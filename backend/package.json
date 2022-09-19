@@ -1,0 +1,20 @@
+{
+  "name": "portfolio-twitter",
+  "version": "1.0.0",
+  "description": "Backend of my practice project for recreating twitter",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoooom2/porfolio.git"
+  },
+  "author": "Adeyinka Roqeeb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zoooom2/porfolio/issues"
+  },
+  "homepage": "https://github.com/zoooom2/porfolio#readme"
+}
