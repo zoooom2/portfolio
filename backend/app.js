@@ -6,6 +6,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const AppError = require('./utils/appError');
+const userRouter = require('./routes/userRoute');
 const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
@@ -40,12 +41,12 @@ app.use(xss());
 app.use(
   hpp({
     whitelist: [
-      'duration',
-      'ratingsQuantity',
-      'ratingsAverage',
-      'maxGroupSize',
-      'difficulty',
-      'price',
+      // 'duration',
+      // 'ratingsQuantity',
+      // 'ratingsAverage',
+      // 'maxGroupSize',
+      // 'difficulty',
+      // 'price',
     ],
   })
 );
@@ -64,7 +65,7 @@ app.use((req, res, next) => {
 // USER HANDLER
 
 // ROUTES
-
+app.use('/api/v1/users', userRouter);
 // START SERVER
 
 app.all('*', (req, res, next) => {

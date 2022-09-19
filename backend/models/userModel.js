@@ -6,7 +6,14 @@ const validator = require('validator');
 const { Schema, model, ObjectId } = mongoose;
 
 const userSchema = new Schema({
-  name: { type: String, required: [true, 'Please tell us your name'] },
+  firstName: {
+    type: String,
+    required: [true, 'Please tell us your first name'],
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Please tell us your last name'],
+  },
   username: {
     type: String,
     required: [true, 'please input your username'],
@@ -33,7 +40,7 @@ const userSchema = new Schema({
     ],
     validate: {
       validator: function (v) {
-        return /\d{3}-\d{3}-\d{4}/.test(v);
+        return /\d{3}\d{3}\d{4}/.test(v);
       },
       message: (props) => `${props.value} is not a valid phone number!`,
     },
@@ -64,6 +71,11 @@ const userSchema = new Schema({
       message: 'password are not the same',
     },
   },
+  dateCreated: {
+    type: Date,
+    default: Date.now(),
+    select: false,
+  },
   followers: [ObjectId],
   following: [ObjectId],
   blocked: [ObjectId],
@@ -72,6 +84,8 @@ const userSchema = new Schema({
   messages: [ObjectId],
   circles: [ObjectId],
   private: { type: Boolean, default: false },
+  lists: [],
+  notifications: [],
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
