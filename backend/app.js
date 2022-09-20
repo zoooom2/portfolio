@@ -7,6 +7,8 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const AppError = require('./utils/appError');
 const userRouter = require('./routes/userRoute');
+const tweetRouter = require('./routes/tweetRoute');
+const messageRouter = require('./routes/messageRoute');
 const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
@@ -66,6 +68,8 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/tweets', tweetRouter);
+app.use('/api/v1/messages', messageRouter);
 // START SERVER
 
 app.all('*', (req, res, next) => {

@@ -26,6 +26,7 @@ const tweetRouter = require('./tweetRoute');
 const router = express.Router();
 
 router.use('/:userId/getAllTweets', tweetRouter);
+router.use('/:userId/likeTweet', tweetRouter);
 
 router.post('/signup', signup);
 router.post('/login', login);

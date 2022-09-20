@@ -5,11 +5,18 @@ const { Schema, model, ObjectId } = mongoose;
 
 const tweetSchema = new Schema(
   {
-    author: { user: { type: ObjectId } },
+    author: {
+      type: ObjectId,
+      required: [true, 'please include the person sending tweet'],
+    },
+    tweetBody: {
+      type: String,
+      required: [true, 'please input something to send the tweet'],
+    },
     timeStamp: { type: Date, default: Date.now() },
     comment: [{ user: { type: ObjectId }, comment: String }],
     retweet: [{ user: { type: ObjectId } }],
-    likes: [{ user: { type: ObjectId } }],
+    likes: [ObjectId],
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
