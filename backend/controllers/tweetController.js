@@ -7,13 +7,10 @@ const {
   getOne,
   getAll,
   createOne,
+  docAction,
 } = require('./handlerFactory');
 
 exports.likeTweet = catchAsync(async (req, res, next) => {
-  //   const tweet = await Tweet.findByIdAndUpdate(req.params.id, {
-  //     likes: [...req.user.likes],
-  //   });
-
   const tweet = await Tweet.findById(req.params.tweetId);
 
   if (!tweet) next(new AppError('No tweet with that id', 404));
@@ -26,15 +23,15 @@ exports.likeTweet = catchAsync(async (req, res, next) => {
 
   await tweet.save({ validateBeforeSave: false });
 
-  console.log(tweet.likes);
   res.status(201).json({
     status: 'success',
     tweet,
   });
-
-  //   next();
 });
 
+exports.comment = docAction();
+exports.retweet = docAction();
+exports.likeTweet = docAction();
 exports.createTweet = createOne(Tweet);
 exports.getAllTweets = getAll(Tweet);
 exports.deleteTweet = deleteOne(Tweet);

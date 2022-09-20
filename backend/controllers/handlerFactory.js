@@ -1,3 +1,4 @@
+const Tweet = require('../models/tweetModel');
 const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
@@ -70,8 +71,8 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    const filter = {};
-    // if (req.params.tweetId) filter = { tour: req.params.tweetId };
+    let filter = {};
+    if (req.params.userId) filter = { tour: req.params.userId };
 
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
@@ -88,5 +89,35 @@ exports.getAll = (Model) =>
       data: {
         doc,
       },
+    });
+  });
+
+exports.docAction = () =>
+  catchAsync(async (req, res, next) => {
+    const { action, id, userId } = req.params;
+    const tweet = await Tweet.findById(id);
+
+    if (!tweet) next(new AppError('No tweet with that id', 404));
+
+    if (action === 'like') {
+      if (tweet.likes.includes(userId)) {
+        tweet.likes = tweet.likes.filter((user) => userId === user);
+      } else {
+        tweet.likes = tweet.likes.push(userId);
+      }
+    } else if (action === 'retweet') {
+      if (tweet.retweet.includes(userId)) {
+        tweet.retweet = tweet.retweet.filter((user) => userId === user);
+      } else {
+        tweet.retweet = tweet.retweet.push(userId);
+      }
+    } else if (action === 'comment') {
+      tweet.comment.push({ user: userId, parcel: req.body.comment });
+    }
+    await tweet.save({ validateBeforeSave: false });
+
+    res.status(201).json({
+      status: 'success',
+      tweet,
     });
   });

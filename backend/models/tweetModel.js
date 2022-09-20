@@ -14,8 +14,8 @@ const tweetSchema = new Schema(
       required: [true, 'please input something to send the tweet'],
     },
     timeStamp: { type: Date, default: Date.now() },
-    comment: [{ user: { type: ObjectId }, comment: String }],
-    retweet: [{ user: { type: ObjectId } }],
+    comment: [{ user: { type: ObjectId }, parcel: String }],
+    retweet: [ObjectId],
     likes: [ObjectId],
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
