@@ -1,4 +1,5 @@
 // const Tweet = require('../models/tweetModel');
+const Tweet = require('../models/tweetModel');
 const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
@@ -38,6 +39,7 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
+    if (Model === Tweet) req.body.author = req.user.id;
     const newDoc = await Model.create(req.body);
 
     res.status(201).json({
@@ -80,6 +82,7 @@ exports.getAll = (Model) =>
       .limitFields()
       .paginate();
 
+    console.log(features);
     // const doc = await features.query.explain();
     const doc = await features.query;
     // SEND RESPONSE
