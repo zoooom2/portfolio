@@ -1,4 +1,4 @@
-const Tweet = require('../models/tweetModel');
+// const Tweet = require('../models/tweetModel');
 const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
@@ -92,32 +92,38 @@ exports.getAll = (Model) =>
     });
   });
 
-exports.docAction = () =>
+exports.docAction = (Model) =>
   catchAsync(async (req, res, next) => {
     const { action, id, userId } = req.params;
-    const tweet = await Tweet.findById(id);
+    const doc = await Model.findById(id);
 
-    if (!tweet) next(new AppError('No tweet with that id', 404));
+    if (!doc) next(new AppError('No doc with that id', 404));
 
     if (action === 'like') {
-      if (tweet.likes.includes(userId)) {
-        tweet.likes = tweet.likes.filter((user) => userId === user);
+      if (doc.likes.includes(userId)) {
+        doc.likes = doc.likes.filter((user) => userId === user);
       } else {
-        tweet.likes = tweet.likes.push(userId);
+        doc.likes = doc.likes.push(userId);
       }
     } else if (action === 'retweet') {
-      if (tweet.retweet.includes(userId)) {
-        tweet.retweet = tweet.retweet.filter((user) => userId === user);
+      if (doc.retweet.includes(userId)) {
+        doc.retweet = doc.retweet.filter((user) => userId === user);
       } else {
-        tweet.retweet = tweet.retweet.push(userId);
+        doc.retweet = doc.retweet.push(userId);
       }
     } else if (action === 'comment') {
-      tweet.comment.push({ user: userId, parcel: req.body.comment });
+      doc.comment.push({ user: userId, parcel: req.body.comment });
+    } else if (action === 'block') {
+      if (doc.blocked.includes(userId)) {
+        doc.blocked = doc.blocked.filter((user) => userId === user);
+      } else {
+        doc.blocked = doc.blocked.push(userId);
+      }
     }
-    await tweet.save({ validateBeforeSave: false });
+    await doc.save({ validateBeforeSave: false });
 
     res.status(201).json({
       status: 'success',
-      tweet,
+      doc,
     });
   });

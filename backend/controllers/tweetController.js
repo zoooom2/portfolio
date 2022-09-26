@@ -29,9 +29,9 @@ exports.likeTweet = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.comment = docAction();
-exports.retweet = docAction();
-exports.likeTweet = docAction();
+exports.comment = docAction(Tweet);
+exports.retweet = docAction(Tweet);
+exports.likeTweet = docAction(Tweet);
 exports.createTweet = createOne(Tweet);
 exports.getAllTweets = getAll(Tweet);
 exports.deleteTweet = deleteOne(Tweet);

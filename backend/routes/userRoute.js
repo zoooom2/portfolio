@@ -9,8 +9,9 @@ const {
   updateMe,
   deleteMe,
   getMe,
-  uploadUserPhoto,
-  resizeUserPhoto,
+  follow,
+  unfollow,
+  blockUser,
 } = require('../controllers/userController');
 const {
   signup,
@@ -36,14 +37,18 @@ router.patch('/updatePassword', updatePassword);
 
 router.use(protect);
 
-router.patch('/updateMe', uploadUserPhoto, resizeUserPhoto, updateMe);
+router.patch('/updateMe', updateMe);
 router.delete('/deleteMe', deleteMe);
 router.get('/me', getMe, getUser);
+router.patch('/:action/:userId', getMe, blockUser);
 
 router.use(restrictTo('admin'));
 
 router.route('/').get(getAllUsers).post(createUser);
 
 router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
+
+router.route('/follow/:id').patch(follow);
+router.route('/unfollow/:id').patch(unfollow);
 
 module.exports = router;
