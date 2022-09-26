@@ -19,6 +19,11 @@ const filteredObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
+exports.checkBlock = (req, res, next) => {
+  if (!req.user.blocked.includes(req.params.id)) next();
+  next(new AppError("You've been blocked by this contact", 403));
+};
+
 exports.updateMe = catchAsync(async (req, res, next) => {
   // create error if user password data
   if (req.body.password || req.body.passwordConfirm) {
@@ -111,7 +116,7 @@ exports.unfollow = catchAsync(async (req, res, next) => {
     user2.following = user2.following.filter((x) => x === req.params.id);
     user1.followers = user1.followers.filter((x) => x === req.user.id);
   } else {
-    next(new AppError('User already following', 404));
+    next(new AppError('User already unfollowed', 404));
   }
 
   await user2.save({ validateBeforeSave: false });

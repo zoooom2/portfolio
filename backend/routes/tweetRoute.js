@@ -1,4 +1,5 @@
 const express = require('express');
+const { protect } = require('../controllers/authorisationController');
 const {
   likeTweet,
   createTweet,
@@ -12,7 +13,7 @@ const {
 
 const router = express.Router({ mergeParams: true });
 
-// router.post('/likeTweet/:tweetId', likeTweet);
+router.use(protect);
 router.route('/').post(createTweet).get(getAllTweets);
 router
   .route('/:id')

@@ -2,7 +2,7 @@ const express = require('express');
 
 const {
   getAllUsers,
-  createUser,
+  // createUser,
   getUser,
   updateUser,
   deleteUser,
@@ -12,6 +12,7 @@ const {
   follow,
   unfollow,
   blockUser,
+  checkBlock,
 } = require('../controllers/userController');
 const {
   signup,
@@ -41,14 +42,15 @@ router.patch('/updateMe', updateMe);
 router.delete('/deleteMe', deleteMe);
 router.get('/me', getMe, getUser);
 router.patch('/:action/:userId', getMe, blockUser);
+router.route('/:id').get(checkBlock, getUser);
+// router.post('/', createUser);
+router.route('/follow/:id').patch(checkBlock, follow);
+router.route('/unfollow/:id').patch(checkBlock, unfollow);
 
 router.use(restrictTo('admin'));
 
-router.route('/').get(getAllUsers).post(createUser);
+router.route('/').get(getAllUsers);
 
-router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
-
-router.route('/follow/:id').patch(follow);
-router.route('/unfollow/:id').patch(unfollow);
+router.route('/:id').patch(updateUser).delete(deleteUser);
 
 module.exports = router;

@@ -72,7 +72,7 @@ exports.getOne = (Model, popOptions) =>
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
-    if (req.params.userId) filter = { tour: req.params.userId };
+    if (req.params.userId) filter = { author: req.params.userId };
 
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
@@ -118,6 +118,12 @@ exports.docAction = (Model) =>
         doc.blocked = doc.blocked.filter((user) => userId === user);
       } else {
         doc.blocked = doc.blocked.push(userId);
+        doc.following = doc.following.filter(
+          (following) => following === userId
+        );
+        doc.followers = doc.followers.filter(
+          (followers) => followers === userId
+        );
       }
     }
     await doc.save({ validateBeforeSave: false });
