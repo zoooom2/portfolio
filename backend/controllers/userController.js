@@ -88,35 +88,8 @@ exports.follow = catchAsync(async (req, res, next) => {
     user2.following = user2.following.push(req.params.id);
     user1.followers = user1.followers.push(req.user.id);
   } else {
-    next(new AppError('User already following', 404));
-  }
-
-  await user2.save({ validateBeforeSave: false });
-  await user1.save({ validateBeforeSave: false });
-
-  res.status(200).json({
-    status: 'success',
-    data: user2,
-  });
-});
-
-exports.unfollow = catchAsync(async (req, res, next) => {
-  const user1 = await User.findById(req.params.id);
-  const user2 = await User.findById(req.user.id);
-
-  if (!user1 || !user2) next(new AppError('User not found', 404));
-
-  if (req.params.id === req.user.id)
-    next(new AppError('you cant unfollow yourself', 404));
-
-  if (
-    user2.following.includes(req.params.id) &&
-    user1.followers.includes(req.user.id)
-  ) {
     user2.following = user2.following.filter((x) => x === req.params.id);
     user1.followers = user1.followers.filter((x) => x === req.user.id);
-  } else {
-    next(new AppError('User already unfollowed', 404));
   }
 
   await user2.save({ validateBeforeSave: false });

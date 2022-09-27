@@ -97,7 +97,8 @@ exports.getAll = (Model) =>
 
 exports.docAction = (Model) =>
   catchAsync(async (req, res, next) => {
-    const { action, id, userId } = req.params;
+    const userId = req.user.id;
+    const { action, id } = req.params;
     const doc = await Model.findById(id);
 
     if (!doc) next(new AppError('No doc with that id', 404));

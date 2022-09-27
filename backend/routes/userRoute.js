@@ -10,7 +10,6 @@ const {
   deleteMe,
   getMe,
   follow,
-  unfollow,
   blockUser,
   checkBlock,
 } = require('../controllers/userController');
@@ -27,9 +26,6 @@ const tweetRouter = require('./tweetRoute');
 
 const router = express.Router();
 
-router.use('/:userId/getAllTweets', tweetRouter);
-router.use('/:userId/:action', tweetRouter);
-
 router.post('/signup', signup);
 router.post('/login', login);
 router.post('/forgotPassword', forgotPassword);
@@ -45,7 +41,8 @@ router.patch('/:action/:userId', getMe, blockUser);
 router.route('/:id').get(checkBlock, getUser);
 // router.post('/', createUser);
 router.route('/follow/:id').patch(checkBlock, follow);
-router.route('/unfollow/:id').patch(checkBlock, unfollow);
+router.use('/get-tweets/:userId', tweetRouter);
+router.use('/:action', tweetRouter);
 
 router.use(restrictTo('admin'));
 
