@@ -21,7 +21,7 @@ const filteredObj = (obj, ...allowedFields) => {
 
 exports.checkBlock = (req, res, next) => {
   if (!req.user.blocked.includes(req.params.id)) next();
-  next(new AppError("You've been blocked by this contact", 403));
+  next(new AppError("You've been blocked by this contact", 401));
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {

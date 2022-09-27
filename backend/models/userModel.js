@@ -81,7 +81,6 @@ const userSchema = new Schema(
     following: [ObjectId],
     blocked: [ObjectId],
     bookmarks: [ObjectId],
-    tweets: [ObjectId],
     messages: [ObjectId],
     circles: [ObjectId],
     private: { type: Boolean, default: false },
@@ -98,6 +97,20 @@ const userSchema = new Schema(
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+userSchema.virtual('tweets', {
+  ref: 'Tweet',
+  foreignField: 'author',
+  localField: '_id',
+});
+
+userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'tweets',
+    select: '_id -author tweetBody',
+  });
+  next();
+});
 
 userSchema.pre('save', async function (next) {
   //Only run this function if password is modified
