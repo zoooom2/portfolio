@@ -137,3 +137,10 @@ exports.docAction = (Model) =>
       doc,
     });
   });
+
+exports.checkOwner = (Model) => (req, res, next) => {
+  const doc = Model.findById(req.params.id);
+  if (req.user.role === 'admin') next();
+  if (doc.author === req.user.id) next();
+  next(new AppError('You perform this action on another person doc'));
+};

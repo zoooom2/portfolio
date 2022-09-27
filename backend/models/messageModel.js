@@ -5,11 +5,9 @@ const { Schema, model, ObjectId } = mongoose;
 
 const messageSchema = new Schema(
   {
-    sender: {
-      user: {
-        type: ObjectId,
-        required: [true, 'specify who is sending message'],
-      },
+    author: {
+      user: { type: ObjectId },
+      required: [true, 'specify who is recieving message'],
     },
     reciever: [
       {

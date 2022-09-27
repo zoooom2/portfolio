@@ -107,7 +107,7 @@ userSchema.virtual('tweets', {
 userSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'tweets',
-    select: '_id -author tweetBody',
+    select: '_id -author timeStamp',
   });
   next();
 });

@@ -1,5 +1,9 @@
 const express = require('express');
-const { protect } = require('../controllers/authorisationController');
+const {
+  protect,
+  accountPrivate,
+} = require('../controllers/authorisationController');
+const { checkOwner } = require('../controllers/handlerFactory');
 const {
   likeTweet,
   createTweet,
@@ -10,16 +14,18 @@ const {
   retweet,
   comment,
 } = require('../controllers/tweetController');
+const Tweet = require('../models/tweetModel');
 
 const router = express.Router({ mergeParams: true });
 
 router.use(protect);
 router.route('/').post(createTweet).get(getAllTweets);
+
 router
   .route('/:id')
-  .get(getTweet)
-  .delete(deleteTweet)
-  .patch(updateTweet)
+  .get(accountPrivate, getTweet)
+  .delete(checkOwner(Tweet), deleteTweet)
+  .patch(checkOwner(Tweet), updateTweet)
   .post(retweet)
   .post(likeTweet)
   .post(comment);

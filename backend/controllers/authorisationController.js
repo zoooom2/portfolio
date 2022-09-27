@@ -5,6 +5,7 @@ const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const sendEmail = require('../utils/email');
+const Tweet = require('../models/tweetModel');
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -185,3 +186,16 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
   createSendToken(user, 200, res);
 });
+
+exports.accountPrivate = (req, res, next) => {
+  const tweet = Tweet.findById(req.params.id);
+  const tweetAuthor = User.findById(tweet.author);
+  if (!tweetAuthor.private) next();
+  if (tweetAuthor.followers.includes(req.user.id)) next();
+  next(
+    new AppError(
+      'this is a private account. You are not allowed to view this tweet',
+      401
+    )
+  );
+};
