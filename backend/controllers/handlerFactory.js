@@ -120,22 +120,22 @@ exports.docAction = (Model) =>
       doc.comment.push({ user: userId, parcel: req.body.comment });
     } else if (action === 'block') {
       if (doc.blocked.includes(userId)) {
-        doc.blocked = doc.blocked.filter((user) => userId !== user);
-        req.user.blocked = req.user.blocked.filter((user) => user !== id);
+        doc.blocked = doc.blocked.filter((user) => userId === user);
+        req.user.blocked = req.user.blocked.filter((user) => user === id);
       } else {
         doc.blocked = doc.blocked.push(userId);
         req.user.blocked = req.user.blocked.push(id);
         doc.following = doc.following.filter(
-          (following) => following !== userId
+          (following) => following === userId
         );
         req.user.following = req.user.following.filter(
-          (following) => following !== id
+          (following) => following === id
         );
         req.user.followers = req.user.following.filter(
-          (followers) => followers !== id
+          (followers) => followers === id
         );
         doc.followers = doc.followers.filter(
-          (followers) => followers !== userId
+          (followers) => followers === userId
         );
       }
       await User.findByIdAndUpdate(req.user.id, {
@@ -145,7 +145,7 @@ exports.docAction = (Model) =>
       });
     } else if (action === 'bookmark') {
       if (req.user.bookmarks.includes(id)) {
-        req.user.bookmarks = req.user.bookmarks.filter((tweet) => tweet !== id);
+        req.user.bookmarks = req.user.bookmarks.filter((tweet) => tweet === id);
       } else {
         req.user.bookmarks = req.user.bookmarks.push(id);
       }
@@ -154,7 +154,7 @@ exports.docAction = (Model) =>
       });
     } else if (action === 'circle') {
       if (req.user.circles.includes(id)) {
-        req.user.circles = req.user.circles.filter((x) => x !== id);
+        req.user.circles = req.user.circles.filter((x) => x === id);
       } else {
         req.user.circles = req.user.circles.push(id);
       }

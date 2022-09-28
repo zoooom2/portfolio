@@ -92,8 +92,8 @@ exports.follow = catchAsync(async (req, res, next) => {
     user2.following = user2.following.push(req.params.id);
     user1.followers = user1.followers.push(req.user.id);
   } else {
-    user2.following = user2.following.filter((x) => x !== req.params.id);
-    user1.followers = user1.followers.filter((x) => x !== req.user.id);
+    user2.following = user2.following.filter((x) => x === req.params.id);
+    user1.followers = user1.followers.filter((x) => x === req.user.id);
   }
 
   await user2.save({ validateBeforeSave: false });
