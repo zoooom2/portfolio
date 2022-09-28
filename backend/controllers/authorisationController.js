@@ -187,15 +187,18 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
-exports.accountPrivate = (req, res, next) => {
-  const tweet = Tweet.findById(req.params.id);
-  const tweetAuthor = User.findById(tweet.author);
-  if (!tweetAuthor.private) next();
-  if (tweetAuthor.followers.includes(req.user.id)) next();
-  next(
-    new AppError(
-      'this is a private account. You are not allowed to view this tweet',
-      401
-    )
-  );
+exports.accountPrivate = async (req, res, next) => {
+  const tweet = await Tweet.findById(req.params.id);
+  const tweetAuthor = await User.findById(tweet.author);
+
+  if (!tweetAuthor.private || tweetAuthor.followers.includes(req.user.id)) {
+    next();
+  } else {
+    next(
+      new AppError(
+        'this is a private account. You are not allowed to view this tweet',
+        401
+      )
+    );
+  }
 };

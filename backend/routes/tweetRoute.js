@@ -13,6 +13,7 @@ const {
   updateTweet,
   retweet,
   comment,
+  bookmarkTweet,
 } = require('../controllers/tweetController');
 const Tweet = require('../models/tweetModel');
 
@@ -20,7 +21,7 @@ const router = express.Router({ mergeParams: true });
 
 router.use(protect);
 router.route('/').post(createTweet).get(getAllTweets);
-
+router.route('/:action/:id').patch(bookmarkTweet);
 router
   .route('/:id')
   .get(accountPrivate, getTweet)

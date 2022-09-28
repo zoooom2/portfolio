@@ -20,8 +20,12 @@ const filteredObj = (obj, ...allowedFields) => {
 };
 
 exports.checkBlock = (req, res, next) => {
-  if (!req.user.blocked.includes(req.params.id)) next();
-  next(new AppError("You've been blocked by this contact", 401));
+  console.log(req.params.id);
+  if (!req.user.blocked.includes(req.params.id)) {
+    next();
+  } else {
+    next(new AppError("You've been blocked by this contact", 401));
+  }
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
@@ -88,8 +92,8 @@ exports.follow = catchAsync(async (req, res, next) => {
     user2.following = user2.following.push(req.params.id);
     user1.followers = user1.followers.push(req.user.id);
   } else {
-    user2.following = user2.following.filter((x) => x === req.params.id);
-    user1.followers = user1.followers.filter((x) => x === req.user.id);
+    user2.following = user2.following.filter((x) => x !== req.params.id);
+    user1.followers = user1.followers.filter((x) => x !== req.user.id);
   }
 
   await user2.save({ validateBeforeSave: false });
@@ -101,7 +105,12 @@ exports.follow = catchAsync(async (req, res, next) => {
   });
 });
 
+// exports.addCircle = (req, res, next) => {
+//   next();
+// };
+
 exports.blockUser = docAction(User);
+exports.addCircle = docAction(User);
 exports.getAllUsers = getAll(User);
 exports.getUser = getOne(User);
 exports.updateUser = updateOne(User);

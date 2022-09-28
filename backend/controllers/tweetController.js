@@ -9,9 +9,13 @@ const {
   docAction,
 } = require('./handlerFactory');
 
+exports.checkCircle = (req, res, next) => {};
+
 exports.comment = docAction(Tweet);
 exports.retweet = docAction(Tweet);
 exports.likeTweet = docAction(Tweet);
+exports.bookmarkTweet = docAction(Tweet);
+
 exports.createTweet = createOne(Tweet);
 exports.getAllTweets = getAll(Tweet);
 exports.deleteTweet = deleteOne(Tweet);
