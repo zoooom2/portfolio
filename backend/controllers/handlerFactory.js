@@ -39,15 +39,29 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    if (Model === Tweet) req.body.author = req.user.id;
-    const newDoc = await Model.create(req.body);
+    if (Model === Tweet) {
+      req.body.author = req.user.id;
+      if (req.params.action) {
+        req.body.parentTweet = req.params.id;
+      }
+    }
 
-    res.status(201).json({
-      status: 'success',
-      data: {
-        doc: newDoc,
-      },
-    });
+    const newDoc = await Model.create(req.body);
+    req.doc = newDoc;
+
+    // // test
+    // req.doc = req.body;
+
+    if (req.params.action === 'reply') {
+      next();
+    } else {
+      res.status(201).json({
+        status: 'success',
+        data: {
+          doc: newDoc,
+        },
+      });
+    }
   });
 
 exports.getOne = (Model, popOptions) =>
@@ -82,7 +96,7 @@ exports.getAll = (Model) =>
       .limitFields()
       .paginate();
 
-    console.log(features);
+    // console.log(features);
     // const doc = await features.query.explain();
     const doc = await features.query;
     // SEND RESPONSE
@@ -123,8 +137,7 @@ exports.docAction = (Model) =>
       //
       //
       //
-    } else if (action === 'comment') {
-      doc.comment.push({ user: userId, parcel: req.body.comment });
+      //
       //
       //
       //
@@ -182,10 +195,11 @@ exports.docAction = (Model) =>
 
     await doc.save({ validateBeforeSave: false });
 
-    res.status(201).json({
-      status: 'success',
-      doc,
-    });
+    // res.status(201).json({
+    //   status: 'success',
+    //   doc,
+    // });
+    next();
   });
 
 exports.checkOwner = (Model) => (req, res, next) => {

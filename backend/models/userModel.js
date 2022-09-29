@@ -85,7 +85,7 @@ const userSchema = new Schema(
     circles: [ObjectId],
     private: { type: Boolean, default: false },
     lists: [],
-    notifications: [],
+    // notifications: [ObjectId],
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
@@ -104,10 +104,19 @@ userSchema.virtual('tweets', {
   localField: '_id',
 });
 
+userSchema.virtual('notifications', {
+  ref: 'Notifications',
+  foreignField: 'to',
+  localField: '_id',
+});
+
 userSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'tweets',
     select: '_id -author timeStamp',
+  }).populate({
+    path: 'notifications',
+    select: 'message createdAt',
   });
   next();
 });

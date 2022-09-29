@@ -24,6 +24,7 @@ const {
   protect,
 } = require('../controllers/authorisationController');
 const tweetRouter = require('./tweetRoute');
+const { sendNotification } = require('../controllers/notificationController');
 
 const router = express.Router();
 
@@ -41,7 +42,7 @@ router.get('/me', getMe, getUser);
 router.route('/:id').get(checkBlock, getUser);
 // router.post('/', createUser);
 router.route('/circle/:id').patch(addCircle);
-router.route('/follow/:id').patch(checkBlock, follow);
+router.route('/follow/:id').patch(checkBlock, follow, sendNotification);
 router.patch('/:action/:id', blockUser);
 router.use('/get-tweets/:userId', tweetRouter);
 router.use('/:action', tweetRouter);

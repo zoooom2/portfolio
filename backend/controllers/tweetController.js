@@ -11,7 +11,18 @@ const {
 
 exports.checkCircle = (req, res, next) => {};
 
-exports.comment = docAction(Tweet);
+exports.replyTweet = async (req, res, next) => {
+  await Tweet.findByIdAndUpdate(
+    req.params.id,
+    {
+      $push: { comment: req.doc.id },
+    },
+    { new: true }
+  );
+
+  next();
+};
+
 exports.retweet = docAction(Tweet);
 exports.likeTweet = docAction(Tweet);
 exports.bookmarkTweet = docAction(Tweet);
