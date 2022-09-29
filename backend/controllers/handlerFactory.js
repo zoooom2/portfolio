@@ -118,8 +118,11 @@ exports.docAction = (Model) =>
 
     if (!doc) next(new AppError('No doc with that id', 404));
 
+    let condition = false;
+
     if (action === 'like') {
-      if (doc.likes.includes(userId)) {
+      condition = doc.likes.includes(userId);
+      if (condition) {
         doc.likes = doc.likes.filter((user) => userId !== user.toString());
       } else {
         doc.likes = doc.likes.push(userId);
@@ -129,7 +132,8 @@ exports.docAction = (Model) =>
       //
       //
     } else if (action === 'retweet') {
-      if (doc.retweet.includes(userId)) {
+      condition = doc.retweet.includes(userId);
+      if (condition) {
         doc.retweet = doc.retweet.filter((user) => userId !== user.toString());
       } else {
         doc.retweet = doc.retweet.push(userId);
@@ -142,7 +146,8 @@ exports.docAction = (Model) =>
       //
       //
     } else if (action === 'block') {
-      if (doc.blocked.includes(userId)) {
+      condition = doc.blocked.includes(userId);
+      if (condition) {
         doc.blocked = doc.blocked.filter((user) => userId !== user.toString());
         req.user.blocked = req.user.blocked.filter(
           (user) => user.toString() !== id
@@ -172,7 +177,8 @@ exports.docAction = (Model) =>
       //
       //
     } else if (action === 'bookmark') {
-      if (req.user.bookmarks.includes(id)) {
+      condition = req.user.bookmarks.includes(id);
+      if (condition) {
         req.user.bookmarks = req.user.bookmarks.filter(
           (tweet) => tweet.toString() !== id
         );
@@ -186,7 +192,8 @@ exports.docAction = (Model) =>
       //
       //
     } else if (action === 'circle') {
-      if (req.user.circles.includes(id)) {
+      condition = req.user.circles.includes(id);
+      if (condition) {
         req.user.circles = req.user.circles.filter((x) => x.toString() !== id);
       } else {
         req.user.circles = req.user.circles.push(id);
@@ -194,12 +201,16 @@ exports.docAction = (Model) =>
     }
 
     await doc.save({ validateBeforeSave: false });
+    console.log(condition);
 
-    // res.status(201).json({
-    //   status: 'success',
-    //   doc,
-    // });
-    next();
+    if (condition) {
+      res.status(201).json({
+        status: 'success',
+        doc,
+      });
+    } else {
+      next();
+    }
   });
 
 exports.checkOwner = (Model) => (req, res, next) => {
