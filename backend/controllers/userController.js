@@ -1,8 +1,9 @@
+const Tweet = require('../models/tweetModel');
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const {
-  deleteOne,
+  // deleteOne,
   updateOne,
   getOne,
   getAll,
@@ -64,6 +65,23 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  let tweet = null;
+  await user.tweets.forEach(async (userTweet) => {
+    const tweetId = userTweet.id.toString();
+    console.log(tweetId);
+    tweet = await Tweet.findById(tweetId);
+    await tweet.deleteOne({ author: req.params.id });
+  });
+
+  await user.deleteOne({ id: req.params.id });
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
+
 exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
   next();
@@ -118,4 +136,4 @@ exports.addCircle = docAction(User);
 exports.getAllUsers = getAll(User);
 exports.getUser = getOne(User);
 exports.updateUser = updateOne(User);
-exports.deleteUser = deleteOne(User);
+// exports.deleteUser = deleteOne(User);
