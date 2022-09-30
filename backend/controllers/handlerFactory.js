@@ -45,7 +45,7 @@ exports.createOne = (Model, middleware) =>
     const newDoc = await Model.create(req.body);
     req.doc = newDoc;
 
-    if (middleware) {
+    if (!middleware) {
       res.status(201).json({
         status: 'success',
         data: {
@@ -68,7 +68,6 @@ exports.getOne = (Model, middleware, popOptions) =>
     if (!doc) {
       return next(new AppError('No doc found with that ID', 404));
     }
-    console.log(doc);
 
     res.status(200).json({
       status: 'success',
@@ -78,7 +77,7 @@ exports.getOne = (Model, middleware, popOptions) =>
     });
   });
 
-exports.getAll = (Model) =>
+exports.getAll = (Model, middleware) =>
   catchAsync(async (req, res, next) => {
     let filter = {};
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
@@ -95,14 +94,19 @@ exports.getAll = (Model) =>
     // console.log(features);
     // const doc = await features.query.explain();
     const doc = await features.query;
+    req.doc = doc;
     // SEND RESPONSE
-    res.status(200).json({
-      status: 'success',
-      results: doc.length,
-      data: {
-        doc,
-      },
-    });
+    if (middleware) {
+      next();
+    } else {
+      res.status(200).json({
+        status: 'success',
+        results: doc.length,
+        data: {
+          doc,
+        },
+      });
+    }
   });
 
 exports.checkOwner = (Model) =>

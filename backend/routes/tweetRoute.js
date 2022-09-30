@@ -3,10 +3,9 @@ const {
   protect,
   accountPrivate,
 } = require('../controllers/authorisationController');
-const { checkOwner } = require('../controllers/handlerFactory');
+const { checkOwner, createOne } = require('../controllers/handlerFactory');
 const { sendNotification } = require('../controllers/notificationController');
 const {
-  createTweet,
   getAllTweets,
   getTweet,
   deleteTweet,
@@ -14,22 +13,21 @@ const {
   bookmarkTweet,
   replyTweet,
   assignTweetData,
+  filterTweets,
 } = require('../controllers/tweetController');
 const Tweet = require('../models/tweetModel');
 
 const router = express.Router({ mergeParams: true });
 
 router.use(protect);
-router.route('/').post(assignTweetData, createTweet).get(getAllTweets);
-
-// router
-//   .route('/:action/:id')
-//   .patch(bookmarkTweet)
-
+router
+  .route('/')
+  .post(assignTweetData, createOne(Tweet))
+  .get(getAllTweets, filterTweets);
 router.patch('/bookmark/:id', bookmarkTweet);
 router
   .route('/reply/:id')
-  .post(assignTweetData, createTweet, replyTweet, sendNotification);
+  .post(assignTweetData, createOne(Tweet, true), replyTweet, sendNotification);
 
 router
   .route('/:id')
