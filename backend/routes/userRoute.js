@@ -8,7 +8,7 @@ const {
   deleteUser,
   updateMe,
   deleteMe,
-  getMe,
+
   follow,
   blockUser,
   checkBlock,
@@ -25,6 +25,8 @@ const {
 } = require('../controllers/authorisationController');
 const tweetRouter = require('./tweetRoute');
 const { sendNotification } = require('../controllers/notificationController');
+const { getMe } = require('../controllers/handlerFactory');
+const { likeTweet, retweet } = require('../controllers/tweetController');
 
 const router = express.Router();
 
@@ -36,16 +38,22 @@ router.patch('/updatePassword', updatePassword);
 
 router.use(protect);
 
-router.patch('/updateMe', updateMe);
-router.delete('/deleteMe', deleteMe);
-router.get('/me', getMe, getUser);
+// router.patch('/updateMe', updateMe);
+// router.delete('/deleteMe', deleteMe);
+// router.get('/me', getMe, getUser);
+
+router.route('/me').get(getMe, getUser).delete(deleteMe).patch(updateMe);
+
 router.route('/:id').get(checkBlock, getUser);
 // router.post('/', createUser);
 router.route('/circle/:id').patch(addCircle);
 router.route('/follow/:id').patch(checkBlock, follow, sendNotification);
-router.patch('/:action/:id', blockUser);
+router.patch('/block/:id', blockUser);
 router.use('/get-tweets/:userId', tweetRouter);
-router.use('/:action', tweetRouter);
+// router.use('/like', tweetRouter);
+// router.use('/retweet', tweetRouter);
+router.patch('/like/:id', likeTweet, sendNotification);
+router.patch('/retweet/:id', retweet, sendNotification);
 
 router.use(restrictTo('admin'));
 

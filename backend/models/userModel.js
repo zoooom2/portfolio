@@ -81,7 +81,7 @@ const userSchema = new Schema(
     following: [ObjectId],
     blocked: [ObjectId],
     bookmarks: [ObjectId],
-    messages: [ObjectId],
+    // messages: [ObjectId],
     circles: [ObjectId],
     private: { type: Boolean, default: false },
     lists: [],
@@ -110,14 +110,25 @@ userSchema.virtual('notifications', {
   localField: '_id',
 });
 
+userSchema.virtual('messages', {
+  ref: 'Message',
+  foreignField: 'reciever',
+  localField: '_id',
+});
+
 userSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'tweets',
     select: '_id -author timeStamp',
-  }).populate({
-    path: 'notifications',
-    select: 'message createdAt',
-  });
+  })
+    .populate({
+      path: 'notifications',
+      select: 'message createdAt',
+    })
+    .populate({
+      path: 'messages',
+      select: 'parcel author createdAt',
+    });
   next();
 });
 
