@@ -21,7 +21,7 @@ exports.assignTweetData = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.replyTweet = async (req, res, next) => {
+exports.replyTweet = catchAsync(async (req, res, next) => {
   await Tweet.findByIdAndUpdate(
     req.params.id,
     {
@@ -31,7 +31,7 @@ exports.replyTweet = async (req, res, next) => {
   );
 
   next();
-};
+});
 
 exports.retweet = catchAsync(async (req, res, next) => {
   const userId = req.user.id;

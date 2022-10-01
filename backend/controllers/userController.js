@@ -122,10 +122,6 @@ exports.follow = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAllUsers = getAll(User);
-exports.getUser = getOne(User);
-exports.updateUser = updateOne(User);
-
 exports.blockUser = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
   const { id } = req.params;
@@ -190,3 +186,7 @@ exports.addCircle = catchAsync(async (req, res, next) => {
     next();
   }
 });
+
+exports.getAllUsers = getAll(User);
+exports.getUser = getOne(User);
+exports.updateUser = updateOne(User);
