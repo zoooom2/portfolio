@@ -4,6 +4,11 @@ const {
   accountPrivate,
 } = require('../controllers/authorisationController');
 const { checkOwner, createOne } = require('../controllers/handlerFactory');
+const {
+  multipleSinglePhotos,
+
+  resizeMultiplePhotos,
+} = require('../controllers/imageHandler');
 const { sendNotification } = require('../controllers/notificationController');
 const {
   getAllTweets,
@@ -22,7 +27,12 @@ const router = express.Router({ mergeParams: true });
 router.use(protect);
 router
   .route('/')
-  .post(assignTweetData, createOne(Tweet))
+  .post(
+    assignTweetData,
+    multipleSinglePhotos({ name: 'images', maxCount: 4 }),
+    resizeMultiplePhotos(2000, 1333, 'tweet', 'tweets'),
+    createOne(Tweet)
+  )
   .get(getAllTweets, filterTweets);
 router.patch('/bookmark/:id', bookmarkTweet);
 router

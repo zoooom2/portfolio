@@ -8,6 +8,7 @@ const messageSchema = new Schema(
     author: ObjectId,
     reciever: ObjectId,
     parcel: { type: String, required: [true, 'please enter your message'] },
+    images: String,
     createdAt: { type: Date, default: Date.now() },
     read: { type: Boolean, default: false },
   },

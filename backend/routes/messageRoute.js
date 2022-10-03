@@ -1,6 +1,7 @@
 const express = require('express');
 const { protect } = require('../controllers/authorisationController');
 const { checkOwner, getOne, getAll } = require('../controllers/handlerFactory');
+const { uploadPhoto, resizePhoto } = require('../controllers/imageHandler');
 const {
   createMessage,
   deleteMessage,
@@ -16,7 +17,12 @@ const router = express.Router();
 router.use(protect);
 router
   .route('/:id')
-  .post(createMessage, sendNotification)
+  .post(
+    uploadPhoto('images'),
+    resizePhoto(2000, 1333, 'messages'),
+    createMessage,
+    sendNotification
+  )
   .delete(deleteMessage)
   .patch(updateMessage)
   .get(checkOwner(Message), getOne(Message, true), readMessage);

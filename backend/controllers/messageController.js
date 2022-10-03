@@ -14,6 +14,7 @@ exports.createMessage = catchAsync(async (req, res, next) => {
   } else if (recipient) {
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
     const msg = { author: req.user.id, reciever: req.params.id, ...req.body };
+
     await Message.create(msg);
     next();
   } else {

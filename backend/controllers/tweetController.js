@@ -1,6 +1,5 @@
 const Tweet = require('../models/tweetModel');
 const User = require('../models/userModel');
-const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 const { deleteOne, updateOne, getOne, getAll } = require('./handlerFactory');
@@ -8,17 +7,19 @@ const { deleteOne, updateOne, getOne, getAll } = require('./handlerFactory');
 exports.checkCircle = (req, res, next) => {};
 
 exports.assignTweetData = catchAsync(async (req, res, next) => {
-  req.body.author = req.user.id;
+  req.options = { author: req.user.id };
   if (req.path.match(/^(\/reply\/)/)) {
     req.body.parentTweet = req.params.id;
   }
 
-  const doc = await Tweet.findById(req.params.id);
-  if (doc) {
-    next();
-  } else {
-    next(new AppError('doc not found', 404));
-  }
+  await Tweet.findById(req.params.id);
+
+  // if (doc) {
+  //   next();
+  // } else {
+  //   next(new AppError('doc not found', 404));
+  // }
+  next();
 });
 
 exports.replyTweet = catchAsync(async (req, res, next) => {

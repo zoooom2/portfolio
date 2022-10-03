@@ -9,6 +9,7 @@ const AppError = require('./utils/appError');
 const userRouter = require('./routes/userRoute');
 const tweetRouter = require('./routes/tweetRoute');
 const messageRouter = require('./routes/messageRoute');
+const notificationRouter = require('./routes/notificationRoute');
 const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
@@ -70,6 +71,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/tweets', tweetRouter);
 app.use('/api/v1/messages', messageRouter);
+app.use('/api/v1/notifications', notificationRouter);
 // START SERVER
 
 app.all('*', (req, res, next) => {

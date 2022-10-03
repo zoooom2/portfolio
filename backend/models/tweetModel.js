@@ -14,6 +14,7 @@ const tweetSchema = new Schema(
       type: String,
       required: [true, 'please input something to send the tweet'],
     },
+    images: [String],
     timeStamp: { type: Date, default: Date.now() },
     comment: [ObjectId],
     retweet: [ObjectId],

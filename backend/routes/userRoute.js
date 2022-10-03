@@ -13,6 +13,8 @@ const {
   blockUser,
   checkBlock,
   addCircle,
+  uploadPhoto,
+  resizePhoto,
 } = require('../controllers/userController');
 const {
   signup,
@@ -42,7 +44,11 @@ router.use(protect);
 // router.delete('/deleteMe', deleteMe);
 // router.get('/me', getMe, getUser);
 
-router.route('/me').get(getMe, getUser).delete(deleteMe).patch(updateMe);
+router
+  .route('/me')
+  .get(getMe, getUser)
+  .delete(deleteMe)
+  .patch(uploadPhoto, resizePhoto, updateMe);
 
 router.route('/:id').get(checkBlock, getUser);
 // router.post('/', createUser);

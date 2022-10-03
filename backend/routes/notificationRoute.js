@@ -25,3 +25,5 @@ router
   );
 
 router.route('/').get(setNotificationFilter, getAll(Notifications));
+
+module.exports = router;

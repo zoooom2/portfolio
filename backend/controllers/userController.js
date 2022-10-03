@@ -1,8 +1,47 @@
+const multer = require('multer');
+const sharp = require('sharp');
 const Tweet = require('../models/tweetModel');
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const { updateOne, getOne, getAll } = require('./handlerFactory');
+
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => cb(null, './public/img'),
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split('/')[1];
+//     const userId = req.user.id;
+//     const timeStamp = Date.now();
+//     cb(null, `user-${userId}-${timeStamp}.${ext}`);
+//   },
+// });
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Not an image! Please upload an image', 400), false);
+  }
+};
+
+const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+
+exports.uploadPhoto = upload.single('photo');
+exports.resizePhoto = (req, res, next) => {
+  if (!req.file) next();
+  const userId = req.user.id;
+  const timeStamp = Date.now();
+
+  req.file.filename = `user-${userId}-${timeStamp}.jpeg`;
+  sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`./public/img/${req.file.filename}`);
+
+  next();
+};
 
 const filteredObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -23,6 +62,9 @@ exports.checkBlock = (req, res, next) => {
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
+  // console.log(req.file);
+  console.log(req.body);
+
   // create error if user password data
   if (req.body.password || req.body.passwordConfirm) {
     next(
@@ -38,7 +80,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     req.body,
     'phoneNumber',
     'email',
-    'username'
+    'username',
+    'photo'
   );
 
   if (req.file) filteredBody.photo = req.file.filename;

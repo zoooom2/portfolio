@@ -42,6 +42,11 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model, middleware) =>
   catchAsync(async (req, res, next) => {
+    // console.log(req.files);
+    // eslint-disable-next-line node/no-unsupported-features/es-syntax
+    if (req.options) req.body = { ...req.body, ...req.options };
+    // console.log(req.body);
+
     const newDoc = await Model.create(req.body);
     req.doc = newDoc;
 
@@ -68,13 +73,16 @@ exports.getOne = (Model, middleware, popOptions) =>
     if (!doc) {
       return next(new AppError('No doc found with that ID', 404));
     }
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-        doc,
-      },
-    });
+    if (middleware) {
+      next();
+    } else {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          doc,
+        },
+      });
+    }
   });
 
 exports.getAll = (Model, middleware) =>
@@ -120,16 +128,10 @@ exports.checkOwner = (Model) =>
     }
   });
 
-exports.markAsRead = (Model, deleteDoc) =>
+exports.markAsRead = (Model) =>
   catchAsync(async (req, res, next) => {
-    if (deleteDoc) {
-      await Model.findByIdAndUpdate(req.params.id, {
-        read: true,
-        expires: Date.now(),
-      });
-    } else {
-      await Model.findByIdAndUpdate(req.params.id, { read: true });
-    }
+    await Model.findByIdAndUpdate(req.params.id, { read: true });
+
     res.status(200).json({
       status: 'document read successfully',
     });
