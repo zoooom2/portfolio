@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { model, Schema } = mongoose;
+const { ObjectId, model, Schema } = mongoose;
 
 const productSchema = new Schema({
   productName: { type: String, required: true },
@@ -9,6 +9,11 @@ const productSchema = new Schema({
   price: { type: Number, required: true },
   color: { type: String, required: true },
   category: { type: String, required: true },
+  reviews: [ObjectId],
+  rating: {
+    type: Number,
+    default: 5,
+  },
 });
 const Product = model('Product', productSchema);
 
