@@ -10,7 +10,7 @@ const productSchema = new Schema({
   color: { type: String, required: true },
   category: { type: String, required: true },
   reviews: [ObjectId],
-  rating: {
+  ratingsAverage: {
     type: Number,
     default: 5,
   },
