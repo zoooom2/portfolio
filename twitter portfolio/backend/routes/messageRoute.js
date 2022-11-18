@@ -19,7 +19,7 @@ router
   .route('/:id')
   .post(
     uploadPhoto('images'),
-    resizePhoto(2000, 1333, 'messages'),
+    resizePhoto(2000, 1333, 'message', 'messages'),
     createMessage,
     sendNotification
   )

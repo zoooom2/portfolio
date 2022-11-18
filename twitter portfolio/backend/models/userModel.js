@@ -46,6 +46,7 @@ const userSchema = new Schema(
         message: (props) => `${props.value} is not a valid phone number!`,
       },
     },
+    verified: { type: Boolean, default: false },
     photo: {
       type: String,
       default: 'default.jpg',
@@ -127,7 +128,7 @@ userSchema.pre(/^find/, function (next) {
     })
     .populate({
       path: 'messages',
-      select: 'parcel author createdAt',
+      select: 'parcel author createdAt images',
     });
   next();
 });

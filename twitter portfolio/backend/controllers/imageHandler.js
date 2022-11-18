@@ -21,14 +21,14 @@ exports.multiplePhotos = (entries) => upload.fields([...entries]);
 exports.multipleSinglePhotos = (entry) =>
   upload.array(entry.name, entry.maxCount);
 
-exports.resizePhoto = (length, width, location) =>
+exports.resizePhoto = (length, width, name, location) =>
   catchAsync(async (req, res, next) => {
     console.log(req.file);
     if (!req.file) next();
     const userId = req.user.id;
     const timeStamp = Date.now();
 
-    req.body.images = `user-${userId}-${timeStamp}.jpeg`;
+    req.body.images = `${name}-${userId}-${timeStamp}.jpeg`;
     await sharp(req.file.buffer)
       .resize(length, width)
       .toFormat('jpeg')
