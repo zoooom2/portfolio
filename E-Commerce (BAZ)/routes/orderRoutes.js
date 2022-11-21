@@ -1,6 +1,7 @@
 const express = require('express');
 const OrderController = require('../controllers/orderController');
-const authController = require('../controllers/authController');
+const authController = require('../controllers/authControllers');
+const { createCart } = require('../controllers/cartController');
 
 const router = express.Router();
 const { protect, restrictTo } = authController;
@@ -15,7 +16,7 @@ const {
 
 router.use(protect);
 
-router.get('/checkout-session/:tourId', getCheckoutSession);
+router.get('/checkout-session/:productId', createCart, getCheckoutSession);
 
 router.use(restrictTo('admin'));
 

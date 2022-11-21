@@ -6,4 +6,4 @@ exports.getProduct = factory.getOne(Product);
 exports.uploadProduct = factory.createOne(Product);
 exports.updateProduct = factory.updateOne(Product);
 exports.deleteProduct = factory.deleteOne(Product);
-exports.deleteAllProduct = factory.deleteAll(Product);
+// exports.deleteAllProduct = factory.deleteAll(Product);

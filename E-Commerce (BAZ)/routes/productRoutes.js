@@ -1,6 +1,6 @@
 const express = require('express');
 const productController = require('../controllers/productsController');
-const authController = require('../controllers/authController');
+const authController = require('../controllers/authControllers');
 
 const router = express.Router();
 const {
@@ -8,17 +8,17 @@ const {
   getProduct,
   updateProduct,
   uploadProduct,
-  deleteAllProduct,
   deleteProduct,
 } = productController;
 
-const { restrictTo } = authController;
+const { restrictTo, protect } = authController;
 
 router.route('/').get(getAllProducts);
 router.route('/:id').get(getProduct);
 
 router.use(restrictTo('admin'));
-router.route('/').delete(deleteAllProduct).post(uploadProduct);
+router.use(protect);
+router.route('/').post(uploadProduct);
 router.route('/:id').delete(deleteProduct).patch(updateProduct);
 
 module.exports = router;
