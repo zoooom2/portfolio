@@ -46,7 +46,7 @@ exports.resizeMultiplePhotos = (length, width, name, location) =>
 
     req.body.images = [];
     // req.body.images = `${name}-${userId}-${timeStamp}.jpeg`;
-
+    console.log(req.files);
     await Promise.all(
       req.files.map(async (file, index) => {
         const filename = `${name}-${userId}-${timeStamp}-${index}.jpeg`;

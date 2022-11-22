@@ -1,6 +1,6 @@
 // review / rating / createdAt / ref to tour / ref to user
 const mongoose = require('mongoose');
-const Tour = require('./productsModel');
+const Product = require('./productsModel');
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -17,10 +17,10 @@ const reviewSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    tour: {
+    product: {
       type: mongoose.Schema.ObjectId,
-      ref: 'Tour',
-      required: [true, 'Review must belong to a tour.'],
+      ref: 'Product',
+      required: [true, 'Review must belong to a product.'],
     },
     user: {
       type: mongoose.Schema.ObjectId,
@@ -52,14 +52,14 @@ reviewSchema.pre(/^find/, function (next) {
   next();
 });
 
-reviewSchema.statics.calcAverageRatings = async function (tourId) {
+reviewSchema.statics.calcAverageRatings = async function (productId) {
   const stats = await this.aggregate([
     {
-      $match: { tour: tourId },
+      $match: { product: productId },
     },
     {
       $group: {
-        _id: '$tour',
+        _id: '$product',
         nRating: { $sum: 1 },
         avgRating: { $avg: '$rating' },
       },
@@ -68,12 +68,12 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
   // console.log(stats);
 
   if (stats.length > 0) {
-    await Tour.findByIdAndUpdate(tourId, {
+    await Product.findByIdAndUpdate(productId, {
       ratingsQuantity: stats[0].nRating,
       ratingsAverage: stats[0].avgRating,
     });
   } else {
-    await Tour.findByIdAndUpdate(tourId, {
+    await Product.findByIdAndUpdate(productId, {
       ratingsQuantity: 0,
       ratingsAverage: 4.5,
     });
@@ -82,7 +82,7 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
 
 reviewSchema.post('save', function () {
   // this points to current review
-  this.constructor.calcAverageRatings(this.tour);
+  this.constructor.calcAverageRatings(this.product);
 });
 
 // findByIdAndUpdate
@@ -95,7 +95,7 @@ reviewSchema.pre(/^findOneAnd/, async function (next) {
 
 reviewSchema.post(/^findOneAnd/, async function () {
   // await this.findOne(); does NOT work here, query has already executed
-  await this.r.constructor.calcAverageRatings(this.r.tour);
+  await this.r.constructor.calcAverageRatings(this.r.product);
 });
 
 const Review = mongoose.model('Review', reviewSchema);

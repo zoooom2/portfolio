@@ -13,11 +13,15 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     name,
     email,
     // callback_url:
-    amount: helper.addFeesTo(req.body.totalPrice),
+    amount: helper.addFeesTo(req.body.totalPrice * 100),
   });
 
   //2) Verify the transaction
-  const verification = await paystack.transaction.verify(session.reference);
+  const verification = await paystack.transaction.verify({
+    reference: session.data.reference,
+  });
+
+  console.log(verification);
 
   //3) create the order
   const order = await Order.create({
