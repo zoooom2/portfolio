@@ -65,6 +65,7 @@ const orderSchema = new Schema({
     id: {
       type: String,
     },
+    channel: { type: String },
     status: {
       type: String,
     },

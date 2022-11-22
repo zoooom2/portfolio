@@ -2,58 +2,50 @@ const paystack = require('paystack-api')(process.env.PAYSTACK_SECRET_KEY);
 const Order = require('../models/orderModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
-const AppError = require('../utils/appError');
-
-// const createOrderCheckout = async (session) => {
-//   // const product = session.client_reference_id;
-//   // const user = (await User.findOne({ email: session.customer_email })).id;
-//   // const price = session.display_items[0].amount / 100;
-//   await Order.create({ product, user, price });
-// };
+const { updateStock } = require('./productsController');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
-  // 1) Get the currently booked product
-  const cart = req.body;
-
   const { name, email, id } = req.user;
-  let totalPrice;
-  let quantity;
-
-  cart.forEach((item) => {
-    item.price *= 100;
-    totalPrice += item.price * item.quantity;
-    quantity += item.quantity;
-  });
-
   const helper = new paystack.FeeHelper();
-  //2) Create checkout session
+
+  //1) Initialize the transaction
   const session = await paystack.transaction.initialize({
     name,
     email,
     // callback_url:
-    amount: helper.addFeesTo(totalPrice),
-    quantity,
+    amount: helper.addFeesTo(req.body.totalPrice),
   });
 
+  //2) Verify the transaction
   const verification = await paystack.transaction.verify(session.reference);
 
+  //3) create the order
+  const order = await Order.create({
+    // eslint-disable-next-line node/no-unsupported-features/es-syntax
+    ...req.body,
+    paidAt: verification.data.paid_at,
+    createdAt: verification.data.created_at,
+    paymentInfo: {
+      id: verification.data.reference,
+      channel: verification.data.channel,
+      status: verification.data.status,
+    },
+    user: id,
+  });
+
+  //4) if successful then update the stock of each product
   if (verification.data.status === 'success') {
-    await Order.create({
-      user: id,
-      orderItems: cart,
-      paymentInfo: { id: session.reference, status: verification.data.status },
-      createdAt: verification.data.created_at,
-      paidAt: verification.data.paid_at,
-      totalPrice: totalPrice,
-    });
-  } else {
-    next(new AppError('Transaction failed', 401));
+    await Promise.all(
+      req.body.orderItems.forEach((item) =>
+        updateStock(item.product, item.quantity)
+      )
+    );
   }
 
-  // 3) Create session as response
+  // 5) Create session as response
   res.status(200).json({
     status: 'success',
-    session,
+    order,
   });
 });
 
