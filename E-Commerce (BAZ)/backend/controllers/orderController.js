@@ -17,7 +17,6 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     )}/api/v1/orders/createOrder`,
     amount: helper.addFeesTo(req.body.totalPrice * 100),
   });
-  console.log(session);
   res.redirect(session.data.authorization_url);
 });
 
@@ -41,7 +40,6 @@ exports.createOrder = catchAsync(async (req, res) => {
     user: req.user.id,
   });
 
-  console.log(req.body.orderItems);
   //4) if successful then update the stock of each product
   if (verification.data.status === 'success') {
     await Promise.all(
