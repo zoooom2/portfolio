@@ -17,6 +17,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     )}/api/v1/orders/createOrder`,
     amount: helper.addFeesTo(req.body.totalPrice * 100),
   });
+  console.log(session.data.authorization_url);
   res.redirect(session.data.authorization_url);
 });
 
@@ -33,7 +34,7 @@ exports.createOrder = catchAsync(async (req, res) => {
     paidAt: verification.data.paid_at,
     createdAt: verification.data.created_at,
     paymentInfo: {
-      id: verification.data.reference,
+      reference: verification.data.reference,
       channel: verification.data.channel,
       status: verification.data.status,
     },

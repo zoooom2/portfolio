@@ -62,8 +62,10 @@ const orderSchema = new Schema({
     },
   ],
   paymentInfo: {
-    id: {
+    reference: {
       type: String,
+      required: [true, 'order must have a payment reference'],
+      unique: [true, 'two orders cant have the same reference'],
     },
     channel: { type: String },
     status: {
