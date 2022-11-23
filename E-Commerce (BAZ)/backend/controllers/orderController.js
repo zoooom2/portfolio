@@ -16,12 +16,12 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     amount: helper.addFeesTo(req.body.totalPrice * 100),
   });
 
+  console.log(session);
+
   //2) Verify the transaction
   const verification = await paystack.transaction.verify({
     reference: session.data.reference,
   });
-
-  console.log(verification);
 
   //3) create the order
   const order = await Order.create({
@@ -51,6 +51,12 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     status: 'success',
     order,
   });
+});
+
+exports.filterUpdateOrder = catchAsync(async (req, res, next) => {
+  const { orderStatus, deliveredAt } = req.body;
+  req.body = { orderStatus, deliveredAt };
+  next();
 });
 
 exports.createOrder = factory.createOne(Order);

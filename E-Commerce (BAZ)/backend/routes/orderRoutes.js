@@ -7,6 +7,7 @@ const { protect, restrictTo } = authController;
 const {
   getCheckoutSession,
   getAllOrders,
+  filterUpdateOrder,
   createOrder,
   getOrder,
   updateOrder,
@@ -21,6 +22,10 @@ router.use(restrictTo('admin'));
 
 router.route('/').get(getAllOrders).post(createOrder);
 
-router.route('/:id').get(getOrder).patch(updateOrder).delete(deleteOrder);
+router
+  .route('/:id')
+  .get(getOrder)
+  .patch(filterUpdateOrder, updateOrder)
+  .delete(deleteOrder);
 
 module.exports = router;

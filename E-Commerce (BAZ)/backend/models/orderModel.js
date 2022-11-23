@@ -104,9 +104,10 @@ const orderSchema = new Schema({
 
 orderSchema.pre(/^find/, function (next) {
   this.populate('user').populate({
-    path: 'Product',
-    select: 'name',
+    path: 'orderItems.product',
+    select: 'productName',
   });
+
   next();
 });
 

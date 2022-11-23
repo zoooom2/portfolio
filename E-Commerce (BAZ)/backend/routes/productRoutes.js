@@ -2,6 +2,11 @@ const express = require('express');
 const productController = require('../controllers/productsController');
 const authController = require('../controllers/authControllers');
 const {
+  setProductUserIds,
+  createReview,
+  getAllReviews,
+} = require('../controllers/reviewController');
+const {
   resizeMultiplePhotos,
   multipleSinglePhotos,
 } = require('../controllers/imageHandler');
@@ -21,6 +26,11 @@ router.route('/').get(getAllProducts);
 router.route('/:id').get(getProduct);
 
 router.use(protect);
+
+router
+  .route('/:productId/reviews')
+  .post(setProductUserIds, createReview)
+  .get(setProductUserIds, getAllReviews);
 
 router.use(restrictTo('admin'));
 
