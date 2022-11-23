@@ -5,22 +5,26 @@ const factory = require('./handlerFactory');
 const { updateStock } = require('./productsController');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
-  const { name, email, id } = req.user;
+  const { name, email } = req.user;
   const helper = new paystack.FeeHelper();
 
   //1) Initialize the transaction
   const session = await paystack.transaction.initialize({
     name,
     email,
-    // callback_url:
+    callback_url: `${req.protocol}://${req.get(
+      'host'
+    )}/api/v1/orders/createOrder`,
     amount: helper.addFeesTo(req.body.totalPrice * 100),
   });
-
   console.log(session);
+  res.redirect(session.data.authorization_url);
+});
 
+exports.createOrder = catchAsync(async (req, res) => {
   //2) Verify the transaction
   const verification = await paystack.transaction.verify({
-    reference: session.data.reference,
+    reference: req.query.reference,
   });
 
   //3) create the order
@@ -34,14 +38,15 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
       channel: verification.data.channel,
       status: verification.data.status,
     },
-    user: id,
+    user: req.user.id,
   });
 
+  console.log(req.body.orderItems);
   //4) if successful then update the stock of each product
   if (verification.data.status === 'success') {
     await Promise.all(
-      req.body.orderItems.forEach((item) =>
-        updateStock(item.product, item.quantity)
+      req.body.orderItems.map(
+        async (item) => await updateStock(item.product, item.quantity)
       )
     );
   }
@@ -59,7 +64,7 @@ exports.filterUpdateOrder = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.createOrder = factory.createOne(Order);
+// exports.createOrder = factory.createOne(Order);
 exports.getOrder = factory.getOne(Order);
 exports.getAllOrders = factory.getAll(Order);
 exports.updateOrder = factory.updateOne(Order);

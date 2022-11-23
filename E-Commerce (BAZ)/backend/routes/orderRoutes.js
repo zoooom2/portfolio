@@ -18,6 +18,8 @@ router.use(protect);
 
 router.post('/checkout-session', getCheckoutSession);
 
+router.get('/createOrder', createOrder);
+
 router.use(restrictTo('admin'));
 
 router.route('/').get(getAllOrders).post(createOrder);
