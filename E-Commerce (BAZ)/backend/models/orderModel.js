@@ -67,6 +67,10 @@ const orderSchema = new Schema({
       required: [true, 'order must have a payment reference'],
       unique: [true, 'two orders cant have the same reference'],
     },
+    gateway: {
+      type: String,
+      required: [true, 'payment should have a gateway'],
+    },
     channel: { type: String },
     status: {
       type: String,

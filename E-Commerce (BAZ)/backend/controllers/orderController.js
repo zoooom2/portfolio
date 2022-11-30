@@ -1,4 +1,5 @@
 const paystack = require('paystack-api')(process.env.PAYSTACK_SECRET_KEY);
+const crypto = require('crypto');
 const Order = require('../models/orderModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
@@ -37,6 +38,7 @@ exports.createOrder = catchAsync(async (req, res) => {
       reference: verification.data.reference,
       channel: verification.data.channel,
       status: verification.data.status,
+      gateway: 'PAYSTACK',
     },
     user: req.user.id,
   });
@@ -55,6 +57,20 @@ exports.createOrder = catchAsync(async (req, res) => {
     status: 'success',
     order,
   });
+});
+
+exports.payStackWebHook = catchAsync(async (req, res) => {
+  const hash = crypto
+    .createHmac('sha512', process.env.PAYSTACK_SECRET_KEY)
+    .update(JSON.stringify(req.body))
+    .digest('hex');
+  if (hash === req.headers['x-paystack-signature']) {
+    // Retrieve the request's body
+    const event = req.body;
+    console.log(event);
+  }
+
+  res.status(200).json({});
 });
 
 exports.filterUpdateOrder = catchAsync(async (req, res, next) => {
