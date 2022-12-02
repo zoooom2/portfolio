@@ -67,14 +67,14 @@ exports.createOrder = catchAsync(async (req, res) => {
   });
 
   const response = await client.execute(request);
-  console.log(`Response: ${JSON.stringify(response)}`);
+  // console.log(`Response: ${JSON.stringify(response)}`);
 
   // If call returns body in response, you can get the deserialized version from the result attribute of the response.
   // console.log(`Order: ${JSON.stringify(response.result)}`);
 
-  const approvelink = response.result.links.find((x) => x.rel === 'approve');
+  // const approvelink = response.result.links.find((x) => x.rel === 'approve');
 
-  console.log(approvelink);
+  // console.log(approvelink);
 
   res.status(201).json({
     response: response.result,
@@ -87,9 +87,9 @@ exports.captureOrder = async function (req, res) {
   request.requestBody({});
   // Call API with your client and get a response for your call
   const response = await client.execute(request);
-  console.log(`Response: ${JSON.stringify(response)}`);
+  // console.log(`Response: ${JSON.stringify(response)}`);
   // If call returns body in response, you can get the deserialized version from the result attribute of the response.
-  console.log(`Capture: ${JSON.stringify(response.result)}`);
+  // console.log(`Capture: ${JSON.stringify(response.result)}`);
 
   res.status(201).json({
     response,

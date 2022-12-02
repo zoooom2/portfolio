@@ -16,8 +16,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const productRouter = require('./routes/productRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
-const orderRouter = require('./routes/orderRoutes');
-const paypalCheckoutRouter = require('./routes/paypalOrderRoute');
+const orderRouter = require('./routes/orderRoute');
 
 // Start express app
 const app = express();
@@ -87,8 +86,8 @@ app.use((req, res, next) => {
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/orders', orderRouter);
-app.use('/api/v1/paypalCheckout', paypalCheckoutRouter);
+app.use('/api/v1/order', orderRouter);
+
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
