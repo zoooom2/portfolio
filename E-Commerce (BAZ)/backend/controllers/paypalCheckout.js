@@ -1,122 +1,99 @@
-const fetch = require('node-fetch');
-const CC = require('currency-converter-lt');
+const paypal = require('@paypal/checkout-server-sdk');
 const Product = require('../models/productsModel');
 const catchAsync = require('../utils/catchAsync');
 
 const { PAYPAL_CLIENT_ID, PAYPAL_APP_SECRET } = process.env;
-const base =
-  process.NODE_ENV === 'production'
-    ? 'https://api-m.paypal.com'
-    : 'https://api-m.sandbox.paypal.com';
 
-// generate access token for the payment
-// create order
-// capture payment
+// This sample uses SandboxEnvironment. In production, use LiveEnvironment
+const environment = new paypal.core.SandboxEnvironment(
+  PAYPAL_CLIENT_ID,
+  PAYPAL_APP_SECRET
+);
+const client = new paypal.core.PayPalHttpClient(environment);
 
-const currencyConverter = new CC();
-const ratesCacheOptions = {
-  isRatesCaching: true,
-  ratesCacheDuration: 3600,
-};
-currencyConverter.setupRatesCache(ratesCacheOptions);
-const handleResponse = async (response) => {
-  if (response.status === 200 || response.status === 201) {
-    return response.json();
-  }
+// Construct a request object and set desired parameters
+// Here, OrdersCreateRequest() creates a POST request to /v2/checkout/orders
 
-  const errorMessage = await response.text();
-  throw new Error(errorMessage);
-};
-
-const generateAccessToken = async () => {
-  const auth = Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_APP_SECRET}`).toString(
-    'base64'
-  );
-  const response = await fetch(`${base}/v2/oauth2/token`, {
-    method: 'post',
-    body: 'grant_type=client_credentials',
-    headers: {
-      Authorization: `Basic ${auth}`,
-    },
-  });
-
-  const jsonData = await handleResponse(response);
-  return jsonData.access_token;
-};
-
+// Call API with your client and get a response for your call
 exports.createOrder = catchAsync(async (req, res) => {
-  // destructure the data
-
-  const amount = req.body.totalPrice.toString();
+  let amount = 0;
+  let itemTotal = 0;
 
   const cart = await Promise.all(
     req.body.orderItems.map(async (item) => {
       const product = await Product.findById(item.productID);
-      const convertedPrice = await currencyConverter
-        .from('USD')
-        .to('GBP')
-        .amount(product.price)
-        .convert();
+      itemTotal += product.price * item.quantity;
       return {
         name: product.productName,
-        unit_amount: { currency_code: 'USD', value: convertedPrice },
+        unit_amount: { currency_code: 'USD', value: product.price },
         description: product.description,
         quantity: item.quantity,
-        tax: { currency_code: 'USD', value: product.taxPrice },
       };
     })
   );
+  amount = itemTotal + req.body.shippingPrice;
 
-  const accessToken = await generateAccessToken();
-  const url = `${base}/v2/checkout/orders`;
-  const response = await fetch(url, {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-      Prefer: 'return=representation',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({
-      intent: 'CAPTURE',
-      purchase_units: [
-        {
-          amount: {
-            currency_code: 'USD',
-            value: amount,
-            // this is where to add handling fee, total disocunt, etc
-            breakdown: { shipping: req.body.shipping },
-          },
-          items: cart,
-          shipping: {
-            address: {
-              countryCode: req.body.shippingInfo,
-              address: req.body.shippingInfo.address_line_1,
-              city: req.body.shippingInfo.admin_area_1,
-              postal_code: req.body.shippingInfo.postalCode,
-            },
-            name: { full_name: req.body.shippingInfo.name },
-            payee: {
-              email_address: 'www.bazng@gmail.com',
-            },
+  const request = new paypal.orders.OrdersCreateRequest();
+  request.requestBody({
+    intent: 'CAPTURE',
+    purchase_units: [
+      {
+        amount: {
+          currency_code: 'USD',
+          value: amount,
+          // this is where to add handling fee, total disocunt, etc
+          breakdown: {
+            shipping: { currency_code: 'USD', value: req.body.shippingPrice },
+            item_total: { currency_code: 'USD', value: itemTotal },
           },
         },
-      ],
-    }),
+        items: cart,
+        description: req.body.description,
+        shipping: {
+          address: {
+            country_code: req.body.shippingInfo.countryCode,
+            address_line_1: req.body.shippingInfo.address,
+            admin_area_2: req.body.shippingInfo.city,
+            postal_code: req.body.shippingInfo.postalCode,
+          },
+          name: { full_name: req.body.shippingInfo.name },
+          type: req.body.shippingInfo.type,
+          payee: {
+            email_address: 'www.bazng@gmail.com',
+          },
+        },
+      },
+    ],
   });
 
-  return handleResponse(response);
+  const response = await client.execute(request);
+  console.log(`Response: ${JSON.stringify(response)}`);
+
+  // If call returns body in response, you can get the deserialized version from the result attribute of the response.
+  // console.log(`Order: ${JSON.stringify(response.result)}`);
+
+  const approvelink = response.result.links.find((x) => x.rel === 'approve');
+
+  console.log(approvelink);
+
+  res.status(201).json({
+    response: response.result,
+  });
 });
 
-exports.capturePayment = async (orderId) => {
-  const accessToken = await generateAccessToken();
-  const url = `${base}/v2/checkout/orders/${orderId}/capture`;
-  const response = await fetch(url, {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+exports.captureOrder = async function (req, res) {
+  const { orderID } = req.params;
+  const request = new paypal.orders.OrdersCaptureRequest(orderID);
+  request.requestBody({});
+  // Call API with your client and get a response for your call
+  const response = await client.execute(request);
+  console.log(`Response: ${JSON.stringify(response)}`);
+  // If call returns body in response, you can get the deserialized version from the result attribute of the response.
+  console.log(`Capture: ${JSON.stringify(response.result)}`);
 
-  return handleResponse(response);
+  res.status(201).json({
+    response,
+  });
 };
+
+// let capture = captureOrder('REPLACE-WITH-APPROVED-ORDER-ID');
