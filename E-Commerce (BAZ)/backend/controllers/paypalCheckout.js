@@ -72,10 +72,6 @@ exports.createOrder = catchAsync(async (req, res) => {
   // If call returns body in response, you can get the deserialized version from the result attribute of the response.
   // console.log(`Order: ${JSON.stringify(response.result)}`);
 
-  // const approvelink = response.result.links.find((x) => x.rel === 'approve');
-
-  // console.log(approvelink);
-
   res.status(201).json({
     response: response.result,
   });
@@ -95,5 +91,3 @@ exports.captureOrder = async function (req, res) {
     response,
   });
 };
-
-// let capture = captureOrder('REPLACE-WITH-APPROVED-ORDER-ID');

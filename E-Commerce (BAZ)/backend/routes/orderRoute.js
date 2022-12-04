@@ -3,6 +3,10 @@ const OrderController = require('../controllers/orderController');
 const authController = require('../controllers/authControllers');
 const paystackCheckout = require('../controllers/paystackCheckout');
 const paypalCheckout = require('../controllers/paypalCheckout');
+const {
+  getCheckoutSession,
+  // createOrder: stripeOrder,
+} = require('../controllers/stripeCheckout');
 
 const router = express.Router();
 const { protect, restrictTo } = authController;
@@ -17,6 +21,10 @@ router.get('/paystack/createOrder', paystackCheckout.createOrder);
 //paypal user actions
 router.route('/paypal').post(paypalCheckout.createOrder);
 router.route('/paypal/:orderID/pay').post(paypalCheckout.captureOrder);
+
+// stripe user actions
+router.route('/stripe-checkout').post(getCheckoutSession);
+// router.route('//stripe-payment').post(stripeOrder);
 
 router.use(restrictTo('admin'));
 

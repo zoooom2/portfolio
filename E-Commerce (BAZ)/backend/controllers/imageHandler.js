@@ -23,7 +23,7 @@ exports.multipleSinglePhotos = (entry) =>
 
 exports.resizePhoto = (length, width, name, location) =>
   catchAsync(async (req, res, next) => {
-    console.log(req.file);
+    // console.log(req.file);
     if (!req.file) next();
     const userId = req.user.id;
     const timeStamp = Date.now();
@@ -46,7 +46,8 @@ exports.resizeMultiplePhotos = (length, width, name, location) =>
 
     req.body.images = [];
     // req.body.images = `${name}-${userId}-${timeStamp}.jpeg`;
-    console.log(req.files);
+    // console.log(req.files);
+
     await Promise.all(
       req.files.map(async (file, index) => {
         const filename = `${name}-${userId}-${timeStamp}-${index}.jpeg`;
