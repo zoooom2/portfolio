@@ -53,7 +53,7 @@ exports.webhookCheckout = (req, res, next) => {
   } catch (err) {
     return res.status(400).send(`Webhook error: ${err.message}`);
   }
-  console.log(event.data.object);
+  // console.log(event.data.object);
   if (event.type === 'checkout.session.completed')
     createOrder(event.data.object);
 
@@ -61,7 +61,3 @@ exports.webhookCheckout = (req, res, next) => {
 };
 
 exports.createBooking = factory.createOne(Order);
-exports.getBooking = factory.getOne(Order);
-exports.getAllBookings = factory.getAll(Order);
-exports.updateBooking = factory.updateOne(Order);
-exports.deleteBooking = factory.deleteOne(Order);

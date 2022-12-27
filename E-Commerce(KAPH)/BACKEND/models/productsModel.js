@@ -5,8 +5,8 @@ const { ObjectId, model, Schema } = mongoose;
 const productSchema = new Schema({
   productName: { type: String, required: true },
   description: { type: String, required: true },
-  collectionName: { type: String, required: true },
-  releaseDate: { type: Date, default: Date.now() },
+  // collectionName: { type: String, required: true },
+  // releaseDate: { type: Date, default: Date.now() },
   price: { type: Number, required: true },
   // USDPrice: { type: Number, required: true },
   priceID: { type: String, required: true },
