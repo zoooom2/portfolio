@@ -1,71 +1,54 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import heroBcg from '../assets/hero-bcg.jpeg';
-import heroBcg2 from '../assets/hero-bcg-2.jpeg';
+import heroBcg from '../assets/homepage hero images/pexels-king-zubby-13062614.jpg';
+import heroBcg2 from '../assets/homepage hero images/pexels-luis-quintero-2360532.jpg';
+import heroBcg3 from '../assets/homepage hero images/pexels-alexey-demidov-10562311.jpg';
+import heroBcg4 from '../assets/homepage hero images/pexels-ellis-mbeku-633661.jpg';
+import heroBcg5 from '../assets/homepage hero images/pexels-ángela-plaza-14435354.jpg';
+import ImageSlider from './imageSlider';
 
 const Hero = () => {
-  return <Wrapper>{/* <img src={} alt=""/> */}</Wrapper>;
+  const slides = [heroBcg, heroBcg2, heroBcg3, heroBcg4, heroBcg5];
+  const timer = 4000;
+  return (
+    <Wrapper>
+      <Link to="/products" className="productLink">
+        <button type="button" className="btn btnt">
+          SHOP NOW
+        </button>
+      </Link>
+      <ImageSlider slides={slides} timer={timer} />
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`
-  min-height: 60vh;
-  display: grid;
-  place-items: center;
-  .img-container {
-    display: none;
-  }
-
-  p {
-    line-height: 2;
-    max-width: 45em;
-    margin-bottom: 2rem;
-    color: var(--clr-grey-5);
-    font-size: 1rem;
-  }
-  @media (min-width: 992px) {
-    height: calc(100vh - 5rem);
-    grid-template-columns: 1fr 1fr;
-    gap: 8rem;
-    h1 {
-      margin-bottom: 2rem;
-    }
-    p {
-      font-size: 1.25rem;
-    }
-    .hero-btn {
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-    }
-    .img-container {
-      display: block;
-      position: relative;
-    }
-    .main-img {
-      width: 100%;
-      height: 550px;
-      position: relative;
-      border-radius: var(--radius);
-      display: block;
-      object-fit: cover;
-    }
-    .accent-img {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 250px;
-      transform: translateX(-50%);
-      border-radius: var(--radius);
-    }
-    .img-container::before {
-      content: '';
-      position: absolute;
-      width: 10%;
-      height: 80%;
-      background: var(--clr-primary-9);
-      bottom: 0%;
-      left: -8%;
-      border-radius: var(--radius);
+  height: 90vh;
+  width: 100%;
+  margin: 6rem auto 0 auto;
+  overflow: hidden;
+  background-color: #d9dddc;
+  .btnt {
+    background-color: rgba(128, 0, 128, 0.5);
+    width: auto;
+    height: auto;
+    padding: 15px;
+    font-size: 30px;
+    color: white;
+    position: absolute;
+    border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    opacity: 1;
+    z-index: 5;
+    cursor: pointer;
+    transition: var(--transition);
+    &:hover {
+      background-color: purple;
     }
   }
 `;

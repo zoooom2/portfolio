@@ -40,6 +40,11 @@ const NavContainer = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: white;
 
   .nav-center {
     width: 90vw;
