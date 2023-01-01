@@ -13,7 +13,7 @@ import {
   feature5,
   feature6,
 } from '../assets/featured images/importFeatured images';
-import ImageSlider from './imageSlider';
+import { ImageSlider } from './index';
 
 const FeaturedProducts = () => {
   const slide1 = [feature1, feature6];
@@ -26,8 +26,8 @@ const FeaturedProducts = () => {
   return (
     <Wrapper>
       <div className="title">
-        <h2>Featured</h2>
-        <div className="underline"></div>
+        <div className="scriptFont">Gallery</div>
+        {/* <div className="underline"></div> */}
       </div>
       <div className="imgCtn">
         <div className="imageContainer">
@@ -41,7 +41,11 @@ const FeaturedProducts = () => {
         </div>
       </div>
       <div className="instaBtnCtn">
-        <a href="https://www.instagram.com/beads_by_kaph/">
+        <a
+          href="https://www.instagram.com/beads_by_kaph/"
+          target="_blank"
+          rel="noreferrer"
+        >
           <button type="button" className="btn instaBtn">
             &gt; find us on instagram &lt;
           </button>
@@ -54,24 +58,33 @@ const FeaturedProducts = () => {
 const Wrapper = styled.section`
   background: rgba(128, 0, 120, 0.4);
   margin: 0 auto;
-  height: 93vh;
+  height: 100vh;
   width: 100%;
+
   padding-bottom: 4rem;
   .title {
     text-align: left;
     margin: 0 auto;
-    height: 10%;
-    padding-top: 1rem;
-    padding-left: 1.5rem;
+    font-weight: 400;
+    font-size: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 15%;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    @media (max-width: 576px) {
+      font-size: 25px;
+    }
   }
   .underline {
-    margin-left: 0;
+    margin-top: 1rem;
   }
   .imgCtn {
     display: flex;
     justify-content: space-around;
     height: 80%;
-    padding-top: 1.5rem;
   }
   .instaBtnCtn {
     display: flex;
@@ -85,15 +98,22 @@ const Wrapper = styled.section`
     border: transparent;
     cursor: pointer;
     background-color: transparent;
+    @media (max-width: 576px) {
+      padding: 0.8rem;
+      text-align: center;
+      width: 100%;
+      font-size: 0.7rem;
+    }
   }
 
   .imageContainer {
     margin: 0 auto;
     width: 30%;
     height: 100%;
+    box-shadow: var(--dark-shadow);
 
-    transition: all 0.2s ease-in-out;
-    @media (max-width: 576px) {
+    transition: all 1s ease-in-out;
+    @media (max-width: 790px) {
       flex: 1;
       &:hover {
         flex: 80%;

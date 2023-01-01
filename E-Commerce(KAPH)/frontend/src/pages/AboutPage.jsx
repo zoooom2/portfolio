@@ -9,8 +9,7 @@ const AboutPage = () => {
       {/* <img src={aboutImg} alt="aboutImage" /> */}
       <article>
         <div className="title">
-          <h2>about us</h2>
-          <div className="underline"></div>
+          <h2 className="scriptFont">about us</h2>
         </div>
         <p>
           Beads by Kaph is a deluxe brand that makes and sells exquisitely
@@ -29,7 +28,11 @@ const AboutPage = () => {
 const Wrapper = styled.section`
   display: grid;
   gap: 4rem;
-  height: 80vh;
+  height: calc(100vh - 5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   img {
     width: 100%;
@@ -57,6 +60,11 @@ const Wrapper = styled.section`
   }
   article {
     margin: 0 auto;
+    height: calc(auto + 5rem);
+    transform: translateY(-5rem);
+    // border: 1px solid red;
+    padding: 20px;
+    box-shadow: var(--light-shadow);
   }
 `;
 export default AboutPage;

@@ -3,6 +3,7 @@
 Variables
 ===============
 */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
 :root {
   /* dark shades of primary color*/
@@ -55,6 +56,7 @@ Global Styles
 ::before {
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
   box-sizing: border-box;
 }
 body {
@@ -203,4 +205,9 @@ p {
 }
 .page {
   min-height: calc(100vh - (20vh + 10rem));
+}
+.scriptFont {
+  font-family: 'Dancing Script', cursive;
+  color: rgb(119, 0, 32);
+  letter-spacing: 2.5px;
 }

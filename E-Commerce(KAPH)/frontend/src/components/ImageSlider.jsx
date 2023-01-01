@@ -25,6 +25,7 @@ const ImageSlider = ({ slides, timer }) => {
         {slides.map((image, index) => {
           return (
             <img
+              key={index}
               src={image}
               alt="backgroundImage"
               style={{
