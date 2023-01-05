@@ -9,7 +9,7 @@ import {
   SingleProductPage,
   ErrorPage,
   CheckoutPage,
-} from './pages/index';
+} from './pages';
 
 function App() {
   return (

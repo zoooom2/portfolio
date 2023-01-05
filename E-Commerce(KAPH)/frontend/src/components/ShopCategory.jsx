@@ -1,17 +1,23 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { categoryData } from '../utils/constants';
 
 const ShopCategory = () => {
   const categories = categoryData.map((category) => {
     return (
-      <div key={category.id} className="category-subcontainer">
+      <Link
+        to={`/products?category=${category.text}`}
+        key={category.id}
+        className="category-subcontainer"
+        // style={{ backgroundImage: `url("${category.image}")` }}
+      >
         <img
           src={category.image}
           alt={category.text}
           className="category-image"
         />
         <div className="category-name">{category.text}</div>
-      </div>
+      </Link>
     );
   });
   return (
@@ -53,18 +59,46 @@ const Wrapper = styled.section`
   .category-subcontainer {
     width: 23%;
     height: auto;
-    border: 1px solid red;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 0.25rem;
+    background-size: cover;
+    flex-basis: 45%;
+    overflow: hidden;
     margin-block: 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+    &:hover {
+      border: 2px solid purple;
+      box-shadow: var(--dark-shadow);
+    }
+    @media (min-width: 768px) {
+      flex-basis: 31%;
+    }
+    @media (min-width: 998px) {
+      flex-basis: 300px;
+    }
   }
   .category-image {
     width: 100%;
-    height: 100%;
+    height: 90%;
     object-fit: cover;
     transition: var(--transition);
-    &:hover {
-      opacity: 0.5;
-    }
   }
-  .category
+  .category-name {
+    width: 100%;
+    color: purple;
+    font-size: 0.6rem;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: var(--spacing);
+    height: 10%;
+    
+    @media (min-width: 500px) {
+      font-size: 1rem;
+  }
 `;
 export default ShopCategory;

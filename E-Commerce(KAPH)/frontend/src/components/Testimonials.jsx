@@ -29,7 +29,7 @@ const Testimonials = () => {
 
 const Wrapper = styled.section`
   width: 100%;
-  height:350px;
+  height: 350px;
   .title {
     text-align: left;
     margin: 0 auto;
@@ -43,9 +43,8 @@ const Wrapper = styled.section`
     align-items: center;
 
     @media (min-width: 992px) {
-      width:50%;
-  }
-
+      width: 50%;
+    }
   }
   .underline {
     margin-left: 0;
@@ -56,15 +55,15 @@ const Wrapper = styled.section`
   .reviews {
     font-size: 1.1rem;
     font-weight: 420;
-    line-spacing: var(--spacing)
+    line-spacing: var(--spacing);
     color: rgba(0, 0, 0, 0.7);
   }
-  .reviewer{
+  .reviewer {
     font-size: 1.1rem;
     font-weight: 700;
     color: rgba(0, 0, 0, 0.7);
     text-align: right;
-    text-transform:capitalize;
+    text-transform: capitalize;
     padding-right: 1rem;
   }
   @media (min-width: 992px) {
@@ -72,7 +71,6 @@ const Wrapper = styled.section`
   @media (min-width: 576px) {
   }
   @media (min-width: 1280px) {
-    
     .section-center {
     }
   }

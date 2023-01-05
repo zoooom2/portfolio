@@ -5,12 +5,14 @@ import {
   ShopCategory,
   Testimonials,
   Contact,
+  HomeAbout,
 } from '../components';
 const HomePage = () => {
   return (
     <main>
       <Hero />
       <ShopCategory />
+      <HomeAbout />
       <FeaturedProducts />
       <Testimonials />
       <Contact />

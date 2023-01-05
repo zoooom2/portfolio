@@ -19,6 +19,7 @@ import PageHero from './PageHero';
 import StripeCheckout from './StripeCheckout';
 import ShopCategory from './ShopCategory';
 import ImageSlider from './ImageSlider';
+import HomeAbout from './HomeAbout';
 export {
   FeaturedProducts,
   Navbar,
@@ -41,4 +42,5 @@ export {
   StripeCheckout,
   ShopCategory,
   ImageSlider,
+  HomeAbout,
 };

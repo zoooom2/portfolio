@@ -50,14 +50,14 @@ export const services = [
 ];
 
 export const categoryData = [
-  { category: 'Necklaces', image: necklace, id: 1 },
-  { category: 'Bags', image: beadedbag, id: 2 },
-  { category: 'Bracelets', image: bracelets, id: 3 },
-  { category: 'Body Jewelry', image: bodyWear, id: 4 },
-  { category: 'Anklets', image: ankletImage, id: 5 },
-  { category: 'Earrings', image: earrings, id: 6 },
-  { category: 'Waistbeads', image: waistbeads, id: 7 },
-  { category: 'Custom Accessories', image: custom, id: 8 },
+  { text: 'Necklaces', image: necklace, id: 1 },
+  { text: 'Bags', image: beadedbag, id: 2 },
+  { text: 'Bracelets', image: bracelets, id: 3 },
+  { text: 'Body Jewelry', image: bodyWear, id: 4 },
+  { text: 'Anklets', image: ankletImage, id: 5 },
+  { text: 'Earrings', image: earrings, id: 6 },
+  { text: 'Waistbeads', image: waistbeads, id: 7 },
+  { text: 'Custom Accessories', image: custom, id: 8 },
 ];
 
 export const products_url = 'https://course-api.com/react-store-products';
