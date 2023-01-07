@@ -31,6 +31,7 @@ const Wrapper = styled.section`
   align-items: center;
   flex-gap: 1em;
   .aboutus {
+    text-justify: auto;
     margin: 0 auto;
     word-spacing: 0.15rem;
     width: 95%;

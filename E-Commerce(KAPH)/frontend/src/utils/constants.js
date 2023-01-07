@@ -60,6 +60,6 @@ export const categoryData = [
   { text: 'Custom Accessories', image: custom, id: 8 },
 ];
 
-export const products_url = 'https://course-api.com/react-store-products';
+export const products_url = 'http://127.0.0.1:2705/api/v1/products';
 
-export const single_product_url = `https://course-api.com/react-store-single-product?id=`;
+export const single_product_url = `http://127.0.0.1:2705/api/v1/products/`;

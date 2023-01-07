@@ -9,7 +9,6 @@ const productSchema = new Schema({
   // USDPrice: { type: Number, required: true },
   priceID: { type: String, required: true },
   taxPrice: { type: Number, required: true, default: 0 },
-  color: { type: String, required: true },
   discount: { type: Number, required: true, default: 0, min: 0, max: 100 },
   category: {
     type: String,
@@ -28,7 +27,7 @@ const productSchema = new Schema({
   reviews: [ObjectId],
   images: [{ type: String, required: true }],
   numberofReviews: Number,
-  stock: { type: Number, required: true },
+  // stock: { type: Number, required: true },
   ratingsAverage: {
     type: Number,
     default: 5,
