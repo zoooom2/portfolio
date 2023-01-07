@@ -26,7 +26,7 @@ function getAllData() {
       data.second,
     ]);
   }
-
+  // the get range depends on where you want the sheet to start inputting the data
   var lr = sheet.getRange('A41').getDataRegion().getLastRow();
 
   dataRange = sheet.getRange(lr + 1, 1, rows.length, 8);
