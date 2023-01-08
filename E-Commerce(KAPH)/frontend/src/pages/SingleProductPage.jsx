@@ -24,26 +24,51 @@ const SingleProductPage = () => {
     fetchSingleProduct,
   } = useProductsContext();
 
+  const {
+    productName,
+    price,
+    description,
+    discount,
+    images,
+    ratingsAverage,
+    reviews,
+    stock,
+    id: sku,
+  } = product;
+
   useEffect(() => {
     fetchSingleProduct(`${url}${id}`);
   }, [id]);
 
   useEffect(() => {
     if (error) {
-      const timer = setTimeout(() => {
-        navigate('/about');
+      setTimeout(() => {
+        navigate('/');
       }, 3000);
-      return clearTimeout(timer);
     }
   }, [error]);
 
   if (loading) {
     return <Loading />;
   }
-
+  if (error) {
+    return <Error />;
+  }
   return (
     <Wrapper>
-      <section className="product-center"></section>
+      <div className="section section-center page">
+        <Link to="/products" className="btn">
+          back to products
+        </Link>
+        <div className="product-center">
+          <ProductImages />
+          <section className="content">
+            <h2>{productName}</h2>
+            <Stars />
+            <h5 className="price"></h5>
+          </section>
+        </div>
+      </div>
     </Wrapper>
   );
 };
