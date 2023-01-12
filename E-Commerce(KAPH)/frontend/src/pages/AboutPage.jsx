@@ -5,7 +5,7 @@ import aboutImg from '../assets/kaph-logo.svg';
 
 const AboutPage = () => {
   return (
-    <Wrapper className="page section section-center">
+    <Wrapper className="page-100 section section-center">
       {/* <img src={aboutImg} alt="aboutImage" /> */}
       <article>
         <div className="title">
@@ -28,7 +28,6 @@ const AboutPage = () => {
 const Wrapper = styled.section`
   display: grid;
   gap: 4rem;
-  height: calc(100vh - 5rem);
   display: flex;
   flex-direction: column;
   justify-content: center;

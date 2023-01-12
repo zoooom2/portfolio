@@ -19,8 +19,6 @@ const ProductsPage = () => {
 };
 
 const Wrapper = styled.div`
-  
-  margin-top: 8.5rem;
   .products {
     display: grid;
     gap: 3rem 1.5rem;

@@ -31,7 +31,7 @@ const Wrapper = styled.section`
   height: 90vh;
   position: relative;
   width: 100%;
-  margin: 6rem auto 0 auto;
+  // margin: 6rem auto 0 auto;
   overflow: hidden;
   background-color: #d9dddc;
   .moving-info {

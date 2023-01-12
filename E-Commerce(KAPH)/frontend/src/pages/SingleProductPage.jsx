@@ -104,7 +104,6 @@ const SingleProductPage = () => {
 };
 
 const Wrapper = styled.main`
-  margin-top: 2rem;
   .product-center {
     display: grid;
     gap: 4rem;

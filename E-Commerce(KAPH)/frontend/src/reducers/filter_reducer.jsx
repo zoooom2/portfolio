@@ -29,7 +29,7 @@ const filter_reducer = (state, action) => {
     case SORT_PRODUCTS:
       const { sort, filtered_product } = state;
       let tempProducts = [];
-      console.log(sort);
+
       if (sort === 'price-lowest') {
         tempProducts = filtered_product.sort((a, b) => a.price - b.price);
       }
@@ -50,6 +50,31 @@ const filter_reducer = (state, action) => {
       }
 
       return { ...state, filtered_product: tempProducts };
+    case UPDATE_FILTERS:
+      const { name, value } = action.payload;
+      return { ...state, filters: { ...state.filters, [name]: value } };
+    case FILTER_PRODUCTS:
+      const { all_products } = state;
+      const { text, category, color, price, shipping } = state.filters;
+      let temp = [...all_products];
+      if (text) {
+        temp = temp.filter((product) =>
+          product.productName.toLowerCase().startsWith(text)
+        );
+      }
+      return { ...state, filtered_product: temp };
+    case CLEAR_FILTERS:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          text: '',
+          category: 'all',
+          color: 'all',
+          price: state.filters.max_price,
+          shipping: false,
+        },
+      };
     default:
       throw new Error(`No Matching "${action.type}" - action type`);
   }
