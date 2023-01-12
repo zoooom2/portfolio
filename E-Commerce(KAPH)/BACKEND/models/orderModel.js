@@ -54,6 +54,10 @@ const orderSchema = new Schema({
         type: String,
         required: [true, 'order must have a image'],
       },
+      size: {
+        type: Number,
+        required: [true, 'order must have a size'],
+      },
       product: {
         type: ObjectId,
         required: [true, 'order must have a product'],

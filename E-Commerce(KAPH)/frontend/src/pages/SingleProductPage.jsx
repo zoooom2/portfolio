@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useProductsContext } from '../context/products_context';
 import { single_product_url as url } from '../utils/constants';
@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const SingleProductPage = () => {
+  const [size, setSize] = useState(10);
   const { id } = useParams();
   const navigate = useNavigate();
   const {
@@ -33,6 +34,8 @@ const SingleProductPage = () => {
     ratingsAverage,
     reviews,
     stock,
+    category,
+    numberOfReviews,
     id: sku,
   } = product;
 
@@ -54,6 +57,7 @@ const SingleProductPage = () => {
   if (error) {
     return <Error />;
   }
+
   return (
     <Wrapper>
       <div className="section section-center page">
@@ -61,11 +65,37 @@ const SingleProductPage = () => {
           back to products
         </Link>
         <div className="product-center">
-          <ProductImages />
+          <ProductImages images={images} />
           <section className="content">
             <h2>{productName}</h2>
-            <Stars />
-            <h5 className="price"></h5>
+            <Stars stars={ratingsAverage} reviews={numberOfReviews} />
+            <h5 className="price">{`₦${price}`}</h5>
+            <p className="desc">{description}</p>
+            <p className="info">
+              <span>Available :</span>
+              {stock > 0 ? 'In Stock' : 'Out of Stock'}
+            </p>
+            <p className="info ">
+              <span>SKU :</span>
+              {id}
+            </p>
+            {category !== 'waistbeads' && (
+              <p className="info">
+                <span>Size(inches) :</span>
+                <input
+                  type="Number"
+                  name="size"
+                  value={size}
+                  id="sizeNum"
+                  min={10}
+                  max={60}
+                  onChange={(e) => setSize(e.target.value)}
+                />
+              </p>
+            )}
+
+            <hr />
+            {stock > 0 && <AddToCart product={product} size={size} />}
           </section>
         </div>
       </div>
@@ -74,6 +104,7 @@ const SingleProductPage = () => {
 };
 
 const Wrapper = styled.main`
+  margin-top: 2rem;
   .product-center {
     display: grid;
     gap: 4rem;
@@ -82,9 +113,16 @@ const Wrapper = styled.main`
   .price {
     color: var(--clr-primary-5);
   }
+  #sizeNum {
+    width: 50px;
+  }
   .desc {
     line-height: 2;
     max-width: 45em;
+  }
+  .content {
+    // border: 1px solid red;
+    height: 100%;
   }
   .info {
     text-transform: capitalize;

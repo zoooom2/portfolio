@@ -53,7 +53,9 @@ const Wrapper = styled.section`
     display: flex;
     flex-wrap: wrap;
     align-items: space-around;
-    justify-content: space-around;
+    justify-items: flex-end;
+    justify-content: space-evenly;
+    flex-shrink:1;
     width: 100%;
   }
   .category-subcontainer {
@@ -74,10 +76,10 @@ const Wrapper = styled.section`
       box-shadow: var(--dark-shadow);
     }
     @media (min-width: 768px) {
-      flex-basis: 31%;
+      flex-basis: 22%;
     }
     @media (min-width: 998px) {
-      flex-basis: 300px;
+      flex-basis: 22%;
     }
   }
   .category-image {

@@ -57,7 +57,7 @@ export const categoryData = [
   { text: 'Anklets', image: ankletImage, id: 5 },
   { text: 'Earrings', image: earrings, id: 6 },
   { text: 'Waistbeads', image: waistbeads, id: 7 },
-  { text: 'Custom Accessories', image: custom, id: 8 },
+  { text: 'Custom', image: custom, id: 8 },
 ];
 
 export const products_url = 'http://127.0.0.1:2705/api/v1/products';

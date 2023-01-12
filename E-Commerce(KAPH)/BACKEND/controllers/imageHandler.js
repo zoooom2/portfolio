@@ -33,7 +33,7 @@ exports.resizePhoto = (length, width, name, location) =>
       .resize(length, width)
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`./public/img/${location}/${req.body.images}`);
+      .toFile(`../../frontend/public/${location}/${req.body.images}`);
 
     next();
   });

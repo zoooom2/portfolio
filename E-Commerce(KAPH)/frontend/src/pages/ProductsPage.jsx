@@ -4,15 +4,23 @@ import { Filters, ProductList, Sort, PageHero } from '../components';
 
 const ProductsPage = () => {
   return (
-    <Wrapper>
-      <h2>products page</h2>
-    </Wrapper>
+    <main>
+      <Wrapper className="page">
+        <div className="section-center products">
+          <Filters />
+          <div>
+            <Sort />
+            <ProductList />
+          </div>
+        </div>
+      </Wrapper>
+    </main>
   );
 };
 
 const Wrapper = styled.div`
-  height: calc(100vh - 10rem);
-  margin-top: 5rem;
+  
+  margin-top: 8.5rem;
   .products {
     display: grid;
     gap: 3rem 1.5rem;

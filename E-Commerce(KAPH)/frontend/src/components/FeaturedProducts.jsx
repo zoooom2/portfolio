@@ -57,11 +57,11 @@ const FeaturedProducts = () => {
 
 const Wrapper = styled.section`
   background: rgba(128, 0, 120, 0.4);
-  margin: 0 auto;
   height: 100vh;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 
-  padding-bottom: 4rem;
   .title {
     text-align: left;
     margin: 0 auto;
@@ -91,8 +91,10 @@ const Wrapper = styled.section`
     justify-content: center;
     align-items: center;
   }
-  .instaBtn {
+  a {
     margin: 2em auto;
+  }
+  .instaBtn {
     padding: 1.2em;
     font-size: 1rem;
     border: transparent;
