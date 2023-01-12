@@ -62,6 +62,16 @@ const filter_reducer = (state, action) => {
           product.productName.toLowerCase().startsWith(text)
         );
       }
+      if (category !== 'all') {
+        temp = temp.filter((product) => product.category === category);
+      }
+      if (color !== 'all') {
+        temp = temp.filter((product) => product.color.find((c) => c === color));
+      }
+      temp = temp.filter((product) => product.price <= price);
+      // if (shipping) {
+      //   temp = temp.filter((product) => product.shipping === true);
+      // }
       return { ...state, filtered_product: temp };
     case CLEAR_FILTERS:
       return {
