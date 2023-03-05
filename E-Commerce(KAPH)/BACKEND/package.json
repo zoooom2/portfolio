@@ -36,6 +36,7 @@
     "nodemailer": "^6.8.0",
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
+    "passport-google-oauth20": "^2.0.0",
     "paystack-api": "^2.0.6",
     "sharp": "^0.31.3",
     "slugify": "^1.6.5",

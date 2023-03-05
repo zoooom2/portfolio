@@ -10,8 +10,7 @@ import { ImageSlider } from './index';
 const Hero = () => {
   const slides = [heroBcg, heroBcg2, heroBcg3, heroBcg4, heroBcg5];
   const timer = 4000;
-  const message =
-    "Season's greetings from everyone at Beads by Kaph!! 🎄🎄 Checkout our exclusive products this holiday ";
+  const message = 'Welcome to Beads by Kaph!! Checkout our exclusive products ';
   return (
     <Wrapper>
       <Link to="products" className="moving-info">

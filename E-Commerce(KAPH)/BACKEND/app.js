@@ -7,16 +7,18 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
-// const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
 const compression = require('compression');
 const cors = require('cors');
-
+require('./controllers/passport')(passport);
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const productRouter = require('./routes/productRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const orderRouter = require('./routes/orderRoute');
+const authRouter = require('./routes/authRoute');
 
 // Start express app
 const app = express();
@@ -32,6 +34,16 @@ app.use(cors());
 //   origin: 'https://www.natours.com'
 // }))
 
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    // cookie: { secure: true },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.options('*', cors());
 // app.options('/api/v1/tours/:id', cors());
 
@@ -87,7 +99,7 @@ app.use('/api/v1/products', productRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/order', orderRouter);
-
+app.use('/api/v1/auth', authRouter);
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });

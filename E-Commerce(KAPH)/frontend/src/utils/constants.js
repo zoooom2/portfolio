@@ -61,5 +61,5 @@ export const categoryData = [
 ];
 
 export const products_url = 'http://127.0.0.1:2705/api/v1/products';
-
 export const single_product_url = `http://127.0.0.1:2705/api/v1/products/`;
+export const auth_url = 'http://localhost:2705/api/v1/auth/google';

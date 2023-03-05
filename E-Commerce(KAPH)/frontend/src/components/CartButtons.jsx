@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useProductsContext } from '../context/products_context';
 import { useCartContext } from '../context/cart_context';
+// import { useFetch as fetch } from '../utils/customHooks/fetchHook';
 import { useUserContext } from '../context/user_context';
+import { auth_url, auth_url as url } from '../utils/constants';
 
 const CartButtons = () => {
   const { closeSidebar } = useProductsContext();
@@ -18,9 +20,11 @@ const CartButtons = () => {
           <span className="cart-value">{total_items}</span>
         </span>
       </Link>
-      <button type="button" className="auth-btn">
-        Login <FaUserPlus />
-      </button>
+      <a href={auth_url}>
+        <button type="button" className="auth-btn" onClick={() => fetch(url)}>
+          Login <FaUserPlus />
+        </button>
+      </a>
     </Wrapper>
   );
 };
