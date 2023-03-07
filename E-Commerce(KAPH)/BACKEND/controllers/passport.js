@@ -12,22 +12,23 @@ module.exports = (passport) => {
       },
       async (accessToken, refreshToken, profile, cb) => {
         const newUser = {
-          googleId: profile.id,
-          displayName: profile.displayName,
+          id: profile.id,
+          name: profile.displayName,
+          email: profile.emails[0].value,
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
-          image: profile.photos[0].value,
+          photo: profile.photos[0].value,
         };
 
         try {
           let user = await GoogleUser.findOne({ googleId: profile.id });
-          console.log(newUser);
+
           if (!user) {
             user = await GoogleUser.create(newUser);
           }
           cb(null, user);
         } catch (error) {
-          console.error(error);
+          // console.error(error);
         }
       }
     )

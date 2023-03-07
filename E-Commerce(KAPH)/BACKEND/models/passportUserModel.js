@@ -1,11 +1,13 @@
 const { Schema, model } = require('mongoose');
 
 const googleUserSchema = new Schema({
-  googleId: { type: String, required: true },
-  displayName: { type: String, required: true },
+  id: { type: String, required: true },
+  name: { type: String, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  image: { type: String },
+  email: { type: String, required: true },
+  photo: { type: String },
+  role: { type: String, enum: ['user'], default: 'user' },
   createdAt: { type: Date, default: Date.now },
 });
 

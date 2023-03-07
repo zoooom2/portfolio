@@ -9,6 +9,7 @@ const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const compression = require('compression');
 const cors = require('cors');
 require('./controllers/passport')(passport);
@@ -34,11 +35,23 @@ app.use(cors());
 //   origin: 'https://www.natours.com'
 // }))
 
+const DB = process.env.DATABASE.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+);
 app.use(
   session({
-    secret: 'keyboard cat',
+    secret: 'keyboard time',
+    crypto: { secret: 'keyboard cat' },
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: DB,
+      ttl: 1 * 1 * 60 * 60, //1 hour
+      autoRemove: 'interval',
+      autoRemoveInterval: 10, //minute
+      touchAfter: 24 * 3600, //24 hours
+    }),
     // cookie: { secure: true },
   })
 );
@@ -99,7 +112,7 @@ app.use('/api/v1/products', productRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/order', orderRouter);
-app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/auth/google', authRouter);
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });

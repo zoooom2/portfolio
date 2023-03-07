@@ -3,15 +3,21 @@ const passport = require('passport');
 
 const router = express.Router();
 //AUTH WITH GOOGLE
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get(
+  '/',
+  passport.authenticate('google', { scope: ['email', 'profile'] })
+);
 
 //AUTH WITH CALLBACK
 router.get(
-  '/google/callback',
+  '/callback',
   passport.authenticate('google', {
     failureRedirect: 'http://localhost:2705/api/v1/google',
   }),
-  (req, res) => res.redirect('http://localhost:3000')
+  (req, res) => {
+    // console.log(req.isAuthenticated());
+    res.redirect('http://localhost:3000');
+  }
 );
 
 //logout user
