@@ -4,6 +4,7 @@ import {
   COUNT_CART_TOTALS,
   REMOVE_CART_ITEM,
   TOGGLE_CART_ITEM_AMOUNT,
+  UPDATE_SHIPPING,
 } from '../actions';
 
 const cart_reducer = (state, action) => {
@@ -60,6 +61,8 @@ const cart_reducer = (state, action) => {
             }
             return { ...item, amount: newAmount };
           }
+        } else {
+          return { ...item };
         }
       });
       return { ...state, cart: tempCart };
@@ -77,6 +80,13 @@ const cart_reducer = (state, action) => {
         }
       );
       return { ...state, total_items, total_amount };
+    case UPDATE_SHIPPING:
+      const { detail, info } = action.payload;
+
+      return {
+        ...state,
+        shipping_details: { ...state.shipping_details, [detail]: info },
+      };
     default:
       throw new Error(`No Matching "${action.type}" - action type`);
   }

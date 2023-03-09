@@ -6,6 +6,7 @@ import {
   TOGGLE_CART_ITEM_AMOUNT,
   CLEAR_CART,
   COUNT_CART_TOTALS,
+  UPDATE_SHIPPING,
 } from '../actions';
 import useLocalStorage from '../utils/customHooks/localStorage';
 
@@ -13,6 +14,17 @@ const initialState = {
   cart: [],
   total_items: 0,
   total_amount: 0,
+  shipping_details: {
+    firstName: '',
+    lastName: '',
+    streetAddress: '',
+    city: '',
+    state: '',
+    country: '',
+    phoneNumber: '',
+    postCode: '',
+    email: '',
+  },
 };
 
 const CartContext = React.createContext();
@@ -41,14 +53,23 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => {
     dispatch({ type: CLEAR_CART });
   };
-
+  const updateShipping = (detail, info) => {
+    dispatch({ type: UPDATE_SHIPPING, payload: { detail, info } });
+  };
   useEffect(() => {
     dispatch({ type: COUNT_CART_TOTALS });
     setLocalStorageStateValue(state.cart);
   }, [state.cart]);
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart }}
+      value={{
+        ...state,
+        addToCart,
+        removeItem,
+        toggleAmount,
+        clearCart,
+        updateShipping,
+      }}
     >
       {children}
     </CartContext.Provider>
