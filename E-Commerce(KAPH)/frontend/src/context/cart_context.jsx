@@ -17,10 +17,11 @@ const initialState = {
   shipping_details: {
     firstName: '',
     lastName: '',
-    streetAddress: '',
+    address: '',
     city: '',
     state: '',
     country: '',
+    countryCode: '',
     phoneNumber: '',
     postCode: '',
     email: '',

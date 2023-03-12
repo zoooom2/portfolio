@@ -18,7 +18,7 @@ const createSendToken = (user, statusCode, req, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    // secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   });
 
   // Remove password from output
@@ -77,6 +77,7 @@ exports.logout = (req, res) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check of it's there
+  console.log(req.cookies);
   let token;
   if (
     req.headers.authorization &&

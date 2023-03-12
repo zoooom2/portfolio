@@ -20,11 +20,11 @@ const CartButtons = () => {
           <span className="cart-value">{total_items}</span>
         </span>
       </Link>
-      <a href={auth_url}>
-        <button type="button" className="auth-btn" onClick={() => fetch(url)}>
+      <Link to="/login">
+        <button type="button" className="auth-btn">
           Login <FaUserPlus />
         </button>
-      </a>
+      </Link>
     </Wrapper>
   );
 };

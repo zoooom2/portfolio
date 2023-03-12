@@ -7,6 +7,9 @@ import HomePage from './HomePage';
 import PrivateRoute from './PrivateRoute';
 import ProductPage from './ProductsPage';
 import SingleProductPage from './SingleProductPage';
+import PaymentGateway from './PaymentGatewayPage';
+import LoginPage from './loginPage';
+import Signup from './signup';
 
 export {
   AboutPage,
@@ -18,4 +21,7 @@ export {
   ProductPage,
   SingleProductPage,
   CartPage,
+  PaymentGateway,
+  LoginPage,
+  Signup,
 };

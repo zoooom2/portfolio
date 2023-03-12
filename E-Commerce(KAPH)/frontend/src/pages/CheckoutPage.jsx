@@ -7,9 +7,11 @@ import { PageHero, StripeCheckout } from '../components';
 import { useCartContext } from '../context/cart_context';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import useLocalStorage from '../utils/customHooks/localStorage';
 
 const CheckoutPage = () => {
   const { updateShipping, shipping_details } = useCartContext();
+  const [localStorageValue, setLocalStorageStateValue] = useLocalStorage();
   const [state, setState] = useState([]);
   const [city, setCity] = useState([]);
   const country = Country.getAllCountries();
@@ -31,6 +33,7 @@ const CheckoutPage = () => {
     );
     setState([...stateArray]);
     updateShipping('country', selectedOption.value);
+    updateShipping('countryCode', selectedOption.countryCode);
   };
 
   const handleState = (selectedOption) => {
@@ -54,6 +57,7 @@ const CheckoutPage = () => {
 
   const handleCity = (selectedOption) => {
     updateShipping('city', selectedOption.value);
+    // setLocalStorageStateValue({shipping_details})
   };
 
   const handleChange = (e) => {
@@ -119,10 +123,10 @@ const CheckoutPage = () => {
 
             <input
               type="text"
-              name="streetAddress"
-              id="streetAddress"
+              name="address"
+              id="address"
               placeholder="Enter Street Address"
-              value={shipping_details.streetAddress}
+              value={shipping_details.address}
               onChange={handleChange}
             />
 
@@ -177,9 +181,9 @@ const CheckoutPage = () => {
               onChange={handleChange}
             />
 
-            <button type="submit" onClick={handleSubmit} className="btn">
+            <Link to="/paymentGateway" className="btn btn-link">
               PROCEED TO PAYMENT CHANNEL
-            </button>
+            </Link>
           </form>
         </div>
       </Wrapper>
@@ -245,6 +249,10 @@ const Wrapper = styled.div`
     padding-block: 1em;
     margin-top: 1em;
     font-size: 0.75em;
+  }
+  .btn-link {
+    display: grid;
+    place-items: center;
   }
 `;
 export default CheckoutPage;

@@ -42,7 +42,7 @@ const orderSchema = new Schema({
         type: String,
         required: [true, 'Order must have a name'],
       },
-      quantity: {
+      amount: {
         type: Number,
         required: [true, 'Order must have a quantity'],
       },

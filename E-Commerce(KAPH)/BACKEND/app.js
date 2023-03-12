@@ -28,7 +28,13 @@ app.enable('trust proxy');
 
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
-app.use(cors());
+app.use(
+  cors({
+    origin: `http://localhost:3000`,
+    methods: 'GET,POST,PATCH,DELETE',
+    credentials: true,
+  })
+);
 // Access-Control-Allow-Origin *
 // api.natours.com, front-end natours.com
 // app.use(cors({
@@ -52,7 +58,7 @@ app.use(
       autoRemoveInterval: 10, //minute
       touchAfter: 24 * 3600, //24 hours
     }),
-    // cookie: { secure: true },
+    cookie: { secure: true, maxAge: 360000 },
   })
 );
 app.use(passport.initialize());
@@ -112,7 +118,7 @@ app.use('/api/v1/products', productRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/order', orderRouter);
-app.use('/api/v1/auth/google', authRouter);
+app.use('/api/v1/auth/', authRouter);
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
