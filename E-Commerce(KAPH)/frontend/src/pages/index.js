@@ -10,6 +10,7 @@ import SingleProductPage from './SingleProductPage';
 import PaymentGateway from './PaymentGatewayPage';
 import LoginPage from './loginPage';
 import Signup from './signup';
+import RedirectPage from './redirectionPage';
 
 export {
   AboutPage,
@@ -24,4 +25,5 @@ export {
   PaymentGateway,
   LoginPage,
   Signup,
+  RedirectPage,
 };

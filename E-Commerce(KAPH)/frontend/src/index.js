@@ -14,7 +14,9 @@ root.render(
     <ProductsProvider>
       <FilterProvider>
         <CartProvider>
-          <App />
+          <UserProvider>
+            <App />
+          </UserProvider>
         </CartProvider>
       </FilterProvider>
     </ProductsProvider>

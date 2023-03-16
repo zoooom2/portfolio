@@ -7,11 +7,9 @@ import { PageHero, StripeCheckout } from '../components';
 import { useCartContext } from '../context/cart_context';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import useLocalStorage from '../utils/customHooks/localStorage';
 
 const CheckoutPage = () => {
-  const { updateShipping, shipping_details } = useCartContext();
-  const [localStorageValue, setLocalStorageStateValue] = useLocalStorage();
+  const { updateShipping, shippingInfo } = useCartContext();
   const [state, setState] = useState([]);
   const [city, setCity] = useState([]);
   const country = Country.getAllCountries();
@@ -57,7 +55,6 @@ const CheckoutPage = () => {
 
   const handleCity = (selectedOption) => {
     updateShipping('city', selectedOption.value);
-    // setLocalStorageStateValue({shipping_details})
   };
 
   const handleChange = (e) => {
@@ -81,15 +78,15 @@ const CheckoutPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      shipping_details.firstName &&
-      shipping_details.lastName &&
-      shipping_details.streetAddress &&
-      shipping_details.city &&
-      shipping_details.state &&
-      shipping_details.country &&
-      shipping_details.phoneNumber &&
-      shipping_details.postCode &&
-      /^[A-Z0-9. _%+-]+@[A-Z0-9. -]+\.[A-Z]{2,4}$/i.test(shipping_details.email)
+      shippingInfo.firstName &&
+      shippingInfo.lastName &&
+      shippingInfo.streetAddress &&
+      shippingInfo.city &&
+      shippingInfo.state &&
+      shippingInfo.country &&
+      shippingInfo.phoneNumber &&
+      shippingInfo.postCode &&
+      /^[A-Z0-9. _%+-]+@[A-Z0-9. -]+\.[A-Z]{2,4}$/i.test(shippingInfo.email)
     ) {
       console.log('post');
     }
@@ -107,7 +104,7 @@ const CheckoutPage = () => {
                 name="firstName"
                 id="firstName"
                 placeholder="Enter Firstname"
-                value={shipping_details.firstName}
+                value={shippingInfo.firstName}
                 onChange={handleChange}
               />
 
@@ -116,7 +113,7 @@ const CheckoutPage = () => {
                 name="lastName"
                 id="lastName"
                 placeholder="Enter Lastname"
-                value={shipping_details.lastName}
+                value={shippingInfo.lastName}
                 onChange={handleChange}
               />
             </div>
@@ -126,7 +123,7 @@ const CheckoutPage = () => {
               name="address"
               id="address"
               placeholder="Enter Street Address"
-              value={shipping_details.address}
+              value={shippingInfo.address}
               onChange={handleChange}
             />
 
@@ -159,7 +156,7 @@ const CheckoutPage = () => {
               name="phoneNumber"
               id="phoneNumber"
               placeholder="Enter Phone Number"
-              value={shipping_details.phoneNumber}
+              value={shippingInfo.phoneNumber}
               onChange={handleChange}
             />
 
@@ -168,7 +165,7 @@ const CheckoutPage = () => {
               name="postCode"
               id="postCode"
               placeholder="Enter Postal Code"
-              value={shipping_details.postCode}
+              value={shippingInfo.postCode}
               onChange={handleChange}
             />
 
@@ -177,11 +174,11 @@ const CheckoutPage = () => {
               name="email"
               id="email"
               placeholder="Enter Email"
-              value={shipping_details.email}
+              value={shippingInfo.email}
               onChange={handleChange}
             />
 
-            <Link to="/paymentGateway" className="btn btn-link">
+            <Link to="/pay" className="btn btn-link">
               PROCEED TO PAYMENT CHANNEL
             </Link>
           </form>

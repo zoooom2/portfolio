@@ -20,6 +20,7 @@ import {
   PaymentGateway,
   LoginPage,
   Signup,
+  RedirectPage,
 } from './pages';
 
 function App() {
@@ -27,9 +28,10 @@ function App() {
 
   const getUser = async () => {
     try {
-      const url = `http://localhost:2705/api/v1/auth/login/success`;
+      const url = `/api/v1/auth/login/success`;
       const { data } = await axios.get(url, { withCredentials: true });
-      setUser(data.user._json);
+      console.log(data);
+      // setUser(data.user._id);
     } catch (err) {
       console.log(err.response.data);
     }
@@ -50,7 +52,7 @@ function App() {
         <Route exact path="/products" element={<ProductPage />} />
         <Route exact path="/product/:id" element={<SingleProductPage />} />
         <Route exact path="/checkout" element={<CheckoutPage />} />
-        <Route exact path="/paymentGateway" element={<PaymentGateway />} />
+        <Route exact path="/pay" element={<PaymentGateway />} />
 
         <Route
           exact
@@ -61,6 +63,7 @@ function App() {
           path="/signup"
           element={user ? <Navigate to="/" /> : <Signup />}
         />
+        <Route path="/redirect" element={<RedirectPage />} />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>

@@ -22,7 +22,7 @@ const orderSchema = new Schema({
         message: (props) => `${props.value} is not a valid phone number!`,
       },
     },
-    postalCode: {
+    postCode: {
       type: String,
       required: [true, 'please enter a postal Code'],
     },

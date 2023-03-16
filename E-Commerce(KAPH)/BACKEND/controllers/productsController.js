@@ -3,11 +3,12 @@ const Product = require('../models/productsModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
-exports.updateStock = catchAsync(async (id, quantity) => {
-  const product = await Product.findById(id);
-  product.stock -= quantity;
-  product.save({ validateBeforeSave: false });
-});
+exports.updateStock = (id, quantity) =>
+  catchAsync(async () => {
+    const product = await Product.findById(id);
+    product.stock -= quantity;
+    product.save({ validateBeforeSave: false });
+  });
 
 exports.uploadProduct = catchAsync(async (req, res) => {
   const stripeProduct = await stripe.products.create({

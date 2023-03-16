@@ -5,6 +5,7 @@ import {
   REMOVE_CART_ITEM,
   TOGGLE_CART_ITEM_AMOUNT,
   UPDATE_SHIPPING,
+  CLEAR_SHIPPING,
 } from '../actions';
 
 const cart_reducer = (state, action) => {
@@ -35,6 +36,7 @@ const cart_reducer = (state, action) => {
           image: product.images[0],
           price: product.price,
           max: product.stock,
+          product: id,
         };
         return { ...state, cart: [...state.cart, newItem] };
       }
@@ -85,8 +87,10 @@ const cart_reducer = (state, action) => {
 
       return {
         ...state,
-        shipping_details: { ...state.shipping_details, [detail]: info },
+        shippingInfo: { ...state.shippingInfo, [detail]: info },
       };
+    case CLEAR_SHIPPING:
+      return { ...state, shippingInfo: {} };
     default:
       throw new Error(`No Matching "${action.type}" - action type`);
   }

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { BsPaypal } from 'react-icons/bs';
 import { GrStripe } from 'react-icons/gr';
 import { useCartContext } from '../context/cart_context';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const PaymentGateway = () => {
   const { shipping_details, cart, total_amount } = useCartContext();
@@ -13,16 +13,18 @@ const PaymentGateway = () => {
 
   const handlePayStack = async () => {
     try {
-      const response = await axios({
-        method: 'post',
-        url: 'http://127.0.0.1:2705/api/v1/order/paystack/checkout-session',
-        data: {
+      const response = await axios.post(
+        '/api/v1/order/paystack/checkout-session',
+        {
           shippingInfo: { ...shipping_details },
           orderItems: cart,
           totalPrice: total_amount,
         },
-        withCredentials: true,
-      });
+        {
+          withCredentials: true,
+        }
+      );
+      window.location.replace(response.data.data);
     } catch (error) {
       console.log(error.response.data);
     }

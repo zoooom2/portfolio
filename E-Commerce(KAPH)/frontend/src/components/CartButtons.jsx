@@ -7,10 +7,22 @@ import { useCartContext } from '../context/cart_context';
 // import { useFetch as fetch } from '../utils/customHooks/fetchHook';
 import { useUserContext } from '../context/user_context';
 import { auth_url, auth_url as url } from '../utils/constants';
+import axios from 'axios';
 
 const CartButtons = () => {
   const { closeSidebar } = useProductsContext();
   const { total_items } = useCartContext();
+  const { isAuthenticated, setIsAuthenticated } = useUserContext();
+
+  const logOut = async () => {
+    try {
+      await axios.get('/api/v1/users/logout');
+      setIsAuthenticated(false);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+    closeSidebar();
+  };
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link to="cart" className="cart-btn" onClick={closeSidebar}>
@@ -20,16 +32,24 @@ const CartButtons = () => {
           <span className="cart-value">{total_items}</span>
         </span>
       </Link>
-      <Link to="/login">
-        <button type="button" className="auth-btn">
-          Login <FaUserPlus />
+
+      {isAuthenticated ? (
+        <button type="button" className="auth-btn" onClick={logOut}>
+          LogOut <FaUserMinus />
         </button>
-      </Link>
+      ) : (
+        <Link to="/login">
+          <button type="button" className="auth-btn" onClick={closeSidebar}>
+            Login <FaUserPlus />
+          </button>
+        </Link>
+      )}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -41,7 +61,7 @@ const Wrapper = styled.div`
     letter-spacing: var(--spacing);
     color: var(--clr-grey-1);
     display: flex;
-
+    font-family: 'Cinzel', serif;
     align-items: center;
   }
   .cart-container {
@@ -80,6 +100,7 @@ const Wrapper = styled.div`
     svg {
       margin-left: 5px;
     }
+    font-family: 'Cinzel', serif;
   }
 `;
 export default CartButtons;

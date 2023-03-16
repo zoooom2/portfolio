@@ -7,6 +7,7 @@ import {
   CLEAR_CART,
   COUNT_CART_TOTALS,
   UPDATE_SHIPPING,
+  CLEAR_SHIPPING,
 } from '../actions';
 import useLocalStorage from '../utils/customHooks/localStorage';
 
@@ -14,7 +15,7 @@ const initialState = {
   cart: [],
   total_items: 0,
   total_amount: 0,
-  shipping_details: {
+  shippingInfo: {
     firstName: '',
     lastName: '',
     address: '',
@@ -35,9 +36,11 @@ export const CartProvider = ({ children }) => {
     'cart',
     []
   );
+  const [localShipping, setLocalShipping] = useLocalStorage('shipping', {});
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
     cart: localStorageValue,
+    shippingInfo: localShipping,
   });
   const addToCart = (id, color, amount, product, size) => {
     dispatch({
@@ -57,10 +60,14 @@ export const CartProvider = ({ children }) => {
   const updateShipping = (detail, info) => {
     dispatch({ type: UPDATE_SHIPPING, payload: { detail, info } });
   };
+  const clearShipping = () => {
+    dispatch({ type: CLEAR_SHIPPING });
+  };
   useEffect(() => {
     dispatch({ type: COUNT_CART_TOTALS });
     setLocalStorageStateValue(state.cart);
-  }, [state.cart]);
+    setLocalShipping(state.shippingInfo);
+  }, [state.cart, state.shippingInfo]);
   return (
     <CartContext.Provider
       value={{
@@ -70,6 +77,7 @@ export const CartProvider = ({ children }) => {
         toggleAmount,
         clearCart,
         updateShipping,
+        clearShipping,
       }}
     >
       {children}

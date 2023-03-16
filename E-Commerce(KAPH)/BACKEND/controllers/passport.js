@@ -26,6 +26,7 @@ module.exports = (passport) => {
           if (!user) {
             user = await GoogleUser.create(newUser);
           }
+
           cb(null, user);
         } catch (error) {
           // console.error(error);

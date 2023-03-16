@@ -1,20 +1,23 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import { useUserContext } from '../context/user_context';
 axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const { setIsAuthenticated } = useUserContext();
+  const navigate = useNavigate();
   const googleAuth = () => {
-    window.open(`http://localhost:2705/api/v1/auth/google/callback`, '_self');
+    window.open(`/api/v1/auth/google/callback`, '_self');
   };
   const jwtAuth = async (e) => {
     e.preventDefault();
 
     try {
       const { data } = await axios.post(
-        `http://localhost:2705/api/v1/users/login`,
+        `/api/v1/users/login`,
         {
           email: credentials.email,
           password: credentials.password,
@@ -22,11 +25,12 @@ const LoginPage = () => {
         {
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Credentials': '*',
           },
         }
       );
-      console.log(data);
+
+      setIsAuthenticated(true);
+      navigate(-1);
     } catch (error) {
       console.log(error);
     }
@@ -107,7 +111,7 @@ const Wrapper = styled.main`
   }
 
   .btn {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     padding: 12px 25px;
     color: white;
@@ -137,13 +141,11 @@ const Wrapper = styled.main`
     border-radius: 5px;
     border: none;
     outline: none;
-    background-color: white;
-    box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px,
-      rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+    background-color: #2c444e;
     font-size: 16px;
     font-weight: 500;
     margin: 0 0 20px 0;
-    color: #2c444e;
+    color: #fff;
     cursor: pointer;
     display: flex;
     align-items: center;
