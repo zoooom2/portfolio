@@ -6,7 +6,6 @@ export const UserProvider = ({ children }) => {
   // const [state, dispatch] = useReducer(reducer, initialState);
   // const [loading,setLoading]=useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  console.log(isAuthenticated);
   return (
     <UserContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       {children}

@@ -10,7 +10,7 @@ const LoginPage = () => {
   const { setIsAuthenticated } = useUserContext();
   const navigate = useNavigate();
   const googleAuth = () => {
-    window.open(`/api/v1/auth/google/callback`, '_self');
+    window.open(`http://localhost:2705/api/v1/auth/google/`, '_self');
   };
   const jwtAuth = async (e) => {
     e.preventDefault();

@@ -12,6 +12,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const compression = require('compression');
 const cors = require('cors');
+
 require('./controllers/passport')(passport);
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -20,6 +21,7 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const orderRouter = require('./routes/orderRoute');
 const authRouter = require('./routes/authRoute');
+const mailRouter = require('./routes/mailRoute');
 
 // Start express app
 const app = express();
@@ -118,7 +120,8 @@ app.use('/api/v1/products', productRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/order', orderRouter);
-app.use('/api/v1/auth/', authRouter);
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/mail', mailRouter);
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });

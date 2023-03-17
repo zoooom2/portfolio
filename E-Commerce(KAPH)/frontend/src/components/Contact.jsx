@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Contact = () => {
   let [email, setEmail] = useState('');
-  const handleSubmit = (e) => {
+  const name = 'Zoooom';
+  const message = 'We are testing a new message';
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(e.target.name);
+    const response = await axios.get(
+      `/api/v1/mail?sendto=${email}&name=${name}&message=${message}`
+    );
+    console.log(response);
     setEmail('');
   };
+
   return (
     <Wrapper>
       <div className="section-center">
@@ -28,7 +35,11 @@ const Contact = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button type="submit" className="submit-btn">
+            <button
+              type="submit"
+              className="submit-btn"
+              onSubmit={handleSubmit}
+            >
               subscribe
             </button>
           </form>
