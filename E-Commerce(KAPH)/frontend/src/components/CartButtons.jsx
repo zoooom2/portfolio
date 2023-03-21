@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useProductsContext } from '../context/products_context';
 import { useCartContext } from '../context/cart_context';
-// import { useFetch as fetch } from '../utils/customHooks/fetchHook';
 import { useUserContext } from '../context/user_context';
 import { auth_url, auth_url as url } from '../utils/constants';
 import axios from 'axios';
@@ -12,15 +11,10 @@ import axios from 'axios';
 const CartButtons = () => {
   const { closeSidebar } = useProductsContext();
   const { total_items } = useCartContext();
-  const { isAuthenticated, setIsAuthenticated } = useUserContext();
+  const { isAuthenticated, logOut } = useUserContext();
 
-  const logOut = async () => {
-    try {
-      await axios.get('/api/v1/users/logout');
-      setIsAuthenticated(false);
-    } catch (error) {
-      console.log(error.response.data);
-    }
+  const logOutUser = async () => {
+    logOut();
     closeSidebar();
   };
   return (
@@ -34,7 +28,7 @@ const CartButtons = () => {
       </Link>
 
       {isAuthenticated ? (
-        <button type="button" className="auth-btn" onClick={logOut}>
+        <button type="button" className="auth-btn" onClick={logOutUser}>
           LogOut <FaUserMinus />
         </button>
       ) : (

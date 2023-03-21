@@ -6,9 +6,20 @@ const bcrypt = require('bcryptjs');
 const { model, Schema } = mongoose;
 
 const userSchema = new Schema({
-  name: {
+  firstname: {
     type: String,
-    required: [true, 'Please tell us your name!'],
+    lowercase: true,
+    required: [true, 'Please tell us your first name!'],
+  },
+  lastname: {
+    type: String,
+    lowercase: true,
+    required: [true, 'Please tell us your last name!'],
+  },
+  username: {
+    type: String,
+    lowercase: true,
+    required: [true, 'Please tell us your username!'],
   },
   email: {
     type: String,
@@ -19,7 +30,7 @@ const userSchema = new Schema({
   },
   photo: {
     type: String,
-    default: 'default.jpg',
+    default: 'default.png',
   },
   role: {
     type: String,
@@ -34,6 +45,7 @@ const userSchema = new Schema({
   },
   passwordConfirm: {
     type: String,
+    lowercase: true,
     required: [true, 'Please confirm your password'],
     validate: {
       // This only works on CREATE and SAVE!!!

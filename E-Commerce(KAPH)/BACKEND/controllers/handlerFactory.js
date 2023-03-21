@@ -85,3 +85,11 @@ exports.getAll = (Model) =>
       data: doc,
     });
   });
+
+exports.getMine = (Model) =>
+  catchAsync(async (req, res) => {
+    const data = await Model.find({
+      user: req.user.id,
+    });
+    res.status(200).json({ status: 'success', results: data.length, data });
+  });

@@ -84,7 +84,6 @@ const cart_reducer = (state, action) => {
       return { ...state, total_items, total_amount };
     case UPDATE_SHIPPING:
       const { detail, info } = action.payload;
-
       return {
         ...state,
         shippingInfo: { ...state.shippingInfo, [detail]: info },

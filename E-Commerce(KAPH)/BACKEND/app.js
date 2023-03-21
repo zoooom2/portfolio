@@ -61,7 +61,12 @@ app.use(
       autoRemoveInterval: 10, //minute
       touchAfter: 24 * 3600, //24 hours
     }),
-    cookie: { secure: true, sameSite: 'lax', maxAge: 360000 },
+    cookie: {
+      // secure: true,
+      httpOnly: true,
+      sameSite: 'lax',
+      maxAge: 360000,
+    },
   })
 );
 app.use(passport.initialize());

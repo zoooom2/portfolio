@@ -21,25 +21,12 @@ import {
   LoginPage,
   Signup,
   RedirectPage,
+  Profile,
 } from './pages';
+import { useUserContext } from './context/user_context';
 
-function App() {
-  const [user, setUser] = useState(null);
-
-  const getUser = async () => {
-    try {
-      const url = `/api/v1/auth/login/success`;
-      const { data } = await axios.get(url, { withCredentials: true });
-      console.log(data);
-      // setUser(data.user._id);
-    } catch (err) {
-      console.log(err.response.data);
-    }
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
+const App = () => {
+  const { isAuthenticated, authenticateUser } = useUserContext();
 
   return (
     <Router>
@@ -51,25 +38,38 @@ function App() {
         <Route exact path="/about" element={<AboutPage />} />
         <Route exact path="/products" element={<ProductPage />} />
         <Route exact path="/product/:id" element={<SingleProductPage />} />
-        <Route exact path="/checkout" element={<CheckoutPage />} />
-        <Route exact path="/pay" element={<PaymentGateway />} />
+        <Route path="/redirect" element={<RedirectPage />} />
+        <Route
+          exact
+          path="/checkout"
+          element={isAuthenticated ? <CheckoutPage /> : <LoginPage />}
+        />
+        <Route
+          exact
+          path="/pay"
+          element={isAuthenticated ? <PaymentGateway /> : <LoginPage />}
+        />
 
         <Route
           exact
           path="/login"
-          element={user ? <Navigate to="/" /> : <LoginPage />}
+          element={isAuthenticated ? <Navigate to="/" /> : <LoginPage />}
         />
         <Route
           path="/signup"
-          element={user ? <Navigate to="/" /> : <Signup />}
+          element={isAuthenticated ? <Navigate to="/" /> : <Signup />}
         />
-        <Route path="/redirect" element={<RedirectPage />} />
+
+        <Route
+          path="/profile"
+          element={isAuthenticated ? <Profile /> : <LoginPage />}
+        />
 
         <Route path="*" element={<ErrorPage />} />
       </Routes>
       <Footer />
     </Router>
   );
-}
+};
 
 export default App;

@@ -8,9 +8,13 @@ const { getCheckoutSession } = require('../controllers/stripeCheckout');
 
 const router = express.Router();
 const { protect, restrictTo } = authController;
-const { getAllOrders, getOrder, updateOrder, deleteOrder } = OrderController;
+const { getAllOrders, getOrder, updateOrder, deleteOrder, getMyOrders } =
+  OrderController;
 
 router.use(protect);
+
+//user order history
+router.get('/myOrders', getMyOrders);
 
 //paystack user actions
 router.post('/paystack/checkout-session', paystackCheckout.getCheckoutSession);

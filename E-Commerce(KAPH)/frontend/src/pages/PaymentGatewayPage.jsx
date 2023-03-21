@@ -1,32 +1,40 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { GrStripe } from 'react-icons/gr';
 import { useCartContext } from '../context/cart_context';
+import { useUserContext } from '../context/user_context';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 const PaymentGateway = () => {
   const { shipping_details, cart, total_amount } = useCartContext();
+  const { isAuthenticated } = useUserContext();
+  const navigate = useNavigate();
 
   const handlePaypal = async () => {};
 
   const handleStripe = () => {};
 
   const handlePayStack = async () => {
-    try {
-      const response = await axios.post(
-        '/api/v1/order/paystack/checkout-session',
-        {
-          shippingInfo: { ...shipping_details },
-          orderItems: cart,
-          totalPrice: total_amount,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      window.location.replace(response.data.data);
-    } catch (error) {
-      console.log(error.response.data);
+    if (isAuthenticated) {
+      try {
+        const response = await axios.post(
+          '/api/v1/order/paystack/checkout-session',
+          {
+            shippingInfo: { ...shipping_details },
+            orderItems: cart,
+            totalPrice: total_amount,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        window.location.replace(response.data.data);
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    } else {
+      navigate('/login');
     }
   };
 

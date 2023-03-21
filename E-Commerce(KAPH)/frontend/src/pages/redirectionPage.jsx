@@ -12,7 +12,7 @@ const RedirectPage = () => {
     try {
       if (body.cart && body.shippingInfo) {
         const url = `/api/v1/order/paystack/createOrder`;
-        const response = await axios.post(
+        await axios.post(
           url,
           { ...body, reference },
           {

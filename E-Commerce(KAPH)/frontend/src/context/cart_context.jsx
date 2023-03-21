@@ -36,7 +36,9 @@ export const CartProvider = ({ children }) => {
     'cart',
     []
   );
-  const [localShipping, setLocalShipping] = useLocalStorage('shipping', {});
+  const [localShipping, setLocalShipping] = useLocalStorage('shipping', {
+    ...initialState.shippingInfo,
+  });
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
     cart: localStorageValue,

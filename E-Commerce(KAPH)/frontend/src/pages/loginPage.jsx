@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
-  const { setIsAuthenticated } = useUserContext();
+  const { isAuthenticated, authenticateUser } = useUserContext();
   const navigate = useNavigate();
   const googleAuth = () => {
     window.open(`http://localhost:2705/api/v1/auth/google/`, '_self');
@@ -16,20 +16,17 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post(
-        `/api/v1/users/login`,
+      await axios.post(
+        '/api/v1/users/login',
         {
           email: credentials.email,
           password: credentials.password,
         },
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          withCredentials: true,
         }
       );
-
-      setIsAuthenticated(true);
+      authenticateUser();
       navigate(-1);
     } catch (error) {
       console.log(error);

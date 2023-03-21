@@ -4,7 +4,8 @@ const passport = require('passport');
 const router = express.Router();
 
 router.get('/login/success', (req, res) => {
-  if (req.user) {
+  console.log(req.isAuthenticated());
+  if (req.isAuthenticated()) {
     res.status(200).json({
       error: false,
       message: 'Successfully Logged In',
@@ -32,8 +33,8 @@ router.get(
 router.get(
   '/google/callback',
   passport.authenticate('google', {
-    successRedirect: 'http://localhost:3000/login/success',
-    failureRedirect: 'http://localhost:3000/login/failed',
+    successRedirect: `${process.env.CLIENT_URL}`,
+    failureRedirect: `${process.env.CLIENT_URL}/login`,
   })
 );
 

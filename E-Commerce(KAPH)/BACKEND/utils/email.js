@@ -13,7 +13,7 @@ oAuth2Client.setCredentials({
   refresh_token: process.env.GOOGLEMAIL_REFRESH_TOKEN,
 });
 
-exports.sendMail = async ({ emailAddress, subject, text }) => {
+exports.sendMail = async ({ emailAddress, subject, text, html }) => {
   try {
     const accessToken = await oAuth2Client.getAccessToken();
 
@@ -32,9 +32,9 @@ exports.sendMail = async ({ emailAddress, subject, text }) => {
     const mailOptions = {
       from: `BEADS BY KAPH <${process.env.AUTHORIZED_MAIL}>`,
       to: emailAddress,
-      subject: subject,
-      text: text,
-      html: `<h1>${text}</h1>`,
+      subject,
+      text,
+      html,
     };
 
     const result = await transport.sendMail(mailOptions);

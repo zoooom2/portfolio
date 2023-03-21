@@ -8,9 +8,10 @@ import PrivateRoute from './PrivateRoute';
 import ProductPage from './ProductsPage';
 import SingleProductPage from './SingleProductPage';
 import PaymentGateway from './PaymentGatewayPage';
-import LoginPage from './loginPage';
-import Signup from './signup';
-import RedirectPage from './redirectionPage';
+import LoginPage from './LoginPage';
+import Signup from './Signup';
+import RedirectPage from './RedirectionPage';
+import Profile from './UserProfilePage';
 
 export {
   AboutPage,
@@ -26,4 +27,5 @@ export {
   LoginPage,
   Signup,
   RedirectPage,
+  Profile,
 };
