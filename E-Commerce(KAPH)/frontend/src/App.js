@@ -1,7 +1,4 @@
-import axios from 'axios';
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -26,7 +23,7 @@ import {
 import { useUserContext } from './context/user_context';
 
 const App = () => {
-  const { isAuthenticated, authenticateUser } = useUserContext();
+  const { isAuthenticated } = useUserContext();
 
   return (
     <Router>

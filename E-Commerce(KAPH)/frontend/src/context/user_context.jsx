@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import reducer from '../reducers/user_reducer';
 import {
@@ -10,6 +10,8 @@ import {
   GET_USER_ORDER_BEGIN,
   GET_USER_ORDER_SUCCESS,
   GET_USER_ORDER_ERROR,
+  SET_IMAGE,
+  REMOVE_IMAGE,
 } from '../actions';
 
 const UserContext = React.createContext();
@@ -18,11 +20,14 @@ const initialState = {
   isAuthenticated: false,
   user: {},
   orders: [],
+  imageFile: {
+    file: [],
+    filePreview: null,
+  },
 };
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const fetchProfile = async () => {
     if (!state.isAuthenticated) {
       try {
@@ -64,6 +69,35 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const handleImage = (e) => {
+    const fileData = e.target.files[0];
+    dispatch({ type: SET_IMAGE, payload: fileData });
+  };
+  const removeImage = () => {
+    dispatch({ type: REMOVE_IMAGE });
+  };
+  const jwtAuth = async (email, password) => {
+    try {
+      await axios.post(
+        '/api/v1/users/login',
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      authenticateUser();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const googleAuth = () => {
+    window.open(`http://localhost:2705/api/v1/auth/google/`, '_self');
+  };
+
   useEffect(() => {
     fetchUserOrder();
     fetchProfile();
@@ -71,7 +105,16 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ ...state, authenticateUser, removeAuthentication, logOut }}
+      value={{
+        ...state,
+        authenticateUser,
+        handleImage,
+        removeImage,
+        removeAuthentication,
+        logOut,
+        jwtAuth,
+        googleAuth,
+      }}
     >
       {children}
     </UserContext.Provider>

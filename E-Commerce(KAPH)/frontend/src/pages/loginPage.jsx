@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { useUserContext } from '../context/user_context';
@@ -7,31 +7,7 @@ axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
-  const { isAuthenticated, authenticateUser } = useUserContext();
-  const navigate = useNavigate();
-  const googleAuth = () => {
-    window.open(`http://localhost:2705/api/v1/auth/google/`, '_self');
-  };
-  const jwtAuth = async (e) => {
-    e.preventDefault();
-
-    try {
-      await axios.post(
-        '/api/v1/users/login',
-        {
-          email: credentials.email,
-          password: credentials.password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      authenticateUser();
-      navigate(-1);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { jwtAuth, googleAuth } = useUserContext();
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -59,7 +35,10 @@ const LoginPage = () => {
             value={credentials.password}
             onChange={handleChange}
           />
-          <button className="btn" onClick={jwtAuth}>
+          <button
+            className="btn"
+            onClick={() => jwtAuth(credentials.email, credentials.password)}
+          >
             Log In
           </button>
           <p className="text">or</p>

@@ -20,7 +20,6 @@ const CartButtons = () => {
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link to="cart" className="cart-btn" onClick={closeSidebar}>
-        Cart
         <span className="cart-container">
           <FaShoppingCart />
           <span className="cart-value">{total_items}</span>
@@ -29,12 +28,12 @@ const CartButtons = () => {
 
       {isAuthenticated ? (
         <button type="button" className="auth-btn" onClick={logOutUser}>
-          LogOut <FaUserMinus />
+          <FaUserMinus />
         </button>
       ) : (
         <Link to="/login">
           <button type="button" className="auth-btn" onClick={closeSidebar}>
-            Login <FaUserPlus />
+            <FaUserPlus />
           </button>
         </Link>
       )}
@@ -47,7 +46,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  width: 225px;
+  width: 100px;
 
   .cart-btn {
     color: var(--clr-grey-1);
@@ -80,7 +79,7 @@ const Wrapper = styled.div`
     border-radius: 50%;
     font-size: 0.75rem;
     color: var(--clr-white);
-    padding: 12px;
+    padding: 10px;
   }
   .auth-btn {
     display: flex;

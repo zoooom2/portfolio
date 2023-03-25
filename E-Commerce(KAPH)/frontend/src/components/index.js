@@ -20,7 +20,7 @@ import StripeCheckout from './StripeCheckout';
 import ShopCategory from './ShopCategory';
 import ImageSlider from './ImageSlider';
 import HomeAbout from './HomeAbout';
-import ProfileMenu from './ProfileMenu';
+import Lists from './ProfileMenu';
 import MenuDetails from './MenuDetails';
 export {
   FeaturedProducts,
@@ -45,6 +45,6 @@ export {
   ShopCategory,
   ImageSlider,
   HomeAbout,
-  ProfileMenu,
+  Lists,
   MenuDetails,
 };

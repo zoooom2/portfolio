@@ -1,4 +1,6 @@
 import React, { useEffect, useContext, useReducer } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import reducer from '../reducers/cart_reducer';
 import {
   ADD_TO_CART,
@@ -10,6 +12,7 @@ import {
   CLEAR_SHIPPING,
 } from '../actions';
 import useLocalStorage from '../utils/customHooks/localStorage';
+import { useUserContext } from './user_context';
 
 const initialState = {
   cart: [],
@@ -44,6 +47,7 @@ export const CartProvider = ({ children }) => {
     cart: localStorageValue,
     shippingInfo: localShipping,
   });
+
   const addToCart = (id, color, amount, product, size) => {
     dispatch({
       type: ADD_TO_CART,
@@ -65,6 +69,30 @@ export const CartProvider = ({ children }) => {
   const clearShipping = () => {
     dispatch({ type: CLEAR_SHIPPING });
   };
+
+  const handlePayStack = async () => {
+    try {
+      const response = await axios.post(
+        '/api/v1/order/paystack/checkout-session',
+        {
+          shippingInfo: { ...state.shippingInfo },
+          orderItems: state.cart,
+          totalPrice: state.total_amount,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      window.location.replace(response.data.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+  const handlePaypal = async () => {};
+
+  const handleStripe = () => {};
+
   useEffect(() => {
     dispatch({ type: COUNT_CART_TOTALS });
     setLocalStorageStateValue(state.cart);
@@ -80,6 +108,9 @@ export const CartProvider = ({ children }) => {
         clearCart,
         updateShipping,
         clearShipping,
+        handlePayStack,
+        handlePaypal,
+        handleStripe,
       }}
     >
       {children}

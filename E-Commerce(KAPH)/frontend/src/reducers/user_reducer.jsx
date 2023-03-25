@@ -7,6 +7,8 @@ import {
   GET_USER_ORDER_SUCCESS,
   AUTHENTICATE_USER,
   REMOVE_AUTHENTICATION,
+  SET_IMAGE,
+  REMOVE_IMAGE,
 } from '../actions';
 
 const user_reducer = (state, action) => {
@@ -34,7 +36,16 @@ const user_reducer = (state, action) => {
       return { ...state, loading: false };
     case GET_USER_ORDER_SUCCESS:
       return { ...state, loading: false, order: [...action.payload] };
-
+    case SET_IMAGE:
+      return {
+        ...state,
+        imageFile: {
+          file: action.payload,
+          filePreview: URL.createObjectURL(action.payload),
+        },
+      };
+    case REMOVE_IMAGE:
+      return { ...state, imageFile: { file: [], filePreview: null } };
     default:
       throw new Error(`No Matching "${action.type}" - action type`);
   }
