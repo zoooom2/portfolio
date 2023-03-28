@@ -12,25 +12,26 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const session = await paystack.transaction.initialize({
     name,
     email,
-    callback_url: `${req.protocol}://${req.get(
-      'host'
-    )}/api/v1/orders/createOrder`,
+    callback_url: `${process.env.CLIENT_URL}/redirect`,
     amount: helper.addFeesTo(req.body.totalPrice * 100),
   });
-  // console.log(session.data.authorization_url);
-  res.redirect(session.data.authorization_url);
+  res.status(200).json({ data: session.data.authorization_url });
 });
 
 exports.createOrder = catchAsync(async (req, res) => {
   //2) Verify the transaction
+
   const verification = await paystack.transaction.verify({
-    reference: req.query.reference,
+    reference: req.body.reference,
   });
+
+  const orderItems = req.body.cart;
 
   //3) create the order
   const order = await Order.create({
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
     ...req.body,
+    orderItems,
     paidAt: verification.data.paid_at,
     createdAt: verification.data.created_at,
     paymentInfo: {
@@ -45,7 +46,7 @@ exports.createOrder = catchAsync(async (req, res) => {
   //4) if successful then update the stock of each product
   if (verification.data.status === 'success') {
     await Promise.all(
-      req.body.orderItems.map(
+      orderItems.map(
         async (item) => await updateStock(item.product, item.quantity)
       )
     );

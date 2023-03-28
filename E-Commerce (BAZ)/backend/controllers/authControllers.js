@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-const Email = require('../utils/email');
+const { sendMail } = require('../utils/email');
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -18,7 +18,8 @@ const createSendToken = (user, statusCode, req, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    sameSite: 'lax',
+    // secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   });
 
   // Remove password from output
@@ -35,16 +36,24 @@ const createSendToken = (user, statusCode, req, res) => {
 
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
-    name: req.body.name,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    username: req.body.username,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
-    role: req.body.role,
   });
 
-  // const url = `${req.protocol}://${req.get('host')}/me`;
-  // console.log(url);
-  // await new Email(newUser, url).sendWelcome();
+  const url = `${req.protocol}://${req.get('host')}/me`;
+  const options = {
+    emailAddress: newUser.email,
+    subject: 'WELCOME TO BEADS BY KAPH',
+    text: `You're welcome to BEADS BY KAPH. Click on the link below to view your profile
+    ${url}`,
+    html: `<p>You're welcome to BEADS BY KAPH. Click on the link below to view your profile<br />
+    <a href=${url}>Click here to view profile</a></p>`,
+  };
+  await sendMail(options);
 
   createSendToken(newUser, 201, req, res);
 });
@@ -180,7 +189,16 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     const resetURL = `${req.protocol}://${req.get(
       'host'
     )}/api/v1/users/resetPassword/${resetToken}`;
-    await new Email(user, resetURL).sendPasswordReset();
+    // await new Email(user, resetURL).sendPasswordReset();
+    const options = {
+      emailAddress: user.email,
+      subject: 'PASSWORD RESET',
+      text: `Click on this link to reset password`,
+      html: `<p>Click on this link to reset password<br />
+    <a href=${resetURL}>Click here to reset password</a></p>`,
+    };
+
+    await sendMail(options);
 
     res.status(200).json({
       status: 'success',

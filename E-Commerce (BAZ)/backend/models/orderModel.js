@@ -22,7 +22,7 @@ const orderSchema = new Schema({
         message: (props) => `${props.value} is not a valid phone number!`,
       },
     },
-    postalCode: {
+    postCode: {
       type: String,
       required: [true, 'please enter a postal Code'],
     },
@@ -42,7 +42,7 @@ const orderSchema = new Schema({
         type: String,
         required: [true, 'Order must have a name'],
       },
-      quantity: {
+      amount: {
         type: Number,
         required: [true, 'Order must have a quantity'],
       },
@@ -53,6 +53,10 @@ const orderSchema = new Schema({
       image: {
         type: String,
         required: [true, 'order must have a image'],
+      },
+      size: {
+        type: Number,
+        required: [true, 'order must have a size'],
       },
       product: {
         type: ObjectId,
