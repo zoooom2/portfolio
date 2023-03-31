@@ -14,16 +14,6 @@ const productSchema = new Schema({
   category: {
     type: String,
     required: true,
-    enum: [
-      'bags',
-      'bracelets',
-      'waistbeads',
-      'necklaces',
-      'anklet',
-      'earrings',
-      'body jewelry',
-      'custom',
-    ],
   },
   reviews: [ObjectId],
   images: [{ type: String, required: true }],
@@ -33,6 +23,8 @@ const productSchema = new Schema({
     type: Number,
     default: 5,
   },
+  collectionName: { type: String, required: true },
+  releaseDate: { type: Date, required: true, default: Date.now },
 });
 const Product = model('Product', productSchema);
 

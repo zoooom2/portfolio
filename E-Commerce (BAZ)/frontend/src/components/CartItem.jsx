@@ -4,7 +4,8 @@ import { formatPrice } from '../utils/helpers';
 import AmountButtons from './AmountButtons';
 import { FaTrash } from 'react-icons/fa';
 import { useCartContext } from '../context/cart_context';
-const CartItem = ({ id, image, name, color, price, amount, size }) => {
+
+const CartItem = ({ id, image, name, price, size }) => {
   const { removeItem, toggleAmount } = useCartContext();
   const increase = () => {
     toggleAmount(id, 'inc');
@@ -14,170 +15,112 @@ const CartItem = ({ id, image, name, color, price, amount, size }) => {
   };
   return (
     <Wrapper>
-      <div className='title'>
-        <img src={`/productImage/${image}`} alt={name} />
-        <div>
-          <div>
-            <p className='color'>
-              color: <span style={{ background: color }}></span>
-            </p>
-            <div className='size'>size:{size}</div>
+      <img src={`/productImage/${image}`} alt='' className='productImage' />
+      <div className='product-details'>
+        <div className='name-size'>{`${name}-${size}`}</div>
+        <div className='price'>₦{price}</div>
+        <div className='quantityForm-remove'>
+          <div className='quantityForm'>
+            <label htmlFor='quantity'>Quantity</label>
+            <input
+              type='number'
+              name='quantity'
+              id='quantity'
+              className='quantity'
+            />
           </div>
-
-          <h5 className='price-small'>{`₦${price}`}</h5>
+          <button className='remove-btn' onClick={removeItem}>
+            Remove
+          </button>
         </div>
       </div>
-      <h5 className='price'>{`₦${price}`}</h5>
-      <AmountButtons amount={amount} increase={increase} decrease={decrease} />
-      <h5 className='subtotal'>{`₦${price * amount}`}</h5>
-      <button
-        className='remove-btn'
-        type='button'
-        onClick={() => removeItem(id)}>
-        <FaTrash />
-      </button>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.article`
-  .subtotal {
-    display: none;
-  }
-  .size {
-    text-transform: Uppercase;
-    letter-spacing: 0.05rem;
-    font-weight: 600;
-  }
-  .price {
-    display: none;
-  }
-  display: grid;
-  grid-template-columns: 200px auto auto;
-  grid-template-rows: 75px;
-  gap: 3rem 1rem;
-  justify-items: center;
-  margin-bottom: 3rem;
-  align-items: center;
-  .title {
-    grid-template-rows: 75px;
-    display: grid;
-    grid-template-columns: 75px 125px;
-    align-items: center;
-    text-align: left;
-    gap: 1rem;
-  }
-  img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    border-radius: var(--radius);
-    object-fit: cover;
-  }
-  h5 {
-    font-size: 0.75rem;
-    margin-bottom: 0;
+const Wrapper = styled.section`
+  display: flex;
+  justify-content: center;
+  gap: 27px;
+  .productImage {
+    width: 50%;
   }
 
-  .color {
-    color: var(--clr-grey-5);
-    font-size: 0.75rem;
-    letter-spacing: var(--spacing);
-    text-transform: capitalize;
-    margin-bottom: 0;
+  .product-details {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    span {
-      display: inline-block;
-      width: 0.5rem;
-      height: 0.5rem;
-      background: red;
-      margin-left: 0.5rem;
-      border-radius: var(--radius);
-    }
+    flex-direction: column;
+    align-items: flex-start;
+    width: 50%;
+    gap: 13.5px;
   }
-  .price-small {
-    color: var(--clr-primary-5);
+  .name-size {
+    font-family: 'Zilla Slab';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 25px;
+    letter-spacing: 0.1em;
   }
-  .amount-btns {
-    width: 75px;
-    button {
-      width: 1rem;
-      height: 0.5rem;
-      font-size: 0.75rem;
-    }
-    h2 {
-      font-size: 1rem;
-    }
+  .price {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    /* identical to box height */
+    color: #000000;
+  }
+  label {
+    font-family: 'Bell MT';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #000000;
+  }
+  .quantityForm-remove {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 24px;
+  }
+  .quantityForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 6px;
+  }
+  .quantity {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 4.5px 7.5px;
+    border: 1.5px solid #757575;
+    border-radius: 1.5px;
+    font-family: 'Bell MT';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 27px;
+    /* identical to box height */
+    letter-spacing: 0.1em;
+    width: 100px;
   }
   .remove-btn {
-    color: var(--clr-white);
+    font-family: 'Bell MT';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    /* identical to box height */
+    text-decoration-line: underline;
     background: transparent;
-    border: transparent;
-    letter-spacing: var(--spacing);
-    background: var(--clr-red-dark);
-    width: 1.5rem;
-    height: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius);
-    font-size: 0.75rem;
+    border: none;
+    outline: none;
     cursor: pointer;
-  }
-  @media (min-width: 776px) {
-    .subtotal {
-      display: block;
-      margin-bottom: 0;
-      color: var(--clr-grey-5);
-      font-weight: 400;
-      font-size: 1rem;
-    }
-    .price-small {
-      display: none;
-    }
-    .price {
-      display: block;
-      font-size: 1rem;
-      color: var(--clr-primary-5);
-      font-weight: 400;
-    }
-    .name {
-      font-size: 0.85rem;
-    }
-    .color {
-      font-size: 0.85rem;
-      span {
-        width: 0.75rem;
-        height: 0.75rem;
-      }
-    }
-    grid-template-columns: 1fr 1fr 1fr 1fr auto;
-    align-items: center;
-    grid-template-rows: 75px;
-    img {
-      height: 100%;
-    }
-    .title {
-      height: 100%;
-      display: grid;
-      grid-template-columns: 100px 200px;
-      align-items: center;
-      gap: 1rem;
-      text-align: left;
-    }
-    .amount-btns {
-      width: 100px;
-      button {
-        width: 1.5rem;
-        height: 1rem;
-        font-size: 1rem;
-      }
-      h2 {
-        font-size: 1.5rem;
-      }
-    }
   }
 `;
 

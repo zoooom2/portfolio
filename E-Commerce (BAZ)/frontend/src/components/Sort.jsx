@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFilterContext } from '../context/filter_context';
-import { BsFillGridFill, BsList } from 'react-icons/bs';
+import { MdKeyboardArrowUp, MdKeyboardArrowDown } from 'react-icons/md';
 import styled from 'styled-components';
 const Sort = () => {
   const {
@@ -10,52 +10,44 @@ const Sort = () => {
     setListView,
     sort,
     updateSort,
+    openFilter,
+    toggleFilter,
   } = useFilterContext();
+
   return (
     <Wrapper>
-      <div className="btn-container">
-        <button
-          type="button"
-          onClick={setGridView}
-          className={`${grid_view ? 'active' : null}`}
-        >
-          <BsFillGridFill />
-        </button>
-        <button
-          type="button"
-          onClick={setListView}
-          className={`${!grid_view ? 'active' : null}`}
-        >
-          <BsList />
-        </button>
+      <p>{products.length} products</p>
+      <div className='filter-sort-flex'>
+        <div className='filter-arrow' onClick={toggleFilter}>
+          <p>Filter</p>
+          {openFilter ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
+        </div>
+
+        <form>
+          <select
+            name='sort'
+            id='sort'
+            value={sort}
+            onChange={updateSort}
+            className='sort-input'>
+            <option value='price-lowest'>Price (lowest)</option>
+            <option value='price-highest'>Price (highest)</option>
+            <option value='name-a'>name (a - z)</option>
+            <option value='name-z'>name (z - a)</option>
+          </select>
+        </form>
       </div>
-      <p>{products.length} products found</p>
-      <hr />
-      <form>
-        <label htmlFor="sort">sort by</label>
-        <select
-          name="sort"
-          id="sort"
-          value={sort}
-          onChange={updateSort}
-          className="sort-input"
-        >
-          <option value="price-lowest">Price (lowest)</option>
-          <option value="price-highest">Price (highest)</option>
-          <option value="name-a">name (a - z)</option>
-          <option value="name-z">name (z - a)</option>
-        </select>
-      </form>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.section`
-  display: grid;
-  grid-template-columns: auto auto 1fr auto;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  column-gap: 2rem;
+  padding: 1em;
+  width: 100%;
+  border-bottom: 1px solid black;
   @media (max-width: 576px) {
     display: grid;
     grid-template-columns: 1fr;
@@ -74,6 +66,12 @@ const Wrapper = styled.section`
   p {
     text-transform: capitalize;
     margin-bottom: 0;
+    font-family: 'Bell MT';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 22px;
+    letter-spacing: 0.1em;
   }
 
   .btn-container {
@@ -103,13 +101,31 @@ const Wrapper = styled.section`
 
   .sort-input {
     border-color: transparent;
-    font-size: 1rem;
     text-transform: capitalize;
     padding: 0.25rem 0.5rem;
+    font-family: 'Bell MT';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 22px;
+    letter-spacing: 0.05em;
+    outline: none;
+    border: none;
+    cursor: pointer;
   }
-  label {
-    font-size: 1rem;
-    text-transform: capitalize;
+  option {
+    cursor: pointer;
+  }
+  .filter-sort-flex {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+  }
+  .filter-arrow {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    cursor: pointer;
   }
 `;
 

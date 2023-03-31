@@ -7,6 +7,7 @@ import {
   UPDATE_FILTERS,
   FILTER_PRODUCTS,
   CLEAR_FILTERS,
+  TOGGLE_FILTER,
 } from '../actions';
 
 const filter_reducer = (state, action) => {
@@ -85,6 +86,9 @@ const filter_reducer = (state, action) => {
           shipping: false,
         },
       };
+    case TOGGLE_FILTER:
+      return { ...state, openFilter: !state.openFilter };
+
     default:
       throw new Error(`No Matching "${action.type}" - action type`);
   }

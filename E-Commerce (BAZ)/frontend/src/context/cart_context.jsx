@@ -48,10 +48,10 @@ export const CartProvider = ({ children }) => {
     shippingInfo: localShipping,
   });
 
-  const addToCart = (id, color, amount, product, size) => {
+  const addToCart = (id, amount, product, size) => {
     dispatch({
       type: ADD_TO_CART,
-      payload: { id, color, amount, product, size },
+      payload: { id, amount, product, size },
     });
   };
   const removeItem = (id) => {
@@ -111,8 +111,7 @@ export const CartProvider = ({ children }) => {
         handlePayStack,
         handlePaypal,
         handleStripe,
-      }}
-    >
+      }}>
       {children}
     </CartContext.Provider>
   );

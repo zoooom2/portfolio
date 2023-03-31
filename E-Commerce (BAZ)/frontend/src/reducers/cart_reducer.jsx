@@ -11,15 +11,11 @@ import {
 const cart_reducer = (state, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      const { id, color, amount, product, size } = action.payload;
+      const { id, amount, product, size } = action.payload;
       const tempItem = state.cart.find((i) => i.id === id);
       if (tempItem) {
         const tempCart = state.cart.map((cartItem) => {
-          if (
-            cartItem.id === id &&
-            cartItem.color === color &&
-            cartItem.size === size
-          ) {
+          if (cartItem.id === id && cartItem.size === size) {
             let newAmount = cartItem.amount + amount;
             if (newAmount > cartItem.max) {
               newAmount = cartItem.max;
@@ -32,9 +28,8 @@ const cart_reducer = (state, action) => {
         return { ...state, cart: tempCart };
       } else {
         const newItem = {
-          id: id + color + size,
+          id: id,
           name: product.productName,
-          color,
           amount,
           size,
           image: product.images[0],

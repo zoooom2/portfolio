@@ -13,101 +13,65 @@ const Filters = () => {
   } = useFilterContext();
 
   const categories = getUniqueValues(all_products, 'category');
-  const colors = getUniqueValues(all_products, 'color');
 
   return (
     <Wrapper>
-      <div className="content">
+      <div className='content'>
         <form onSubmit={(e) => e.preventDefault()}>
-          <div className="form-control">
+          <div className='form-control'>
             <input
-              type="text"
-              name="text"
-              className="search-input"
+              type='text'
+              name='text'
+              className='search-input'
               value={text}
               onChange={updateFilters}
-              placeholder="search"
+              placeholder='search'
             />
           </div>
-          <div className="form-control">
-            <h5>category</h5>
-            <div>
+          <div className='form-control sub-control'>
+            <span className='label'>Category:</span>
+            <select>
               {categories.map((c, index) => (
-                <button
+                <option
                   key={index}
-                  type="button"
-                  name="category"
+                  value={c.toLowerCase()}
+                  name='category'
                   onClick={updateFilters}
                   className={`${
                     category.toLowerCase() === c.toLowerCase() ? 'active' : null
-                  }`}
-                >
+                  }`}>
                   {c}
-                </button>
+                </option>
               ))}
-            </div>
+            </select>
           </div>
-          <div className="form-control">
-            <h5>colors</h5>
-            <div className="colors">
-              {colors.map((col, index) => {
-                if (col === 'all') {
-                  return (
-                    <button
-                      key={index}
-                      name="color"
-                      onClick={updateFilters}
-                      data-color="all"
-                      className={`${
-                        color === 'all' ? 'all-btn active' : 'all-btn'
-                      }`}
-                    >
-                      all
-                    </button>
-                  );
-                }
-                return (
-                  <button
-                    key={index}
-                    name="color"
-                    type="button"
-                    style={{ background: col }}
-                    className={`${
-                      color === col ? 'color-btn active' : 'color-btn'
-                    }`}
-                    data-color={col}
-                    onClick={updateFilters}
-                  >
-                    {color === col ? <FaCheck /> : null}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-          <div className="form-control">
-            <h5>price</h5>
-            <div className="price">{`₦${price}`}</div>
+
+          <div className='form-control sub-control'>
+            <div className='label'>Price:</div>
+            <div className='price'>{`₦${price}`}</div>
             <input
-              type="range"
-              name="price"
+              type='range'
+              name='price'
               onChange={updateFilters}
               min={min_price}
               max={max_price}
               value={price}
             />
           </div>
-          <div className="form-control shipping">
-            <label htmlFor="shipping">free shipping</label>
+          <div className='form-control shipping'>
+            <label htmlFor='shipping' className='label'>
+              free shipping
+            </label>
             <input
-              type="checkbox"
-              name="shipping"
-              id="shipping"
+              type='checkbox'
+              name='shipping'
+              id='shipping'
               onChange={updateFilters}
               checked={shipping}
             />
           </div>
         </form>
-        <button type="button" className="clear-btn" onClick={clearFilters}>
+        <button type='button' className='clear-btn' onClick={clearFilters}>
           clearFilters
         </button>
       </div>
@@ -116,18 +80,29 @@ const Filters = () => {
 };
 
 const Wrapper = styled.section`
+  .content {
+    background-color: white;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+  }
+  form {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2em;
+  }
   .form-control {
-    margin-bottom: 1.25rem;
-    h5 {
-      margin-bottom: 0.5rem;
-    }
+    margin-bottom: 1rem;
   }
   .search-input {
     padding: 0.5rem;
     background: var(--clr-grey-10);
     border-radius: var(--radius);
     border-color: transparent;
-    letter-spacing: var(--spacing);
+    letter-spacing: 0.1em;
+    font-family: poppins;
   }
   .search-input::placeholder {
     text-transform: capitalize;
@@ -153,29 +128,6 @@ const Wrapper = styled.section`
     border-radius: var(--radius);
     border-color: transparent;
     padding: 0.25rem;
-  }
-  .colors {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .color-btn {
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
-    background: #222;
-    margin-right: 0.5rem;
-    border: none;
-    cursor: pointer;
-    opacity: 0.5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    svg {
-      font-size: 0.5rem;
-      color: var(--clr-white);
-    }
   }
   .all-btn {
     display: flex;
@@ -206,6 +158,13 @@ const Wrapper = styled.section`
     color: var(--clr-white);
     padding: 0.25rem 0.5rem;
     border-radius: var(--radius);
+  }
+  .sub-control {
+    display: flex;
+    gap: 1em;
+  }
+  .label {
+    font-family: poppins;
   }
   @media (min-width: 768px) {
     .content {

@@ -1,17 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Filters, ProductList, Sort } from '../components';
+import { useFilterContext } from '../context/filter_context';
+import { getUniqueValues } from '../utils/helpers';
 
 const ProductsPage = () => {
+  const {
+    filters: { text, category, color, min_price, max_price, price, shipping },
+    updateFilters,
+    clearFilters,
+    all_products,
+    openFilter,
+  } = useFilterContext();
+  const collections = getUniqueValues(all_products, 'collectionName');
   return (
     <main>
-      <Wrapper className="page">
-        <div className="section-center products">
-          <Filters />
-          <div>
-            <Sort />
-            <ProductList />
+      <Wrapper className='page'>
+        <div className='pageHero'>
+          <select className='pageName'>
+            {collections.map((collection, index) => (
+              <option value={collection} key={index}>
+                {collection}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className='sort-filter'>
+          <Sort />
+          <div className={`filter ${openFilter && 'open'}`}>
+            <Filters />
           </div>
+        </div>
+
+        <div className='product-list'>
+          <ProductList />
         </div>
       </Wrapper>
     </main>
@@ -19,10 +41,48 @@ const ProductsPage = () => {
 };
 
 const Wrapper = styled.div`
-  .products {
-    display: grid;
-    gap: 3rem 1.5rem;
-    margin: 4rem auto;
+  padding-block: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .pageHero {
+    display: flex;
+    padding: 1.2em;
+    width: 100%;
+    border-bottom: 1px solid black;
+    justify-content: center;
+  }
+  .pageName {
+    font-family: 'Zilla Slab';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    /* identical to box height */
+    border: none;
+    outline: none;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+  }
+  option {
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    padding: 1em;
+  }
+  .sort-filter {
+    width: 100%;
+    position: relative;
+  }
+  .filter {
+    top: 100%;
+    z-index: 2;
+    border-bottom: 1px solid black;
+    padding: 1em;
+    display: none;
+  }
+  .open {
+    display: block;
   }
   @media (min-width: 768px) {
     .products {

@@ -5,11 +5,11 @@ import { FaCheck } from 'react-icons/fa';
 import { useCartContext } from '../context/cart_context';
 import AmountButtons from './AmountButtons';
 
-const AddToCart = ({ product, size }) => {
+const AddToCart = ({ product }) => {
   const { addToCart } = useCartContext();
-  const { _id: id, stock, category, color } = product;
-  const [mainColor, setMainColor] = useState(color[0]);
+  const { _id: id, stock, category } = product;
   const [amount, setAmount] = useState(1);
+  const [size, setSize] = useState('');
 
   const increase = () => {
     setAmount((oldAmount) => {
@@ -30,88 +30,88 @@ const AddToCart = ({ product, size }) => {
     });
   };
 
+  const handleClick = (e) => {
+    const value = e.target.value;
+    setSize(value);
+  };
+
   return (
-    <Wrapper>
-      <div className="colors">
-        <span>colors :</span>
-        <div>
-          {color.map((clr, index) => {
-            return (
-              <button
-                key={index}
-                style={{ background: clr }}
-                className={`${
-                  mainColor === clr ? 'color-btn active' : 'color-btn'
-                }`}
-                onClick={() => setMainColor(clr)}
-              >
-                {mainColor === clr ? <FaCheck /> : null}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-      <div className="btn-container">
-        <AmountButtons
-          increase={increase}
-          decrease={decrease}
-          amount={amount}
-        />
-      </div>
-      <Link
-        to="/cart"
-        className="btn"
-        onClick={() => addToCart(id, mainColor, amount, product, size)}
-      >
-        add to cart
-      </Link>
+    <Wrapper className='size'>
+      <AmountButtons increase={increase} decrease={decrease} amount={amount} />
+      <div className='size-guide'>size guide</div>
+      <select name='size' className='size-select' defaultValue={'medium'}>
+        <option onClick={handleClick} value='small'>
+          Small
+        </option>
+        <option onClick={handleClick} value='medium'>
+          Medium
+        </option>
+        <option onClick={handleClick} value='large'>
+          Large
+        </option>
+        <option onClick={handleClick} value='x-large'>
+          X-Large
+        </option>
+        <option onClick={handleClick} value='2x-large'>
+          2x-large
+        </option>
+      </select>
+      <button
+        className='add-cart-btn'
+        onClick={() => addToCart(id, amount, product, size)}>
+        Add To Cart
+      </button>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.section`
-  margin-top: 2rem;
-  .colors {
-    display: grid;
-    grid-template-columns: 125px 1fr;
-    align-items: center;
-    margin-bottom: 1rem;
-    span {
-      text-transform: capitalize;
-      font-weight: 700;
-    }
-    div {
-      display: flex;
-    }
-  }
-  .color-btn {
-    display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
-    background: #222;
-    margin-right: 0.5rem;
-    border: none;
-    cursor: pointer;
-    opacity: 0.5;
+const Wrapper = styled.div`
+  .size {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    svg {
-      font-size: 0.75rem;
-      color: var(--clr-white);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 24px;
+  }
+  .size-guide {
+    font-family: 'Bell MT';
+    font-size: 18px;
+    line-height: 20px;
+    /* identical to box height */
+    margin-left: auto;
+    text-decoration-line: underline;
+  }
+  .size-select {
+    padding: 31.5px 24px;
+    gap: 15px;
+    width: 100%;
+    border: 1.5px solid black;
+    // drop down arrow
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1.5rem center;
+    background-size: 1em;
+    cursor: pointer;
+  }
+  .add-cart-btn {
+    padding-block: 1em;
+    gap: 15px;
+    background: #000000;
+    border: 1.5px solid #000000;
+    width: 100%;
+    font-family: 'Zilla Slab';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+    color: #ffffff;
+    transition: var(--transition);
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.01);
     }
-  }
-  .active {
-    opacity: 1;
-  }
-  .btn-container {
-    margin-top: 2rem;
-  }
-
-  .btn {
-    margin-top: 1rem;
-    width: 140px;
   }
 `;
 export default AddToCart;

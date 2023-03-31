@@ -11,12 +11,13 @@ import Filters from './Filters';
 import ProductList from './ProductList';
 import Sort from './Sort';
 import Stars from './Stars';
-import CartContent from './CarContent';
+import CartContent from './CartContent';
 import PageHero from './PageHero';
 import ImageSlider from './ImageSlider';
 import HomeAbout from './HomeAbout';
 import Lists from './ProfileMenu';
 import MenuDetails from './MenuDetails';
+import Conditions from './Conditions';
 export {
   Navbar,
   CartButtons,
@@ -37,4 +38,5 @@ export {
   HomeAbout,
   Lists,
   MenuDetails,
+  Conditions,
 };

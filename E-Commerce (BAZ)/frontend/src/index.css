@@ -6,6 +6,9 @@ Variables
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 :root {
   /* dark shades of primary color*/
   --clr-primary-1: rgb(0, 0, 0);
@@ -211,4 +214,4 @@ p {
   font-family: 'Dancing Script', cursive;
   color: rgb(119, 0, 32);
   letter-spacing: 2.5px;
-}
+} 

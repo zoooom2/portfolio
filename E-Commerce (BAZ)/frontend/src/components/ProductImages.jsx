@@ -5,13 +5,13 @@ const ProductImages = ({ images = [] }) => {
   const [index, setIndex] = useState(0);
   return (
     <Wrapper>
-      <img src={`/productImage/${images[index]}`} alt="main" className="main" />
-      <div className="gallery">
+      <img src={`/productImage/${images[index]}`} alt='main' className='main' />
+      <div className='gallery'>
         {images.map((image, count) => {
           return (
             <img
               src={`/productImage/${image}`}
-              alt=""
+              alt=''
               key={count}
               className={`${image === images[index] ? 'active' : null}`}
               onClick={() => setIndex(count)}
@@ -29,7 +29,6 @@ const Wrapper = styled.section`
   }
   img {
     width: 100%;
-    display: block;
     border-radius: var(--radius);
     object-fit: cover;
   }
@@ -38,6 +37,7 @@ const Wrapper = styled.section`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     column-gap: 1rem;
+
     img {
       height: 100px;
       cursor: pointer;

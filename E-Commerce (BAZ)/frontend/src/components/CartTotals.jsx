@@ -4,54 +4,42 @@ import { useCartContext } from '../context/cart_context';
 import { useUserContext } from '../context/user_context';
 import { formatPrice } from '../utils/helpers';
 import { Link } from 'react-router-dom';
+import Conditions from './Conditions';
 
 const CartTotals = () => {
   const { total_amount } = useCartContext();
   return (
     <Wrapper>
-      <div>
-        <article>
-          <h4>
-            Total: <span>{`₦${total_amount}`}</span>
-          </h4>
-        </article>
-        <Link to="/checkout" className="btn">
-          proceed to checkout
-        </Link>
+      <div className='subtotal-price'>
+        <div className='subtotal'>Subtotal:</div>
+        <div className='price'>₦{total_amount}</div>
       </div>
+      <Conditions />
+      <button className='checkout-btn'>Checkout</button>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.section`
-  margin-top: 3rem;
-  display: flex;
-  justify-content: center;
-  article {
-    border: 1px solid var(--clr-grey-8);
-    border-radius: var(--radius);
-    padding: 1.5rem 3rem;
+  padding: 3em;
+  .subtotal-price {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.5px;
   }
-  h4,
-  h5,
-  p {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-  }
-  p {
-    text-transform: capitalize;
-  }
-  h4 {
-    margin-top: 2rem;
-  }
-  @media (min-width: 776px) {
-    justify-content: flex-end;
-  }
-  .btn {
-    width: 100%;
-    margin-top: 1rem;
-    text-align: center;
+  .checkout-btn {
+    padding: 30px 195px;
+    gap: 15px;
+    font-family: 'Zilla Slab';
+    font-style: normal;
     font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+    color: #000000;
   }
 `;
 

@@ -1,4 +1,4 @@
-import AboutPage from './AboutPage';
+import ThesisPage from './ThesisPage';
 import CartPage from './CartPage';
 import CheckoutPage from './CheckoutPage';
 import ErrorPage from './ErrorPage';
@@ -10,9 +10,10 @@ import LoginPage from './LoginPage';
 import Signup from './Signup';
 import RedirectPage from './RedirectionPage';
 import Profile from './UserProfilePage';
+import ContactPage from './ContactPage';
 
 export {
-  AboutPage,
+  ThesisPage,
   CheckoutPage,
   ErrorPage,
   HomePage,
@@ -24,4 +25,5 @@ export {
   Signup,
   RedirectPage,
   Profile,
+  ContactPage,
 };

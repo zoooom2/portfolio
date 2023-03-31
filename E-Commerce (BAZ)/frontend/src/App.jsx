@@ -8,7 +8,7 @@ import {
 import { Navbar, Sidebar, Footer } from './components';
 import {
   HomePage,
-  AboutPage,
+  ThesisPage,
   CartPage,
   ProductPage,
   SingleProductPage,
@@ -19,6 +19,7 @@ import {
   Signup,
   RedirectPage,
   Profile,
+  ContactPage,
 } from './pages';
 import { useUserContext } from './context/user_context';
 
@@ -31,10 +32,11 @@ const App = () => {
       <Sidebar />
       <Routes>
         <Route exact path='/' element={<HomePage />} />
-        {/* <Route exact path='/cart' element={<CartPage />} /> */}
-        {/* <Route exact path='/about' element={<AboutPage />} /> */}
-        {/* <Route exact path='/products' element={<ProductPage />} /> */}
-        <Route exact path='/product/:id' element={<SingleProductPage />} />
+        <Route exact path='/contact' element={<ContactPage />} />
+        <Route exact path='/cart' element={<CartPage />} />
+        <Route exact path='/thesis' element={<ThesisPage />} />
+        <Route exact path='/shop' element={<ProductPage />} />
+        <Route exact path='/shop/:id' element={<SingleProductPage />} />
         {/* <Route path='/redirect' element={<RedirectPage />} /> */}
         {/* <Route
           exact

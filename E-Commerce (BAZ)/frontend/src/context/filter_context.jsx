@@ -9,6 +9,7 @@ import {
   UPDATE_FILTERS,
   FILTER_PRODUCTS,
   CLEAR_FILTERS,
+  TOGGLE_FILTER,
 } from '../actions';
 import { useProductsContext } from './products_context';
 
@@ -17,6 +18,7 @@ const initialState = {
   all_product: [],
   grid_view: true,
   sort: 'price-lowest',
+  openFilter: false,
   filters: {
     text: '',
     category: 'all',
@@ -50,6 +52,10 @@ export const FilterProvider = ({ children }) => {
     dispatch({ type: SET_LISTVIEW });
   };
 
+  const toggleFilter = () => {
+    dispatch({ type: TOGGLE_FILTER });
+  };
+
   const updateSort = (e) => {
     const value = e.target.value;
     dispatch({ type: UPDATE_SORT, payload: value });
@@ -80,8 +86,8 @@ export const FilterProvider = ({ children }) => {
         updateSort,
         updateFilters,
         clearFilters,
-      }}
-    >
+        toggleFilter,
+      }}>
       {children}
     </FilterContext.Provider>
   );
