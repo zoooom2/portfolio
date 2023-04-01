@@ -1,5 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+require 'path/to/PHPMailer/src/PHPMailer.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -8,10 +9,10 @@ if($_SERVER['HTTP_REFERER'] === "http://localhost:3000/"){
     // extract the data from $_POST
     $name = isset($_GET['name']) ? $_GET['name'] : null;
     $message = isset($_GET['message']) ? $_GET['message'] : null;
-    $email = isset($_GET['sendto']) ? $_GET['sendto'] : null;
+    $email = isset($_GET['email']) ? $_GET['email'] : null;
 
     if($name && $message && $email){
-    
+
         //Load composer's autoloader
         require 'vendor/autoload.php';
 
@@ -21,8 +22,8 @@ if($_SERVER['HTTP_REFERER'] === "http://localhost:3000/"){
             $mail->isSMTP();                                      // Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                // Set the SMTP server to send through
             $mail->SMTPAuth   = true;                             // Enable SMTP authentication
-            $mail->Username   = 'adeyinkaroqeeb@gmail.com';           // SMTP username
-            $mail->Password   = 'roqeeb2000';                        // SMTP password
+            $mail->Username   = '';           // SMTP username
+            $mail->Password   = '';                        // SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
             $mail->Port       = 587;
 
@@ -43,7 +44,7 @@ if($_SERVER['HTTP_REFERER'] === "http://localhost:3000/"){
             echo "Message couldn't be sent. Error: ", $mail->ErrorInfo;
         }
     }else{
-        echo "All the fileds are required!";
+        echo "All the fields are required!";
     }
 }else{
     echo "You can't use this server!";
