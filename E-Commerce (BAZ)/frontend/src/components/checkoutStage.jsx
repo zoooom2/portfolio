@@ -1,0 +1,47 @@
+import React, { useState, useEffect } from 'react';
+
+import styled from 'styled-components';
+import { checkoutStage } from '../utils/constants';
+
+const CheckoutStage = ({ position }) => {
+  const [stage, setStage] = useState(1);
+
+  useEffect(() => {
+    setStage(position);
+  }, [position]);
+
+  return (
+    <Wrapper>
+      {checkoutStage.map((i) => (
+        <li
+          key={i.id}
+          value={i.id}
+          className={stage === i.id ? 'active' : null}>
+          {i.stage}
+        </li>
+      ))}
+    </Wrapper>
+  );
+};
+const Wrapper = styled.ul`
+  display: flex;
+  width: 100%;
+  font-family: 'Zilla Slab';
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 25px;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid black;
+
+  li {
+    display: grid;
+    place-items: center;
+    width: calc(100% / 3);
+    padding: 0.5em;
+  }
+  .active {
+    background: black;
+    color: white;
+  }
+`;
+export default CheckoutStage;

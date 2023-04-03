@@ -1,5 +1,3 @@
-import React from 'react';
-import { GiCompass, GiDiamondHard, GiStabbedNote } from 'react-icons/gi';
 import {
   image1,
   image2,
@@ -35,6 +33,46 @@ export const links = [
     url: '/delivery',
   },
 ];
+
+export const checkoutStage = [
+  {
+    stage: 'information',
+    id: 1,
+  },
+  {
+    stage: 'shipping',
+    id: 2,
+  },
+  {
+    stage: 'payment',
+    id: 3,
+  },
+];
+
+export const placeholderStyle = {
+  fontFamily: 'Poppins',
+  fontWeight: 400,
+  fontSize: '10px',
+  lineHeight: '22px',
+  color: 'black',
+};
+
+export const selectStyle = {
+  fontFamily: 'Poppins',
+  fontWeight: 400,
+  letterSpacing: '0.05em',
+  lineHeight: '22px',
+  fontSize: '11px',
+  color: 'black',
+  border: '1.5px solid #a6a6a6',
+  borderRadius: 'none',
+  padding: '1em',
+};
+
+export const priceFormat = (price) =>
+  `₦${new Intl.NumberFormat({
+    style: 'currency',
+  }).format(price)}`;
 
 export const featuredSlide1 = [image1, image2, image3, img, img2];
 export const featuredSlide2 = [img1, img3, img4, img5, img6, img7];

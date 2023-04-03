@@ -38,7 +38,7 @@ router
   .route('/')
   .post(
     multipleSinglePhotos({ name: 'coverImages', maxCount: 4 }),
-    resizeMultiplePhotos(2000, 1333, 'product', 'productImage'),
+    resizeMultiplePhotos(1024, 1280, 'product', 'productImage'),
     uploadProduct
   );
 router.route('/:id').delete(deleteProduct).patch(updateProduct);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useProductsContext } from '../context/products_context';
-import { single_product_url as url } from '../utils/constants';
+import { priceFormat, single_product_url as url } from '../utils/constants';
 import {
   Loading,
   Error,
@@ -67,7 +67,9 @@ const SingleProductPage = () => {
         <div className='product-details-center'>
           <div className='name-price'>
             <div className='product-name'>{productName}</div>
-            <div className='product-price'>{`₦${price}`}</div>
+            <div className='product-price'>
+              {priceFormat(price)}
+            </div>
           </div>
           <p className='desc'>{description}</p>
           {stock > 0 ? (

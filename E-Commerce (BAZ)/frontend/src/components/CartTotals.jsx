@@ -12,16 +12,39 @@ const CartTotals = () => {
     <Wrapper>
       <div className='subtotal-price'>
         <div className='subtotal'>Subtotal:</div>
-        <div className='price'>₦{total_amount}</div>
+        <div className='price'>
+          ₦
+          {new Intl.NumberFormat({
+            style: 'currency',
+          }).format(total_amount)}
+        </div>
       </div>
       <Conditions />
-      <button className='checkout-btn'>Checkout</button>
+      <div className='toCheckout'>
+        <Link to='/checkout/information' className='checkout-btn'>
+          Checkout
+        </Link>
+      </div>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.section`
-  padding: 3em;
+  padding: 5em;
+  .subtotal {
+    font-family: 'Bell MT';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 23px;
+  }
+  .price {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 45px;
+  }
   .subtotal-price {
     display: flex;
     flex-direction: column;
@@ -29,16 +52,26 @@ const Wrapper = styled.section`
     align-items: flex-start;
     gap: 1.5px;
   }
+
   .checkout-btn {
-    padding: 30px 195px;
     gap: 15px;
+    display: grid;
+    padding-block: 30px;
+    grid-template-columns: 1fr;
+    text-align: center;
+    width: 100%;
     font-family: 'Zilla Slab';
-    font-style: normal;
     font-weight: 700;
     font-size: 24px;
     line-height: 29px;
+    border: 1.5px solid black;
+    background: transparent;
+    transition: var(--transition);
+    &:hover {
+      color: white;
+      background-color: black;
+    }
     /* identical to box height */
-
     color: #000000;
   }
 `;

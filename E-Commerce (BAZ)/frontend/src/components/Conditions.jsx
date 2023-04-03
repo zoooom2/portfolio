@@ -37,6 +37,7 @@ const Wrapper = styled.ul`
   align-items: flex-start;
   gap: 18px;
   width: 100%;
+  margin-block: 2em;
   li {
     display: flex;
     align-items: center;

@@ -21,10 +21,11 @@ import {
   Profile,
   ContactPage,
 } from './pages';
-import { useUserContext } from './context/user_context';
+
+import { useCartContext } from './context/cart_context';
 
 const App = () => {
-  const { isAuthenticated } = useUserContext();
+  const { cart } = useCartContext();
 
   return (
     <Router>
@@ -38,33 +39,30 @@ const App = () => {
         <Route exact path='/shop' element={<ProductPage />} />
         <Route exact path='/shop/:id' element={<SingleProductPage />} />
         {/* <Route path='/redirect' element={<RedirectPage />} /> */}
-        {/* <Route
+        <Route
           exact
-          path='/checkout'
-          element={isAuthenticated ? <CheckoutPage /> : <LoginPage />}
+          path='/checkout/:params'
+          element={cart ? <CheckoutPage /> : <CartPage />}
         />
         <Route
           exact
           path='/pay'
-          element={isAuthenticated ? <PaymentGateway /> : <LoginPage />}
+          element={cart ? <PaymentGateway /> : <LoginPage />}
         />
-
-        <Route
+        {/* <Route
           exact
           path='/login'
           element={isAuthenticated ? <Navigate to='/' /> : <LoginPage />}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path='/signup'
           element={isAuthenticated ? <Navigate to='/' /> : <Signup />}
-        />
-
-        <Route
+        /> */}
+        {/* <Route
           path='/profile'
           element={isAuthenticated ? <Profile /> : <LoginPage />}
-        />
-
-        <Route path='*' element={<ErrorPage />} /> */}
+        /> */}
+        <Route path='*' element={<ErrorPage />} />
       </Routes>
       {/* <Footer /> */}
     </Router>

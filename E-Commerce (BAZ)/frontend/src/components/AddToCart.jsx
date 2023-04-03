@@ -39,26 +39,26 @@ const AddToCart = ({ product }) => {
     <Wrapper className='size'>
       <AmountButtons increase={increase} decrease={decrease} amount={amount} />
       <div className='size-guide'>size guide</div>
-      <select name='size' className='size-select' defaultValue={'medium'}>
-        <option onClick={handleClick} value='small'>
-          Small
+      <select
+        name='size'
+        className='size-select'
+        defaultValue={'none'}
+        onChange={handleClick}>
+        <option value='none' disabled>
+          Select a Size
         </option>
-        <option onClick={handleClick} value='medium'>
-          Medium
-        </option>
-        <option onClick={handleClick} value='large'>
-          Large
-        </option>
-        <option onClick={handleClick} value='x-large'>
-          X-Large
-        </option>
-        <option onClick={handleClick} value='2x-large'>
-          2x-large
-        </option>
+        <option value='small'>Small</option>
+        <option value='medium'>Medium</option>
+        <option value='large'>Large</option>
+        <option value='x-large'>X-Large</option>
+        <option value='2x-large'>2x-large</option>
       </select>
       <button
         className='add-cart-btn'
-        onClick={() => addToCart(id, amount, product, size)}>
+        onClick={() => {
+          addToCart(id, amount, product, size);
+        }}
+        disabled={size ? false : true}>
         Add To Cart
       </button>
     </Wrapper>

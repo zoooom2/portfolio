@@ -38,7 +38,6 @@ const Wrapper = styled.article`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 0.5em;
   }
 
   footer {

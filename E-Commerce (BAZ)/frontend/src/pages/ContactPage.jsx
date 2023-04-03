@@ -52,7 +52,6 @@ const Wrapper = styled.section`
   align-items: center;
   .pageName {
     font-family: 'Zilla Slab';
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;
@@ -63,29 +62,22 @@ const Wrapper = styled.section`
     margin: 1.5em;
   }
   main {
-    width: 100%;
     border-block: 1px solid black;
-    display: flex;
-    width: 100%;
-    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
   }
   main > * {
     display: flex;
     flex-direction: column;
-    width: calc(100% / 3);
     font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
     font-size: 20px;
     line-height: 200.5%;
-    /* or 40px */
     letter-spacing: 0.1em;
   }
   main > * > h3 {
     border-bottom: 1px solid black;
     padding: 0.2em;
     font-family: 'Zilla Slab';
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;

@@ -10,6 +10,7 @@ import {
   COUNT_CART_TOTALS,
   UPDATE_SHIPPING,
   CLEAR_SHIPPING,
+  SET_CART_AMOUNT,
 } from '../actions';
 import useLocalStorage from '../utils/customHooks/localStorage';
 import { useUserContext } from './user_context';
@@ -18,6 +19,7 @@ const initialState = {
   cart: [],
   total_items: 0,
   total_amount: 0,
+
   shippingInfo: {
     firstName: '',
     lastName: '',
@@ -29,6 +31,8 @@ const initialState = {
     phoneNumber: '',
     postCode: '',
     email: '',
+    shippingMethod: '',
+    shippingFee: 0,
   },
 };
 
@@ -59,6 +63,9 @@ export const CartProvider = ({ children }) => {
   };
   const toggleAmount = (id, value) => {
     dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } });
+  };
+  const setAmount = (id, value) => {
+    dispatch({ type: SET_CART_AMOUNT, payload: { id, value } });
   };
   const clearCart = () => {
     dispatch({ type: CLEAR_CART });
@@ -105,6 +112,7 @@ export const CartProvider = ({ children }) => {
         addToCart,
         removeItem,
         toggleAmount,
+        setAmount,
         clearCart,
         updateShipping,
         clearShipping,

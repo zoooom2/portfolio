@@ -18,6 +18,11 @@ import HomeAbout from './HomeAbout';
 import Lists from './ProfileMenu';
 import MenuDetails from './MenuDetails';
 import Conditions from './Conditions';
+import CheckoutStage from './checkoutStage';
+import BillingInfo from './BillingInfo';
+import CartSummary from './CartSummary';
+import Shipping from './Shipping';
+import Payment from './Payment';
 export {
   Navbar,
   CartButtons,
@@ -39,4 +44,9 @@ export {
   Lists,
   MenuDetails,
   Conditions,
+  CheckoutStage,
+  BillingInfo,
+  CartSummary,
+  Shipping,
+  Payment,
 };

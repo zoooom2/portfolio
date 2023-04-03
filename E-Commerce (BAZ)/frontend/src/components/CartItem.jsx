@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { formatPrice } from '../utils/helpers';
 import AmountButtons from './AmountButtons';
 import { FaTrash } from 'react-icons/fa';
 import { useCartContext } from '../context/cart_context';
+import { priceFormat } from '../utils/constants';
 
 const CartItem = ({ id, image, name, price, size }) => {
-  const { removeItem, toggleAmount } = useCartContext();
-  const increase = () => {
-    toggleAmount(id, 'inc');
+  const { removeItem, setAmount } = useCartContext();
+  const [quantity, setQuantity] = useState(1);
+
+  const handleChange = (e) => {
+    // let value;
+    // if (e.target.value && e.target.value > 0) {
+    //   value = e.target.value;
+    //   if (value > 500) {
+    //     value = 500;
+    //   }
+    //   setQuantity(value);
+    //   setAmount(id, value);
+    // } else {
+    //   setQuantity('');
+    //   setAmount(id, 0);
+    // }
   };
-  const decrease = () => {
-    toggleAmount(id, 'dec');
-  };
+
   return (
     <Wrapper>
       <img src={`/productImage/${image}`} alt='' className='productImage' />
       <div className='product-details'>
-        <div className='name-size'>{`${name}-${size}`}</div>
-        <div className='price'>₦{price}</div>
+        <div className='name'>{name}</div>
+        <div className='size'>Size: {size}</div>
+        <div className='price'>{priceFormat(price)}</div>
         <div className='quantityForm-remove'>
           <div className='quantityForm'>
             <label htmlFor='quantity'>Quantity</label>
@@ -26,10 +39,13 @@ const CartItem = ({ id, image, name, price, size }) => {
               type='number'
               name='quantity'
               id='quantity'
+              max={100}
+              value={quantity}
               className='quantity'
+              onChange={handleChange}
             />
           </div>
-          <button className='remove-btn' onClick={removeItem}>
+          <button className='remove-btn' onClick={() => removeItem(id)}>
             Remove
           </button>
         </div>
@@ -61,6 +77,14 @@ const Wrapper = styled.section`
     line-height: 25px;
     letter-spacing: 0.1em;
   }
+  .name {
+    font-family: 'Bell-MT';
+    font-style: normal;
+    font-size: 20px;
+    line-height: 45px;
+    text-transform: capitalize;
+  }
+
   .price {
     font-family: 'Poppins';
     font-style: normal;
@@ -92,6 +116,14 @@ const Wrapper = styled.section`
     align-items: flex-start;
     padding: 0px;
     gap: 6px;
+  }
+  .size {
+    font-family: 'Bell MT';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 27px;
+    text-transform: capitalize;
   }
   .quantity {
     display: flex;

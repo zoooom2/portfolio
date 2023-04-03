@@ -6,13 +6,14 @@ import {
   TOGGLE_CART_ITEM_AMOUNT,
   UPDATE_SHIPPING,
   CLEAR_SHIPPING,
+  SET_CART_AMOUNT,
 } from '../actions';
 
 const cart_reducer = (state, action) => {
   switch (action.type) {
     case ADD_TO_CART:
       const { id, amount, product, size } = action.payload;
-      const tempItem = state.cart.find((i) => i.id === id);
+      const tempItem = state.cart.find((i) => i.id === id && i.size === size);
       if (tempItem) {
         const tempCart = state.cart.map((cartItem) => {
           if (cartItem.id === id && cartItem.size === size) {
@@ -25,6 +26,7 @@ const cart_reducer = (state, action) => {
             return cartItem;
           }
         });
+
         return { ...state, cart: tempCart };
       } else {
         const newItem = {
@@ -35,7 +37,6 @@ const cart_reducer = (state, action) => {
           image: product.images[0],
           price: product.price,
           max: product.stock,
-          product: id,
         };
         return { ...state, cart: [...state.cart, newItem] };
       }
@@ -44,6 +45,7 @@ const cart_reducer = (state, action) => {
       return { ...state, cart: temp };
     case CLEAR_CART:
       return { ...state, cart: [] };
+
     case TOGGLE_CART_ITEM_AMOUNT:
       const { id: sid, value } = action.payload;
       const tempCart = state.cart.map((item) => {
@@ -67,6 +69,15 @@ const cart_reducer = (state, action) => {
         }
       });
       return { ...state, cart: tempCart };
+    case SET_CART_AMOUNT:
+      const tempCarts = state.cart.map((item) => {
+        if (item.id === action.payload.id) {
+          return { ...item, amount: action.payload.value };
+        } else {
+          return { ...item };
+        }
+      });
+      return { ...state, cart: tempCarts };
     case COUNT_CART_TOTALS:
       const { total_items, total_amount } = state.cart.reduce(
         (total, cartItem) => {
