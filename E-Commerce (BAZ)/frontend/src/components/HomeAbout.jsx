@@ -3,11 +3,11 @@ import { FaSketch } from 'react-icons/fa';
 
 export const HomeAbout = () => {
   return (
-    <Wrapper>
-      <div className="icon">
-        <FaSketch className="diamond" />
+    <Wrapper className='place-center flex-column'>
+      <div className='icon'>
+        <FaSketch className='diamond' />
       </div>
-      <p className="aboutus">
+      <p className='aboutus'>
         Beads by Kaph is a deluxe brand that makes and sells exquisitely crafted
         beaded accessories. Our products are centered on contemporary, classic
         and timeless designs and are exclusively for stylish people. Kaph
@@ -25,10 +25,7 @@ const Wrapper = styled.section`
   width: 95%;
   padding: 2rem;
   background: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
   flex-gap: 1em;
   .aboutus {
     text-justify: auto;

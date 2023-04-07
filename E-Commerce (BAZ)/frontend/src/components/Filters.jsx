@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useFilterContext } from '../context/filter_context';
 import { getUniqueValues, formatPrice } from '../utils/helpers';
 import { FaCheck } from 'react-icons/fa';
+import { priceFormat } from '../utils/constants';
 
 const Filters = () => {
   const {
@@ -48,7 +49,7 @@ const Filters = () => {
 
           <div className='form-control sub-control'>
             <div className='label'>Price:</div>
-            <div className='price'>{`₦${price}`}</div>
+            <div className='price'>{priceFormat(price)}</div>
             <input
               type='range'
               name='price'
@@ -80,21 +81,34 @@ const Filters = () => {
 };
 
 const Wrapper = styled.section`
-  .content {
+  display: flex;
+  width: 100%;
+   .content {
     background-color: white;
     width: 100%;
     display: flex;
     align-items: flex-start;
     justify-content: space-around;
+    
   }
+
   form {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 2em;
+    @media (max-width: 768px) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1em;
+    }
   }
   .form-control {
     margin-bottom: 1rem;
+  }
+  input {
+    margin-block: 0;
   }
   .search-input {
     padding: 0.5rem;
@@ -161,7 +175,8 @@ const Wrapper = styled.section`
   }
   .sub-control {
     display: flex;
-    gap: 1em;
+    gap: 0.5em;
+    align-items: center;
   }
   .label {
     font-family: poppins;

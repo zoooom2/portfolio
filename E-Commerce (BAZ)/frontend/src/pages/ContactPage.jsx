@@ -3,7 +3,7 @@ import { BsTwitter, BsInstagram } from 'react-icons/bs';
 
 const ContactPage = () => {
   return (
-    <Wrapper>
+    <Wrapper className='flex-column'>
       <h3 className='pageName'>Contact</h3>
       <main>
         <div className='call'>
@@ -20,7 +20,7 @@ const ContactPage = () => {
         </div>
         <div className='social-media'>
           <h3>Social Media</h3>
-          <ul>
+          <ul className='flex-column'>
             <li>
               <BsTwitter />
               <a
@@ -47,9 +47,8 @@ const ContactPage = () => {
 };
 
 const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
   align-items: center;
+  width: 100%;
   .pageName {
     font-family: 'Zilla Slab';
     font-weight: 600;
@@ -60,11 +59,17 @@ const Wrapper = styled.section`
     display: flex;
     justify-content: center;
     margin: 1.5em;
+    width: 100%;
   }
   main {
     border-block: 1px solid black;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    @media (max-width: 927px) {
+      grid-template-columns: 1fr;
+      gap 1em;
+    }
   }
   main > * {
     display: flex;
@@ -79,16 +84,19 @@ const Wrapper = styled.section`
     padding: 0.2em;
     font-family: 'Zilla Slab';
     font-weight: 600;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 29px;
     /* identical to box height */
     letter-spacing: 0.1em;
     display: flex;
     justify-content: center;
+   
   }
   main > * > a {
-    margin: auto auto;
+    display:grid;
+    place-items:center;
     padding: 2em;
+    
   }
   .mail {
     border-inline: 1px solid black;
@@ -97,18 +105,20 @@ const Wrapper = styled.section`
     color: black;
   }
   span {
+     @media(max-width:380px){
+      font-size:16px;
+    }
     &:hover {
       text-decoration: underline;
     }
   }
   ul {
-    display: flex;
-    flex-direction: column;
     padding: 2em;
   }
   li {
     display: flex;
     align-items: center;
+    justify-content:center;
     gap: 2em;
   }
 `;

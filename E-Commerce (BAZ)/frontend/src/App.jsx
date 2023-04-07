@@ -23,9 +23,11 @@ import {
 } from './pages';
 
 import { useCartContext } from './context/cart_context';
+import { useUserContext } from './context/user_context';
 
 const App = () => {
   const { cart } = useCartContext();
+  const { isAuthenticated } = useUserContext();
 
   return (
     <Router>
@@ -49,11 +51,11 @@ const App = () => {
           path='/pay'
           element={cart ? <PaymentGateway /> : <LoginPage />}
         />
-        {/* <Route
+        <Route
           exact
           path='/login'
           element={isAuthenticated ? <Navigate to='/' /> : <LoginPage />}
-        /> */}
+        />
         {/* <Route
           path='/signup'
           element={isAuthenticated ? <Navigate to='/' /> : <Signup />}

@@ -56,7 +56,7 @@ const filter_reducer = (state, action) => {
       return { ...state, filters: { ...state.filters, [name]: value } };
     case FILTER_PRODUCTS:
       const { all_products } = state;
-      const { text, category, color, price, shipping } = state.filters;
+      const { text, category, color, price, collection } = state.filters;
       let temp = [...all_products];
       if (text) {
         temp = temp.filter((product) =>
@@ -70,9 +70,9 @@ const filter_reducer = (state, action) => {
         temp = temp.filter((product) => product.color.find((c) => c === color));
       }
       temp = temp.filter((product) => product.price <= price);
-      // if (shipping) {
-      //   temp = temp.filter((product) => product.shipping === true);
-      // }
+      if (collection !== 'all') {
+        temp = temp.filter((product) => product.collectionName === collection);
+      }
       return { ...state, filtered_product: temp };
     case CLEAR_FILTERS:
       return {
@@ -83,7 +83,7 @@ const filter_reducer = (state, action) => {
           category: 'all',
           color: 'all',
           price: state.filters.max_price,
-          shipping: false,
+          collection: 'all',
         },
       };
     case TOGGLE_FILTER:

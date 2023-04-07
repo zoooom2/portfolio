@@ -15,8 +15,8 @@ const CheckoutPage = () => {
 
   return (
     <main>
-      <Wrapper>
-        <div className='pageHero'>
+      <Wrapper className='flex-column place-center'>
+        <div className='pageHero flex-column place-center'>
           <h3 className='pageName'>Checkout</h3>
           <button className='backToCart-btn'>Back to Cart</button>
         </div>
@@ -32,19 +32,10 @@ const CheckoutPage = () => {
   );
 };
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   margin-inline: 0;
   width: 100%;
-
   padding-block: 1em;
   .pageHero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     padding-block: 0.8em;
     width: 100%;
     border-bottom: 1px solid black;
@@ -60,7 +51,6 @@ const Wrapper = styled.div`
   }
   .backToCart-btn {
     font-family: 'Poppins';
-    font-weight: 400;
     font-size: 14px;
     line-height: 21px;
     /* identical to box height */
@@ -70,11 +60,19 @@ const Wrapper = styled.div`
     cursor: pointer;
   }
   .details {
-    width: 40%;
+    width: 100%;
     display: grid;
     place-items: center;
-    @media (max-width: 720px) {
+
+    padding-inline: 1em;
+    @media (min-width: 480px) {
       width: 95%;
+    }
+    @media (min-width: 768px) {
+      width: 70%;
+    }
+    @media (min-width: 1024px) {
+      width: 50%;
     }
   }
 `;

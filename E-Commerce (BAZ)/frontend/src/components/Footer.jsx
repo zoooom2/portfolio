@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 const Footer = () => {
   return (
-    <Wrapper>
+    <Wrapper className='flex-column place-center'>
       <h5>
         &copy; {new Date().getFullYear()} <span> Beads By Kaph</span>
       </h5>
@@ -13,10 +13,6 @@ const Footer = () => {
 
 const Wrapper = styled.footer`
   height: 5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background: var(--clr-black);
   text-align: center;
   span {

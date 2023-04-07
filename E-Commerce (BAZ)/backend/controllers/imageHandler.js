@@ -1,7 +1,25 @@
 const multer = require('multer');
 const sharp = require('sharp');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET_KEY,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'product images',
+    allowed_formats: ['jpg', 'png'],
+    transformation: [{ width: 500, height: 500, crop: 'limit' }],
+    public_id: (req, file) => file.originalname,
+  },
+});
 
 const multerStorage = multer.memoryStorage();
 
@@ -13,13 +31,28 @@ const multerFilter = (req, file, cb) => {
   }
 };
 
+const cloudUpload = multer({ storage: storage, fileFilter: multerFilter });
+
 const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 
-exports.uploadPhoto = (image) => upload.single(image);
-
-exports.multiplePhotos = (entries) => upload.fields([...entries]);
-exports.multipleSinglePhotos = (entry) =>
-  upload.array(entry.name, entry.maxCount);
+exports.uploadPhoto = (image, uploadType) => {
+  if (uploadType && uploadType === 'multerUpload') {
+    return upload.single(image);
+  }
+  return cloudUpload.single(image);
+};
+exports.multiplePhotos = (entries, uploadType) => {
+  if (uploadType && uploadType === 'multerUpload') {
+    return upload.fields([...entries]);
+  }
+  return cloudUpload.fields([...entries]);
+};
+exports.multipleSinglePhotos = (entry, uploadType) => {
+  if (uploadType && uploadType === 'multerUpload') {
+    return upload.array(entry.name, entry.maxCount);
+  }
+  return cloudUpload.array(entry.name, entry.maxCount);
+};
 
 exports.resizePhoto = (length, width, name, location) =>
   catchAsync(async (req, res, next) => {
@@ -55,7 +88,7 @@ exports.resizeMultiplePhotos = (length, width, name, location) =>
           .resize(length, width)
           .toFormat('jpeg')
           .jpeg({ quality: 90 })
-          .toFile(`./public/img/${location}/${filename}`);
+          .toFile(`../../frontend/public/${location}/${filename}`);
 
         req.body.images.push(filename);
       })

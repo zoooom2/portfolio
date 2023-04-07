@@ -13,11 +13,15 @@ const ProductsPage = () => {
     openFilter,
   } = useFilterContext();
   const collections = getUniqueValues(all_products, 'collectionName');
+
   return (
     <main>
-      <Wrapper className='page'>
+      <Wrapper className='page flex-column'>
         <div className='pageHero'>
-          <select className='pageName'>
+          <select
+            className='pageName'
+            onChange={updateFilters}
+            name='collection'>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
                 {collection}
@@ -42,8 +46,6 @@ const ProductsPage = () => {
 
 const Wrapper = styled.div`
   padding-block: 0.5rem;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   .pageHero {
     display: flex;
@@ -54,7 +56,6 @@ const Wrapper = styled.div`
   }
   .pageName {
     font-family: 'Zilla Slab';
-    font-style: normal;
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
@@ -81,8 +82,11 @@ const Wrapper = styled.div`
     padding: 1em;
     display: none;
   }
+  .product-list {
+    padding-bottom: 1em;
+  }
   .open {
-    display: block;
+    display: flex;
   }
   @media (min-width: 768px) {
     .products {

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const ThesisPage = () => {
   return (
-    <Wrapper className='page-100'>
+    <Wrapper className='page-100 flex-column'>
       <h3 className='pageName'>Thesis</h3>
       <main>
         <article className='thesis' title='baz philosophy'>
@@ -56,12 +56,9 @@ const ThesisPage = () => {
 };
 
 const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
   align-items: center;
   h3 {
     font-family: 'Zilla Slab';
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;
@@ -78,11 +75,13 @@ const Wrapper = styled.section`
   .thesis {
     width: 50%;
     margin: 3em auto;
+    @media (max-width: 768px) {
+      width: 100%;
+      padding-inline: 2em;
+    }
   }
   p {
     font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
     font-size: 16px;
     line-height: 200.5%;
     /* or 32px */

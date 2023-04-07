@@ -36,7 +36,7 @@ const AddToCart = ({ product }) => {
   };
 
   return (
-    <Wrapper className='size'>
+    <Wrapper className='size flex-column'>
       <AmountButtons increase={increase} decrease={decrease} amount={amount} />
       <div className='size-guide'>size guide</div>
       <select
@@ -54,7 +54,7 @@ const AddToCart = ({ product }) => {
         <option value='2x-large'>2x-large</option>
       </select>
       <button
-        className='add-cart-btn'
+        className='btn add-cart-btn zilla-700'
         onClick={() => {
           addToCart(id, amount, product, size);
         }}
@@ -67,8 +67,6 @@ const AddToCart = ({ product }) => {
 
 const Wrapper = styled.div`
   .size {
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     padding: 0px;
     gap: 24px;
@@ -94,20 +92,12 @@ const Wrapper = styled.div`
     background-size: 1em;
     cursor: pointer;
   }
-  .add-cart-btn {
-    padding-block: 1em;
+  .btn {
     gap: 15px;
     background: #000000;
-    border: 1.5px solid #000000;
     width: 100%;
-    font-family: 'Zilla Slab';
-    font-style: normal;
-    font-weight: 700;
     font-size: 24px;
-    line-height: 29px;
-    /* identical to box height */
     color: #ffffff;
-    transition: var(--transition);
     cursor: pointer;
     &:hover {
       transform: scale(1.01);

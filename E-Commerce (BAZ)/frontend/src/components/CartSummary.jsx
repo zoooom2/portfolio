@@ -111,8 +111,6 @@ const Wrapper = styled.div`
   .shipping-price,
   .total-price {
     font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
     font-size: 24px;
     line-height: 36px;
     /* identical to box height */
@@ -127,8 +125,6 @@ const Wrapper = styled.div`
   .shipping,
   .total {
     font-family: 'Blaak Thin PERSONAL USE';
-    font-style: normal;
-    font-weight: 400;
     font-size: 21px;
     line-height: 28px;
     letter-spacing: 0.1em;

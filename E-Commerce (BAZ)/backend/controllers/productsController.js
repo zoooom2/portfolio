@@ -24,8 +24,10 @@ exports.uploadProduct = catchAsync(async (req, res) => {
     currency: 'ngn',
     product: stripeProduct.id,
   });
-  // console.log(stripePrice);
+
   req.body.priceID = stripePrice.id;
+
+  req.body.images = req.files.map((image) => image.path);
 
   const response = await Product.create(req.body);
 

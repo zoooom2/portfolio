@@ -18,7 +18,7 @@ const Nav = () => {
     );
   });
   return (
-    <NavContainer>
+    <NavContainer className='place-center'>
       <div className='nav-center'>
         <div className='nav-header'>
           <Link to='/'>
@@ -39,8 +39,6 @@ const Nav = () => {
 const NavContainer = styled.nav`
   border-bottom: 1px solid rgba(0, 0, 0, 0.7);
   display: flex;
-  align-items: center;
-  justify-content: center;
   padding-top: 2em;
   padding-bottom: 0.5em;
   position: sticky;
@@ -97,7 +95,6 @@ const NavContainer = styled.nav`
       }
       a {
         color: var(--clr-grey-3);
-        font-style: normal;
         font-weight: 600;
         font-size: 20px;
         font-family: Zilla Slab, serif;

@@ -49,6 +49,7 @@ const Wrapper = styled.main`
     &:hover {
       background: rgba(0, 0, 0, 0.8);
       color: white;
+      border: none;
     }
   }
 `;

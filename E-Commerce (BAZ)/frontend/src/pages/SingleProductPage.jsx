@@ -64,12 +64,10 @@ const SingleProductPage = () => {
         <ProductImages images={images} />
       </div>
       <div className='product-details'>
-        <div className='product-details-center'>
+        <div className='product-details-center flex-column'>
           <div className='name-price'>
             <div className='product-name'>{productName}</div>
-            <div className='product-price'>
-              {priceFormat(price)}
-            </div>
+            <div className='product-price'>{priceFormat(price)}</div>
           </div>
           <p className='desc'>{description}</p>
           {stock > 0 ? (
@@ -87,21 +85,24 @@ const SingleProductPage = () => {
 };
 
 const Wrapper = styled.main`
-  display: flex;
+  display: grid;
   justify-content: center;
   width: 100%;
+  grid-template-columns: 1fr 1fr;
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
   .product-picture {
-    width: 50%;
     border-right: 1px solid rgba(0, 0, 0, 0.7);
-    padding: 4rem;
+    padding: 1rem;
   }
   .product-details {
-    width: 50%;
     padding: 4rem;
+    @media (max-width: 768px) {
+      padding: 2rem;
+    }
   }
   .product-details-center {
-    display: flex;
-    flex-direction: column;
     justify-content: space-around;
     height: 100%;
     gap: 69px;

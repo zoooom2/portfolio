@@ -7,7 +7,7 @@ const {
   getAllReviews,
 } = require('../controllers/reviewController');
 const {
-  resizeMultiplePhotos,
+  // resizeMultiplePhotos,
   multipleSinglePhotos,
 } = require('../controllers/imageHandler');
 
@@ -38,7 +38,6 @@ router
   .route('/')
   .post(
     multipleSinglePhotos({ name: 'coverImages', maxCount: 4 }),
-    resizeMultiplePhotos(1024, 1280, 'product', 'productImage'),
     uploadProduct
   );
 router.route('/:id').delete(deleteProduct).patch(updateProduct);

@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useCartContext } from '../context/cart_context';
+import { priceFormat } from '../utils/constants';
 
 const Payment = ({ setStage }) => {
-  const { shippingInfo } = useCartContext();
+  const { shippingInfo, handlePayStack } = useCartContext();
   const {
     firstName,
     lastName,
@@ -14,6 +15,8 @@ const Payment = ({ setStage }) => {
     state,
     country,
     phoneNumber,
+    shippingFee,
+    shippingMethod,
   } = shippingInfo;
 
   useEffect(() => {
@@ -21,7 +24,7 @@ const Payment = ({ setStage }) => {
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper className='flex-column'>
       <div className='personal-info'>
         <div className='info'>
           <div className='full-name'>
@@ -42,15 +45,18 @@ const Payment = ({ setStage }) => {
         </div>
       </div>
       <div className='dashed'></div>
+      <div className='shippingMethod'>{shippingMethod}</div>
+      <div className='shippingFee'>{priceFormat(shippingFee)}</div>
+      <button className='btn zilla-700' onClick={handlePayStack}>
+        Pay Now
+      </button>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.main`
   margin-block: 3em;
-  display: flex;
-  flex-direction: column;
-
+  width: 60%;
   .personal-info,
   .location {
     display: flex;
@@ -58,24 +64,22 @@ const Wrapper = styled.main`
     align-items: flex-start;
     gap: 2em;
   }
-  .dashed {
-    margin-block: 2em;
-    border-bottom: 1.5px dashed #5c5c5c;
-  }
-  .solid-line {
-    margin-block: 3em;
-    border-bottom: 1.5px solid #000;
-  }
+
   .personal-info > *,
-  .location > * {
+  .location > *,
+  .shippingMethod,
+  .shippingFee {
     font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
     font-size: 15px;
     line-height: 32px;
     /* identical to box height */
     text-transform: uppercase;
     color: #5c5c5c;
+  }
+  .btn {
+    width: 100%;
+    margin-top: 2em;
+    font-size: 24px;
   }
 `;
 export default Payment;

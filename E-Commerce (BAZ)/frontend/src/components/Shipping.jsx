@@ -28,7 +28,7 @@ const Shipping = ({ setStage }) => {
     setStage(2);
   }, []);
   return (
-    <Wrapper>
+    <Wrapper className='flex-column'>
       <div className='personal-info'>
         <div className='info'>
           <div className='full-name'>
@@ -87,7 +87,7 @@ const Shipping = ({ setStage }) => {
           <div className='form-price'>{priceFormat(2000)} </div>
         </div>
       </div>
-      <Link to='/checkout/payment' className='payment-btn'>
+      <Link to='/checkout/payment' className='btn zilla-700'>
         Proceed To Payment
       </Link>
     </Wrapper>
@@ -96,9 +96,9 @@ const Shipping = ({ setStage }) => {
 
 const Wrapper = styled.main`
   margin-block: 3em;
-  display: flex;
-  flex-direction: column;
-
+  @media (min-width: 1100px) {
+    width: 60%;
+  }
   .personal-info,
   .location {
     display: flex;
@@ -117,8 +117,6 @@ const Wrapper = styled.main`
   .personal-info > *,
   .location > * {
     font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
     font-size: 15px;
     line-height: 32px;
     /* identical to box height */
@@ -139,8 +137,6 @@ const Wrapper = styled.main`
   .home,
   .park {
     font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
     font-size: 15px;
     line-height: 32px;
   }
@@ -156,30 +152,15 @@ const Wrapper = styled.main`
     line-height: 22px;
     /* identical to box height */
     text-decoration-line: underline;
-
     color: #5c5c5c;
   }
-  .payment-btn {
-    border: 1px solid black;
-    font-family: 'Zilla Slab';
+  .btn {
     margin-top: 1em;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 29px;
     /* identical to box height */
-    color: #000000;
     text-align: center;
-    padding-block: 1em;
-    transition: var(--transition);
-    &:hover {
-      color: white;
-      background-color: #000000;
-    }
   }
   .form-price {
     font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
     font-size: 21px;
     line-height: 32px;
   }

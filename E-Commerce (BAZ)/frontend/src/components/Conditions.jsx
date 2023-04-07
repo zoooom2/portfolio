@@ -27,12 +27,10 @@ const Conditions = () => {
     </li>
   ));
 
-  return <Wrapper>{termList}</Wrapper>;
+  return <Wrapper className='flex-column'>{termList}</Wrapper>;
 };
 
 const Wrapper = styled.ul`
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 18px;

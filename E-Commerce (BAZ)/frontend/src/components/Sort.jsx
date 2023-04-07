@@ -67,8 +67,6 @@ const Wrapper = styled.section`
     text-transform: capitalize;
     margin-bottom: 0;
     font-family: 'Bell MT';
-    font-style: normal;
-    font-weight: 400;
     font-size: 20px;
     line-height: 22px;
     letter-spacing: 0.1em;
@@ -104,8 +102,6 @@ const Wrapper = styled.section`
     text-transform: capitalize;
     padding: 0.25rem 0.5rem;
     font-family: 'Bell MT';
-    font-style: normal;
-    font-weight: 400;
     font-size: 20px;
     line-height: 22px;
     letter-spacing: 0.05em;
@@ -120,6 +116,10 @@ const Wrapper = styled.section`
     display: flex;
     align-items: center;
     gap: 2em;
+    @media (max-width: 768px) {
+      display: flex;
+      justify-content: space-between;
+    }
   }
   .filter-arrow {
     display: flex;

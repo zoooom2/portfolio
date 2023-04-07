@@ -27,13 +27,13 @@ const CartItem = ({ id, image, name, price, size }) => {
 
   return (
     <Wrapper>
-      <img src={`/productImage/${image}`} alt='' className='productImage' />
-      <div className='product-details'>
+      <img src={image} alt='' className='productImage' />
+      <div className='product-details flex-column '>
         <div className='name'>{name}</div>
         <div className='size'>Size: {size}</div>
         <div className='price'>{priceFormat(price)}</div>
-        <div className='quantityForm-remove'>
-          <div className='quantityForm'>
+        <div className='quantityForm-remove flex-column'>
+          <div className='quantityForm flex-column'>
             <label htmlFor='quantity'>Quantity</label>
             <input
               type='number'
@@ -57,29 +57,28 @@ const CartItem = ({ id, image, name, price, size }) => {
 const Wrapper = styled.section`
   display: flex;
   justify-content: center;
-  gap: 27px;
+  gap: 2em;
+
   .productImage {
     width: 50%;
   }
-
+  input {
+    margin-block: 0;
+  }
   .product-details {
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
     width: 50%;
-    gap: 13.5px;
+    gap: 10px;
   }
   .name-size {
     font-family: 'Zilla Slab';
-    font-style: normal;
-    font-weight: 400;
     font-size: 21px;
     line-height: 25px;
     letter-spacing: 0.1em;
   }
   .name {
     font-family: 'Bell-MT';
-    font-style: normal;
     font-size: 20px;
     line-height: 45px;
     text-transform: capitalize;
@@ -87,7 +86,6 @@ const Wrapper = styled.section`
 
   .price {
     font-family: 'Poppins';
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 36px;
@@ -96,31 +94,23 @@ const Wrapper = styled.section`
   }
   label {
     font-family: 'Bell MT';
-    font-style: normal;
-    font-weight: 400;
     font-size: 15px;
     line-height: 17px;
     /* identical to box height */
     color: #000000;
   }
   .quantityForm-remove {
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     padding: 0px;
     gap: 24px;
   }
   .quantityForm {
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     padding: 0px;
     gap: 6px;
   }
   .size {
     font-family: 'Bell MT';
-    font-style: normal;
-    font-weight: 400;
     font-size: 15px;
     line-height: 27px;
     text-transform: capitalize;
@@ -133,8 +123,6 @@ const Wrapper = styled.section`
     border: 1.5px solid #757575;
     border-radius: 1.5px;
     font-family: 'Bell MT';
-    font-style: normal;
-    font-weight: 400;
     font-size: 24px;
     line-height: 27px;
     /* identical to box height */
@@ -143,8 +131,6 @@ const Wrapper = styled.section`
   }
   .remove-btn {
     font-family: 'Bell MT';
-    font-style: normal;
-    font-weight: 400;
     font-size: 15px;
     line-height: 17px;
     /* identical to box height */

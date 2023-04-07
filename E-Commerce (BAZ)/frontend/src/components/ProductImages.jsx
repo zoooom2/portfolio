@@ -3,17 +3,18 @@ import styled from 'styled-components';
 
 const ProductImages = ({ images = [] }) => {
   const [index, setIndex] = useState(0);
+
   return (
     <Wrapper>
-      <img src={`/productImage/${images[index]}`} alt='main' className='main' />
+      <img src={images[index]} alt='main' className='main' />
       <div className='gallery'>
         {images.map((image, count) => {
           return (
             <img
-              src={`/productImage/${image}`}
+              src={image}
               alt=''
               key={count}
-              className={`${image === images[index] ? 'active' : null}`}
+              className={`preview ${image === images[index] ? 'active' : null}`}
               onClick={() => setIndex(count)}
             />
           );
@@ -24,46 +25,59 @@ const ProductImages = ({ images = [] }) => {
 };
 
 const Wrapper = styled.section`
+  display: grid;
+  place-items: center;
+
   .main {
-    height: 600px;
-  }
-  img {
-    width: 100%;
+    height: 500px;
+    width: auto;
+    max-width: 100%;
     border-radius: var(--radius);
     object-fit: cover;
   }
+
   .gallery {
     margin-top: 1rem;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    column-gap: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 0.5rem;
 
-    img {
-      height: 100px;
+    .preview {
+      width: 125px;
       cursor: pointer;
+      height: 150px;
+      object-fit: cover;
     }
   }
+
   .active {
     box-shadow: 0px 0px 0px 2px var(--clr-primary-5);
   }
+
   @media (max-width: 576px) {
     .main {
       height: 300px;
+      width: auto;
+      object-fit: cover;
     }
+
     .gallery {
-      img {
-        height: 50px;
-      }
+      grid-template-columns: repeat(5, minmax(80px, 1fr));
+
+      --gallery-column-gap: 1rem;
     }
   }
+
   @media (min-width: 992px) {
     .main {
-      height: 500px;
+      height: 400px;
+      width: auto;
     }
+
     .gallery {
-      img {
-        height: 75px;
-      }
+      --gallery-column-gap: 1rem;
     }
   }
 `;

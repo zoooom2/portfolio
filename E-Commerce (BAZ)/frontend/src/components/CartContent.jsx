@@ -23,18 +23,21 @@ const CartContent = () => {
   );
 };
 const Wrapper = styled.main`
-  display: flex;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
   .cartContent {
-    width: 50%;
     border-right: 1px solid black;
     padding-block: 3em;
+    @media (max-width: 768px) {
+      padding-block: 1em;
+    }
   }
   .column-cart {
     padding: 2em;
-    border-bottom: 1px solid black;
     display: flex;
-    height: 20em;
   }
 `;
 export default CartContent;

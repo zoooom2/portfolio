@@ -74,8 +74,8 @@ const BillingInfo = ({ setStage }) => {
     updateShipping(name, value);
   };
   return (
-    <Wrapper>
-      <h5 className='form-title'>Contact Information</h5>
+    <Wrapper className='flex-column'>
+      <h5 className='form-title zilla-500'>Contact Information</h5>
       <div className='form-name'>
         <input
           type='text'
@@ -112,7 +112,7 @@ const BillingInfo = ({ setStage }) => {
           onChange={handleChange}
         />
       </div>
-      <h5 className='form-title'>shipping Address</h5>
+      <h5 className='form-title zilla-500'>shipping Address</h5>
       <input
         type='text'
         name='address'
@@ -196,7 +196,7 @@ const BillingInfo = ({ setStage }) => {
           }
         }
       />
-      <Link to='/checkout/shipping' className='payment-btn'>
+      <Link to='/checkout/shipping' className='btn place-center zilla-700'>
         NEXT
       </Link>
     </Wrapper>
@@ -204,8 +204,6 @@ const BillingInfo = ({ setStage }) => {
 };
 
 const Wrapper = styled.form`
-  display: flex;
-  flex-direction: column;
   width: 90%;
 
   @media (max-width: 768px) {
@@ -215,8 +213,6 @@ const Wrapper = styled.form`
     width: 100%;
   }
   .form-title {
-    font-family: 'Zilla Slab';
-    font-weight: 500;
     font-size: 24px;
     line-height: 29px;
     /* identical to box height */
@@ -229,44 +225,16 @@ const Wrapper = styled.form`
     justify-content: space-between;
   }
   input {
-    margin-block: 1em;
-    border: 1.5px solid #a6a6a6;
-    padding: 18px;
-    font-family: 'Poppins';
-    font-weight: 400;
-    font-size: 10px;
-    line-height: 22px;
-    color: black;
-    background: transparent;
     letter-spacing: 0.05em;
     text-transform: capitalize;
-    &::placeholder {
-      color: black;
-      font-size: 10px;
-    }
   }
   .selectStyle {
     margin-block: 1em;
     width: 100%;
   }
-  .payment-btn {
-    padding: 1em;
-    border: 1px solid black;
+  .btn {
     display: grid;
-    place-items: center;
-    color: black;
     margin-block: 1em;
-    background: transparent;
-    transition: var(--transition);
-    font-family: 'Zilla Slab';
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 29px;
-    cursor: pointer;
-    &:hover {
-      background-color: black;
-      color: white;
-    }
   }
 `;
 

@@ -3,19 +3,21 @@ import styled from 'styled-components';
 import { formatPrice } from '../utils/helpers';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { priceFormat } from '../utils/constants';
+import { useCartContext } from '../context/cart_context';
 
 const Product = ({ images, _id: id, productName: name, price, stock }) => {
   return (
     <Wrapper>
-      <div className='container'>
-        <Link to={`/shop/${id}`}>
-          <img src={`/productImage/${images && images[0]}`} alt={name} />
+      <div className='container '>
+        <Link to={`/shop/${id}`} className='place-center'>
+          <img src={images && images[0]} alt={name} />
         </Link>
       </div>
-      <footer>
+      <footer className='flex-column'>
         <h5 className='name'>{name}</h5>
         <div className='price-stock'>
-          <p className={stock > 0 ? null : 'soldout'}>{`₦${price} `}</p>
+          <p className={stock > 0 ? null : 'soldout'}>{priceFormat(price)}</p>
           <p>{stock > 0 ? null : ' Sold-Out'}</p>
         </div>
       </footer>
@@ -32,21 +34,19 @@ const Wrapper = styled.article`
     background: transparent;
     border-radius: var(--radius);
   }
-  img {
-    width: 100%;
+  .container > a {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
   }
-
+  img {
+    width: 60%;
+  }
   footer {
     margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+
     gap: 1em;
     padding-inline: 1em;
+    display: flex;
+    justify-content: space-between;
   }
   footer h5,
   footer p {
@@ -60,16 +60,12 @@ const Wrapper = styled.article`
   }
   .name {
     font-family: 'Zilla Slab';
-    font-style: normal;
-    font-weight: 400;
     font-size: 15.9261px;
     line-height: 25px;
     letter-spacing: 0.1em;
   }
   footer > div > p {
     font-family: 'Zilla Slab';
-    font-style: normal;
-    font-weight: 400;
     font-size: 20.9261px;
     line-height: 25px;
     letter-spacing: 0.1em;
@@ -81,6 +77,17 @@ const Wrapper = styled.article`
   .price-stock {
     display: flex;
     gap: 1em;
+  }
+  .add-to-cart-btn {
+    background: transparent;
+    padding-inline: 1em;
+    border: 1px solid black;
+    transition: var(--transition);
+    cursor: pointer;
+    &:hover {
+      color: white;
+      background: black;
+    }
   }
 `;
 export default Product;

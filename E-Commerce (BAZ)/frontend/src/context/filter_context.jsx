@@ -27,6 +27,7 @@ const initialState = {
     max_price: 0,
     price: 0,
     shipping: false,
+    collection: 'all',
   },
 };
 
@@ -72,6 +73,7 @@ export const FilterProvider = ({ children }) => {
     if (name === 'shipping') {
       value = e.target.checked;
     }
+
     dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
   };
   const clearFilters = () => {

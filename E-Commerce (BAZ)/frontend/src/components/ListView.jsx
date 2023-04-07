@@ -15,12 +15,12 @@ const ListView = ({ products }) => {
         } = product;
         return (
           <article key={id}>
-            <img src={`/productImage/${images[0]}`} alt={name} />
+            <img src={images[0]} alt={name} />
             <div>
               <h4>{name}</h4>
-              <h5 className="price">{`₦${price}`}</h5>
+              <h5 className='price'>{`₦${price}`}</h5>
               <p>{description.substring(0, 150)}...</p>
-              <Link to={`/product/${id}`} className="btn">
+              <Link to={`/product/${id}`} className='btn'>
                 Details
               </Link>
             </div>
