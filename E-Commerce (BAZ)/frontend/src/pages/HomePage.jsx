@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Entry } from '../components';
 import ImageSlider from '../components/ImageSlider';
+import { useUserContext } from '../context/user_context';
 import { featuredSlide1, featuredSlide2 } from '../utils/constants';
+
 const HomePage = () => {
+  const { clicked } = useUserContext();
+  if (clicked === true) {
+    return (
+      <Wrapper>
+        <div className='left-section'>
+          <ImageSlider slides={featuredSlide1} timer={3001} />
+        </div>
+        <div className='right-section'>
+          <ImageSlider slides={featuredSlide2} timer={5001} />
+        </div>
+        <button className='discover-btn'>DISCOVER</button>
+      </Wrapper>
+    );
+  }
   return (
-    <Wrapper>
-      <div className='left-section'>
-        <ImageSlider slides={featuredSlide1} timer={3001} />
-      </div>
-      <div className='right-section'>
-        <ImageSlider slides={featuredSlide2} timer={5001} />
-      </div>
-      <button className='discover-btn'>DISCOVER</button>
-    </Wrapper>
+    <>
+      <Entry />
+    </>
   );
 };
 

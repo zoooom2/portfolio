@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Filters, ProductList, Sort } from '../components';
 import { useFilterContext } from '../context/filter_context';
+import { useUserContext } from '../context/user_context';
 import { getUniqueValues } from '../utils/helpers';
 
 const ProductsPage = () => {
@@ -12,6 +13,10 @@ const ProductsPage = () => {
     all_products,
     openFilter,
   } = useFilterContext();
+  const { setClicked } = useUserContext();
+
+  useEffect(() => setClicked(true), []);
+
   const collections = getUniqueValues(all_products, 'collectionName');
 
   return (
@@ -46,7 +51,7 @@ const ProductsPage = () => {
 
 const Wrapper = styled.div`
   padding-block: 0.5rem;
-  align-items: center;
+
   .pageHero {
     display: flex;
     padding: 1.2em;

@@ -12,12 +12,14 @@ import {
   GET_USER_ORDER_ERROR,
   SET_IMAGE,
   REMOVE_IMAGE,
+  SET_CLICKED,
 } from '../actions';
 
 const UserContext = React.createContext();
 const initialState = {
   loading: true,
   isAuthenticated: false,
+  clicked: false,
   user: {},
   orders: [],
   imageFile: {
@@ -98,6 +100,10 @@ export const UserProvider = ({ children }) => {
     window.open(`http://localhost:2705/api/v1/auth/google/`, '_self');
   };
 
+  const setClicked = () => {
+    dispatch({ type: SET_CLICKED });
+  };
+
   useEffect(() => {
     fetchUserOrder();
     fetchProfile();
@@ -114,8 +120,8 @@ export const UserProvider = ({ children }) => {
         logOut,
         jwtAuth,
         googleAuth,
-      }}
-    >
+        setClicked,
+      }}>
       {children}
     </UserContext.Provider>
   );

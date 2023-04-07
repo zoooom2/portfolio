@@ -3,9 +3,15 @@ import styled from 'styled-components';
 import { useCartContext } from '../context/cart_context';
 import { Link } from 'react-router-dom';
 import { CartContent, PageHero } from '../components';
+import { useUserContext } from '../context/user_context';
+import { useEffect } from 'react';
 
 const CartPage = () => {
   const { cart } = useCartContext();
+  const { setClicked } = useUserContext();
+
+  useEffect(() => setClicked(true), []);
+
   if (cart.length < 1) {
     return (
       <Wrapper className='page-100'>

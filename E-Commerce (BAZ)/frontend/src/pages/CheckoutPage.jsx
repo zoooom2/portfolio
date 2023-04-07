@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import {
@@ -8,10 +8,14 @@ import {
   Payment,
 } from '../components';
 import Shipping from '../components/Shipping';
+import { useUserContext } from '../context/user_context';
 
 const CheckoutPage = () => {
   const [stage, setStage] = useState(1);
   const { params } = useParams();
+  const { setClicked } = useUserContext();
+
+  useEffect(() => setClicked(true), []);
 
   return (
     <main>

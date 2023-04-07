@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useUserContext } from '../context/user_context';
 const ErrorPage = () => {
+  const { setClicked } = useUserContext();
+
+  useEffect(() => setClicked(true), []);
+
   return (
     <Wrapper className='page-100 place-center'>
       <section>

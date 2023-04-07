@@ -13,6 +13,7 @@ import {
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { testImg } from '../assets/productImage';
+import { useUserContext } from '../context/user_context';
 
 const SingleProductPage = () => {
   const [size, setSize] = useState(10);
@@ -24,6 +25,9 @@ const SingleProductPage = () => {
     single_product: product,
     fetchSingleProduct,
   } = useProductsContext();
+  const { setClicked } = useUserContext();
+
+  useEffect(() => setClicked(true), []);
 
   const {
     productName,

@@ -22,17 +22,24 @@ import {
   ContactPage,
 } from './pages';
 
+import { Loading } from './components';
+
 import { useCartContext } from './context/cart_context';
 import { useUserContext } from './context/user_context';
 
 const App = () => {
   const { cart } = useCartContext();
-  const { isAuthenticated } = useUserContext();
+  const { isAuthenticated, clicked } = useUserContext();
 
   return (
     <Router>
-      <Navbar />
-      <Sidebar />
+      {clicked && (
+        <>
+          <Navbar />
+          <Sidebar />
+        </>
+      )}
+
       <Routes>
         <Route exact path='/' element={<HomePage />} />
         <Route exact path='/contact' element={<ContactPage />} />

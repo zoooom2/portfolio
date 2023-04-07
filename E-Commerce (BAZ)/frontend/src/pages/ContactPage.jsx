@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 import { BsTwitter, BsInstagram } from 'react-icons/bs';
+import { useUserContext } from '../context/user_context';
+import { useEffect } from 'react';
 
 const ContactPage = () => {
+  const { setClicked } = useUserContext();
+
+  useEffect(() => setClicked(true), []);
+
   return (
     <Wrapper className='flex-column'>
       <h3 className='pageName'>Contact</h3>

@@ -24,10 +24,10 @@ const Nav = () => {
           <Link to='/'>
             <img src={logo} alt='logo' />
           </Link>
-          <button type='button' className='nav-toggle'>
+          <div type='button' className='nav-toggle'>
             <CartButtons />
             <FaBars onClick={openSidebar} />
-          </button>
+          </div>
         </div>
         <ul className='nav-links'>{navlinks}</ul>
         <CartButtons />

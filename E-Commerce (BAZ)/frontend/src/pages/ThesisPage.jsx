@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useUserContext } from '../context/user_context';
 
 const ThesisPage = () => {
+  const { setClicked } = useUserContext();
+
+  useEffect(() => setClicked(true), []);
+
   return (
     <Wrapper className='page-100 flex-column'>
       <h3 className='pageName'>Thesis</h3>

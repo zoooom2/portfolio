@@ -7,10 +7,13 @@ import { links } from '../utils/constants';
 import styled from 'styled-components';
 import CartButtons from './CartButtons';
 import { useUserContext } from '../context/user_context';
+import { useCartContext } from '../context/cart_context';
 
 const Sidebar = () => {
   // const isOpen = false;
   const { openSidebar, closeSidebar, isSidebarOpen } = useProductsContext();
+  const { cart } = useCartContext();
+  const { isAuthenticated } = useUserContext();
 
   return (
     <SidebarContainer>
@@ -32,11 +35,13 @@ const Sidebar = () => {
               </li>
             );
           })}
-          <li>
-            <Link to='/checkout/information' onClick={closeSidebar}>
-              checkout
-            </Link>
-          </li>
+          {isAuthenticated && cart && (
+            <li>
+              <Link to='/checkout/information' onClick={closeSidebar}>
+                checkout
+              </Link>
+            </li>
+          )}
         </ul>
         <CartButtons />
       </aside>

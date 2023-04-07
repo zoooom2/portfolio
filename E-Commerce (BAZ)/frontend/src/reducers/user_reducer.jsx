@@ -9,6 +9,7 @@ import {
   REMOVE_AUTHENTICATION,
   SET_IMAGE,
   REMOVE_IMAGE,
+  SET_CLICKED,
 } from '../actions';
 
 const user_reducer = (state, action) => {
@@ -46,6 +47,8 @@ const user_reducer = (state, action) => {
       };
     case REMOVE_IMAGE:
       return { ...state, imageFile: { file: [], filePreview: null } };
+    case SET_CLICKED:
+      return { ...state, clicked: true };
     default:
       throw new Error(`No Matching "${action.type}" - action type`);
   }

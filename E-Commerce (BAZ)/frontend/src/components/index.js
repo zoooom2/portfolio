@@ -2,7 +2,7 @@ import Navbar from './Navbar';
 import CartButtons from './CartButtons';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
-
+import Entry from './Entry';
 import Loading from './Loading';
 import Error from './Error';
 import ProductImages from './ProductImages';
@@ -48,4 +48,5 @@ export {
   CartSummary,
   Shipping,
   Payment,
+  Entry,
 };

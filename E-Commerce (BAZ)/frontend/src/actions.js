@@ -33,3 +33,4 @@ export const SET_IMAGE = 'SET_IMAGE';
 export const REMOVE_IMAGE = 'REMOVE_IMAGE';
 export const TOGGLE_FILTER = 'TOGGLE_FILTER';
 export const SET_CART_AMOUNT = 'SET_CART_AMOUNT';
+export const SET_CLICKED = 'SET_CLICKED';
