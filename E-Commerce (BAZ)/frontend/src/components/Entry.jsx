@@ -16,6 +16,7 @@ const Entry = () => {
 const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
+  cursor: pointer;
   img {
     width: 60%;
     @media (min-width: 768px) {

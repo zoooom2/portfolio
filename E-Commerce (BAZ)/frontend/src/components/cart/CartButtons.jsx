@@ -7,10 +7,10 @@ import {
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useProductsContext } from '../context/products_context';
-import { useCartContext } from '../context/cart_context';
-import { useUserContext } from '../context/user_context';
-import { auth_url, auth_url as url } from '../utils/constants';
+import { useProductsContext } from '../../context/products_context';
+import { useCartContext } from '../../context/cart_context';
+import { useUserContext } from '../../context/user_context';
+import { auth_url, auth_url as url } from '../../utils/constants';
 import axios from 'axios';
 
 const CartButtons = () => {

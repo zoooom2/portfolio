@@ -2,8 +2,8 @@ import React from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useCartContext } from '../context/cart_context';
-import { priceFormat } from '../utils/constants';
+import { useCartContext } from '../../context/cart_context';
+import { priceFormat } from '../../utils/constants';
 
 const Shipping = ({ setStage }) => {
   const { shippingInfo, updateShipping } = useCartContext();

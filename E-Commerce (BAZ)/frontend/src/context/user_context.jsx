@@ -30,6 +30,7 @@ const initialState = {
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
   const fetchProfile = async () => {
     if (!state.isAuthenticated) {
       try {

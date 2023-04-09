@@ -5,7 +5,14 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { Navbar, Sidebar, Footer } from './components';
+import {
+  Navbar,
+  Sidebar,
+  ProtectedRoute,
+  AdminNav,
+  AdminSidebar,
+  Footer,
+} from './components';
 import {
   HomePage,
   ThesisPage,
@@ -20,16 +27,18 @@ import {
   RedirectPage,
   Profile,
   ContactPage,
+  AdminPages,
 } from './pages';
 
 import { Loading } from './components';
 
 import { useCartContext } from './context/cart_context';
 import { useUserContext } from './context/user_context';
+import AdminRoutes from './components/AdminRoutes';
 
 const App = () => {
   const { cart } = useCartContext();
-  const { isAuthenticated, clicked } = useUserContext();
+  const { isAuthenticated, clicked, user } = useUserContext();
 
   return (
     <Router>
@@ -47,30 +56,40 @@ const App = () => {
         <Route exact path='/thesis' element={<ThesisPage />} />
         <Route exact path='/shop' element={<ProductPage />} />
         <Route exact path='/shop/:id' element={<SingleProductPage />} />
-        {/* <Route path='/redirect' element={<RedirectPage />} /> */}
-        <Route
-          exact
-          path='/checkout/:params'
-          element={cart ? <CheckoutPage /> : <CartPage />}
-        />
-        <Route
-          exact
-          path='/pay'
-          element={cart ? <PaymentGateway /> : <LoginPage />}
-        />
+
+        <Route exact path='/pay' element={<PaymentGateway />} />
         <Route
           exact
           path='/login'
-          element={isAuthenticated ? <Navigate to='/' /> : <LoginPage />}
+          element={
+            // isAuthenticated ? <Navigate to='/' /> :
+            <LoginPage />
+          }
         />
-        {/* <Route
+        <Route
           path='/signup'
-          element={isAuthenticated ? <Navigate to='/' /> : <Signup />}
-        /> */}
+          element={
+            // isAuthenticated ? <Navigate to='/' /> :
+            <Signup />
+          }
+          exact
+        />
         {/* <Route
           path='/profile'
           element={isAuthenticated ? <Profile /> : <LoginPage />}
         /> */}
+
+        <Route element={<ProtectedRoute />}>
+          <Route exact path='/checkout/:params' element={<CheckoutPage />} />
+        </Route>
+        <Route element={<AdminRoutes />}>
+          <Route
+            exact
+            path='/admin/:page'
+            isAdmin={true}
+            element={<AdminPages />}
+          />
+        </Route>
         <Route path='*' element={<ErrorPage />} />
       </Routes>
       {/* <Footer /> */}

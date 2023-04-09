@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useUserContext } from '../context/user_context';
+import logo from '../assets/image 2.svg';
 
 const tempDetails = {
   firstname: '',
@@ -18,6 +19,9 @@ const Signup = () => {
   });
   const [errorMessage, setErrorMessage] = useState(false);
   const navigate = useNavigate();
+  const { setClicked } = useUserContext();
+
+  useEffect(() => setClicked(true), []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -30,18 +34,18 @@ const Signup = () => {
     const name = e.target.name;
     const value = e.target.value;
 
-    if (name !== 'email') {
-      if (e.target.value === '') {
-        e.target.style.border = '1px solid red';
-      } else {
-        e.target.style.border = 'none';
-      }
-    }
-    if (name === 'email') {
-      /^[A-Z0-9. _%+-]+@[A-Z0-9. -]+\.[A-Z]{2,4}$/i.test(e.target.value)
-        ? (e.target.style.border = 'none')
-        : (e.target.style.border = '1px solid red');
-    }
+    // if (name !== 'email') {
+    //   if (e.target.value === '') {
+    //     e.target.style.border = '1px solid red';
+    //   } else {
+    //     e.target.style.border = 'none';
+    //   }
+    // }
+    // if (name === 'email') {
+    //   /^[A-Z0-9. _%+-]+@[A-Z0-9. -]+\.[A-Z]{2,4}$/i.test(e.target.value)
+    //     ? (e.target.style.border = 'none')
+    //     : (e.target.style.border = '1px solid red');
+    // }
     setDetails({ ...details, [name]: value });
   };
 
@@ -49,7 +53,6 @@ const Signup = () => {
     e.preventDefault();
     try {
       await axios.post('/api/v1/users/signup', details);
-      console.log(tempDetails);
       setDetails(tempDetails);
       navigate('/');
     } catch (error) {
@@ -61,9 +64,9 @@ const Signup = () => {
     <main>
       <Wrapper className='page-100 section section-center'>
         <div className='details'>
-          <h2 className='form-head scriptFont'>beads by kaph</h2>
+          <img src={logo} alt='logo' />
           <form className='shipping-details'>
-            <h5 className='form-title '>Sign Up Page</h5>
+            <h5 className='form-title zilla-700'>Sign Up</h5>
             <div className='form-name'>
               {/* <label htmlFor="photo">
                 {imageFile.filePreview ? (
@@ -176,7 +179,7 @@ const Wrapper = styled.div`
     padding: 30px;
     box-shadow: var(--light-shadow);
     border-radius: var(--radius);
-    background-color: rgba(0, 0, 0, 0.1);
+
     width: 60%;
     display: grid;
     place-items: center;
@@ -184,13 +187,8 @@ const Wrapper = styled.div`
       width: 95%;
     }
   }
-  input {
-    margin-block: 1em;
-    border: none;
-    padding: 0.5em;
-    font-size: 1em;
-    border-radius: 4px;
-    color: rgba(0, 0, 0, 0.8);
+  .details input {
+    border: 1px solid black;
   }
   .selectStyle {
     margin-block: 1em;
@@ -198,15 +196,22 @@ const Wrapper = styled.div`
   }
   .form-name {
     display: flex;
-    justify-content: space-between;
+
+    gap: 4%;
+    input {
+      width: 48%;
+    }
+
     @media (max-width: 1080px) {
       flex-direction: column;
+      input {
+        width: 100%;
+      }
     }
   }
   .form-title {
     margin-block: 1em;
     text-transform: uppercase;
-    color: purple;
   }
   // label {
   //   border: 3px solid white;

@@ -11,6 +11,7 @@ import Signup from './Signup';
 import RedirectPage from './RedirectionPage';
 import Profile from './UserProfilePage';
 import ContactPage from './ContactPage';
+import AdminPages from './AdminPages';
 
 export {
   ThesisPage,
@@ -26,4 +27,5 @@ export {
   RedirectPage,
   Profile,
   ContactPage,
+  AdminPages,
 };

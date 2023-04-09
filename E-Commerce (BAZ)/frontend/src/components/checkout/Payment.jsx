@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useCartContext } from '../context/cart_context';
-import { priceFormat } from '../utils/constants';
+import { useCartContext } from '../../context/cart_context';
+import { priceFormat } from '../../utils/constants';
 
 const Payment = ({ setStage }) => {
   const { shippingInfo, handlePayStack } = useCartContext();

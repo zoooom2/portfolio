@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice } from '../../utils/helpers';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { priceFormat } from '../utils/constants';
-import { useCartContext } from '../context/cart_context';
+import { priceFormat } from '../../utils/constants';
+import { useCartContext } from '../../context/cart_context';
 
 const Product = ({ images, _id: id, productName: name, price, stock }) => {
   return (

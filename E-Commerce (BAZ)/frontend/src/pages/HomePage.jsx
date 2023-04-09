@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Entry } from '../components';
 import ImageSlider from '../components/ImageSlider';
@@ -16,7 +17,9 @@ const HomePage = () => {
         <div className='right-section'>
           <ImageSlider slides={featuredSlide2} timer={5001} />
         </div>
-        <button className='discover-btn'>DISCOVER</button>
+        <Link to='/shop' className='discover-btn'>
+          DISCOVER
+        </Link>
       </Wrapper>
     );
   }

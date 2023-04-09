@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import styled from 'styled-components';
-import { useCartContext } from '../context/cart_context';
-import { priceFormat } from '../utils/constants';
+import { useCartContext } from '../../context/cart_context';
+import { priceFormat } from '../../utils/constants';
 
 const CartSummary = () => {
   const { cart, total_amount } = useCartContext();

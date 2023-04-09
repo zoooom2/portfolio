@@ -7,7 +7,7 @@ import {
   CheckoutStage,
   Payment,
 } from '../components';
-import Shipping from '../components/Shipping';
+import { Shipping } from '../components';
 import { useUserContext } from '../context/user_context';
 
 const CheckoutPage = () => {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import logo from '../assets/image 2.svg';
@@ -9,11 +9,20 @@ axios.defaults.withCredentials = true;
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const { jwtAuth, googleAuth } = useUserContext();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setCredentials({ ...credentials, [name]: value });
+  };
+  const handleJwtLogin = () => {
+    try {
+      jwtAuth(credentials.email, credentials.password);
+      navigate(-1, { replace: true });
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <Wrapper className='page-100 section section-center'>
@@ -36,9 +45,7 @@ const LoginPage = () => {
             value={credentials.password}
             onChange={handleChange}
           />
-          <button
-            className='btn place-center'
-            onClick={() => jwtAuth(credentials.email, credentials.password)}>
+          <button className='btn place-center' onClick={handleJwtLogin}>
             Log In
           </button>
           <p className='text'>or</p>

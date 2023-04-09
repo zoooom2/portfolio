@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Country, State, City } from 'country-state-city';
 import Select from 'react-select';
-import { useCartContext } from '../context/cart_context';
+import { useCartContext } from '../../context/cart_context';
 
-import { placeholderStyle, selectStyle } from '../utils/constants';
+import { placeholderStyle, selectStyle } from '../../utils/constants';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 

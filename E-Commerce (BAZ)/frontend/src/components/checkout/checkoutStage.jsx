@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import styled from 'styled-components';
-import { checkoutStage } from '../utils/constants';
+import { checkoutStage } from '../../utils/constants';
 
 const CheckoutStage = ({ position }) => {
   const [stage, setStage] = useState(1);

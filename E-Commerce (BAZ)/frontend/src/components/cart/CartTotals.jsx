@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useCartContext } from '../context/cart_context';
-import { priceFormat } from '../utils/constants';
-import { useUserContext } from '../context/user_context';
+import { useCartContext } from '../../context/cart_context';
+import { priceFormat } from '../../utils/constants';
+import { useUserContext } from '../../context/user_context';
 
 import { Link } from 'react-router-dom';
-import Conditions from './Conditions';
+import Conditions from '../Conditions';
 
 const CartTotals = () => {
   const { total_amount } = useCartContext();

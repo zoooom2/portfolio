@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice } from '../../utils/helpers';
 import AmountButtons from './AmountButtons';
 import { FaTrash } from 'react-icons/fa';
-import { useCartContext } from '../context/cart_context';
-import { priceFormat } from '../utils/constants';
+import { useCartContext } from '../../context/cart_context';
+import { priceFormat } from '../../utils/constants';
 
 const CartItem = ({ id, image, name, price, size }) => {
   const { removeItem, setAmount } = useCartContext();
