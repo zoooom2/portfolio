@@ -13,8 +13,8 @@ const CartContent = () => {
     <Wrapper className='cart-container'>
       <section className='cartContent'>
         {cart.map((item, index) => (
-          <section className='column-cart'>
-            <CartItem key={item.id} {...item} />
+          <section key={index} className='column-cart'>
+            <CartItem {...item} />
           </section>
         ))}
       </section>

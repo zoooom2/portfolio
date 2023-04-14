@@ -8,13 +8,22 @@ const { getCheckoutSession } = require('../controllers/stripeCheckout');
 
 const router = express.Router();
 const { protect, restrictTo } = authController;
-const { getAllOrders, getOrder, updateOrder, deleteOrder, getMyOrders } =
-  OrderController;
+const {
+  getAllOrders,
+  getOrder,
+  updateOrder,
+  deleteOrder,
+  getMyOrders,
+  revenuePerTime,
+  percentageChange,
+} = OrderController;
 
 router.use(protect);
 
 //user order history
 router.get('/myOrders', getMyOrders);
+
+//get Total Amount for a particular period
 
 //paystack user actions
 router.post('/paystack/checkout-session', paystackCheckout.getCheckoutSession);
@@ -35,8 +44,8 @@ router
   .patch(paystackCheckout.filterUpdateOrder, updateOrder);
 
 router.route('/').get(getAllOrders);
-// router.route('/paystackCheckout').post(createOrder);
-
+router.get('/sales/:time', revenuePerTime);
+router.get('/pctChange/:time', percentageChange);
 router.route('/:id').get(getOrder).delete(deleteOrder);
 
 module.exports = router;

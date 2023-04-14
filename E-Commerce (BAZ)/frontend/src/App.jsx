@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -37,9 +37,16 @@ import { useUserContext } from './context/user_context';
 import AdminRoutes from './components/AdminRoutes';
 
 const App = () => {
-  const { cart } = useCartContext();
-  const { isAuthenticated, clicked, user } = useUserContext();
+  const { isAuthenticated, clicked, user, loading, checkVisitorCount } =
+    useUserContext();
 
+  useEffect(() => {
+    checkVisitorCount();
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <Router>
       {clicked && (
@@ -48,7 +55,6 @@ const App = () => {
           <Sidebar />
         </>
       )}
-
       <Routes>
         <Route exact path='/' element={<HomePage />} />
         <Route exact path='/contact' element={<ContactPage />} />
@@ -61,17 +67,11 @@ const App = () => {
         <Route
           exact
           path='/login'
-          element={
-            // isAuthenticated ? <Navigate to='/' /> :
-            <LoginPage />
-          }
+          element={isAuthenticated ? <Navigate to='/' /> : <LoginPage />}
         />
         <Route
           path='/signup'
-          element={
-            // isAuthenticated ? <Navigate to='/' /> :
-            <Signup />
-          }
+          element={isAuthenticated ? <Navigate to='/' /> : <Signup />}
           exact
         />
         {/* <Route
@@ -82,7 +82,10 @@ const App = () => {
         <Route element={<ProtectedRoute />}>
           <Route exact path='/checkout/:params' element={<CheckoutPage />} />
         </Route>
-        <Route element={<AdminRoutes />}>
+        <Route
+          element={
+            <AdminRoutes isAuthenticated={isAuthenticated} user={user} />
+          }>
           <Route
             exact
             path='/admin/:page'

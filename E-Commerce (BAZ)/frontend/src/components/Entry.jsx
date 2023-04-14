@@ -6,7 +6,9 @@ import { useUserContext } from '../context/user_context';
 const Entry = () => {
   const { setClicked } = useUserContext();
   return (
-    <Wrapper className='flex-column place-center' onClick={setClicked}>
+    <Wrapper
+      className='flex-column place-center'
+      onClick={() => setClicked(true)}>
       <img src={logo} alt='' className='logo' />
       <p>click to enter</p>
     </Wrapper>

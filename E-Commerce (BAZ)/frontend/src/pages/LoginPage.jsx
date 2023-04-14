@@ -1,6 +1,11 @@
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import logo from '../assets/image 2.svg';
 import { useUserContext } from '../context/user_context';
@@ -8,20 +13,20 @@ axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
-  const { jwtAuth, googleAuth } = useUserContext();
+  const { jwtAuth, googleAuth, authentication_error, user } = useUserContext();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setCredentials({ ...credentials, [name]: value });
   };
-  const handleJwtLogin = () => {
-    try {
-      jwtAuth(credentials.email, credentials.password);
-      navigate(-1, { replace: true });
-    } catch (e) {
-      console.log(e);
+  const handleJwtLogin = async () => {
+    await jwtAuth(credentials.email, credentials.password);
+    if (!authentication_error) {
+      const redirectTo = searchParams.get('redirectTo');
+      navigate(redirectTo);
     }
   };
   return (

@@ -69,6 +69,29 @@ export const selectStyle = {
   padding: '1em',
 };
 
+export const adminSidebarLinks = [
+  {
+    name: 'Overview',
+    tag: 'overview',
+    link: '/admin/overview/',
+  },
+  {
+    name: 'Product',
+    tag: 'product',
+    link: '/admin/product/',
+  },
+  {
+    name: 'Orders',
+    tag: 'order',
+    link: '/admin/order/',
+  },
+  {
+    name: 'User',
+    tag: 'users',
+    link: '/admin/users/',
+  },
+];
+
 export const priceFormat = (price) =>
   `₦${new Intl.NumberFormat({
     style: 'currency',
