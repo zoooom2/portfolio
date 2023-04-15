@@ -44,8 +44,8 @@ router
   .patch(paystackCheckout.filterUpdateOrder, updateOrder);
 
 router.route('/').get(getAllOrders);
-router.get('/sales/:time', revenuePerTime);
-router.get('/pctChange/:time', percentageChange);
+router.get('/sales', revenuePerTime);
+router.get('/pctChange', percentageChange);
 router.route('/:id').get(getOrder).delete(deleteOrder);
 
 module.exports = router;

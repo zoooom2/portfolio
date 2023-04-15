@@ -1,3 +1,5 @@
+/* eslint-disable node/no-unsupported-features/es-syntax */
+// eslint-disable-next-line import/no-extraneous-dependencies
 const moment = require('moment');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -95,7 +97,7 @@ exports.getMine = (Model) =>
   });
 
 const aggregator = async (Model, start, stop, period, time, acc, newField) =>
-  await Model.aggregate([
+  await Model.aggregate(
     {
       $match: {
         createdAt: {
@@ -103,13 +105,13 @@ const aggregator = async (Model, start, stop, period, time, acc, newField) =>
           $lte: stop.toDate(),
         },
         $or: [
-          { orderStatus: { $exists: false } },
-          { orderStatus: { $in: ['completed', 'shipped', 'processing'] } },
+          { status: { $exists: false } },
+          { status: { $in: ['completed', 'shipped'] } },
         ],
       },
     },
     {
-      $addFields: {
+      $adddFields: {
         orderItems: {
           $ifNull: ['$orderItems', []],
         },
@@ -133,8 +135,8 @@ const aggregator = async (Model, start, stop, period, time, acc, newField) =>
         _id: 0,
         [newField]: 1,
       },
-    },
-  ]);
+    }
+  );
 
 exports.getTotalModelPerTime = (Model, acc) =>
   catchAsync(async (req, res) => {
@@ -148,7 +150,6 @@ exports.getTotalModelPerTime = (Model, acc) =>
     };
     let startOfPeriod;
     let endOfPeriod;
-
     if (startTime && endTime) {
       startOfPeriod = moment(startTime, 'YYYY-MM-DD');
       endOfPeriod = moment(endTime, 'YYYY-MM-DD');
@@ -157,7 +158,7 @@ exports.getTotalModelPerTime = (Model, acc) =>
       endOfPeriod = moment().endOf(period[time] || 'day');
     }
 
-    const totalAmount = await aggregator(
+    const totalAmount = aggregator(
       Model,
       startOfPeriod,
       endOfPeriod,
@@ -166,12 +167,52 @@ exports.getTotalModelPerTime = (Model, acc) =>
       acc,
       'total'
     );
+
+    // const totalAmount = await Model.aggregate([
+    //   {
+    //     $match: {
+    //       createdAt: {
+    //         $gte: startOfPeriod.toDate(),
+    //         $lte: endOfPeriod.toDate(),
+    //       },
+    //       $or: [
+    //         { status: { $exists: false } },
+    //         { status: { $in: ['completed', 'shipped'] } },
+    //       ],
+    //     },
+    //   },
+    //   {
+    //     $adddFields: {
+    //       orderItems: {
+    //         $ifNull: ['$orderItems', []],
+    //       },
+    //     },
+    //   },
+    //   {
+    //     $unwind: {
+    //       path: '$orderItems',
+    //       preserveNullAndEmptyArrays: true,
+    //     },
+    //   },
+
+    //   {
+    //     $group: {
+    //       _id: period[time || 'daily'],
+    //       totalOrders: { $sum: acc },
+    //     },
+    //   },
+    //   {
+    //     $sort: {
+    //       _id: 1,
+    //     },
+    //   },
+    // ]);
     res.status(200).json({ ordersPerTime: totalAmount });
   });
 
 exports.percentageChangeOrder = (Model, acc) =>
   catchAsync(async (req, res) => {
-    const { time } = req.query;
+    const { time } = req.params;
     const timeRange = {
       daily: 'day',
       weekly: 'week',
@@ -187,7 +228,7 @@ exports.percentageChangeOrder = (Model, acc) =>
       .endOf(timeRange[time] || 'day')
       .subtract(1, timeRange[time] || 'day');
 
-    const currentTime = await aggregator(
+    const currentTime = aggregator(
       Model,
       currentTimeStart,
       currentTimeEnd,
@@ -197,7 +238,7 @@ exports.percentageChangeOrder = (Model, acc) =>
       'totalCurrentTime'
     );
 
-    const previousTime = await aggregator(
+    const previousTime = aggregator(
       Model,
       previousTimeStart,
       previousTimeEnd,
@@ -205,8 +246,52 @@ exports.percentageChangeOrder = (Model, acc) =>
       acc,
       'totalPreviousTime'
     );
+    // const currentTime = await Model.aggregate([
+    //   {
+    //     $match: {
+    //       createdAt: {
+    //         $gte: currentTimeStart.toDate(),
+    //         $lte: currentTimeEnd.toDate(),
+    //       },
+    //     },
+    //   },
+    //   {
+    //     $group: {
+    //       _id: null,
+    //       totalCurrentTime: { $sum: acc },
+    //     },
+    //   },
+    //   {
+    //     $project: {
+    //       _id: 0,
+    //       totalCurrentTime: 1,
+    //     },
+    //   },
+    // ]);
+    // const previousTime = await Model.aggregate([
+    //   {
+    //     $match: {
+    //       createdAt: {
+    //         $gte: previousTimeStart.toDate(),
+    //         $lte: previousTimeEnd.toDate(),
+    //       },
+    //     },
+    //   },
+    //   {
+    //     $group: {
+    //       _id: null,
+    //       totalPreviousTime: { $sum: acc },
+    //     },
+    //   },
+    //   {
+    //     $project: {
+    //       _id: 0,
+    //       totalPreviousTime: 1,
+    //     },
+    //   },
+    // ]);
 
-    const totalCurrentTime = currentTime[0].totalCurrentTime || 0;
+    const totalCurrentTime = currentTime[0].totalCurrentWeek || 0;
     const totalPreviousTime = previousTime[0].totalPreviousTime || 0;
     const percentageDifference =
       ((totalCurrentTime - totalPreviousTime) / totalPreviousTime) * 100;

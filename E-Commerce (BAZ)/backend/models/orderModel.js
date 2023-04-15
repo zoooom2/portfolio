@@ -105,21 +105,12 @@ const orderSchema = new Schema({
   orderStatus: {
     type: String,
     required: true,
-    enum: ['processing', 'delivered'],
+    enum: ['processing', 'completed'],
     default: 'processing',
   },
   deliveredAt: {
     type: Date,
   },
-});
-
-orderSchema.pre(/^find/, function (next) {
-  this.populate('user').populate({
-    path: 'orderItems.product',
-    select: 'productName',
-  });
-
-  next();
 });
 
 const Order = model('Order', orderSchema);
