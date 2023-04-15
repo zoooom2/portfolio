@@ -8,8 +8,8 @@ const CartSummary = () => {
   const { cart, total_amount } = useCartContext();
   const [show, setShow] = useState(false);
 
-  const content = cart.map((cartItem) => (
-    <li key={cartItem.id}>
+  const content = cart.map((cartItem, key) => (
+    <li key={key}>
       <div className='name-size-quantity'>
         <div className='name'>{cartItem.name}</div>
         <div className='size-quantity'>

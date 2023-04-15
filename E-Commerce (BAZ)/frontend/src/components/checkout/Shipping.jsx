@@ -16,12 +16,12 @@ const Shipping = ({ setStage }) => {
     state,
     country,
     phoneNumber,
+    shippingMethod,
   } = shippingInfo;
 
   const handleChange = (e) => {
-    const data = e.target.value.split('-');
-    updateShipping('shippingMethod', `${data[0]} delivery`);
-    updateShipping('shippingFee', `${+data[1]}`);
+    updateShipping('shippingMethod', e.target.id);
+    updateShipping('shippingFee', +e.target.value);
   };
 
   useEffect(() => {
@@ -62,7 +62,8 @@ const Shipping = ({ setStage }) => {
               type='radio'
               name='delivery'
               id='home'
-              value='Home-4000'
+              value={4000}
+              checked={shippingMethod === 'home'}
               onChange={handleChange}
             />
             <label htmlFor='home' className='home'>
@@ -77,7 +78,8 @@ const Shipping = ({ setStage }) => {
               type='radio'
               name='delivery'
               id='park'
-              value='Park-2000'
+              value={2000}
+              checked={shippingMethod === 'park'}
               onChange={handleChange}
             />
             <label htmlFor='park' className='park'>

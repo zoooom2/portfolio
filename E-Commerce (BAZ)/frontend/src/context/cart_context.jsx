@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useReducer } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import reducer from '../reducers/cart_reducer';
 import {
@@ -11,15 +10,16 @@ import {
   UPDATE_SHIPPING,
   CLEAR_SHIPPING,
   SET_CART_AMOUNT,
+  UPDATE_TOTAL_PRICE,
 } from '../actions';
 import useLocalStorage from '../utils/customHooks/localStorage';
-import { useUserContext } from './user_context';
 
 const initialState = {
   cart: [],
   total_items: 0,
+  shippingFee: 0,
+  subtotal: 0,
   total_amount: 0,
-
   shippingInfo: {
     firstName: '',
     lastName: '',
@@ -32,7 +32,6 @@ const initialState = {
     postCode: '',
     email: '',
     shippingMethod: '',
-    shippingFee: 0,
   },
 };
 
@@ -104,7 +103,13 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: COUNT_CART_TOTALS });
     setLocalStorageStateValue(state.cart);
     setLocalShipping(state.shippingInfo);
-  }, [state.cart, state.shippingInfo]);
+    dispatch({ type: UPDATE_TOTAL_PRICE });
+  }, [
+    state.cart,
+    state.shippingInfo,
+    state.subtotal,
+    state.shippingInfo.shippingFee,
+  ]);
   return (
     <CartContext.Provider
       value={{

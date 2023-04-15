@@ -64,11 +64,11 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const checkVisitorCount = () => {
-    if (!Cookies.get('visitorCount')) {
+  const checkVisitorCount = async () => {
+    if (!Cookies.get('visited')) {
       dispatch({ type: INCREMENT_VISITOR_COUNT });
-      axios.post('/api/v1/visitorCount');
-      Cookies.set('visitorCount', true, { expires: 1 });
+      await axios.post('/api/v1/visitor');
+      Cookies.set('visited', true, { expires: 1 });
     }
   };
 

@@ -24,7 +24,7 @@ import {
   PaymentGateway,
   LoginPage,
   Signup,
-  RedirectPage,
+  OrderPage,
   Profile,
   ContactPage,
   AdminPages,
@@ -63,7 +63,6 @@ const App = () => {
         <Route exact path='/shop' element={<ProductPage />} />
         <Route exact path='/shop/:id' element={<SingleProductPage />} />
 
-        <Route exact path='/pay' element={<PaymentGateway />} />
         <Route
           exact
           path='/login'
@@ -81,6 +80,8 @@ const App = () => {
 
         <Route element={<ProtectedRoute />}>
           <Route exact path='/checkout/:params' element={<CheckoutPage />} />
+          <Route exact path='/pay' element={<PaymentGateway />} />
+          <Route exact path='/order' element={<OrderPage />} />
         </Route>
         <Route
           element={

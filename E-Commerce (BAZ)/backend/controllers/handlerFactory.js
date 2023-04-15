@@ -166,7 +166,9 @@ exports.getTotalModelPerTime = (Model, acc) =>
       acc,
       'total'
     );
-    res.status(200).json({ ordersPerTime: totalAmount });
+
+    // eslint-disable-next-line node/no-unsupported-features/es-syntax
+    res.status(200).json({ ...totalAmount[0] });
   });
 
 exports.percentageChangeOrder = (Model, acc) =>

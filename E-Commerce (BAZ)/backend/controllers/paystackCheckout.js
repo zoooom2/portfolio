@@ -1,6 +1,7 @@
 const paystack = require('paystack-api')(process.env.PAYSTACK_SECRET_KEY);
 const crypto = require('crypto');
 const Order = require('../models/orderModel');
+const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const { updateStock } = require('./productsController');
 
@@ -12,13 +13,13 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const session = await paystack.transaction.initialize({
     name,
     email,
-    callback_url: `${process.env.CLIENT_URL}/redirect`,
+    callback_url: `${process.env.CLIENT_URL}/order`,
     amount: helper.addFeesTo(req.body.totalPrice * 100),
   });
   res.status(200).json({ data: session.data.authorization_url });
 });
 
-exports.createOrder = catchAsync(async (req, res) => {
+exports.createOrder = catchAsync(async (req, res, next) => {
   //2) Verify the transaction
 
   const verification = await paystack.transaction.verify({
@@ -28,6 +29,7 @@ exports.createOrder = catchAsync(async (req, res) => {
   const orderItems = req.body.cart;
 
   //3) create the order
+
   const order = await Order.create({
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
     ...req.body,
@@ -43,6 +45,10 @@ exports.createOrder = catchAsync(async (req, res) => {
     user: req.user.id,
   });
 
+  if (!order) {
+    next(new AppError('Could not create order. Please try again.', 400));
+  }
+
   //4) if successful then update the stock of each product
   if (verification.data.status === 'success') {
     await Promise.all(
@@ -50,6 +56,8 @@ exports.createOrder = catchAsync(async (req, res) => {
         async (item) => await updateStock(item.product, item.quantity)
       )
     );
+  } else {
+    next(new AppError('verification failed', 400));
   }
 
   // 5) Create session as response

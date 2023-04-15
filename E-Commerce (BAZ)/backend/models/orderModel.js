@@ -23,12 +23,21 @@ const orderSchema = new Schema({
       },
     },
     postCode: {
-      type: String,
-      required: [true, 'please enter a postal Code'],
+      type: Number,
+      // required: [true, 'please enter a postal Code'],
     },
     country: {
       type: String,
       required: [true, 'please enter a shipping address'],
+    },
+    shippingFee: {
+      type: Number,
+      required: true,
+      default: 0.0,
+    },
+    shippingMethod: {
+      type: String,
+      required: true,
     },
   },
   user: {
@@ -55,7 +64,7 @@ const orderSchema = new Schema({
         required: [true, 'order must have a image'],
       },
       size: {
-        type: Number,
+        type: String,
         required: [true, 'order must have a size'],
       },
       product: {
@@ -92,12 +101,17 @@ const orderSchema = new Schema({
     required: true,
     default: 0.0,
   },
-  shippingPrice: {
+
+  total_items: {
+    type: Number,
+    required: true,
+  },
+  subtotal: {
     type: Number,
     required: true,
     default: 0.0,
   },
-  totalPrice: {
+  total_amount: {
     type: Number,
     required: true,
     default: 0.0,

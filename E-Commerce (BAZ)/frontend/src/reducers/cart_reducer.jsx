@@ -7,13 +7,16 @@ import {
   UPDATE_SHIPPING,
   CLEAR_SHIPPING,
   SET_CART_AMOUNT,
+  UPDATE_TOTAL_PRICE,
 } from '../actions';
 
 const cart_reducer = (state, action) => {
   switch (action.type) {
     case ADD_TO_CART:
       const { id, amount, product, size } = action.payload;
-      const tempItem = state.cart.find((i) => i.id === id && i.size === size);
+      const tempItem = state.cart.find(
+        (i) => i.product === id && i.size === size
+      );
       if (tempItem) {
         const tempCart = state.cart.map((cartItem) => {
           if (cartItem.id === id && cartItem.size === size) {
@@ -30,13 +33,13 @@ const cart_reducer = (state, action) => {
         return { ...state, cart: tempCart };
       } else {
         const newItem = {
-          id: id,
           name: product.productName,
           amount,
           size,
           image: product.images[0],
           price: product.price,
           max: product.stock,
+          product: id,
         };
         return { ...state, cart: [...state.cart, newItem] };
       }
@@ -79,19 +82,19 @@ const cart_reducer = (state, action) => {
       });
       return { ...state, cart: tempCarts };
     case COUNT_CART_TOTALS:
-      const { total_items, total_amount } = state.cart.reduce(
+      const { total_items, subtotal } = state.cart.reduce(
         (total, cartItem) => {
           const { amount, price } = cartItem;
           total.total_items += amount;
-          total.total_amount += price * amount;
+          total.subtotal += price * amount;
           return total;
         },
         {
           total_items: 0,
-          total_amount: 0,
+          subtotal: 0,
         }
       );
-      return { ...state, total_items, total_amount };
+      return { ...state, total_items, subtotal };
     case UPDATE_SHIPPING:
       const { detail, info } = action.payload;
       return {
@@ -99,7 +102,28 @@ const cart_reducer = (state, action) => {
         shippingInfo: { ...state.shippingInfo, [detail]: info },
       };
     case CLEAR_SHIPPING:
-      return { ...state, shippingInfo: {} };
+      return {
+        ...state,
+        shippingInfo: {
+          firstName: '',
+          lastName: '',
+          address: '',
+          city: '',
+          state: '',
+          country: '',
+          countryCode: '',
+          phoneNumber: '',
+          postCode: '',
+          email: '',
+          shippingMethod: '',
+          shippingFee: 0,
+        },
+      };
+    case UPDATE_TOTAL_PRICE:
+      return {
+        ...state,
+        total_amount: state.subtotal + state.shippingInfo.shippingFee,
+      };
     default:
       throw new Error(`No Matching "${action.type}" - action type`);
   }

@@ -8,12 +8,12 @@ import { Link } from 'react-router-dom';
 import Conditions from '../Conditions';
 
 const CartTotals = () => {
-  const { total_amount } = useCartContext();
+  const { subtotal } = useCartContext();
   return (
     <Wrapper>
       <div className='subtotal-price flex-column'>
         <div className='subtotal'>Subtotal:</div>
-        <div className='price'>{priceFormat(total_amount)}</div>
+        <div className='price'>{priceFormat(subtotal)}</div>
       </div>
       <Conditions />
       <div className='toCheckout'>

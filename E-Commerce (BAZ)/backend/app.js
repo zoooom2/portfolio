@@ -21,6 +21,7 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const orderRouter = require('./routes/orderRoute');
 const authRouter = require('./routes/authRoute');
+const visitorRouter = require('./routes/visitorRoute');
 
 // Start express app
 const app = express();
@@ -125,6 +126,7 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/order', orderRouter);
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/visitor', visitorRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

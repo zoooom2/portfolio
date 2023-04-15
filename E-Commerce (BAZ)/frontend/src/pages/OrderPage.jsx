@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const RedirectPage = () => {
+const OrderPage = () => {
   const body = useCartContext();
   const query = new URLSearchParams(useLocation().search);
   const reference = query.get('reference');
@@ -30,7 +30,7 @@ const RedirectPage = () => {
   useEffect(() => {
     getDetails();
   }, []);
-  return <>abcg</>;
+  return <h1>order successful</h1>;
 };
 
-export default RedirectPage;
+export default OrderPage;

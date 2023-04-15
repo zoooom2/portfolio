@@ -8,7 +8,7 @@ import SingleProductPage from './SingleProductPage';
 import PaymentGateway from './PaymentGatewayPage';
 import LoginPage from './LoginPage';
 import Signup from './Signup';
-import RedirectPage from './RedirectionPage';
+import OrderPage from './OrderPage';
 import Profile from './UserProfilePage';
 import ContactPage from './ContactPage';
 import AdminPages from './AdminPages';
@@ -24,7 +24,7 @@ export {
   PaymentGateway,
   LoginPage,
   Signup,
-  RedirectPage,
+  OrderPage,
   Profile,
   ContactPage,
   AdminPages,
