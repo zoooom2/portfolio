@@ -19,12 +19,19 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   res.status(200).json({ data: session.data.authorization_url });
 });
 
+const verifyPaystackTransaction = (reference) =>
+  catchAsync(async (req, res, next) => {
+    const verification = await paystack.transaction.verify({ reference });
+    if (verification.data.status !== 'success') {
+      next(new AppError('payment transaction verification failed', 401));
+    }
+    return verification;
+  });
+
 exports.createOrder = catchAsync(async (req, res, next) => {
   //2) Verify the transaction
 
-  const verification = await paystack.transaction.verify({
-    reference: req.body.reference,
-  });
+  const verification = verifyPaystackTransaction(req.body.reference);
 
   const orderItems = req.body.cart;
 
@@ -49,22 +56,49 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     next(new AppError('Could not create order. Please try again.', 400));
   }
 
-  //4) if successful then update the stock of each product
-  if (verification.data.status === 'success') {
-    await Promise.all(
-      orderItems.map(
-        async (item) => await updateStock(item.product, item.quantity)
-      )
-    );
-  } else {
-    next(new AppError('verification failed', 400));
-  }
+  //4) update the stock of each product
+
+  await Promise.all(
+    orderItems.map(
+      async (item) => await updateStock(item.product, item.quantity)
+    )
+  );
 
   // 5) Create session as response
   res.status(200).json({
     status: 'success',
     order,
   });
+});
+
+// exports.updatePayStackOrderStatus = (reference, status, id) =>
+//   catchAsync(async (req, res) => {
+//     const order = await Order.findByIdAndUpdate(
+//       id,
+//       { orderStatus: status },
+//       {
+//         new: true,
+//         runValidators: true,
+//       }
+//     );
+//     res.status(200).json({ status: 'success', order });
+//   });
+
+exports.updatePayStackOrder = catchAsync(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  const { status } = req.query;
+  await verifyPaystackTransaction(order.paymentInfo.reference);
+  const { orderStatus, deliveredAt } = req.body;
+  req.body = { orderStatus, deliveredAt };
+
+  if (status === 'completed') {
+    order.status = 'completed';
+    order.deliveredAt = Date.now();
+  } else {
+    order.orderStatus = status;
+  }
+  order.save({ new: true });
+  res.status(200).json({ status: 'success', order });
 });
 
 exports.payStackWebHook = catchAsync(async (req, res) => {
@@ -81,8 +115,8 @@ exports.payStackWebHook = catchAsync(async (req, res) => {
   res.status(200).json({});
 });
 
-exports.filterUpdateOrder = catchAsync(async (req, res, next) => {
-  const { orderStatus, deliveredAt } = req.body;
-  req.body = { orderStatus, deliveredAt };
-  next();
-});
+// exports.filterUpdateOrder = catchAsync(async (req, res, next) => {
+//   const { orderStatus, deliveredAt } = req.body;
+//   req.body = { orderStatus, deliveredAt };
+//   next();
+// });

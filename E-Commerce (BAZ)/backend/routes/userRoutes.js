@@ -16,8 +16,6 @@ const {
 const {
   getMe,
   getUser,
-  uploadUserPhoto,
-  resizeUserPhoto,
   updateMe,
   deleteMe,
   getAllUsers,
@@ -25,6 +23,8 @@ const {
   updateUser,
   deleteUser,
 } = userController;
+
+const { uploadPhoto } = require('../controllers/imageHandler');
 
 router.post('/signup', signup);
 router.post('/login', login);
@@ -38,7 +38,7 @@ router.use(protect);
 
 router.patch('/updateMyPassword', updatePassword);
 router.get('/me', getMe, getUser);
-router.patch('/updateMe', uploadUserPhoto, resizeUserPhoto, updateMe);
+router.patch('/updateMe', uploadPhoto([], 'user'), updateMe);
 router.delete('/deleteMe', deleteMe);
 
 router.use(restrictTo('admin'));

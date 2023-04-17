@@ -17,9 +17,8 @@ const AdminSidebar = ({ page }) => {
 };
 
 const Wrapper = styled.aside`
-  width: 20%;
   height: calc(100vh - 7em);
-  border-right: 1px solid black;
+  border-right: 1px solid #b6b6b6;
   ul {
     padding: 2em;
     gap: 1em;

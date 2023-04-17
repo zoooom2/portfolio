@@ -32,6 +32,10 @@ import Product from './product/Product';
 import ProtectedRoute from './ProtectedRoute';
 import AdminNav from './admin/AdminNav';
 import AdminSidebar from './admin/AdminSidebar';
+import AdminOverview from './admin/AdminOverview';
+import AdminOrders from './admin/AdminOrders';
+import AdminProduct from './admin/AdminProduct';
+import AdminUsers from './admin/AdminUser';
 
 export {
   Navbar,
@@ -62,4 +66,8 @@ export {
   ProtectedRoute,
   AdminNav,
   AdminSidebar,
+  AdminOrders,
+  AdminOverview,
+  AdminProduct,
+  AdminUsers,
 };

@@ -171,7 +171,7 @@ exports.getTotalModelPerTime = (Model, acc) =>
     res.status(200).json({ ...totalAmount[0] });
   });
 
-exports.percentageChangeOrder = (Model, acc) =>
+exports.percentageChangeModel = (Model, acc) =>
   catchAsync(async (req, res) => {
     const { time } = req.query;
     const timeRange = {
@@ -208,9 +208,14 @@ exports.percentageChangeOrder = (Model, acc) =>
       'totalPreviousTime'
     );
 
-    const totalCurrentTime = currentTime[0].totalCurrentTime || 0;
-    const totalPreviousTime = previousTime[0].totalPreviousTime || 0;
-    const percentageDifference =
+    let percentageDifference = 0;
+    let totalCurrentTime = 0;
+    let totalPreviousTime = 0;
+
+    if (currentTime[0]) totalCurrentTime = currentTime[0].totalCurrentTime || 0;
+    if (previousTime[0])
+      totalPreviousTime = previousTime[0].totalPreviousTime || 0;
+    percentageDifference =
       ((totalCurrentTime - totalPreviousTime) / totalPreviousTime) * 100;
 
     res.status(200).json({

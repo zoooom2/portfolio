@@ -1,19 +1,35 @@
 import React from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../../assets/image 2.svg';
-import { CiSearch, CiUser } from 'react-icons/ci';
-import { CgProfile } from 'react-icons/cg';
+import { CiSearch, CiUser, CiLogout } from 'react-icons/ci';
+import { useUserContext } from '../../context/user_context';
 
 const AdminNav = () => {
+  const { logOut } = useUserContext();
+  const navigate = useNavigate();
   return (
     <Wrapper>
-      <img src={logo} alt='logo' className='logo' />
+      <Link to='/admin/overview'>
+        <img src={logo} alt='logo' className='logo' />
+      </Link>
+
       <div className='home-search'>
         <button>
           <CiSearch />
         </button>
         <button>
           <CiUser />
+        </button>
+
+        <button
+          type='button'
+          className='auth-btn'
+          onClick={() => {
+            logOut();
+            navigate('/login');
+          }}>
+          <CiLogout />
         </button>
       </div>
     </Wrapper>
@@ -27,7 +43,7 @@ const Wrapper = styled.nav`
   padding-bottom: 1.5em;
   justify-content: space-between;
   align-items: flex-end;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #b6b6b6;
   .home-search {
     display: flex;
     gap: 1em;

@@ -11,11 +11,12 @@ const { protect, restrictTo } = authController;
 const {
   getAllOrders,
   getOrder,
-  updateOrder,
   deleteOrder,
   getMyOrders,
+  orderPerTime,
   revenuePerTime,
-  percentageChange,
+  percentageChangeItemSold,
+  percentageChangeRevenue,
 } = OrderController;
 
 router.use(protect);
@@ -39,13 +40,11 @@ router.route('/stripe-checkout').post(getCheckoutSession);
 
 router.use(restrictTo('admin'));
 
-router
-  .route('/paystack/:id')
-  .patch(paystackCheckout.filterUpdateOrder, updateOrder);
-
+router.route('/paystack/:id').patch(paystackCheckout.updatePayStackOrder);
 router.route('/').get(getAllOrders);
-router.get('/sales', revenuePerTime);
-router.get('/pctChange', percentageChange);
+router.get('/totalOrder', orderPerTime);
+router.get('/revenue', revenuePerTime);
+router.get('/pctChange/item', percentageChangeItemSold);
+router.get('/pctChange/revenue', percentageChangeRevenue);
 router.route('/:id').get(getOrder).delete(deleteOrder);
-
 module.exports = router;

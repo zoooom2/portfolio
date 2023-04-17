@@ -11,15 +11,16 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET_KEY,
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'product images',
-    allowed_formats: ['jpg', 'png'],
-    transformation: [{ width: 500, height: 500, crop: 'limit' }],
-    public_id: (req, file) => file.originalname,
-  },
-});
+const storage = (location) =>
+  new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: `${location} images`,
+      allowed_formats: ['jpg', 'png'],
+      transformation: [{ width: 500, height: 500, crop: 'limit' }],
+      public_id: (req, file) => file.originalname,
+    },
+  });
 
 const multerStorage = multer.memoryStorage();
 
@@ -31,27 +32,28 @@ const multerFilter = (req, file, cb) => {
   }
 };
 
-const cloudUpload = multer({ storage: storage, fileFilter: multerFilter });
+const cloudUpload = (location) =>
+  multer({ storage: storage(location), fileFilter: multerFilter });
 
 const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 
-exports.uploadPhoto = (image, uploadType) => {
+exports.uploadPhoto = ([uploadType], type) => {
   if (uploadType && uploadType === 'multerUpload') {
-    return upload.single(image);
+    return upload.single('image');
   }
-  return cloudUpload.single(image);
+  return cloudUpload(type).single('image');
 };
-exports.multiplePhotos = (entries, uploadType) => {
+exports.multiplePhotos = ([entries, uploadType], type) => {
   if (uploadType && uploadType === 'multerUpload') {
     return upload.fields([...entries]);
   }
-  return cloudUpload.fields([...entries]);
+  return cloudUpload(type).fields([...entries]);
 };
-exports.multipleSinglePhotos = (entry, uploadType) => {
+exports.multipleSinglePhotos = ([entry, uploadType], type) => {
   if (uploadType && uploadType === 'multerUpload') {
     return upload.array(entry.name, entry.maxCount);
   }
-  return cloudUpload.array(entry.name, entry.maxCount);
+  return cloudUpload(type).array(entry.name, entry.maxCount);
 };
 
 exports.resizePhoto = (length, width, name, location) =>

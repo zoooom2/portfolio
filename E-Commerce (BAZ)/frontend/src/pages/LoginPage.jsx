@@ -23,10 +23,16 @@ const LoginPage = () => {
     setCredentials({ ...credentials, [name]: value });
   };
   const handleJwtLogin = async () => {
-    await jwtAuth(credentials.email, credentials.password);
+    const response = await jwtAuth(credentials.email, credentials.password);
     if (!authentication_error) {
       const redirectTo = searchParams.get('redirectTo');
-      navigate(redirectTo);
+      if (redirectTo) {
+        navigate(redirectTo);
+      } else if (response.user.role === 'admin') {
+        navigate('/admin/overview');
+      } else {
+        navigate('/');
+      }
     }
   };
   return (

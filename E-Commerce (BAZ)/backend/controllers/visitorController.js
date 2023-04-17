@@ -17,4 +17,7 @@ exports.createOrUpdateVisitorCount = catchAsync(async (req, res) => {
 });
 
 exports.visitorPerTime = factory.getTotalModelPerTime(VisitorCount, '$count');
-exports.pctChangeVisitor = factory.getTotalModelPerTime(VisitorCount, '$count');
+exports.pctChangeVisitor = factory.percentageChangeModel(
+  VisitorCount,
+  '$count'
+);

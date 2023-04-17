@@ -37,7 +37,7 @@ router.use(restrictTo('admin'));
 router
   .route('/')
   .post(
-    multipleSinglePhotos({ name: 'coverImages', maxCount: 4 }),
+    multipleSinglePhotos([{ name: 'coverImages', maxCount: 4 }], 'product'),
     uploadProduct
   );
 router.route('/:id').delete(deleteProduct).patch(updateProduct);

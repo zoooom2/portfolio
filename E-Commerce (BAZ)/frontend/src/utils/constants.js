@@ -1,3 +1,6 @@
+import { MdSell, MdShoppingCart } from 'react-icons/md';
+import { FaUsers, FaMoneyCheckAlt } from 'react-icons/fa';
+
 import {
   image1,
   image2,
@@ -90,6 +93,20 @@ export const adminSidebarLinks = [
     tag: 'users',
     link: '/admin/users/',
   },
+];
+
+export const periodOption = [
+  { name: 'today', value: 'daily' },
+  { name: 'This week', value: 'weekly' },
+  { name: 'This month', value: 'monthly' },
+  { name: 'This year', value: 'yearly' },
+];
+
+export const adminAnalytics = [
+  { logo: <FaMoneyCheckAlt />, topic: 'Total Revenue', value: 'revenue' },
+  { logo: <MdShoppingCart />, topic: 'Total Orders', value: 'order' },
+  { logo: <FaUsers />, topic: 'Total Visitors', value: 'visitor' },
+  { logo: <MdSell />, topic: 'Total Items Sold', value: 'sales' },
 ];
 
 export const priceFormat = (price) =>
