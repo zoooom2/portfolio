@@ -2,7 +2,7 @@ const { spawn } = require('child_process');
 
 exports.sendContact = (req, res) => {
   const process = spawn('php', [
-    'D:/portfolio/E-Commerce(KAPH)/BACKEND/phpmail/index.php',
+    process.env.PHP_PATH,
     req.query.name,
     req.query.message,
     req.query.email,
