@@ -19,19 +19,25 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   res.status(200).json({ data: session.data.authorization_url });
 });
 
-const verifyPaystackTransaction = (reference) =>
-  catchAsync(async (req, res, next) => {
-    const verification = await paystack.transaction.verify({ reference });
-    if (verification.data.status !== 'success') {
-      next(new AppError('payment transaction verification failed', 401));
-    }
-    return verification;
-  });
+// const verifyPaystackTransaction = (reference) => async (req, res, next) => {
+//   const verification = await paystack.transaction.verify({ reference });
+
+//   if (verification.data.status !== 'success') {
+//     next(new AppError('payment transaction verification failed', 401));
+//   }
+//   return verification;
+// };
 
 exports.createOrder = catchAsync(async (req, res, next) => {
   //2) Verify the transaction
+  // const verification = await verifyPaystackTransaction(req.body.reference);
+  const verification = await paystack.transaction.verify({
+    reference: req.body.reference,
+  });
 
-  const verification = verifyPaystackTransaction(req.body.reference);
+  if (verification.data.status !== 'success') {
+    next(new AppError('payment transaction verification failed', 401));
+  }
 
   const orderItems = req.body.cart;
 
@@ -84,10 +90,16 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 //     res.status(200).json({ status: 'success', order });
 //   });
 
-exports.updatePayStackOrder = catchAsync(async (req, res) => {
+exports.updatePayStackOrder = catchAsync(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
   const { status } = req.query;
-  await verifyPaystackTransaction(order.paymentInfo.reference);
+  const verified = await paystack.transaction.verify({
+    reference: order.paymentInfo.reference,
+  });
+
+  if (verified.data.status !== 'success')
+    next(new AppError('invalid payment reference', 401));
+
   const { orderStatus, deliveredAt } = req.body;
   req.body = { orderStatus, deliveredAt };
 

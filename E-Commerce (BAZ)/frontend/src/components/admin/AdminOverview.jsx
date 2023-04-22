@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useUserContext } from '../../context/user_context';
+import { useAdminContext } from '../../context/admin_context';
 import { adminAnalytics, periodOption } from '../../utils/constants';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
 const AdminOverview = () => {
   const { user } = useUserContext();
+  const { fetchTotalRevenue } = useAdminContext();
   const options = periodOption.map((option, i) => (
     <option key={i} value={option.value}>
       {option.name}
@@ -26,6 +28,8 @@ const AdminOverview = () => {
       </div>
     </div>
   ));
+
+  useEffect(() => fetchTotalRevenue, []);
 
   return (
     <Wrapper>

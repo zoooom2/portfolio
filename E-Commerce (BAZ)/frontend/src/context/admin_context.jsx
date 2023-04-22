@@ -13,9 +13,10 @@ const initialState = {
 export const AdminProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const fetchTotalRevenue = async () => {
-    const response = axios.get('/order/revenue');
+    const response = await axios.get('/api/v1/order/pctchange/revenue');
     console.log(response);
   };
+
   return (
     <AdminContext.Provider value={{ ...state, fetchTotalRevenue }}>
       {children}

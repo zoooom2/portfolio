@@ -16,8 +16,12 @@ exports.createOrUpdateVisitorCount = catchAsync(async (req, res) => {
   res.status(200).json({ doc });
 });
 
-exports.visitorPerTime = factory.getTotalModelPerTime(VisitorCount, '$count');
-exports.pctChangeVisitor = factory.percentageChangeModel(
-  VisitorCount,
-  '$count'
-);
+exports.visitorPerTime = factory.getTotalModelPerTime(VisitorCount, [
+  {
+    field: 'total_count',
+    acc: '$count',
+  },
+]);
+exports.pctChangeVisitor = factory.percentageChangeModel(VisitorCount, [
+  { field: 'total_count', acc: '$count' },
+]);

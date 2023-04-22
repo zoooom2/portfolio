@@ -94,8 +94,16 @@ exports.getMine = (Model) =>
     res.status(200).json({ status: 'success', results: data.length, data });
   });
 
-const aggregator = async (Model, start, stop, period, time, acc, newField) =>
-  await Model.aggregate([
+const aggregator = async (Model, start, stop, period, time, newField) => {
+  const groupFields = {
+    _id: period[time || 'daily'],
+  };
+
+  newField.forEach((property) => {
+    groupFields[property.field] = { $sum: property.acc };
+  });
+
+  return await Model.aggregate([
     {
       $match: {
         createdAt: {
@@ -104,7 +112,7 @@ const aggregator = async (Model, start, stop, period, time, acc, newField) =>
         },
         $or: [
           { orderStatus: { $exists: false } },
-          { orderStatus: { $in: ['completed', 'shipped', 'processing'] } },
+          { orderStatus: { $in: ['completed', 'processing'] } },
         ],
       },
     },
@@ -121,22 +129,12 @@ const aggregator = async (Model, start, stop, period, time, acc, newField) =>
         preserveNullAndEmptyArrays: true,
       },
     },
-
     {
-      $group: {
-        _id: period[time || 'daily'],
-        [newField]: { $sum: acc },
-      },
-    },
-    {
-      $project: {
-        _id: 0,
-        [newField]: 1,
-      },
+      $group: groupFields,
     },
   ]);
-
-exports.getTotalModelPerTime = (Model, acc) =>
+};
+exports.getTotalModelPerTime = (Model, newField) =>
   catchAsync(async (req, res) => {
     const { startTime, endTime, time } = req.query;
 
@@ -146,6 +144,7 @@ exports.getTotalModelPerTime = (Model, acc) =>
       monthly: 'month',
       yearly: 'year',
     };
+
     let startOfPeriod;
     let endOfPeriod;
 
@@ -163,15 +162,13 @@ exports.getTotalModelPerTime = (Model, acc) =>
       endOfPeriod,
       period,
       time,
-      acc,
-      'total'
+      newField
     );
-
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
     res.status(200).json({ ...totalAmount[0] });
   });
 
-exports.percentageChangeModel = (Model, acc) =>
+exports.percentageChangeModel = (Model, newField) =>
   catchAsync(async (req, res) => {
     const { time } = req.query;
     const timeRange = {
@@ -195,8 +192,7 @@ exports.percentageChangeModel = (Model, acc) =>
       currentTimeEnd,
       timeRange,
       time,
-      acc,
-      'totalCurrentTime'
+      newField
     );
 
     const previousTime = await aggregator(
@@ -204,24 +200,35 @@ exports.percentageChangeModel = (Model, acc) =>
       previousTimeStart,
       previousTimeEnd,
       timeRange,
-      acc,
-      'totalPreviousTime'
+      time,
+      newField
     );
 
     let percentageDifference = 0;
     let totalCurrentTime = 0;
     let totalPreviousTime = 0;
+    const stats = [];
 
-    if (currentTime[0]) totalCurrentTime = currentTime[0].totalCurrentTime || 0;
-    if (previousTime[0])
-      totalPreviousTime = previousTime[0].totalPreviousTime || 0;
-    percentageDifference =
-      ((totalCurrentTime - totalPreviousTime) / totalPreviousTime) * 100;
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < newField.length; i++) {
+      if (currentTime[0]) totalCurrentTime = currentTime[0][newField[i].field];
+      if (previousTime[0])
+        totalPreviousTime = currentTime[0][newField[i].field];
+      percentageDifference = (
+        ((totalCurrentTime - totalPreviousTime) / totalPreviousTime) *
+        100
+      ).toFixed(2);
+      const current = `Current ${timeRange[time]} ${newField[i].field}`;
+      const previous = `Previous ${timeRange[time]} ${newField[i].field}`;
+      stats.push({
+        [current]: totalCurrentTime,
+        [previous]: totalPreviousTime,
+        percentageDifference,
+      });
+    }
 
     res.status(200).json({
       time,
-      totalCurrentTime,
-      totalPreviousTime,
-      percentageDifference,
+      stats,
     });
   });

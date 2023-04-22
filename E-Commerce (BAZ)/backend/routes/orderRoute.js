@@ -14,9 +14,7 @@ const {
   deleteOrder,
   getMyOrders,
   orderPerTime,
-  revenuePerTime,
-  percentageChangeItemSold,
-  percentageChangeRevenue,
+  percentageChangeOrder,
 } = OrderController;
 
 router.use(protect);
@@ -43,8 +41,7 @@ router.use(restrictTo('admin'));
 router.route('/paystack/:id').patch(paystackCheckout.updatePayStackOrder);
 router.route('/').get(getAllOrders);
 router.get('/totalOrder', orderPerTime);
-router.get('/revenue', revenuePerTime);
-router.get('/pctChange/item', percentageChangeItemSold);
-router.get('/pctChange/revenue', percentageChangeRevenue);
+
+router.get('/pctChange', percentageChangeOrder);
 router.route('/:id').get(getOrder).delete(deleteOrder);
 module.exports = router;

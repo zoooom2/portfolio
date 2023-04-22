@@ -3,20 +3,16 @@
 const Order = require('../models/orderModel');
 const factory = require('./handlerFactory');
 
-exports.orderPerTime = factory.getTotalModelPerTime(
-  Order,
-  '$orderItems.amount'
-);
+exports.orderPerTime = factory.getTotalModelPerTime(Order, [
+  { field: 'Total Items Ordered', acc: '$total_items' },
+  { field: 'Total Sale', acc: '$total_amount' },
+]);
 
-exports.revenuePerTime = factory.getTotalModelPerTime(Order, '$totalPrice');
-exports.percentageChangeRevenue = factory.percentageChangeModel(
-  Order,
-  '$totalPrice'
-);
-exports.percentageChangeItemSold = factory.percentageChangeModel(
-  Order,
-  '$orderItems.amount'
-);
+exports.percentageChangeOrder = factory.percentageChangeModel(Order, [
+  { field: 'Total Items Ordered', acc: '$total_items' },
+  { field: 'Total Sale', acc: '$total_amount' },
+]);
+
 exports.getMyOrders = factory.getMine(Order);
 exports.getOrder = factory.getOne(Order);
 exports.getAllOrders = factory.getAll(Order);
