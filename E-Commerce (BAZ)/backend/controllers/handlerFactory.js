@@ -30,7 +30,6 @@ exports.updateOne = (Model) =>
 
     res.status(200).json({
       status: 'success',
-
       data: doc,
     });
   });
@@ -203,7 +202,6 @@ exports.percentageChangeModel = (Model, newField) =>
       time,
       newField
     );
-
     let percentageDifference = 0;
     let totalCurrentTime = 0;
     let totalPreviousTime = 0;
@@ -213,16 +211,15 @@ exports.percentageChangeModel = (Model, newField) =>
     for (let i = 0; i < newField.length; i++) {
       if (currentTime[0]) totalCurrentTime = currentTime[0][newField[i].field];
       if (previousTime[0])
-        totalPreviousTime = currentTime[0][newField[i].field];
+        totalPreviousTime = previousTime[0][newField[i].field];
       percentageDifference = (
         ((totalCurrentTime - totalPreviousTime) / totalPreviousTime) *
         100
       ).toFixed(2);
-      const current = `Current ${timeRange[time]} ${newField[i].field}`;
-      const previous = `Previous ${timeRange[time]} ${newField[i].field}`;
+
       stats.push({
-        [current]: totalCurrentTime,
-        [previous]: totalPreviousTime,
+        current: totalCurrentTime,
+        previous: totalPreviousTime,
         percentageDifference,
       });
     }

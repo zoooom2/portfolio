@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { ObjectId, Schema, model } = mongoose;
+const { Schema, model } = mongoose;
 
 const orderSchema = new Schema({
   shippingInfo: {
@@ -68,7 +68,7 @@ const orderSchema = new Schema({
         required: [true, 'order must have a size'],
       },
       product: {
-        type: ObjectId,
+        type: Schema.ObjectId,
         required: [true, 'order must have a product'],
         ref: 'Product',
       },
@@ -125,6 +125,14 @@ const orderSchema = new Schema({
   deliveredAt: {
     type: Date,
   },
+});
+
+orderSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'firstname lastname',
+  });
+  next();
 });
 
 const Order = model('Order', orderSchema);

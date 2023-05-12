@@ -11,6 +11,7 @@ exports.orderPerTime = factory.getTotalModelPerTime(Order, [
 exports.percentageChangeOrder = factory.percentageChangeModel(Order, [
   { field: 'Total Items Ordered', acc: '$total_items' },
   { field: 'Total Sale', acc: '$total_amount' },
+  { field: 'Total Orders', acc: 1 },
 ]);
 
 exports.getMyOrders = factory.getMine(Order);

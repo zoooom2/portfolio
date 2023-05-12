@@ -103,10 +103,30 @@ export const periodOption = [
 ];
 
 export const adminAnalytics = [
-  { logo: <FaMoneyCheckAlt />, topic: 'Total Revenue', value: 'revenue' },
-  { logo: <MdShoppingCart />, topic: 'Total Orders', value: 'order' },
-  { logo: <FaUsers />, topic: 'Total Visitors', value: 'visitor' },
-  { logo: <MdSell />, topic: 'Total Items Sold', value: 'sales' },
+  {
+    logo: <FaMoneyCheckAlt />,
+    topic: 'Total Revenue',
+    value: { current: 'totalRevenue', previous: 'previousTotalRevenue' },
+    percentage: 'percentageRevenue',
+  },
+  {
+    logo: <MdShoppingCart />,
+    topic: 'Total Orders',
+    value: { current: 'totalOrder', previous: 'previousTotalOrder' },
+    percentage: 'percentageOrder',
+  },
+  {
+    logo: <FaUsers />,
+    topic: 'Total Visitors',
+    value: { current: 'visitor', previous: 'previousVisitor' },
+    percentage: 'percentageVisitor',
+  },
+  {
+    logo: <MdSell />,
+    topic: 'Total Items Sold',
+    value: { current: 'totalSale', previous: 'previousTotalSales' },
+    percentage: 'percentageSales',
+  },
 ];
 
 export const priceFormat = (price) =>

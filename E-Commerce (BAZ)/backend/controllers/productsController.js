@@ -4,10 +4,11 @@ const Product = require('../models/productsModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
-exports.updateStock = (id, quantity) =>
+exports.updateProduct = (id, quantity) =>
   catchAsync(async () => {
     const product = await Product.findById(id);
     product.stock -= quantity;
+    product.quantitySold += quantity;
     product.save({ validateBeforeSave: false });
   });
 

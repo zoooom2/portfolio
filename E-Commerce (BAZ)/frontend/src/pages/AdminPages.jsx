@@ -31,6 +31,7 @@ const AdminPages = () => {
 };
 
 const Wrapper = styled.section`
+  overflow-y: none;
   main {
     display: grid;
     grid-template-columns: auto 1fr;

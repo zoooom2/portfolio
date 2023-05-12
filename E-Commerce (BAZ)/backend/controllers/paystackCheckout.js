@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const Order = require('../models/orderModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-const { updateStock } = require('./productsController');
+const { updateProduct } = require('./productsController');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const { name, email } = req.user;
@@ -66,7 +66,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 
   await Promise.all(
     orderItems.map(
-      async (item) => await updateStock(item.product, item.quantity)
+      async (item) => await updateProduct(item.product, item.quantity)
     )
   );
 

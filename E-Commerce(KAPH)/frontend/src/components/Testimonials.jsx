@@ -10,7 +10,7 @@ const Testimonials = () => {
       const isLastReview = currentIndex === reviews.length - 1;
       const newIndex = isLastReview ? 0 : currentIndex + 1;
       setCurrentIndex(newIndex);
-    }, 7000);
+    }, 15000);
     return () => clearInterval(review);
   }, [currentIndex]);
   return (
