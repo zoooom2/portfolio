@@ -67,7 +67,7 @@ const orderSchema = new Schema({
         type: String,
         required: [true, 'order must have a size'],
       },
-      product: {
+      productID: {
         type: Schema.ObjectId,
         required: [true, 'order must have a product'],
         ref: 'Product',

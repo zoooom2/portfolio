@@ -42,7 +42,11 @@ const ProductsPage = () => {
         <div className='pageHero'>
           <select
             className='pageName'
-            onChange={(e) => dispatch(updateFilters({name:'collection', value: e.target.value}))}
+            onChange={(e) =>
+              dispatch(
+                updateFilters({ name: 'collection', value: e.target.value })
+              )
+            }
             name='collection'>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
@@ -54,7 +58,7 @@ const ProductsPage = () => {
         <div className='sort-filter'>
           <Sort />
           <div className={`filter ${openFilter && 'open'}`}>
-            <Filters />
+            <Filters openFilter={openFilter} />
           </div>
         </div>
 
@@ -97,6 +101,9 @@ const Wrapper = styled.div`
     width: 100%;
     position: relative;
   }
+  // .z {
+  //   z-index: 999999;
+  // }
   .filter {
     top: 100%;
     z-index: 2;

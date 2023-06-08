@@ -48,10 +48,10 @@ exports.signup = catchAsync(async (req, res, next) => {
   const url = `${req.protocol}://${req.get('host')}/me`;
   const options = {
     emailAddress: newUser.email,
-    subject: 'WELCOME TO BEADS BY KAPH',
-    text: `You're welcome to BEADS BY KAPH. Click on the link below to view your profile
+    subject: 'WELCOME TO BAZ FASHION',
+    text: `You're welcome to BAZ FASHION. Click on the link below to view your profile
     ${url}`,
-    html: `<p>You're welcome to BEADS BY KAPH. Click on the link below to view your profile<br />
+    html: `<p>You're welcome BAZ FASHION. Click on the link below to view your profile<br />
     <a href=${url}>Click here to view profile</a></p>`,
   };
   await sendMail(options);

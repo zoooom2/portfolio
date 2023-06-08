@@ -14,7 +14,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     name,
     email,
     callback_url: `${process.env.CLIENT_URL}/order`,
-    amount: helper.addFeesTo(req.body.totalPrice * 100),
+    amount: helper.addFeesTo(req.body.total_amount * 100),
   });
   res.status(200).json({ data: session.data.authorization_url });
 });
@@ -42,10 +42,19 @@ exports.createOrder = catchAsync(async (req, res, next) => {
   const orderItems = req.body.cart;
 
   //3) create the order
+  const {
+    shippingInfo,
+    total_amount: totalAmount,
+    subtotal,
+    total_items: totalItems,
+  } = req.body;
 
   const order = await Order.create({
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
-    ...req.body,
+    shippingInfo,
+    total_amount: totalAmount,
+    subtotal,
+    total_items: totalItems,
     orderItems,
     paidAt: verification.data.paid_at,
     createdAt: verification.data.created_at,

@@ -60,14 +60,14 @@ const Filters = () => {
 
           <div className='form-control sub-control'>
             <div className='label'>Price:</div>
-            <div className='price'>{priceFormat(price)}</div>
+            <div className='price'>{priceFormat(min_price ? price : 0)}</div>
             <input
               type='range'
               name='price'
               onChange={handleFilter}
-              min={min_price}
-              max={max_price}
-              value={price}
+              min={min_price ? min_price : 0}
+              max={min_price ? max_price : 0}
+              value={min_price ? price : 0}
             />
           </div>
           <div className='form-control shipping'>
@@ -82,13 +82,13 @@ const Filters = () => {
               checked={shipping}
             />
           </div>
+          <button
+            type='button'
+            className='clear-btn'
+            onClick={() => dispatch(clearFilters())}>
+            clearFilters
+          </button>
         </form>
-        <button
-          type='button'
-          className='clear-btn'
-          onClick={() => dispatch(clearFilters())}>
-          clearFilters
-        </button>
       </div>
     </Wrapper>
   );
@@ -97,6 +97,7 @@ const Filters = () => {
 const Wrapper = styled.section`
   display: flex;
   width: 100%;
+
   .content {
     background-color: white;
     width: 100%;
@@ -110,6 +111,7 @@ const Wrapper = styled.section`
     justify-content: flex-start;
     align-items: center;
     gap: 2em;
+
     @media (max-width: 768px) {
       display: flex;
       flex-direction: column;
@@ -117,9 +119,7 @@ const Wrapper = styled.section`
       gap: 1em;
     }
   }
-  .form-control {
-    margin-bottom: 1rem;
-  }
+
   input {
     margin-block: 0;
   }
@@ -169,9 +169,7 @@ const Wrapper = styled.section`
   .all-btn .active {
     text-decoration: underline;
   }
-  .price {
-    margin-bottom: 0.25rem;
-  }
+
   .shipping {
     display: grid;
     grid-template-columns: auto 1fr;

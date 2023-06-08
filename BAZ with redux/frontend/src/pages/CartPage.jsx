@@ -12,7 +12,7 @@ import useLocalStorage from '../utils/customHooks/localStorage';
 
 const CartPage = () => {
   const dispatch = useDispatch();
-  const { cart, shippingInfo, subtotal } = useSelector((state) => state.cart);
+  const { cart, subtotal } = useSelector((state) => state.cart);
   // eslint-disable-next-line no-unused-vars
   const [localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
 
@@ -24,12 +24,12 @@ const CartPage = () => {
     dispatch(updateCartTotal());
     dispatch(countCartTotal());
     setLocalStorageCart(cart);
-  }, [cart, shippingInfo, subtotal]);
+  }, [cart, subtotal]);
 
   if (cart.length < 1) {
     return (
       <Wrapper className='page-100'>
-        <div className='pageHero'>
+        <div className='pageHero flex-column'>
           <h3 className='pageName'>Shopping Cart</h3>
           <Link to='/shop' className='shopping-btn'>
             Continue Shopping
@@ -62,6 +62,7 @@ const Wrapper = styled.main`
   align-items: center;
   .pageHero {
     padding-block: 0.8em;
+    align-items: center;
     border-bottom: 1px solid black;
     width: 100%;
   }

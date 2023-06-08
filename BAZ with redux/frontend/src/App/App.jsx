@@ -42,7 +42,6 @@ const App = () => {
       dispatch(fetchProfile());
     }
   }, []);
-  // useEffect(() => {}, [cart]);
 
   if (loading) {
     return <Loading />;
@@ -70,7 +69,8 @@ const App = () => {
         />
         <Route
           path='/signup'
-          element={isAuthenticated ? <Navigate to='/' /> : <Signup />}
+          // element={isAuthenticated ? <Navigate to='/' /> : <Signup />}
+          element={<Signup />}
           exact
         />
         {/* <Route

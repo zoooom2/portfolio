@@ -3,7 +3,7 @@ const Footer = () => {
   return (
     <Wrapper className='flex-column place-center'>
       <h5>
-        &copy; {new Date().getFullYear()} <span> Beads By Kaph</span>
+        &copy; {new Date().getFullYear()} <span>Baz</span>
       </h5>
       <h5>All rights reserved</h5>
     </Wrapper>

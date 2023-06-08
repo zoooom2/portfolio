@@ -2,7 +2,12 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { clearCart, clearShipping } from '../features/cartFeature/cartSlice';
+import {
+  clearCart,
+  clearShipping,
+  countCartTotal,
+  updateCartTotal,
+} from '../features/cartFeature/cartSlice';
 import { useDispatch } from 'react-redux';
 
 const OrderPage = () => {
@@ -31,8 +36,15 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
-    getDetails();
-  }, []);
+    dispatch(countCartTotal());
+    dispatch(updateCartTotal());
+    if (body.subtotal && body.total_amount) {
+      getDetails();
+      localStorage.removeItem('cart');
+      localStorage.removeItem('shipping');
+    }
+  }, [body]);
+
   return <h1>order successful</h1>;
 };
 

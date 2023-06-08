@@ -3,11 +3,14 @@ import { BsTwitter, BsInstagram } from 'react-icons/bs';
 import { useEffect } from 'react';
 import { setClicked } from '../features/userFeature/userSlice';
 import { useDispatch } from 'react-redux';
+
 const ContactPage = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setClicked(true));
   }, []);
+
   return (
     <Wrapper className='flex-column'>
       <h3 className='pageName'>Contact</h3>
@@ -76,6 +79,8 @@ const Wrapper = styled.section`
     @media (max-width: 927px) {
       grid-template-columns: 1fr;
       gap 1em;
+      
+      
     }
   }
   main > * {
@@ -85,6 +90,7 @@ const Wrapper = styled.section`
     font-size: 20px;
     line-height: 200.5%;
     letter-spacing: 0.1em;
+    
   }
   main > * > h3 {
     border-bottom: 1px solid black;
@@ -102,11 +108,14 @@ const Wrapper = styled.section`
   main > * > a {
     display:grid;
     place-items:center;
-    padding: 2em;
+    padding-block: 1em;
     
   }
   .mail {
     border-inline: 1px solid black;
+    @media(max-width:927px){
+      border-inline:none;
+    }
   }
   a {
     color: black;

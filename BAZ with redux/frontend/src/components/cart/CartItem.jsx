@@ -28,6 +28,7 @@ const CartItem = ({ productID, image, name, price, size, amount, max }) => {
               name='quantity'
               id='quantity'
               placeholder={0}
+              min={0}
               value={amount === 0 ? '' : amount}
               className='quantity'
               onChange={handleChange}

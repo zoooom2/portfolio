@@ -6,6 +6,7 @@ export const fetchOrderStats = createAsyncThunk(
   'admin/fetchOrderStats',
   async (period) => {
     const response = await axios.get(`/api/v1/order/pctchange?time=${period}`);
+    console.log(response);
     return response.data.stats;
   }
 );
@@ -72,21 +73,17 @@ const adminSlice = createSlice({
     });
 
     builder.addCase(fetchOrderStats.fulfilled, (state, action) => {
-      console.log(action.payload);
-      state = {
-        ...state,
-        loading: false,
-        fetch_order_stat_error: '',
-        totalRevenue: priceFormat(action.payload[1].current),
-        percentageRevenue: action.payload[1].percentageDifference,
-        totalSale: action.payload[0].current,
-        percentageSales: action.payload[0].percentageDifference,
-        totalOrder: action.payload[2].current,
-        percentageOrder: action.payload[2].percentageDifference,
-        previousTotalRevenue: priceFormat(action.payload[1].previous),
-        previousTotalSales: action.payload[0].previous,
-        previousTotalOrder: action.payload[2].previous,
-      };
+      state.loading = false;
+      state.fetch_order_stat_error = '';
+      state.totalRevenue = priceFormat(action.payload[1].current);
+      state.percentageRevenue = action.payload[1].percentageDifference;
+      state.totalSale = action.payload[0].current;
+      state.percentageSales = action.payload[0].percentageDifference;
+      state.totalOrder = action.payload[2].current;
+      state.percentageOrder = action.payload[2].percentageDifference;
+      state.previousTotalRevenue = priceFormat(action.payload[1].previous);
+      state.previousTotalSales = action.payload[0].previous;
+      state.previousTotalOrder = action.payload[2].previous;
     });
     builder.addCase(fetchOrderStats.rejected, (state, action) => {
       state.loading = false;
@@ -101,10 +98,9 @@ const adminSlice = createSlice({
       state.previousTotalOrder = 0;
       state.fetch_order_stat_error = action.error.message;
     });
-    builder.addCase(
-      fetchVisitorStats.pending,
-      (state) => (state.loading = true)
-    );
+    builder.addCase(fetchVisitorStats.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(fetchVisitorStats.fulfilled, (state, action) => {
       state.fetch_visitor_stat_error = '';
       state.loading = false;
@@ -119,7 +115,9 @@ const adminSlice = createSlice({
       state.previousVisitor = 0;
       state.percentageVisitor = 0;
     });
-    builder.addCase(fetchBestSeller.pending, (state) => (state.loading = true));
+    builder.addCase(fetchBestSeller.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(fetchBestSeller.fulfilled, (state, action) => {
       state.loading = false;
       state.fetch_best_seller_error = '';

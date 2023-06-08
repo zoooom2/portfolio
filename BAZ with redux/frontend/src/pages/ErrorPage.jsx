@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 
 const ErrorPage = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setClicked(true));
   }, []);

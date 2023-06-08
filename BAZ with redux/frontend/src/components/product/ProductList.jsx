@@ -14,6 +14,8 @@ const ProductList = () => {
           textTransform: 'none',
           fontFamily: 'Bell MT',
           marginTop: '5em',
+          display: 'flex',
+          justifyContent: 'center',
         }}>
         Sorry, no product match your search
       </h5>

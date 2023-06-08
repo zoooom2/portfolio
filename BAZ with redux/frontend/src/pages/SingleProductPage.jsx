@@ -21,6 +21,7 @@ import useLocalStorage from '../utils/customHooks/localStorage';
 const SingleProductPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+
   // eslint-disable-next-line no-unused-vars
   const [localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
   const navigate = useNavigate();
@@ -29,12 +30,11 @@ const SingleProductPage = () => {
     single_products_error: error,
     single_product: product,
   } = useSelector((state) => state.product);
-  const { cart, shippingInfo, subtotal } = useSelector((state) => state.cart);
+  const { cart, subtotal } = useSelector((state) => state.cart);
+  const { productName, price, description, images, stock } = product;
   useEffect(() => {
     dispatch(setClicked(true));
   }, []);
-
-  const { productName, price, description, images, stock } = product;
 
   useEffect(() => {
     dispatch(fetchSingleProduct(`${url}${id}`));
@@ -44,7 +44,7 @@ const SingleProductPage = () => {
     dispatch(updateCartTotal());
     dispatch(countCartTotal());
     setLocalStorageCart(cart);
-  }, [cart, shippingInfo, subtotal]);
+  }, [cart, subtotal]);
 
   useEffect(() => {
     if (error) {

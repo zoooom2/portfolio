@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { DevTool } from '@hookform/devtools';
 import axios from 'axios';
 import logo from '../assets/image 2.svg';
 import { jwtAuth, googleAuth } from '../features/userFeature/userSlice';
@@ -8,21 +11,38 @@ import { useSelector, useDispatch } from 'react-redux';
 axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
   const { authentication_error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setCredentials({ ...credentials, [name]: value });
-  };
-  const handleJwtLogin = async () => {
-    const response = await dispatch(
-      jwtAuth([credentials.email, credentials.password])
-    );
+  const validationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email('Invalid email format')
+      .required('Email is required'),
+    password: yup
+      .string()
+      .required('Password is required')
+      .min(8, 'Password should be at least 8 characters long'),
+  });
+  const form = useForm({
+    resolver: yupResolver(validationSchema),
+    mode: 'onTouched',
+  });
+
+  const { register, control, handleSubmit, formState } = form;
+  const {
+    errors,
+    isDirty,
+    isValid,
+    isSubmitting,
+    // isSubmitted,
+    isSubmitSuccessful,
+  } = formState;
+
+  const onSubmit = async (data) => {
+    const response = await dispatch(jwtAuth([data.email, data.password]));
     if (!authentication_error) {
       const redirectTo = searchParams.get('redirectTo');
       if (redirectTo) {
@@ -34,30 +54,44 @@ const LoginPage = () => {
       }
     }
   };
+  const onError = (errors) => console.log('Form Errors', errors);
+
   return (
     <Wrapper className='page-100 section section-center'>
       <div className='form_container'>
         <div className='right flex-column place-center'>
           <img src={logo} alt='logo' className='logo' />
-          <input
-            type='text'
-            className='input'
-            placeholder='Email'
-            name='email'
-            value={credentials.email}
-            onChange={handleChange}
-          />
-          <input
-            type='password'
-            className='input'
-            placeholder='Password'
-            name='password'
-            value={credentials.password}
-            onChange={handleChange}
-          />
-          <button className='btn place-center' onClick={handleJwtLogin}>
-            Log In
-          </button>
+
+          <form onSubmit={handleSubmit(onSubmit, onError)}>
+            {!isSubmitSuccessful && <h5>incorrect email/password</h5>}
+            <div className='form-control'>
+              <input
+                type='text'
+                className='input'
+                placeholder='Email'
+                name='email'
+                {...register('email')}
+              />
+              <p className='error'>{errors.email?.message}</p>
+            </div>
+            <div className='form-control'>
+              <input
+                type='password'
+                className='input'
+                placeholder='Password'
+                name='password'
+                {...register('password')}
+              />
+              <p className='error'>{errors.password?.message}</p>
+            </div>
+
+            <button
+              className='btn place-center'
+              disabled={!isDirty || !isValid || isSubmitting}>
+              Log In
+            </button>
+            <DevTool control={control} />
+          </form>
           <p className='text'>or</p>
           <button className='btn zilla-500 place-center' onClick={googleAuth}>
             <img src='/google.png' alt='google icon' />

@@ -64,7 +64,7 @@ const AdminOverview = () => {
             <RecentOrderTable
               header={['Name', 'Piece(s)', 'Price', 'Status']}
               content={[
-                'username',
+                'lastname',
                 'total_items',
                 'total_amount',
                 'orderStatus',

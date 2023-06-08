@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import logo from '../assets/image 2.svg';
 
 const Loading = () => {

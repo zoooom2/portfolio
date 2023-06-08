@@ -7,13 +7,55 @@ import { useDispatch } from 'react-redux';
 import { placeholderStyle, selectStyle } from '../../utils/constants';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { updateShipping } from '../../features/cartFeature/cartSlice';
+import { createShipping } from '../../features/cartFeature/cartSlice';
+import { useForm } from 'react-hook-form';
+import { DevTool } from '@hookform/devtools';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-const BillingInfo = ({ setStage, shippingInfo }) => {
+const BillingInfo = ({ setStage }) => {
   const [state, setState] = useState([]);
   const [city, setCity] = useState([]);
+
   const dispatch = useDispatch();
   // const { shippingInfo } = useSelector((state) => state.cart);
+  const validationSchema = yup.object().shape({
+    firstName: yup.string().required('First Name is required'),
+    lastName: yup.string().required('Last Name is required'),
+    address: yup.string().required('Address is required'),
+    city: yup.string().required('City is required'),
+    state: yup.string().required('State is required'),
+    country: yup.string().required('Country is required'),
+    countryCode: yup.string().required('Country Code is required'),
+    phoneNumber: yup.string().required('Phone Number is required'),
+    // postCode: yup.string().required('Post Code is required'),
+    email: yup.string().email('Invalid email').required('Email is required'),
+  });
+
+  const form = useForm({
+    resolver: yupResolver(validationSchema),
+    mode: 'onTouched',
+  });
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState,
+    // watch,
+    getValues,
+    setValue,
+    // reset,
+    // trigger,
+  } = form;
+
+  const {
+    errors,
+    isDirty,
+    isValid,
+    isSubmitting,
+    // isSubmitted,
+    isSubmitSuccessful,
+  } = formState;
 
   useEffect(() => {
     setStage(1);
@@ -40,16 +82,12 @@ const BillingInfo = ({ setStage, shippingInfo }) => {
         countryCode: x.countryCode,
       })
     );
+
+    setValue('country', selectedOption.value);
+    setValue('countryCode', selectedOption.countryCode);
     setState([...stateArray]);
-    dispatch(updateShipping({ detail: 'state', info: '' }));
-    dispatch(updateShipping({ detail: 'city', info: '' }));
-    dispatch(updateShipping({ detail: 'country', info: selectedOption.value }));
-    dispatch(
-      updateShipping({
-        detail: 'countryCode',
-        info: selectedOption.countryCode,
-      })
-    );
+    setValue('state', undefined);
+    setValue('city', undefined);
   };
 
   const handleState = (selectedOption) => {
@@ -66,22 +104,24 @@ const BillingInfo = ({ setStage, shippingInfo }) => {
         countryCode: x.countryCode,
       })
     );
-
     setCity([...cityArray]);
-    dispatch(updateShipping({ detail: 'state', info: selectedOption.value }));
+    setValue('state', selectedOption.value);
+    setValue('city', undefined);
   };
 
   const handleCity = (selectedOption) => {
-    dispatch(updateShipping({ detail: 'city', info: selectedOption.value }));
+    setValue('city', selectedOption.value);
   };
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    dispatch(updateShipping({ detail: name, info: value }));
+  const onSubmit = async (data) => {
+    console.log({ ...data });
+    dispatch(createShipping(data));
   };
+
+  const onError = (errors) => console.log('Form Errors', errors);
+  console.log(isValid, errors);
   return (
-    <Wrapper className='flex-column'>
+    <Wrapper className='flex-column' onSubmit={handleSubmit(onSubmit, onError)}>
       <h5 className='form-title zilla-500'>Contact Information</h5>
       <div className='form-name'>
         <input
@@ -89,8 +129,7 @@ const BillingInfo = ({ setStage, shippingInfo }) => {
           name='firstName'
           id='firstName'
           placeholder='Enter Firstname'
-          value={shippingInfo.firstName}
-          onChange={handleChange}
+          {...register('firstName')}
         />
 
         <input
@@ -98,16 +137,14 @@ const BillingInfo = ({ setStage, shippingInfo }) => {
           name='lastName'
           id='lastName'
           placeholder='Enter Lastname'
-          value={shippingInfo.lastName}
-          onChange={handleChange}
+          {...register('lastName')}
         />
         <input
           type='text'
           name='email'
           id='email'
           placeholder='Enter Email'
-          value={shippingInfo.email}
-          onChange={handleChange}
+          {...register('email')}
         />
 
         <input
@@ -115,8 +152,7 @@ const BillingInfo = ({ setStage, shippingInfo }) => {
           name='phoneNumber'
           id='phoneNumber'
           placeholder='Enter Phone Number'
-          value={shippingInfo.phoneNumber}
-          onChange={handleChange}
+          {...register('phoneNumber')}
         />
       </div>
       <h5 className='form-title zilla-500'>shipping Address</h5>
@@ -125,8 +161,7 @@ const BillingInfo = ({ setStage, shippingInfo }) => {
         name='address'
         id='address'
         placeholder='Enter Street Address'
-        value={shippingInfo.address}
-        onChange={handleChange}
+        {...register('address')}
       />
       <Select
         styles={{
@@ -142,14 +177,15 @@ const BillingInfo = ({ setStage, shippingInfo }) => {
           }),
         }}
         options={countryArray}
+        {...register('country')}
         onChange={handleCountry}
         noOptionsMessage={() => 'No Country Found'}
         placeholder='Enter Country'
         className='selectStyle'
         value={
-          shippingInfo.country && {
-            value: shippingInfo.country,
-            label: shippingInfo.country,
+          getValues('country') && {
+            label: getValues('country'),
+            value: getValues('country'),
           }
         }
       />
@@ -167,14 +203,15 @@ const BillingInfo = ({ setStage, shippingInfo }) => {
             ...selectStyle,
           }),
         }}
+        {...register('state')}
         onChange={handleState}
         noOptionsMessage={() => 'No State Found'}
         placeholder='Enter State'
         className='selectStyle'
         value={
-          shippingInfo.state && {
-            value: shippingInfo.state,
-            label: shippingInfo.state,
+          getValues('state') && {
+            label: getValues('state'),
+            value: getValues('state'),
           }
         }
       />
@@ -192,20 +229,27 @@ const BillingInfo = ({ setStage, shippingInfo }) => {
           }),
         }}
         options={city}
+        {...register('city')}
         onChange={handleCity}
-        noOptionsMessage={() => 'No State Found'}
+        noOptionsMessage={() => 'No City Found'}
         placeholder='Enter City'
         className='selectStyle'
         value={
-          shippingInfo.city && {
-            value: shippingInfo.city,
-            label: shippingInfo.city,
+          getValues('city') && {
+            label: getValues('city'),
+            value: getValues('city'),
           }
         }
       />
-      <Link to='/checkout/shipping' className='btn place-center zilla-700'>
+
+      <Link
+        disabled={isSubmitting || !isValid}
+        className='btn place-center zilla-700'
+        to={!isSubmitting && isValid ? '/checkout/shipping' : '#'}>
         NEXT
       </Link>
+
+      <DevTool control={control} />
     </Wrapper>
   );
 };

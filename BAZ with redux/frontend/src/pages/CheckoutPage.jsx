@@ -17,7 +17,7 @@ import {
 } from '../features/cartFeature/cartSlice';
 
 const CheckoutPage = () => {
-  const { params } = useParams();
+  let { params } = useParams();
   const [stage, setStage] = useState(1);
   const dispatch = useDispatch();
   const { shippingInfo } = useSelector((state) => state.cart);
@@ -31,13 +31,10 @@ const CheckoutPage = () => {
   }, []);
 
   useEffect(() => {
-    setLocalShipping(shippingInfo);
-  }, [shippingInfo]);
-
-  useEffect(() => {
     dispatch(updateCartTotal());
     dispatch(countCartTotal());
-  }, [shippingInfo.shippingFee]);
+    setLocalShipping(shippingInfo);
+  }, [shippingInfo]);
 
   return (
     <main>

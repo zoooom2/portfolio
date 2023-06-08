@@ -3,13 +3,15 @@ import axios from 'axios';
 
 export const handlePayStack = createAsyncThunk(
   'cart/handlePayStack',
-  async ([shippingInfo, cart, total_amount]) => {
+  async ({ shippingInfo, cart, total_amount, subtotal, total_items }) => {
     const response = await axios.post(
       '/api/v1/order/paystack/checkout-session',
       {
         shippingInfo: { ...shippingInfo },
         orderItems: cart,
-        totalPrice: total_amount,
+        total_amount,
+        subtotal,
+        total_items,
       },
       {
         withCredentials: true,
@@ -41,6 +43,7 @@ const cartSlice = createSlice({
       postCode: '',
       email: '',
       shippingMethod: '',
+      shippingFee: 0,
     },
   },
   reducers: {
@@ -130,6 +133,9 @@ const cartSlice = createSlice({
       const { detail, info } = action.payload;
       state.shippingInfo = { ...state.shippingInfo, [detail]: info };
     },
+    createShipping: (state, action) => {
+      state.shippingInfo = { ...state.shippingInfo, ...action.payload };
+    },
     clearShipping: (state) => {
       state.shippingInfo = {
         firstName: '',
@@ -172,6 +178,7 @@ export const {
   toggleAmount,
   setAmount,
   clearCart,
+  createShipping,
   updateCartTotal,
   countCartTotal,
   updateShipping,

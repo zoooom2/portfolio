@@ -3,6 +3,7 @@ import { handlePayStack } from '../../features/cartFeature/cartSlice';
 import styled from 'styled-components';
 import { priceFormat } from '../../utils/constants';
 import PropTypes from 'prop-types';
+import { SpinnerCircular } from 'spinners-react';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Payment = ({ setStage, shippingInfo }) => {
@@ -11,6 +12,9 @@ const Payment = ({ setStage, shippingInfo }) => {
     // shippingInfo,
     cart,
     total_amount,
+    total_items,
+    subtotal,
+    loading,
   } = useSelector((state) => state.cart);
   const {
     firstName,
@@ -26,7 +30,15 @@ const Payment = ({ setStage, shippingInfo }) => {
   } = shippingInfo;
 
   const handlePayment = () => {
-    dispatch(handlePayStack([shippingInfo, cart, total_amount]));
+    dispatch(
+      handlePayStack({
+        shippingInfo,
+        cart,
+        total_amount,
+        total_items,
+        subtotal,
+      })
+    );
   };
 
   useEffect(() => {
@@ -58,7 +70,11 @@ const Payment = ({ setStage, shippingInfo }) => {
       <div className='shippingMethod'>{shippingMethod}</div>
       <div className='shippingFee'>{priceFormat(shippingFee)}</div>
       <button className='btn zilla-700' onClick={handlePayment}>
-        Pay Now
+        {!loading ? (
+          <SpinnerCircular secondaryColor={'#000'} color='white' size={35} />
+        ) : (
+          'Pay Now'
+        )}
       </button>
     </Wrapper>
   );

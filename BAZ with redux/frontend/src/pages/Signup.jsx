@@ -1,158 +1,201 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import logo from '../assets/image 2.svg';
 import { setClicked } from '../features/userFeature/userSlice';
+import { useForm } from 'react-hook-form';
+import { DevTool } from '@hookform/devtools';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-const tempDetails = {
-  firstname: '',
-  lastname: '',
-  username: '',
-  email: '',
-  password: '',
-  passwordConfirm: '',
-};
 const Signup = () => {
-  const [details, setDetails] = useState({
-    ...tempDetails,
-  });
-  const [errorMessage, setErrorMessage] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const validationSchema = yup.object().shape({
+    username: yup.string().required('Username is required'),
+    lastname: yup.string().required('Last name is required'),
+    firstname: yup.string().required('First name is required'),
+    email: yup
+      .string()
+      .email('Invalid email format')
+      .required('Email is required'),
+    dateOfBirth: yup
+      .date()
+      .required('Date of birth is required')
+      .max(new Date(), 'Date of birth must be in the past'),
+    password: yup
+      .string()
+      .required('Password is required')
+      .min(8, 'Password should be at least 8 characters long'),
+    passwordConfirm: yup
+      .string()
+      .oneOf([yup.ref('password'), null], 'Passwords must match')
+      .required('Password confirmation is required'),
+  });
+  const form = useForm({
+    resolver: yupResolver(validationSchema),
+    mode: 'onTouched',
+  });
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState,
+    // watch,
+    // getValues,
+    // setValue,
+    // reset,
+    // trigger,
+  } = form;
+
+  const {
+    errors,
+    isDirty,
+    isValid,
+    isSubmitting,
+    // isSubmitted,
+    isSubmitSuccessful,
+  } = formState;
+
+  const onSubmit = async (data) => {
+    try {
+      await axios.post('/api/v1/users/signup', data);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onError = (errors) => console.log('Form Errors', errors);
+
+  // const onReset = () => reset();
+
+  // const handleGetValues = () =>
+  //   console.log('Get Values', getValues('username'));
+  // const handleSetValues = () =>
+  //   console.log(
+  //     'Set Values',
+  //     setValue('username', '', {
+  //       shouldValidate: true,
+  //       shouldDirty: true,
+  //       shouldTouch: true,
+  //     })
+  //   );
+
+  // useEffect(() => {
+  //   if (isSubmitSuccessful) {
+  //     // reset();
+  //   }
+  // }, [isSubmitSuccessful, reset]);
 
   useEffect(() => {
     dispatch(setClicked(true));
   }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setErrorMessage(false);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [errorMessage]);
-
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-
-    // if (name !== 'email') {
-    //   if (e.target.value === '') {
-    //     e.target.style.border = '1px solid red';
-    //   } else {
-    //     e.target.style.border = 'none';
-    //   }
-    // }
-    // if (name === 'email') {
-    //   /^[A-Z0-9. _%+-]+@[A-Z0-9. -]+\.[A-Z]{2,4}$/i.test(e.target.value)
-    //     ? (e.target.style.border = 'none')
-    //     : (e.target.style.border = '1px solid red');
-    // }
-    setDetails({ ...details, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post('/api/v1/users/signup', details);
-      setDetails(tempDetails);
-      navigate('/');
-    } catch (error) {
-      setErrorMessage(true);
-    }
-  };
 
   return (
     <main>
       <Wrapper className='page-100 section section-center'>
         <div className='details'>
           <img src={logo} alt='logo' />
-          <form className='shipping-details'>
+          <form
+            className='shipping-details'
+            onSubmit={handleSubmit(onSubmit, onError)}>
             <h5 className='form-title zilla-700'>Sign Up</h5>
             <div className='form-name'>
-              {/* <label htmlFor="photo">
-                {imageFile.filePreview ? (
-                  <img src={imageFile.filePreview} alt="preview" />
-                ) : (
-                  <div>
-                    <BsUpload />
-                    <br />
-                    <span>Upload Image</span>
-                  </div>
-                )}
-              </label>
-              {imageFile.filePreview ? (
-                <button onClick={removeImage} className="removeImage">
-                  remove image
-                </button>
-              ) : null}
-              <input
-                type="file"
-                name="photo"
-                id="photo"
-                accept="image/*"
-                className="photo"
-                onChange={handleImage}
-              /> */}
-              <input
-                type='text'
-                name='firstname'
-                id='firstname'
-                placeholder='Enter First Name'
-                value={details.firstname}
-                onChange={handleChange}
-              />
-
-              <input
-                type='text'
-                name='lastname'
-                id='lastName'
-                placeholder='Enter Last Name'
-                value={details.lastname}
-                onChange={handleChange}
-              />
+              <div className='form-control'>
+                <input
+                  type='text'
+                  name='firstname'
+                  id='firstname'
+                  placeholder='Enter First Name'
+                  {...register('firstname')}
+                />
+                <p className='error'>{errors.firstname?.message}</p>
+              </div>
+              <div className='form-control'>
+                <input
+                  type='text'
+                  name='lastname'
+                  id='lastname'
+                  placeholder='Enter Last Name'
+                  {...register('lastname')}
+                />
+                <p className='error'>{errors.lastname?.message}</p>
+              </div>
             </div>
-
-            <input
-              type='username'
-              name='username'
-              id='username'
-              placeholder='Enter User Name'
-              value={details.username}
-              onChange={handleChange}
-            />
-
-            <input
-              type='email'
-              name='email'
-              id='email'
-              placeholder='Enter Email'
-              value={details.email}
-              onChange={handleChange}
-            />
-            <input
-              type='password'
-              name='password'
-              id='password'
-              placeholder='Enter Password'
-              value={details.password}
-              onChange={handleChange}
-            />
-
-            <input
-              type='password'
-              name='passwordConfirm'
-              id='passwordConfirm'
-              placeholder='Confirm Password'
-              value={details.passwordConfirm}
-              onChange={handleChange}
-            />
-            <button className='btn btn-link' onClick={handleSubmit}>
+            <div className='form-control'>
+              <input
+                type='username'
+                name='username'
+                id='username'
+                placeholder='Enter User Name'
+                {...register('username')}
+              />
+              <p className='error'>{errors.username?.message}</p>
+            </div>
+            <div className='form-control'>
+              <input
+                type='email'
+                name='email'
+                id='email'
+                placeholder='Enter Email'
+                {...register('email', {
+                  emailAvailable: async (fieldValue) => {
+                    const response = await axios.get(
+                      `https://jsonplaceholder.typicode.com/users?email=${fieldValue}`
+                    );
+                    const data = response.data;
+                    return data.length === 0 || 'Email already exists';
+                  },
+                })}
+              />
+              <p className='error'>{errors.email?.message}</p>
+            </div>
+            <div className='form-control'>
+              <input
+                type='date'
+                name='dateOfBirth'
+                {...register('dateOfBirth', {
+                  required: { value: true, message: 'Enter Date of Birth' },
+                })}
+              />
+              <p className='error'>{errors.dateOfBirth?.message}</p>
+            </div>
+            <div className='form-control'>
+              <input
+                type='password'
+                name='password'
+                id='password'
+                placeholder='Enter Password'
+                {...register('password', {
+                  required: { value: true, message: 'Please enter password' },
+                })}
+              />
+              <p className='error'>{errors.password?.message}</p>
+            </div>
+            <div className='form-control'>
+              <input
+                type='password'
+                name='passwordConfirm'
+                id='passwordConfirm'
+                placeholder='Confirm Password'
+                {...register('passwordConfirm')}
+              />
+              <p className='error'>{errors.passwordConfirm?.message}</p>
+            </div>
+            <button
+              className='btn btn-link'
+              disabled={!isDirty || !isValid || isSubmitting}>
               Register
             </button>
-            {errorMessage && <p>Something Wrong Happened. Please try again</p>}
+            {!isSubmitSuccessful && (
+              <p>Something Wrong Happened. Please try again</p>
+            )}
           </form>
+          <DevTool control={control} />
         </div>
       </Wrapper>
     </main>
@@ -216,21 +259,7 @@ const Wrapper = styled.div`
     margin-block: 1em;
     text-transform: uppercase;
   }
-  // label {
-  //   border: 3px solid white;
-  //   border-radius: 50%;
-  //   margin: 1em auto;
-  //   height: 100px;
-  //   width: 100px;
-  //   cursor: pointer;
-  //   display: grid;
-  //   place-items: center;
-  //   text-align: center;
-  // }
-  // label > div > span {
-  //   font-family: monospace;
-  //   font-size: 12px;
-  // }
+
   .btn {
     padding-block: 1em;
     margin-top: 1em;
@@ -240,29 +269,6 @@ const Wrapper = styled.div`
     display: grid;
     place-items: center;
   }
-  // .photo {
-  //   display: none;
-  // }
-  // img {
-  //   width: 100%;
-  //   height: 100%;
-  //   object-fit: contain;
-  //   border-radius: 50%;
-  // }
-  // .removeImage {
-  //   border: none;
-  //   width: auto;
-  //   margin-inline: auto;
-  //   margin-bottom: 1em;
-  //   background-color: transparent;
-  //   font-size: 12px;
-  //   cursor: pointer;
-  //   &:hover {
-  //     color: purple;
-  //     text-transform: underline;
-  //   }
-  // }
-
   p {
     color: red;
     font-size: 12px;
