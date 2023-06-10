@@ -48,7 +48,7 @@ const orderSchema = new Schema({
       },
       price: {
         type: Number,
-        require: [true, 'Booking must have a price.'],
+        required: [true, 'Booking must have a price.'],
       },
       image: {
         type: String,
