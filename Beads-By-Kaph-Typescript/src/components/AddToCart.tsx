@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaCheck } from 'react-icons/fa';
-import { useCartContext } from '../context/cart_context';
 import AmountButtons from './AmountButtons';
+import { useCartContext } from '../context/contextHooks';
+import { SingleProductType } from '../types';
 
-const AddToCart = ({ product, size }) => {
+const AddToCart = ({
+  product,
+  size,
+}: {
+  product: SingleProductType;
+  size: number;
+}) => {
   const { addToCart } = useCartContext();
-  const { _id: id, stock, category, color } = product;
+  const { id, stock, color } = product;
   const [mainColor, setMainColor] = useState(color[0]);
   const [amount, setAmount] = useState(1);
 
-  const increase = () => {
+  const increase = useCallback(() => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount + 1;
       if (tempAmount > stock) {
@@ -19,8 +26,9 @@ const AddToCart = ({ product, size }) => {
       }
       return tempAmount;
     });
-  };
-  const decrease = () => {
+  }, [stock]);
+
+  const decrease = useCallback(() => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount - 1;
       if (tempAmount < 1) {
@@ -28,11 +36,11 @@ const AddToCart = ({ product, size }) => {
       }
       return tempAmount;
     });
-  };
+  }, []);
 
   return (
     <Wrapper>
-      <div className="colors">
+      <div className='colors'>
         <span>colors :</span>
         <div>
           {color.map((clr, index) => {
@@ -43,15 +51,14 @@ const AddToCart = ({ product, size }) => {
                 className={`${
                   mainColor === clr ? 'color-btn active' : 'color-btn'
                 }`}
-                onClick={() => setMainColor(clr)}
-              >
+                onClick={() => setMainColor(clr)}>
                 {mainColor === clr ? <FaCheck /> : null}
               </button>
             );
           })}
         </div>
       </div>
-      <div className="btn-container">
+      <div className='btn-container'>
         <AmountButtons
           increase={increase}
           decrease={decrease}
@@ -59,10 +66,9 @@ const AddToCart = ({ product, size }) => {
         />
       </div>
       <Link
-        to="/cart"
-        className="btn"
-        onClick={() => addToCart(id, mainColor, amount, product, size)}
-      >
+        to='/cart'
+        className='btn'
+        onClick={() => addToCart(id, mainColor, amount, product, size)}>
         add to cart
       </Link>
     </Wrapper>

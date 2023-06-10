@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import { GrStripe } from 'react-icons/gr';
-import { useCartContext } from '../context/cart_context';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useUserContext } from '../context/user_context';
+import { useCartContext, useUserContext } from '../context/contextHooks';
 axios.defaults.withCredentials = true;
 
 const PaymentGateway = () => {
@@ -11,21 +10,20 @@ const PaymentGateway = () => {
   const { isAuthenticated } = useUserContext();
   const navigate = useNavigate();
   return (
-    <Wrapper className="page-100 section section-center">
-      <div className="gateway-container">
+    <Wrapper className='page-100 section section-center'>
+      <div className='gateway-container'>
         <h5>Select Payment Option</h5>
         {/* <Select options={options} className="option" /> */}
-        <button className="paypalBtn btn" onClick={handlePaypal}>
-          <img src="/paypal-3.svg" alt="Paypal" />
+        <button className='paypalBtn btn' onClick={handlePaypal}>
+          <img src='/paypal-3.svg' alt='Paypal' />
         </button>
-        <button className="stripeBtn btn" onClick={handleStripe}>
+        <button className='stripeBtn btn' onClick={handleStripe}>
           <GrStripe /> Stripe
         </button>
         <button
-          className="paystackBtn btn"
-          onClick={isAuthenticated ? handlePayStack : navigate('/login')}
-        >
-          <img src="/paystack-2.svg" alt="logo" />
+          className='paystackBtn btn'
+          onClick={isAuthenticated ? handlePayStack : () => navigate('/login')}>
+          <img src='/paystack-2.svg' alt='logo' />
         </button>
       </div>
     </Wrapper>

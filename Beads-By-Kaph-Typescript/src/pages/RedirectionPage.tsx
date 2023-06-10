@@ -1,7 +1,7 @@
-import { useCartContext } from '../context/cart_context';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useCartContext } from '../context/contextHooks';
 
 const RedirectPage = () => {
   const body = useCartContext();
@@ -23,7 +23,10 @@ const RedirectPage = () => {
         body.clearShipping();
       }
     } catch (err) {
-      console.log(err.response.data);
+      if (axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError;
+        console.log(axiosError.response?.data);
+      }
     }
   };
 

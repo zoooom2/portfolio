@@ -1,40 +1,47 @@
-import React from 'react';
 import styled from 'styled-components';
-import { formatPrice } from '../utils/helpers';
 import AmountButtons from './AmountButtons';
 import { FaTrash } from 'react-icons/fa';
-import { useCartContext } from '../context/cart_context';
-const CartItem = ({ id, image, name, color, price, amount, size }) => {
+import { useCartContext } from '../context/contextHooks';
+import { CartItemType } from '../types';
+
+const CartItem = ({
+  productID,
+  image,
+  name,
+  color,
+  price,
+  amount,
+  size,
+}: CartItemType) => {
   const { removeItem, toggleAmount } = useCartContext();
   const increase = () => {
-    toggleAmount(id, 'inc');
+    toggleAmount(productID, 'inc', color, size);
   };
   const decrease = () => {
-    toggleAmount(id, 'dec');
+    toggleAmount(productID, 'dec', color, size);
   };
   return (
     <Wrapper>
-      <div className="title">
+      <div className='title'>
         <img src={`/productImage/${image}`} alt={name} />
         <div>
           <div>
-            <p className="color">
+            <p className='color'>
               color: <span style={{ background: color }}></span>
             </p>
-            <div className="size">size:{size}</div>
+            <div className='size'>size:{size}</div>
           </div>
 
-          <h5 className="price-small">{`₦${price}`}</h5>
+          <h5 className='price-small'>{`₦${price}`}</h5>
         </div>
       </div>
-      <h5 className="price">{`₦${price}`}</h5>
+      <h5 className='price'>{`₦${price}`}</h5>
       <AmountButtons amount={amount} increase={increase} decrease={decrease} />
-      <h5 className="subtotal">{`₦${price * amount}`}</h5>
+      <h5 className='subtotal'>{`₦${price * amount}`}</h5>
       <button
-        className="remove-btn"
-        type="button"
-        onClick={() => removeItem(id)}
-      >
+        className='remove-btn'
+        type='button'
+        onClick={() => removeItem(productID)}>
         <FaTrash />
       </button>
     </Wrapper>

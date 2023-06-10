@@ -7,15 +7,33 @@ import {
   UPDATE_SHIPPING,
   CLEAR_SHIPPING,
 } from '../actions';
+import { initialState } from '../context/defaultContextValue/cartDefault';
+import {
+  CartActionType,
+  CartContextStateType,
+  CartItemAndProduct,
+  CartItemType,
+} from '../types';
 
-const cart_reducer = (state, action) => {
+const cart_reducer = (
+  state: CartContextStateType,
+  action: CartActionType
+): CartContextStateType => {
   switch (action.type) {
-    case ADD_TO_CART:
-      const { id, color, amount, product, size } = action.payload;
-      const tempItem = state.cart.find((i) => i.id === id + color + size);
+    case ADD_TO_CART: {
+      const { productID, color, amount, product, size } =
+        action.payload as CartItemAndProduct;
+      // const { id, amount } = product;
+      const tempItem = state.cart.find(
+        (i) => i.productID === productID && i.size === size && i.color === color
+      );
       if (tempItem) {
         const tempCart = state.cart.map((cartItem) => {
-          if (cartItem.id === id + color + size) {
+          if (
+            cartItem.productID === productID &&
+            cartItem.size === size &&
+            cartItem.color === color
+          ) {
             let newAmount = cartItem.amount + amount;
             if (newAmount > cartItem.max) {
               newAmount = cartItem.max;
@@ -28,7 +46,6 @@ const cart_reducer = (state, action) => {
         return { ...state, cart: tempCart };
       } else {
         const newItem = {
-          id: id + color + size,
           name: product.productName,
           color,
           amount,
@@ -36,19 +53,33 @@ const cart_reducer = (state, action) => {
           image: product.images[0],
           price: product.price,
           max: product.stock,
-          product: id,
+          productID: product.id,
         };
         return { ...state, cart: [...state.cart, newItem] };
       }
-    case REMOVE_CART_ITEM:
-      const temp = state.cart.filter((item) => item.id !== action.payload.id);
+    }
+    case REMOVE_CART_ITEM: {
+      const temp = state.cart.filter((item) => {
+        const { productID, size } = action.payload as CartItemType;
+        item.productID === productID && item.size === size;
+      });
       return { ...state, cart: temp };
+    }
     case CLEAR_CART:
       return { ...state, cart: [] };
-    case TOGGLE_CART_ITEM_AMOUNT:
-      const { id: sid, value } = action.payload;
+    case TOGGLE_CART_ITEM_AMOUNT: {
+      const {
+        productID: sid,
+        value,
+        color,
+        size,
+      } = action.payload as CartItemType & { value: string };
       const tempCart = state.cart.map((item) => {
-        if (item.id === sid) {
+        if (
+          item.productID === sid &&
+          item.color === color &&
+          item.size === size
+        ) {
           if (value === 'inc') {
             let newAmount = item.amount + 1;
             if (newAmount > item.max) {
@@ -66,9 +97,10 @@ const cart_reducer = (state, action) => {
         } else {
           return { ...item };
         }
-      });
+      }) as CartItemType[];
       return { ...state, cart: tempCart };
-    case COUNT_CART_TOTALS:
+    }
+    case COUNT_CART_TOTALS: {
       const { total_items, total_amount } = state.cart.reduce(
         (total, cartItem) => {
           const { amount, price } = cartItem;
@@ -82,14 +114,22 @@ const cart_reducer = (state, action) => {
         }
       );
       return { ...state, total_items, total_amount };
-    case UPDATE_SHIPPING:
-      const { detail, info } = action.payload;
+    }
+    case UPDATE_SHIPPING: {
+      const { detail, info } = action.payload as {
+        detail: string;
+        info: string;
+      };
       return {
         ...state,
         shippingInfo: { ...state.shippingInfo, [detail]: info },
       };
+    }
     case CLEAR_SHIPPING:
-      return { ...state, shippingInfo: {} };
+      return {
+        ...state,
+        ...initialState.shippingInfo,
+      };
     default:
       throw new Error(`No Matching "${action.type}" - action type`);
   }

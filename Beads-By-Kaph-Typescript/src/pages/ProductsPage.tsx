@@ -1,12 +1,11 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Filters, ProductList, Sort } from '../components';
 
 const ProductsPage = () => {
   return (
     <main>
-      <Wrapper className="page">
-        <div className="section-center products">
+      <Wrapper className='page'>
+        <div className='section-center products'>
           <Filters />
           <div>
             <Sort />

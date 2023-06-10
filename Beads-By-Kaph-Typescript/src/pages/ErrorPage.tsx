@@ -1,14 +1,13 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 const ErrorPage = () => {
   return (
-    <Wrapper className="page-100">
+    <Wrapper className='page-100'>
       <section>
         <h1>404</h1>
         <h3>sorry the page does not exist</h3>
-        <Link to="/">
-          <button type="button" className="btn">
+        <Link to='/'>
+          <button type='button' className='btn'>
             Homepage
           </button>
         </Link>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useLocalStorage = (key, defaultValue) => {
+const useLocalStorage = (key: string, defaultValue: any) => {
   // Create state variable to store
   // localStorage value in state
   const [localStorageValue, setLocalStorageValue] = useState(() => {
@@ -24,7 +24,9 @@ const useLocalStorage = (key, defaultValue) => {
   });
 
   // this method update our localStorage and our state
-  const setLocalStorageStateValue = (valueOrFn) => {
+  const setLocalStorageStateValue = (
+    valueOrFn: (value: string) => string | string
+  ) => {
     let newValue;
     if (typeof valueOrFn === 'function') {
       const fn = valueOrFn;

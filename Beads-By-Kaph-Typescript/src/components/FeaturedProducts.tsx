@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import Error from './Error';
 import Loading from './Loading';
@@ -9,7 +8,7 @@ import {
   feature4,
   feature5,
   feature6,
-} from '../assets/featured images/importFeatured images';
+} from '../assets/featured images/importFeatured images.js';
 import { ImageSlider } from './index';
 
 const FeaturedProducts = () => {
@@ -22,28 +21,27 @@ const FeaturedProducts = () => {
   const timer3 = 6000;
   return (
     <Wrapper>
-      <div className="title">
-        <div className="scriptFont">Gallery</div>
+      <div className='title'>
+        <div className='scriptFont'>Gallery</div>
         {/* <div className="underline"></div> */}
       </div>
-      <div className="imgCtn">
-        <div className="imageContainer">
+      <div className='imgCtn'>
+        <div className='imageContainer'>
           <ImageSlider slides={slide1} timer={timer1}></ImageSlider>
         </div>
-        <div className="imageContainer">
+        <div className='imageContainer'>
           <ImageSlider slides={slide2} timer={timer3}></ImageSlider>
         </div>
-        <div className="imageContainer">
+        <div className='imageContainer'>
           <ImageSlider slides={slide3} timer={timer2}></ImageSlider>
         </div>
       </div>
-      <div className="instaBtnCtn">
+      <div className='instaBtnCtn'>
         <a
-          href="https://www.instagram.com/beads_by_kaph/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button" className="btn instaBtn">
+          href='https://www.instagram.com/beads_by_kaph/'
+          target='_blank'
+          rel='noreferrer'>
+          <button type='button' className='btn instaBtn'>
             &gt; find us on instagram &lt;
           </button>
         </a>

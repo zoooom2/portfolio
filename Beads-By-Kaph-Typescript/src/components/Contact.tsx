@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
 const Contact = () => {
-  let [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
   const name = 'Zoooom';
   const message = 'We are testing a new message';
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await axios.get(
       `/api/v1/mail?sendto=${email}&name=${name}&message=${message}`
@@ -18,27 +18,27 @@ const Contact = () => {
 
   return (
     <Wrapper>
-      <div className="section-center">
-        <h3 className="scriptFont">Join our NewsLetter</h3>
-        <div className="content">
+      <div className='section-center'>
+        <h3 className='scriptFont'>Join our NewsLetter</h3>
+        <div className='content'>
           <p>
             Join our newsletter to get update on our exclusive deals and also to
             get update about our new products
           </p>
 
-          <form className="contact-form" onSubmit={handleSubmit}>
+          <form className='contact-form' onSubmit={handleSubmit}>
             <input
-              type="email"
-              className="form-input"
-              name="email"
-              placeholder="enter email"
+              type='email'
+              className='form-input'
+              name='email'
+              placeholder='enter email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <button
-              type="submit"
-              className="submit-btn"
-              onSubmit={handleSubmit}
+              type='submit'
+              className='submit-btn'
+              // onSubmit={handleSubmit}
             >
               subscribe
             </button>

@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-const ProductImages = ({ images = [] }) => {
+const ProductImages = ({ images = [] }: { images: string[] }) => {
   const [index, setIndex] = useState(0);
   return (
     <Wrapper>
-      <img src={`/productImage/${images[index]}`} alt="main" className="main" />
-      <div className="gallery">
+      <img src={`/productImage/${images[index]}`} alt='main' className='main' />
+      <div className='gallery'>
         {images.map((image, count) => {
           return (
             <img
               src={`/productImage/${image}`}
-              alt=""
+              alt=''
               key={count}
               className={`${image === images[index] ? 'active' : null}`}
               onClick={() => setIndex(count)}

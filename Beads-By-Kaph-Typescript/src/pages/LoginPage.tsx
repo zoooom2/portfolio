@@ -1,53 +1,56 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import axios from 'axios';
-import { useUserContext } from '../context/user_context';
+import { useUserContext } from '../context/contextHooks';
 axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const { jwtAuth, googleAuth } = useUserContext();
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setCredentials({ ...credentials, [name]: value });
-  };
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const name = e.target.name;
+      const value = e.target.value;
+      setCredentials({ ...credentials, [name]: value });
+    },
+    [credentials]
+  );
+
   return (
-    <Wrapper className="page-100 section section-center">
-      <div className="form_container">
-        <div className="right">
-          <img src="/kaph-logo.png" alt="logo" className="logo" />
+    <Wrapper className='page-100 section section-center'>
+      <div className='form_container'>
+        <div className='right'>
+          <img src='/kaph-logo.png' alt='logo' className='logo' />
           <input
-            type="text"
-            className="input"
-            placeholder="Email"
-            name="email"
+            type='text'
+            className='input'
+            placeholder='Email'
+            name='email'
             value={credentials.email}
             onChange={handleChange}
           />
           <input
-            type="password"
-            className="input"
-            placeholder="Password"
-            name="password"
+            type='password'
+            className='input'
+            placeholder='Password'
+            name='password'
             value={credentials.password}
             onChange={handleChange}
           />
           <button
-            className="btn"
-            onClick={() => jwtAuth(credentials.email, credentials.password)}
-          >
+            className='btn'
+            onClick={() => jwtAuth(credentials.email, credentials.password)}>
             Log In
           </button>
-          <p className="text">or</p>
-          <button className="google_btn" onClick={googleAuth}>
-            <img src="/google.png" alt="google icon" />
+          <p className='text'>or</p>
+          <button className='google_btn' onClick={googleAuth}>
+            <img src='/google.png' alt='google icon' />
             <span>Sign in with Google</span>
           </button>
-          <p className="text">
-            New Here ? <Link to="/signup">Sign Up</Link>
+          <p className='text'>
+            New Here ? <Link to='/signup'>Sign Up</Link>
           </p>
         </div>
       </div>

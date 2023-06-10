@@ -1,86 +1,111 @@
-import React, { useState } from 'react';
+import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
 import styled from 'styled-components';
 import { Country, State, City } from 'country-state-city';
-import Select from 'react-select';
+import Select, { SingleValue, ActionMeta } from 'react-select';
 import { PageHero, StripeCheckout } from '../components';
 // extra imports
-import { useCartContext } from '../context/cart_context';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useCartContext } from '../context/contextHooks';
+import { countryTypes } from '../types';
 
 const CheckoutPage = () => {
   const { updateShipping, shippingInfo } = useCartContext();
-  const [state, setState] = useState([]);
-  const [city, setCity] = useState([]);
+  const [state, setState] = useState([
+    { value: '', label: '', stateCode: '', countryCode: '' },
+  ]);
+  const [city, setCity] = useState([
+    {
+      value: '',
+      label: '',
+      stateCode: '',
+      countryCode: '',
+    },
+  ]);
   const country = Country.getAllCountries();
-  let countryArray = [];
+  const countryArray: countryTypes[] = [];
   country.forEach((x) =>
     countryArray.push({ value: x.name, label: x.name, countryCode: x.isoCode })
   );
 
-  const handleCountry = (selectedOption) => {
-    let states = State.getStatesOfCountry(selectedOption.countryCode);
-    let stateArray = [];
-    states.forEach((x) =>
-      stateArray.push({
-        value: x.name,
-        label: x.name,
-        stateCode: x.isoCode,
-        countryCode: x.countryCode,
-      })
-    );
-    setState([...stateArray]);
-    updateShipping('country', selectedOption.value);
-    updateShipping('countryCode', selectedOption.countryCode);
+  const handleCountry = (selectedOption: SingleValue<countryTypes>) => {
+    if (selectedOption) {
+      const states = State.getStatesOfCountry(selectedOption.countryCode);
+      const stateArray: (countryTypes & { stateCode: string })[] = [];
+      states.forEach((x) =>
+        stateArray.push({
+          value: x.name,
+          label: x.name,
+          stateCode: x.isoCode,
+          countryCode: x.countryCode,
+        })
+      );
+      setState([...stateArray]);
+      updateShipping('country', selectedOption.value);
+      updateShipping('countryCode', selectedOption.countryCode);
+    }
   };
 
-  const handleState = (selectedOption) => {
-    let cities = City.getCitiesOfState(
-      selectedOption.countryCode,
-      selectedOption.stateCode
-    );
-    let cityArray = [];
-    cities.forEach((x) =>
-      cityArray.push({
-        value: x.name,
-        label: x.name,
-        stateCode: x.isoCode,
-        countryCode: x.countryCode,
-      })
-    );
+  const handleState = (
+    selectedOption: SingleValue<countryTypes & { stateCode: string }>
+  ) => {
+    if (selectedOption) {
+      const cities = City.getCitiesOfState(
+        selectedOption.countryCode,
+        selectedOption.stateCode
+      );
+      const cityArray: (countryTypes & { stateCode: string })[] = [];
+      cities.forEach((x) =>
+        cityArray.push({
+          value: x.name,
+          label: x.name,
+          stateCode: x.stateCode,
+          countryCode: x.countryCode,
+        })
+      );
 
-    setCity([...cityArray]);
-    updateShipping('state', selectedOption.value);
+      setCity([...cityArray]);
+      updateShipping('state', selectedOption.value);
+    }
   };
 
-  const handleCity = (selectedOption) => {
-    updateShipping('city', selectedOption.value);
+  const handleCity = (
+    selectedOption: SingleValue<countryTypes & { stateCode: string }>
+  ) => {
+    if (selectedOption) updateShipping('city', selectedOption.value);
   };
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+  const handleChange = (
+    e:
+      | ChangeEvent<HTMLInputElement>
+      | MouseEvent<HTMLButtonElement, MouseEvent>
+      | ChangeEvent<HTMLSelectElement>
+  ) => {
+    if (e.target instanceof HTMLInputElement) {
+      const name = e.target.name;
+      const value = e.target.value;
 
-    if (name !== 'email') {
-      if (e.target.value === '') {
-        e.target.style.border = '1px solid red';
-      } else {
-        e.target.style.border = 'none';
+      if (name !== 'email') {
+        if (e.target.value === '') {
+          e.target.style.border = '1px solid red';
+        } else {
+          e.target.style.border = 'none';
+        }
       }
+      if (name === 'email') {
+        /^[A-Z0-9. _%+-]+@[A-Z0-9. -]+\.[A-Z]{2,4}$/i.test(e.target.value)
+          ? (e.target.style.border = 'none')
+          : (e.target.style.border = '1px solid red');
+      }
+      updateShipping(name, value);
     }
-    if (name === 'email') {
-      /^[A-Z0-9. _%+-]+@[A-Z0-9. -]+\.[A-Z]{2,4}$/i.test(e.target.value)
-        ? (e.target.style.border = 'none')
-        : (e.target.style.border = '1px solid red');
-    }
-    updateShipping(name, value);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
       shippingInfo.firstName &&
       shippingInfo.lastName &&
-      shippingInfo.streetAddress &&
+      shippingInfo.address &&
       shippingInfo.city &&
       shippingInfo.state &&
       shippingInfo.country &&
@@ -93,36 +118,36 @@ const CheckoutPage = () => {
   };
   return (
     <main>
-      <Wrapper className="page-100 section section-center">
-        <div className="details">
-          <h2 className="form-head scriptFont">beads by kaph</h2>
-          <form className="shipping-details">
-            <h5 className="form-title ">shipping details</h5>
-            <div className="form-name">
+      <Wrapper className='page-100 section section-center'>
+        <div className='details'>
+          <h2 className='form-head scriptFont'>beads by kaph</h2>
+          <form className='shipping-details'>
+            <h5 className='form-title '>shipping details</h5>
+            <div className='form-name'>
               <input
-                type="text"
-                name="firstName"
-                id="firstName"
-                placeholder="Enter Firstname"
+                type='text'
+                name='firstName'
+                id='firstName'
+                placeholder='Enter Firstname'
                 value={shippingInfo.firstName}
                 onChange={handleChange}
               />
 
               <input
-                type="text"
-                name="lastName"
-                id="lastName"
-                placeholder="Enter Lastname"
+                type='text'
+                name='lastName'
+                id='lastName'
+                placeholder='Enter Lastname'
                 value={shippingInfo.lastName}
                 onChange={handleChange}
               />
             </div>
 
             <input
-              type="text"
-              name="address"
-              id="address"
-              placeholder="Enter Street Address"
+              type='text'
+              name='address'
+              id='address'
+              placeholder='Enter Street Address'
               value={shippingInfo.address}
               onChange={handleChange}
             />
@@ -131,54 +156,54 @@ const CheckoutPage = () => {
               options={countryArray}
               onChange={handleCountry}
               noOptionsMessage={() => 'No Country Found'}
-              placeholder="Enter Country"
-              className="selectStyle"
+              placeholder='Enter Country'
+              className='selectStyle'
             />
 
             <Select
               options={state}
               onChange={handleState}
               noOptionsMessage={() => 'No State Found'}
-              placeholder="Enter State"
-              className="selectStyle"
+              placeholder='Enter State'
+              className='selectStyle'
             />
 
             <Select
               options={city}
               onChange={handleCity}
               noOptionsMessage={() => 'No State Found'}
-              placeholder="Enter City"
-              className="selectStyle"
+              placeholder='Enter City'
+              className='selectStyle'
             />
 
             <input
-              type="text"
-              name="phoneNumber"
-              id="phoneNumber"
-              placeholder="Enter Phone Number"
+              type='text'
+              name='phoneNumber'
+              id='phoneNumber'
+              placeholder='Enter Phone Number'
               value={shippingInfo.phoneNumber}
               onChange={handleChange}
             />
 
             <input
-              type="postCode"
-              name="postCode"
-              id="postCode"
-              placeholder="Enter Postal Code"
+              type='postCode'
+              name='postCode'
+              id='postCode'
+              placeholder='Enter Postal Code'
               value={shippingInfo.postCode}
               onChange={handleChange}
             />
 
             <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Enter Email"
+              type='email'
+              name='email'
+              id='email'
+              placeholder='Enter Email'
               value={shippingInfo.email}
               onChange={handleChange}
             />
 
-            <Link to="/pay" className="btn btn-link">
+            <Link to='/pay' className='btn btn-link'>
               PROCEED TO PAYMENT CHANNEL
             </Link>
           </form>

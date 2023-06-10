@@ -1,8 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
-import { useFilterContext } from '../context/filter_context';
 import { getUniqueValues, formatPrice } from '../utils/helpers';
 import { FaCheck } from 'react-icons/fa';
+import { useFilterContext } from '../context/contextHooks';
 
 const Filters = () => {
   const {
@@ -17,51 +16,49 @@ const Filters = () => {
 
   return (
     <Wrapper>
-      <div className="content">
+      <div className='content'>
         <form onSubmit={(e) => e.preventDefault()}>
-          <div className="form-control">
+          <div className='form-control'>
             <input
-              type="text"
-              name="text"
-              className="search-input"
+              type='text'
+              name='text'
+              className='search-input'
               value={text}
               onChange={updateFilters}
-              placeholder="search"
+              placeholder='search'
             />
           </div>
-          <div className="form-control">
+          <div className='form-control'>
             <h5>category</h5>
             <div>
               {categories.map((c, index) => (
                 <button
                   key={index}
-                  type="button"
-                  name="category"
+                  type='button'
+                  name='category'
                   onClick={updateFilters}
                   className={`${
                     category.toLowerCase() === c.toLowerCase() ? 'active' : null
-                  }`}
-                >
+                  }`}>
                   {c}
                 </button>
               ))}
             </div>
           </div>
-          <div className="form-control">
+          <div className='form-control'>
             <h5>colors</h5>
-            <div className="colors">
+            <div className='colors'>
               {colors.map((col, index) => {
                 if (col === 'all') {
                   return (
                     <button
                       key={index}
-                      name="color"
+                      name='color'
                       onClick={updateFilters}
-                      data-color="all"
+                      data-color='all'
                       className={`${
                         color === 'all' ? 'all-btn active' : 'all-btn'
-                      }`}
-                    >
+                      }`}>
                       all
                     </button>
                   );
@@ -69,45 +66,44 @@ const Filters = () => {
                 return (
                   <button
                     key={index}
-                    name="color"
-                    type="button"
+                    name='color'
+                    type='button'
                     style={{ background: col }}
                     className={`${
                       color === col ? 'color-btn active' : 'color-btn'
                     }`}
                     data-color={col}
-                    onClick={updateFilters}
-                  >
+                    onClick={updateFilters}>
                     {color === col ? <FaCheck /> : null}
                   </button>
                 );
               })}
             </div>
           </div>
-          <div className="form-control">
+          <div className='form-control'>
             <h5>price</h5>
-            <div className="price">{`₦${price}`}</div>
+            <div className='price'>{`₦${price}`}</div>
             <input
-              type="range"
-              name="price"
+              type='range'
+              name='price'
               onChange={updateFilters}
               min={min_price}
               max={max_price}
               value={price}
             />
           </div>
-          <div className="form-control shipping">
-            <label htmlFor="shipping">free shipping</label>
+          <div className='form-control shipping'>
+            <label htmlFor='shipping'>free shipping</label>
             <input
-              type="checkbox"
-              name="shipping"
-              id="shipping"
+              type='checkbox'
+              name='shipping'
+              id='shipping'
               onChange={updateFilters}
               checked={shipping}
             />
           </div>
         </form>
-        <button type="button" className="clear-btn" onClick={clearFilters}>
+        <button type='button' className='clear-btn' onClick={clearFilters}>
           clearFilters
         </button>
       </div>

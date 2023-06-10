@@ -1,7 +1,14 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import axios from 'axios';
-import React, { useContext, useEffect, useReducer } from 'react';
-import reducer from '../reducers/products_reducer';
-import { products_url as url } from '../utils/constants';
+import {
+  useEffect,
+  useReducer,
+  createContext,
+  useCallback,
+  useMemo,
+} from 'react';
+import reducer from '../../reducers/products_reducer';
+import { products_url as url } from '../../utils/constants';
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
@@ -11,32 +18,28 @@ import {
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
-} from '../actions';
+} from '../../actions';
+import { ChildrenProps } from '../../types';
+import {
+  defaultValue,
+  initialState,
+  ProductsContextValue,
+} from '../defaultContextValue/productDefault';
 
-const initialState = {
-  isSidebarOpen: false,
-  products_loading: false,
-  products_error: false,
-  products: [],
-  featured_products: [],
-  single_product_loading: false,
-  single_product_error: false,
-  single_product: {},
-};
+export const ProductsContext =
+  createContext<ProductsContextValue>(defaultValue);
 
-const ProductsContext = React.createContext();
-
-export const ProductsProvider = ({ children }) => {
+export const ProductsProvider = ({ children }: ChildrenProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const openSidebar = () => {
+  const openSidebar = useCallback(() => {
     dispatch({ type: SIDEBAR_OPEN });
-  };
-  const closeSidebar = () => {
+  }, []);
+  const closeSidebar = useCallback(() => {
     dispatch({ type: SIDEBAR_CLOSE });
-  };
+  }, []);
 
-  const fetchProducts = async (url) => {
+  const fetchProducts = useCallback(async (url: string) => {
     dispatch({ type: GET_PRODUCTS_BEGIN });
     try {
       const response = await axios.get(url);
@@ -46,9 +49,9 @@ export const ProductsProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: GET_PRODUCTS_ERROR });
     }
-  };
+  }, []);
 
-  const fetchSingleProduct = async (url) => {
+  const fetchSingleProduct = useCallback(async (url: string) => {
     dispatch({ type: GET_SINGLE_PRODUCT_BEGIN });
     try {
       const response = await axios.get(url);
@@ -57,22 +60,21 @@ export const ProductsProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: GET_SINGLE_PRODUCT_ERROR });
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchProducts(url);
-  }, []);
+  }, [fetchProducts]);
+
+  const value = useMemo(
+    () => ({ ...state, openSidebar, closeSidebar, fetchSingleProduct }),
+    [closeSidebar, fetchSingleProduct, openSidebar, state]
+  );
 
   return (
-    <ProductsContext.Provider
-      value={{ ...state, openSidebar, closeSidebar, fetchSingleProduct }}
-    >
+    <ProductsContext.Provider value={value}>
       {children}
     </ProductsContext.Provider>
   );
 };
 // make sure use
-
-export const useProductsContext = () => {
-  return useContext(ProductsContext);
-};

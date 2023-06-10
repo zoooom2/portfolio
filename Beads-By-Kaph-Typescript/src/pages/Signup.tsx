@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import {
+  useState,
+  useEffect,
+  ChangeEvent,
+  useCallback,
+  FormEvent,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -25,26 +31,29 @@ const Signup = () => {
     return () => clearTimeout(timer);
   }, [errorMessage]);
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const name = e.target.name;
+      const value = e.target.value;
 
-    if (name !== 'email') {
-      if (e.target.value === '') {
-        e.target.style.border = '1px solid red';
-      } else {
-        e.target.style.border = 'none';
+      if (name !== 'email') {
+        if (e.target.value === '') {
+          e.target.style.border = '1px solid red';
+        } else {
+          e.target.style.border = 'none';
+        }
       }
-    }
-    if (name === 'email') {
-      /^[A-Z0-9. _%+-]+@[A-Z0-9. -]+\.[A-Z]{2,4}$/i.test(e.target.value)
-        ? (e.target.style.border = 'none')
-        : (e.target.style.border = '1px solid red');
-    }
-    setDetails({ ...details, [name]: value });
-  };
+      if (name === 'email') {
+        /^[A-Z0-9. _%+-]+@[A-Z0-9. -]+\.[A-Z]{2,4}$/i.test(e.target.value)
+          ? (e.target.style.border = 'none')
+          : (e.target.style.border = '1px solid red');
+      }
+      setDetails({ ...details, [name]: value });
+    },
+    [details]
+  );
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await axios.post('/api/v1/users/signup', details);
@@ -58,12 +67,12 @@ const Signup = () => {
 
   return (
     <main>
-      <Wrapper className="page-100 section section-center">
-        <div className="details">
-          <h2 className="form-head scriptFont">beads by kaph</h2>
-          <form className="shipping-details">
-            <h5 className="form-title ">Sign Up Page</h5>
-            <div className="form-name">
+      <Wrapper className='page-100 section section-center'>
+        <div className='details'>
+          <h2 className='form-head scriptFont'>beads by kaph</h2>
+          <form className='shipping-details'>
+            <h5 className='form-title '>Sign Up Page</h5>
+            <div className='form-name'>
               {/* <label htmlFor="photo">
                 {imageFile.filePreview ? (
                   <img src={imageFile.filePreview} alt="preview" />
@@ -89,59 +98,63 @@ const Signup = () => {
                 onChange={handleImage}
               /> */}
               <input
-                type="text"
-                name="firstname"
-                id="firstname"
-                placeholder="Enter First Name"
+                type='text'
+                name='firstname'
+                id='firstname'
+                placeholder='Enter First Name'
                 value={details.firstname}
                 onChange={handleChange}
               />
 
               <input
-                type="text"
-                name="lastname"
-                id="lastName"
-                placeholder="Enter Last Name"
+                type='text'
+                name='lastname'
+                id='lastName'
+                placeholder='Enter Last Name'
                 value={details.lastname}
                 onChange={handleChange}
               />
             </div>
 
             <input
-              type="username"
-              name="username"
-              id="username"
-              placeholder="Enter User Name"
+              type='username'
+              name='username'
+              id='username'
+              placeholder='Enter User Name'
               value={details.username}
               onChange={handleChange}
             />
 
             <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Enter Email"
+              type='email'
+              name='email'
+              id='email'
+              placeholder='Enter Email'
               value={details.email}
               onChange={handleChange}
             />
             <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Enter Password"
+              type='password'
+              name='password'
+              id='password'
+              placeholder='Enter Password'
               value={details.password}
               onChange={handleChange}
             />
 
             <input
-              type="password"
-              name="passwordConfirm"
-              id="passwordConfirm"
-              placeholder="Confirm Password"
+              type='password'
+              name='passwordConfirm'
+              id='passwordConfirm'
+              placeholder='Confirm Password'
               value={details.passwordConfirm}
               onChange={handleChange}
             />
-            <button className="btn btn-link" onClick={handleSubmit}>
+            <button
+              className='btn btn-link'
+              onClick={(e) => {
+                handleSubmit;
+              }}>
               Register
             </button>
             {errorMessage && <p>Something Wrong Happened. Please try again</p>}

@@ -1,15 +1,16 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-const useFetch = (url) => {
+export const useFetch = (url: string) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     const response = await axios.get(url);
     setData(response.data);
     setLoading(false);
-  };
+  }, [url]);
+
   useEffect(() => {
     getData();
   }, [url]);

@@ -1,15 +1,15 @@
-import React from 'react';
 import styled from 'styled-components';
+import { SingleProductType } from '../types';
 
 import Product from './Product';
 
-const GridView = ({ products }) => {
+const GridView = ({ products }: { products: SingleProductType[] }) => {
   return (
     <Wrapper>
-      <div className="products-container">
+      <div className='products-container'>
         {products.map((product) => {
-          const { _id: id } = product;
-          return <Product key={id} {...product} />;
+          const { id } = product;
+          return <Product key={id.toString()} {...product} />;
         })}
       </div>
     </Wrapper>

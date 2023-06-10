@@ -8,8 +8,8 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import { useCartContext } from '../context/cart_context';
-import { useUserContext } from '../context/user_context';
+import { useCartContext } from '../context/contextProviders/cart_context';
+import { useUserContext } from '../context/contextProviders/user_context';
 import { formatPrice } from '../utils/helpers';
 import { useHistory } from 'react-router-dom';
 

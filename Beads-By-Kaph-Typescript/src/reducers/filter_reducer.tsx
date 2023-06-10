@@ -8,27 +8,39 @@ import {
   FILTER_PRODUCTS,
   CLEAR_FILTERS,
 } from '../actions';
+import {
+  FilterActionType,
+  FilterContextStatetype,
+  SingleProductType,
+} from '../types';
 
-const filter_reducer = (state, action) => {
+const filter_reducer = (
+  state: FilterContextStatetype,
+  action: FilterActionType
+): FilterContextStatetype => {
   switch (action.type) {
-    case LOAD_PRODUCTS:
-      let maxPrice = action.payload.map((p) => p.price);
-      maxPrice = Math.max(...maxPrice);
+    case LOAD_PRODUCTS: {
+      const { products } = action.payload as { products: SingleProductType[] };
+      const maxPrice = products.map((p) => p.price);
+      const max = Math.max(...maxPrice);
       return {
         ...state,
-        all_products: [...action.payload],
-        filtered_product: [...action.payload],
-        filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
+        all_products: [...products],
+        filtered_product: [...products],
+        filters: { ...state.filters, max_price: max, price: max },
       };
+    }
     case SET_GRIDVIEW:
       return { ...state, grid_view: true };
     case SET_LISTVIEW:
       return { ...state, grid_view: false };
-    case UPDATE_SORT:
-      return { ...state, sort: action.payload };
-    case SORT_PRODUCTS:
+    case UPDATE_SORT: {
+      const { sort } = action.payload as Pick<FilterContextStatetype, 'sort'>;
+      return { ...state, sort };
+    }
+    case SORT_PRODUCTS: {
       const { sort, filtered_product } = state;
-      let tempProducts = [];
+      let tempProducts: SingleProductType[] = [];
 
       if (sort === 'price-lowest') {
         tempProducts = filtered_product.sort((a, b) => a.price - b.price);
@@ -50,10 +62,15 @@ const filter_reducer = (state, action) => {
       }
 
       return { ...state, filtered_product: tempProducts };
-    case UPDATE_FILTERS:
-      const { name, value } = action.payload;
+    }
+    case UPDATE_FILTERS: {
+      const { name, value } = action.payload as {
+        name: string;
+        value: string | boolean | null;
+      };
       return { ...state, filters: { ...state.filters, [name]: value } };
-    case FILTER_PRODUCTS:
+    }
+    case FILTER_PRODUCTS: {
       const { all_products } = state;
       const { text, category, color, price, shipping } = state.filters;
       let temp = [...all_products];
@@ -73,6 +90,7 @@ const filter_reducer = (state, action) => {
       //   temp = temp.filter((product) => product.shipping === true);
       // }
       return { ...state, filtered_product: temp };
+    }
     case CLEAR_FILTERS:
       return {
         ...state,

@@ -1,37 +1,37 @@
 import styled from 'styled-components';
 import { CiMail } from 'react-icons/ci';
 import { MenuDetails, Lists } from '../components';
-import { useUserContext } from '../context/user_context';
+import { useUserContext } from '../context/contextHooks';
 
 const UserProfilePage = () => {
   const { user, handleImage, removeImage, imageFile } = useUserContext();
   const { firstname, lastname, username, email, role, photo } = user;
-  const { file, filePreview } = imageFile;
+  // const { file, filePreview } = imageFile;
 
   return (
-    <Wrapper className="page-100 section section-center">
-      <div className="profile-picture-container">
-        <div className="profile-picture-background">
+    <Wrapper className='page-100 section section-center'>
+      <div className='profile-picture-container'>
+        <div className='profile-picture-background'>
           <img
             src={photo || 'default.png'}
-            alt=""
-            className="profile-picture"
+            alt=''
+            className='profile-picture'
           />
         </div>
-        <h5 className="username">{username}</h5>
-        <p className="contact-details">
+        <h5 className='username'>{username}</h5>
+        <p className='contact-details'>
           <CiMail />
           <span>{email}</span>
         </p>
       </div>
 
-      <main className="profileDetailsContainer">
-        <ul className="menu">
+      <main className='profileDetailsContainer'>
+        <ul className='menu'>
           <Lists />
         </ul>
         <MenuDetails />
       </main>
-      <div className="menuInfo"></div>
+      <div className='menuInfo'></div>
     </Wrapper>
   );
 };

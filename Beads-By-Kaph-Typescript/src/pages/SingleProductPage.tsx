@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useProductsContext } from '../context/products_context';
+
 import { single_product_url as url } from '../utils/constants';
 import { Loading, Error, ProductImages, AddToCart, Stars } from '../components';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useProductsContext } from '../context/contextHooks';
 
 const SingleProductPage = () => {
   const [size, setSize] = useState(10);
   const { id } = useParams();
   const navigate = useNavigate();
   const {
-    single_products_loading: loading,
-    single_products_error: error,
+    single_product_loading: loading,
+    single_product_error: error,
     single_product: product,
     fetchSingleProduct,
   } = useProductsContext();
@@ -52,36 +53,41 @@ const SingleProductPage = () => {
 
   return (
     <Wrapper>
-      <div className="section section-center page">
-        <Link to="/products" className="btn">
+      <div className='section section-center page'>
+        <Link to='/products' className='btn'>
           back to products
         </Link>
-        <div className="product-center">
+        <div className='product-center'>
           <ProductImages images={images} />
-          <section className="content">
+          <section className='content'>
             <h2>{productName}</h2>
             <Stars stars={ratingsAverage} reviews={numberOfReviews} />
-            <h5 className="price">{`₦${price}`}</h5>
-            <p className="desc">{description}</p>
-            <p className="info">
+            <h5 className='price'>{`₦${price}`}</h5>
+            <p className='desc'>{description}</p>
+            <p className='info'>
               <span>Available :</span>
               {stock > 0 ? 'In Stock' : 'Out of Stock'}
             </p>
-            <p className="info ">
+            <p className='info '>
               <span>SKU :</span>
               {id}
             </p>
             {category !== 'waistbeads' && (
-              <p className="info">
+              <p className='info'>
                 <span>Size(inches) :</span>
                 <input
-                  type="Number"
-                  name="size"
+                  type='number'
+                  name='size'
                   value={size}
-                  id="sizeNum"
+                  id='sizeNum'
                   min={10}
                   max={60}
-                  onChange={(e) => setSize(e.target.value)}
+                  onChange={(e) => {
+                    if (e.target instanceof HTMLInputElement) {
+                      const { value } = e.target;
+                      setSize(+value);
+                    }
+                  }}
                 />
               </p>
             )}

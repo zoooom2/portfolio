@@ -10,13 +10,31 @@ import {
   SET_IMAGE,
   REMOVE_IMAGE,
 } from '../actions';
+import {
+  initialState,
+  UserContextValue,
+} from '../context/defaultContextValue/userDefault';
+import {
+  OrderType,
+  userActionType,
+  UserInitialStateType,
+  UserType,
+} from '../types';
 
-const user_reducer = (state, action) => {
+const user_reducer = (
+  state: UserInitialStateType,
+  action: userActionType
+): UserInitialStateType => {
   switch (action.type) {
     case AUTHENTICATE_USER:
       return { ...state, isAuthenticated: true };
     case REMOVE_AUTHENTICATION:
-      return { ...state, isAuthenticated: false, user: {}, order: [] };
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: { ...initialState.user },
+        orders: [],
+      };
     case GET_USER_BEGIN:
       return { ...state, loading: true };
     case GET_USER_ERROR:
@@ -26,7 +44,7 @@ const user_reducer = (state, action) => {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: { ...action.payload },
+        user: { ...action.payload } as UserType,
       };
 
     case GET_USER_ORDER_BEGIN:
@@ -34,18 +52,29 @@ const user_reducer = (state, action) => {
 
     case GET_USER_ORDER_ERROR:
       return { ...state, loading: false };
-    case GET_USER_ORDER_SUCCESS:
-      return { ...state, loading: false, order: [...action.payload] };
-    case SET_IMAGE:
+    case GET_USER_ORDER_SUCCESS: {
+      const payload = action.payload as OrderType[];
+      return {
+        ...state,
+        loading: false,
+        orders: [...payload] as OrderType[],
+      };
+    }
+    case SET_IMAGE: {
+      const payload = action.payload as File;
       return {
         ...state,
         imageFile: {
-          file: action.payload,
-          filePreview: URL.createObjectURL(action.payload),
+          file: action.payload as File,
+          filePreview: URL.createObjectURL(payload),
         },
       };
+    }
     case REMOVE_IMAGE:
-      return { ...state, imageFile: { file: [], filePreview: null } };
+      return {
+        ...state,
+        imageFile: { file: undefined, filePreview: undefined },
+      };
     default:
       throw new Error(`No Matching "${action.type}" - action type`);
   }

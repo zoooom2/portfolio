@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import reviews from '../assets/reviews/reviews';
 import { services } from '../utils/constants';
@@ -6,7 +6,7 @@ import { services } from '../utils/constants';
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
-    let review = setInterval(() => {
+    const review = setInterval(() => {
       const isLastReview = currentIndex === reviews.length - 1;
       const newIndex = isLastReview ? 0 : currentIndex + 1;
       setCurrentIndex(newIndex);
@@ -15,12 +15,12 @@ const Testimonials = () => {
   }, [currentIndex]);
   return (
     <Wrapper>
-      <div className="title">
-        <div className="scriptFont">Reviews</div>
+      <div className='title'>
+        <div className='scriptFont'>Reviews</div>
         {/* <div className="underline"></div> */}
-        <div className="rvw-ctn">
-          <p className="reviews">{reviews[currentIndex].text}</p>
-          <p className="reviewer">{`-${reviews[currentIndex].name}`}</p>
+        <div className='rvw-ctn'>
+          <p className='reviews'>{reviews[currentIndex].text}</p>
+          <p className='reviewer'>{`-${reviews[currentIndex].name}`}</p>
         </div>
       </div>
     </Wrapper>

@@ -1,15 +1,14 @@
-import React from 'react';
 import styled from 'styled-components';
 import { PageHero } from '../components';
 import aboutImg from '../assets/kaph-logo.svg';
 
 const AboutPage = () => {
   return (
-    <Wrapper className="page-100 section section-center">
+    <Wrapper className='page-100 section section-center'>
       {/* <img src={aboutImg} alt="aboutImage" /> */}
       <article>
-        <div className="title">
-          <h2 className="scriptFont">about us</h2>
+        <div className='title'>
+          <h2 className='scriptFont'>about us</h2>
         </div>
         <p>
           Beads by Kaph is a deluxe brand that makes and sells exquisitely
@@ -18,7 +17,7 @@ const AboutPage = () => {
           Kaph products include; beaded bags, waistbeads, bracelets, anklets,
           necklaces, beaded body jewelry and phone holders. Our services include
           beaded items for editorials based on orders. Kindly contact the store
-          for further enquiries.
+          for further enquiries.
         </p>
       </article>
     </Wrapper>

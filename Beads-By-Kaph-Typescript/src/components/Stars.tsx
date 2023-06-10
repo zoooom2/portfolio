@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs';
-const Stars = ({ stars, reviews = 0 }) => {
+const Stars = ({ stars, reviews = 0 }: { stars: number; reviews: number }) => {
   const tempStars = Array.from({ length: 5 }, (_, index) => {
     const number = index + 0.5;
     return (
@@ -17,8 +17,8 @@ const Stars = ({ stars, reviews = 0 }) => {
   });
   return (
     <Wrapper>
-      <div className="stars">{tempStars}</div>
-      <p className="reviews">({reviews} customer reviews)</p>
+      <div className='stars'>{tempStars}</div>
+      <p className='reviews'>({reviews} customer reviews)</p>
     </Wrapper>
   );
 };

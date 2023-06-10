@@ -1,26 +1,19 @@
-import React from 'react';
 import styled from 'styled-components';
-import { formatPrice } from '../utils/helpers';
 import { Link } from 'react-router-dom';
-const ListView = ({ products }) => {
+import { SingleProductType } from '../types';
+const ListView = ({ products }: { products: SingleProductType[] }) => {
   return (
     <Wrapper>
       {products.map((product) => {
-        const {
-          _id: id,
-          images,
-          productName: name,
-          price,
-          description,
-        } = product;
+        const { id, images, productName: name, price, description } = product;
         return (
-          <article key={id}>
+          <article key={id.toString()}>
             <img src={`/productImage/${images[0]}`} alt={name} />
             <div>
               <h4>{name}</h4>
-              <h5 className="price">{`₦${price}`}</h5>
+              <h5 className='price'>{`₦${price}`}</h5>
               <p>{description.substring(0, 150)}...</p>
-              <Link to={`/product/${id}`} className="btn">
+              <Link to={`/product/${id}`} className='btn'>
                 Details
               </Link>
             </div>

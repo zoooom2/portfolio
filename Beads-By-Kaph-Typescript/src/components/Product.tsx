@@ -1,15 +1,19 @@
-import React from 'react';
 import styled from 'styled-components';
-import { formatPrice } from '../utils/helpers';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { SingleProductType } from '../types';
 
-const Product = ({ images, _id: id, productName: name, price }) => {
+const Product = ({
+  images,
+  id,
+  productName: name,
+  price,
+}: SingleProductType) => {
   return (
     <Wrapper>
-      <div className="container">
+      <div className='container'>
         <img src={`/productImage/${images}`} alt={name} />
-        <Link to={`/product/${id}`} className="link">
+        <Link to={`/product/${id}`} className='link'>
           <FaSearch />
         </Link>
       </div>

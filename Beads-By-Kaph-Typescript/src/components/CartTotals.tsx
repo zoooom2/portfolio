@@ -1,9 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
-import { useCartContext } from '../context/cart_context';
-import { useUserContext } from '../context/user_context';
 import { formatPrice } from '../utils/helpers';
 import { Link } from 'react-router-dom';
+import { useCartContext } from '../context/contextHooks';
 
 const CartTotals = () => {
   const { total_amount } = useCartContext();
@@ -15,7 +13,7 @@ const CartTotals = () => {
             Total: <span>{`₦${total_amount}`}</span>
           </h4>
         </article>
-        <Link to="/checkout" className="btn">
+        <Link to='/checkout' className='btn'>
           proceed to checkout
         </Link>
       </div>

@@ -1,12 +1,12 @@
-import React from 'react';
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useProductsContext } from '../context/products_context';
-import { useCartContext } from '../context/cart_context';
-import { useUserContext } from '../context/user_context';
-import { auth_url, auth_url as url } from '../utils/constants';
-import axios from 'axios';
+
+import {
+  useCartContext,
+  useProductsContext,
+  useUserContext,
+} from '../context/contextHooks';
 
 const CartButtons = () => {
   const { closeSidebar } = useProductsContext();
@@ -18,21 +18,21 @@ const CartButtons = () => {
     closeSidebar();
   };
   return (
-    <Wrapper className="cart-btn-wrapper">
-      <Link to="cart" className="cart-btn" onClick={closeSidebar}>
-        <span className="cart-container">
+    <Wrapper className='cart-btn-wrapper'>
+      <Link to='cart' className='cart-btn' onClick={closeSidebar}>
+        <span className='cart-container'>
           <FaShoppingCart />
-          <span className="cart-value">{total_items}</span>
+          <span className='cart-value'>{total_items}</span>
         </span>
       </Link>
 
       {isAuthenticated ? (
-        <button type="button" className="auth-btn" onClick={logOutUser}>
+        <button type='button' className='auth-btn' onClick={logOutUser}>
           <FaUserMinus />
         </button>
       ) : (
-        <Link to="/login">
-          <button type="button" className="auth-btn" onClick={closeSidebar}>
+        <Link to='/login'>
+          <button type='button' className='auth-btn' onClick={closeSidebar}>
             <FaUserPlus />
           </button>
         </Link>
