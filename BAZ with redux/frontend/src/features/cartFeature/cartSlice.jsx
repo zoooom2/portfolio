@@ -90,6 +90,7 @@ const cartSlice = createSlice({
       );
       state.cart = temp;
     },
+    //error
     toggleAmount: (state, action) => {
       const temp = state.cart.filter(
         (item) => item.productID !== action.payload.id
