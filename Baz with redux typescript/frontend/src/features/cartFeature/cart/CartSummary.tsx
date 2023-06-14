@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import styled from 'styled-components';
-import { priceFormat } from '../../utils/constants';
-import { useSelector } from 'react-redux';
+import { priceFormat } from '../../../utils/constants';
+import { useAppSelector } from '../../../App/hooks';
 
 const CartSummary = () => {
-  const { cart, total_amount } = useSelector((state) => state.cart);
+  const { cart, total_amount } = useAppSelector((state) => state.cart);
   const [show, setShow] = useState(false);
 
   const content = cart.map((cartItem, key) => (
@@ -17,10 +17,7 @@ const CartSummary = () => {
         </div>
       </div>
       <div className='price'>
-        ₦
-        {new Intl.NumberFormat({
-          style: 'currency',
-        }).format(cartItem.price)}
+        ₦{new Intl.NumberFormat('currency').format(cartItem.price)}
       </div>
     </li>
   ));
@@ -33,7 +30,7 @@ const CartSummary = () => {
         </h5>
         <h5 className='summary-total'>{priceFormat(total_amount)}</h5>
       </div>
-      <ul className={show ? 'show' : null}>
+      <ul className={show ? 'show' : ''}>
         {content}
         <div className='dashed'></div>
         <li key={1}>

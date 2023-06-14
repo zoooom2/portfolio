@@ -1,32 +1,35 @@
 import styled from 'styled-components';
-import { getUniqueValues } from '../utils/helpers';
-import { priceFormat } from '../utils/constants';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  updateFilters,
-  clearFilters,
-} from '../features/filterFeature/filterSlice';
+import { getUniqueValues } from '../../../utils/helpers';
+import { priceFormat } from '../../../utils/constants';
+import { updateFilters, clearFilters } from '../filterSlice';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
+import { ChangeEvent } from 'react';
 
 const Filters = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     filters: { text, category, min_price, max_price, price, shipping },
     all_products,
-  } = useSelector((state) => state.filter);
+  } = useAppSelector((state) => state.filter);
 
   const categories = getUniqueValues(all_products, 'category');
 
-  const handleFilter = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
+  const handleFilter = (
+    e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>
+  ) => {
+    if (e.target instanceof HTMLInputElement) {
+      const name = e.target.name;
+      let value;
+      value = e.target.value as string;
 
-    if (name === 'color') {
-      value = e.target.dataset.color;
+      if (name === 'color') {
+        value = e.target.dataset.color as string;
+      }
+      if (name === 'shipping') {
+        value = e.target.checked as boolean;
+      }
+      dispatch(updateFilters({ name, value }));
     }
-    if (name === 'shipping') {
-      value = e.target.checked;
-    }
-    dispatch(updateFilters({ name, value }));
   };
 
   return (

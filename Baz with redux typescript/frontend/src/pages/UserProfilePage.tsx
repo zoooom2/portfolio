@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { CiMail } from 'react-icons/ci';
-import { MenuDetails, Lists } from '../components';
+import { MenuDetails, Lists } from '../global_components';
 import { useEffect } from 'react';
 import {
   handleImage,
@@ -8,12 +8,13 @@ import {
   setClicked,
 } from '../features/userFeature/userSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
 
 const UserProfilePage = () => {
-  const { user, imageFile } = useSelector((state) => state.user);
+  const { user, imageFile } = useAppSelector((state) => state.user);
   const { firstname, lastname, username, email, role, photo } = user;
-  const { file, filePreview } = imageFile;
-  const dispatch = useDispatch();
+  // const { file, filePreview } = imageFile;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(setClicked(true));

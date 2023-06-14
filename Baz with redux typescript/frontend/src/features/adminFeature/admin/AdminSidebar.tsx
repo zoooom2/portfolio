@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { adminSidebarLinks } from '../../utils/constants';
 
-const AdminSidebar = ({ page }) => {
+import { adminSidebarLinks } from '../../../utils/constants';
+
+const AdminSidebar = ({
+  page = 'overview',
+}: {
+  page: 'overview' | 'product' | 'order' | 'users';
+}) => {
   const links = adminSidebarLinks.map((link, index) => (
-    <li key={index} className={page === link.tag ? 'active' : null}>
+    <li key={index} className={page === link.tag ? 'active' : ''}>
       <Link to={link.link}>{link.name}</Link>
     </li>
   ));
@@ -14,14 +18,6 @@ const AdminSidebar = ({ page }) => {
       <ul className='flex-column'>{links}</ul>
     </Wrapper>
   );
-};
-
-AdminSidebar.propTypes = {
-  page: PropTypes.oneOf(['overview', 'product', 'order', 'users']).isRequired,
-};
-
-AdminSidebar.defaultProps = {
-  page: 'overview',
 };
 
 const Wrapper = styled.aside`

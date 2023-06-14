@@ -14,6 +14,7 @@ import {
   img6,
   img7,
 } from '../assets/productImage';
+
 export const links = [
   {
     id: 1,
@@ -102,6 +103,24 @@ export const periodOption = [
   { name: 'This year', value: 'yearly' },
 ];
 
+export type AdminAnalyticsType = {
+  logo: JSX.Element;
+  topic: string;
+  value: {
+    current: 'totalRevenue' | 'totalOrder' | 'visitor' | 'totalSale';
+    previous:
+      | 'previousTotalRevenue'
+      | 'previousTotalOrder'
+      | 'previousVisitor'
+      | 'previousTotalSales';
+  };
+  percentage:
+    | 'percentageRevenue'
+    | 'percentageOrder'
+    | 'percentageVisitor'
+    | 'percentageSales';
+};
+
 export const adminAnalytics = [
   {
     logo: <FaMoneyCheckAlt />,
@@ -127,12 +146,10 @@ export const adminAnalytics = [
     value: { current: 'totalSale', previous: 'previousTotalSales' },
     percentage: 'percentageSales',
   },
-];
+] as AdminAnalyticsType[];
 
-export const priceFormat = (price) =>
-  `₦${new Intl.NumberFormat({
-    style: 'currency',
-  }).format(price)}`;
+export const priceFormat = (price: number) =>
+  `₦${new Intl.NumberFormat('currency').format(price)}`;
 
 export const featuredSlide1 = [image1, image2, image3, img, img2];
 export const featuredSlide2 = [img1, img3, img4, img5, img6, img7];

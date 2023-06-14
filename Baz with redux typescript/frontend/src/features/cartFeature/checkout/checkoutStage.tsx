@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { checkoutStage } from '../../utils/constants';
+import { checkoutStage } from '../../../utils/constants';
 
-const CheckoutStage = ({ position }) => {
+const CheckoutStage = ({ position = 1 }: { position: number }) => {
   const [stage, setStage] = useState(1);
 
   useEffect(() => {
@@ -13,22 +12,12 @@ const CheckoutStage = ({ position }) => {
   return (
     <Wrapper>
       {checkoutStage.map((i) => (
-        <li
-          key={i.id}
-          value={i.id}
-          className={stage === i.id ? 'active' : null}>
+        <li key={i.id} value={i.id} className={stage === i.id ? 'active' : ''}>
           {i.stage}
         </li>
       ))}
     </Wrapper>
   );
-};
-
-CheckoutStage.propTypes = {
-  position: PropTypes.number.isRequired,
-};
-CheckoutStage.defaultProps = {
-  position: 1,
 };
 
 const Wrapper = styled.ul`

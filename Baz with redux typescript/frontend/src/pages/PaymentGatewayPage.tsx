@@ -2,17 +2,20 @@ import styled from 'styled-components';
 // import { GrStripe } from 'react-icons/gr';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   handlePayStack,
   // handlePaypal,
   // handleStripe,
 } from '../features/cartFeature/cartSlice';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
+import { CartStateType } from '../types';
 axios.defaults.withCredentials = true;
 
 const PaymentGateway = () => {
-  const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAppSelector((state) => state.user);
+  const { shippingInfo, cart, total_amount, subtotal, total_items } =
+    useAppSelector((state) => state.cart);
 
   const navigate = useNavigate();
   return (
@@ -34,8 +37,17 @@ const PaymentGateway = () => {
           className='paystackBtn btn'
           onClick={
             isAuthenticated
-              ? () => dispatch(handlePayStack())
-              : navigate('/login')
+              ? () =>
+                  dispatch(
+                    handlePayStack({
+                      shippingInfo,
+                      cart,
+                      total_amount,
+                      subtotal,
+                      total_items,
+                    } as CartStateType)
+                  )
+              : () => navigate('/login')
           }>
           <img src='/paystack-2.svg' alt='logo' />
         </button>

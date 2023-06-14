@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import styled from 'styled-components';
 import AmountButtons from './AmountButtons';
-import PropTypes from 'prop-types';
-import { addToCart } from '../../features/cartFeature/cartSlice';
-import { useDispatch } from 'react-redux';
+import { addToCart } from '../../cartFeature/cartSlice';
+import { SingleProductType } from '../../../types';
+import { useAppDispatch } from '../../../App/hooks';
 
-const AddToCart = ({ product }) => {
-  const { _id: id, stock } = product;
+const AddToCart = ({ product }: { product: SingleProductType }) => {
+  const { id, stock } = product;
   const [amount, setAmount] = useState(1);
   const [size, setSize] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const increase = () => {
     setAmount((oldAmount) => {
@@ -30,9 +30,13 @@ const AddToCart = ({ product }) => {
     });
   };
 
-  const handleClick = (e) => {
-    const value = e.target.value;
-    setSize(value);
+  const handleClick = (
+    e: MouseEvent<HTMLButtonElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
+    if (e.target instanceof HTMLInputElement) {
+      const value = e.target.value;
+      setSize(value);
+    }
   };
 
   return (
@@ -63,10 +67,6 @@ const AddToCart = ({ product }) => {
       </button>
     </Wrapper>
   );
-};
-
-AddToCart.propTypes = {
-  product: PropTypes.object.isRequired,
 };
 
 const Wrapper = styled.div`

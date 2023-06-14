@@ -1,21 +1,29 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Country, State, City } from 'country-state-city';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import { useDispatch } from 'react-redux';
-import { placeholderStyle, selectStyle } from '../../utils/constants';
+import { placeholderStyle, selectStyle } from '../../../utils/constants';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { createShipping } from '../../features/cartFeature/cartSlice';
-import { useForm } from 'react-hook-form';
+import { createShipping } from '../cartSlice';
+import { FieldErrors, FieldValues, useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { countryTypes } from '../../../types';
 
-const BillingInfo = ({ setStage }) => {
-  const [state, setState] = useState([]);
-  const [city, setCity] = useState([]);
+const BillingInfo = ({
+  setStage,
+}: {
+  setStage: React.Dispatch<React.SetStateAction<number>>;
+}) => {
+  const [state, setState] = useState<(countryTypes & { stateCode: string })[]>(
+    []
+  );
+  const [city, setCity] = useState<(countryTypes & { stateCode: string })[]>(
+    []
+  );
 
   const dispatch = useDispatch();
   // const { shippingInfo } = useSelector((state) => state.cart);
@@ -62,7 +70,7 @@ const BillingInfo = ({ setStage }) => {
   }, []);
 
   const country = Country.getAllCountries();
-  let countryArray = [];
+  const countryArray: countryTypes[] = [];
   country.forEach((x) =>
     countryArray.push({
       value: x.name,
@@ -71,54 +79,62 @@ const BillingInfo = ({ setStage }) => {
     })
   );
 
-  const handleCountry = (selectedOption) => {
-    let states = State.getStatesOfCountry(selectedOption.countryCode);
-    let stateArray = [];
-    states.forEach((x) =>
-      stateArray.push({
-        value: x.name,
-        label: x.name,
-        stateCode: x.isoCode,
-        countryCode: x.countryCode,
-      })
-    );
+  const handleCountry = (selectedOption: SingleValue<countryTypes>) => {
+    if (selectedOption) {
+      const states = State.getStatesOfCountry(selectedOption.countryCode);
+      const stateArray: (countryTypes & { stateCode: string })[] = [];
+      states.forEach((x) =>
+        stateArray.push({
+          value: x.name,
+          label: x.name,
+          stateCode: x.isoCode,
+          countryCode: x.countryCode,
+        })
+      );
 
-    setValue('country', selectedOption.value);
-    setValue('countryCode', selectedOption.countryCode);
-    setState([...stateArray]);
-    setValue('state', undefined);
-    setValue('city', undefined);
+      setValue('country', selectedOption.value);
+      setValue('countryCode', selectedOption.countryCode);
+      setState([...stateArray]);
+      setValue('state', undefined);
+      setValue('city', undefined);
+    }
   };
 
-  const handleState = (selectedOption) => {
-    let cities = City.getCitiesOfState(
-      selectedOption.countryCode,
-      selectedOption.stateCode
-    );
-    let cityArray = [];
-    cities.forEach((x) =>
-      cityArray.push({
-        value: x.name,
-        label: x.name,
-        stateCode: x.isoCode,
-        countryCode: x.countryCode,
-      })
-    );
-    setCity([...cityArray]);
-    setValue('state', selectedOption.value);
-    setValue('city', undefined);
+  const handleState = (
+    selectedOption: SingleValue<countryTypes & { stateCode: string }>
+  ) => {
+    if (selectedOption) {
+      const cities = City.getCitiesOfState(
+        selectedOption.countryCode,
+        selectedOption.stateCode
+      );
+      const cityArray: (countryTypes & { stateCode: string })[] = [];
+      cities.forEach((x) =>
+        cityArray.push({
+          value: x.name,
+          label: x.name,
+          stateCode: x.stateCode,
+          countryCode: x.countryCode,
+        })
+      );
+      setCity([...cityArray]);
+      setValue('state', selectedOption.value);
+      setValue('city', undefined);
+    }
   };
 
-  const handleCity = (selectedOption) => {
-    setValue('city', selectedOption.value);
+  const handleCity = (
+    selectedOption: SingleValue<countryTypes & { stateCode: string }>
+  ) => {
+    if (selectedOption) setValue('city', selectedOption.value);
   };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FieldValues) => {
     console.log({ ...data });
     dispatch(createShipping(data));
   };
 
-  const onError = (errors) => console.log('Form Errors', errors);
+  const onError = (errors: FieldErrors) => console.log('Form Errors', errors);
   console.log(isValid, errors);
   return (
     <Wrapper className='flex-column' onSubmit={handleSubmit(onSubmit, onError)}>
@@ -252,11 +268,6 @@ const BillingInfo = ({ setStage }) => {
       <DevTool control={control} />
     </Wrapper>
   );
-};
-
-BillingInfo.propTypes = {
-  setStage: PropTypes.func.isRequired,
-  shippingInfo: PropTypes.object.isRequired,
 };
 
 const Wrapper = styled.form`

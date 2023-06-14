@@ -1,10 +1,9 @@
-
 import { Outlet, Navigate, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../App/hooks';
 
 const ProtectedRoute = () => {
   const location = useLocation();
-  const {  isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated } = useAppSelector((state) => state.user);
   return isAuthenticated ? (
     <Outlet />
   ) : (

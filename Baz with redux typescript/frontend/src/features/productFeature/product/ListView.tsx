@@ -1,17 +1,12 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-const ListView = ({ products }) => {
+
+import { SingleProductType } from '../../../types';
+const ListView = ({ products }: { products: SingleProductType[] }) => {
   return (
     <Wrapper>
       {products.map((product) => {
-        const {
-          _id: id,
-          images,
-          productName: name,
-          price,
-          description,
-        } = product;
+        const { id, images, productName: name, price, description } = product;
         return (
           <article key={id}>
             <img src={images[0]} alt={name} />
@@ -28,9 +23,6 @@ const ListView = ({ products }) => {
       })}
     </Wrapper>
   );
-};
-ListView.propTypes = {
-  products: PropTypes.array.isRequired,
 };
 
 const Wrapper = styled.section`

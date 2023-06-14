@@ -1,22 +1,18 @@
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { SingleProductType } from '../../../types';
 import Product from './Product';
 
-const GridView = ({ products }) => {
+const GridView = ({ products }: { products: SingleProductType[] }) => {
   return (
     <Wrapper>
       <div className='products-container'>
         {products.map((product) => {
-          const { _id: id } = product;
+          const { id } = product;
           return <Product key={id} {...product} />;
         })}
       </div>
     </Wrapper>
   );
-};
-
-GridView.propTypes = {
-  products: PropTypes.array.isRequired,
 };
 
 const Wrapper = styled.section`

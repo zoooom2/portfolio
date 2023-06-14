@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const ProductImages = ({ images }) => {
+const ProductImages = ({ images = [] }: { images: string[] }) => {
   const [index, setIndex] = useState(0);
 
   return (
@@ -25,12 +24,6 @@ const ProductImages = ({ images }) => {
   );
 };
 
-ProductImages.propTypes = {
-  images: PropTypes.array.isRequired,
-};
-ProductImages.defaultProps = {
-  images: [],
-};
 const Wrapper = styled.section`
   display: grid;
   place-items: center;

@@ -6,14 +6,14 @@ import {
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { closeSidebar } from '../../features/productFeature/productSlice';
-import { logOut } from '../../features/userFeature/userSlice';
+import { closeSidebar } from '../../productFeature/productSlice';
+import { logOut } from '../../userFeature/userSlice';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 
 const CartButtons = () => {
-  const dispatch = useDispatch();
-  const { total_items } = useSelector((state) => state.cart);
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const { total_items } = useAppSelector((state) => state.cart);
+  const { isAuthenticated } = useAppSelector((state) => state.user);
 
   const logOutUser = async () => {
     dispatch(logOut());

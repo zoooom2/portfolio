@@ -1,13 +1,19 @@
 import { useEffect } from 'react';
-import { handlePayStack } from '../../features/cartFeature/cartSlice';
+import { handlePayStack } from '../cartSlice';
 import styled from 'styled-components';
-import { priceFormat } from '../../utils/constants';
-import PropTypes from 'prop-types';
+import { priceFormat } from '../../../utils/constants';
 import { SpinnerCircular } from 'spinners-react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
+import { CartShippingTypes } from '../../../types';
 
-const Payment = ({ setStage, shippingInfo }) => {
-  const dispatch = useDispatch();
+const Payment = ({
+  setStage,
+  shippingInfo,
+}: {
+  setStage: React.Dispatch<React.SetStateAction<number>>;
+  shippingInfo: CartShippingTypes;
+}) => {
+  const dispatch = useAppDispatch();
   const {
     // shippingInfo,
     cart,
@@ -15,7 +21,7 @@ const Payment = ({ setStage, shippingInfo }) => {
     total_items,
     subtotal,
     loading,
-  } = useSelector((state) => state.cart);
+  } = useAppSelector((state) => state.cart);
   const {
     firstName,
     lastName,
@@ -79,10 +85,7 @@ const Payment = ({ setStage, shippingInfo }) => {
     </Wrapper>
   );
 };
-Payment.propTypes = {
-  setStage: PropTypes.func.isRequired,
-  shippingInfo: PropTypes.object.isRequired,
-};
+
 const Wrapper = styled.main`
   margin-block: 3em;
   width: 60%;

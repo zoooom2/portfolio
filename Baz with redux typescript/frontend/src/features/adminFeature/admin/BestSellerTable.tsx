@@ -1,8 +1,12 @@
 import styled from 'styled-components';
-import { priceFormat } from '../../utils/constants';
-import PropTypes from 'prop-types';
+import { SingleProductType } from '../../../types';
+import { priceFormat } from '../../../utils/constants';
 
-const BestSellerTable = ({ contentArray }) => {
+const BestSellerTable = ({
+  contentArray = [],
+}: {
+  contentArray: SingleProductType[];
+}) => {
   const tableContent = contentArray.map((content, index) => {
     const total = content.quantitySold * content.price;
     return (
@@ -31,14 +35,6 @@ const BestSellerTable = ({ contentArray }) => {
       <tbody>{tableContent}</tbody>
     </Wrapper>
   );
-};
-
-BestSellerTable.propTypes = {
-  contentArray: PropTypes.array.isRequired,
-};
-
-BestSellerTable.defaultProps = {
-  contentArray: [],
 };
 
 const Wrapper = styled.table`

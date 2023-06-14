@@ -1,7 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import {
   clearCart,
   clearShipping,
@@ -9,9 +8,10 @@ import {
   updateCartTotal,
 } from '../features/cartFeature/cartSlice';
 import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../App/hooks';
 
 const OrderPage = () => {
-  const body = useSelector((state) => state.cart);
+  const body = useAppSelector((state) => state.cart);
   const query = new URLSearchParams(useLocation().search);
   const reference = query.get('reference');
   const dispatch = useDispatch();
@@ -31,7 +31,10 @@ const OrderPage = () => {
         dispatch(clearShipping());
       }
     } catch (err) {
-      console.log(err.response.data);
+      if (axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError;
+        console.log(axiosError.response?.data);
+      }
     }
   };
 

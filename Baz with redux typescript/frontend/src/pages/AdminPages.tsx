@@ -1,15 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+
 import styled from 'styled-components';
-import {
-  AdminNav,
-  AdminSidebar,
-  AdminOverview,
-  AdminProduct,
-  AdminOrders,
-  AdminUsers,
-} from '../components';
+
 import { setClicked } from '../features/userFeature/userSlice';
 import {
   fetchOrderStats,
@@ -17,11 +10,22 @@ import {
   fetchRecentOrder,
   fetchBestSeller,
 } from '../features/adminFeature/adminSlice';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
+import {
+  AdminNav,
+  AdminOrders,
+  AdminOverview,
+  AdminProduct,
+  AdminSidebar,
+  AdminUser,
+} from '../features/adminFeature/admin';
 
 const AdminPages = () => {
-  const { page } = useParams();
-  const dispatch = useDispatch();
-  const { period } = useSelector((state) => state.admin);
+  const { page = 'overview' } = useParams() as {
+    page: 'overview' | 'product' | 'order' | 'users';
+  };
+  const dispatch = useAppDispatch();
+  const { period } = useAppSelector((state) => state.admin);
 
   useEffect(() => {
     dispatch(fetchRecentOrder());
@@ -42,7 +46,7 @@ const AdminPages = () => {
         {page === 'overview' && <AdminOverview />}
         {page === 'product' && <AdminProduct />}
         {page === 'order' && <AdminOrders />}
-        {page === 'users' && <AdminUsers />}
+        {page === 'users' && <AdminUser />}
       </main>
     </Wrapper>
   );

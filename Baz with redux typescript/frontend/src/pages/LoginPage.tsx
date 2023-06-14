@@ -7,14 +7,14 @@ import { DevTool } from '@hookform/devtools';
 import axios from 'axios';
 import logo from '../assets/image 2.svg';
 import { jwtAuth, googleAuth } from '../features/userFeature/userSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
 axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
-  const { authentication_error } = useSelector((state) => state.user);
+  const { authentication_error } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const validationSchema = yup.object().shape({
     email: yup
@@ -41,7 +41,7 @@ const LoginPage = () => {
     isSubmitSuccessful,
   } = formState;
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: { email: string; password: string }) => {
     const response = await dispatch(jwtAuth([data.email, data.password]));
     if (!authentication_error) {
       const redirectTo = searchParams.get('redirectTo');

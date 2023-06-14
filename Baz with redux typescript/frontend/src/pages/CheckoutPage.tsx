@@ -1,26 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import {
-  BillingInfo,
-  CartSummary,
-  CheckoutStage,
-  Payment,
-} from '../components';
-import { Shipping } from '../components';
-import { useDispatch, useSelector } from 'react-redux';
 import { setClicked } from '../features/userFeature/userSlice';
 import useLocalStorage from '../utils/customHooks/localStorage';
 import {
   countCartTotal,
   updateCartTotal,
 } from '../features/cartFeature/cartSlice';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
+import {
+  BillingInfo,
+  CheckoutStage,
+  Payment,
+  Shipping,
+} from '../features/cartFeature/checkout';
+import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
-  let { params } = useParams();
+  const { params } = useParams();
   const [stage, setStage] = useState(1);
-  const dispatch = useDispatch();
-  const { shippingInfo } = useSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+  const { shippingInfo } = useAppSelector((state) => state.cart);
 
   const [localShipping, setLocalShipping] = useLocalStorage('shipping', {
     ...shippingInfo,
@@ -45,9 +45,7 @@ const CheckoutPage = () => {
         </div>
         <div className='details'>
           <CheckoutStage position={stage} />
-          {params === 'information' && (
-            <BillingInfo setStage={setStage} shippingInfo={localShipping} />
-          )}
+          {params === 'information' && <BillingInfo setStage={setStage} />}
           {params === 'shipping' && (
             <Shipping setStage={setStage} shippingInfo={localShipping} />
           )}

@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { Filters, ProductList, Sort } from '../components';
-import { useSelector, useDispatch } from 'react-redux';
 import { getUniqueValues } from '../utils/helpers';
 import { setClicked } from '../features/userFeature/userSlice';
 import {
@@ -12,13 +10,16 @@ import {
 } from '../features/filterFeature/filterSlice';
 import { fetchProducts } from '../features/productFeature/productSlice';
 import { products_url as url } from '../utils/constants';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
+import { Filters, Sort } from '../features/filterFeature/filter';
+import ProductList from '../features/productFeature/product/ProductList';
 
 const ProductsPage = () => {
-  const dispatch = useDispatch();
-  const { all_products, openFilter, sort, filters } = useSelector(
+  const dispatch = useAppDispatch();
+  const { all_products, openFilter, sort, filters } = useAppSelector(
     (state) => state.filter
   );
-  const { products } = useSelector((state) => state.product);
+  const { products } = useAppSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(setClicked(true));
@@ -58,7 +59,7 @@ const ProductsPage = () => {
         <div className='sort-filter'>
           <Sort />
           <div className={`filter ${openFilter && 'open'}`}>
-            <Filters openFilter={openFilter} />
+            <Filters />
           </div>
         </div>
 

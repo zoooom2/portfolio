@@ -1,9 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { CartStateType, SingleProductType } from '../../types';
 
 export const handlePayStack = createAsyncThunk(
   'cart/handlePayStack',
-  async ({ shippingInfo, cart, total_amount, subtotal, total_items }) => {
+  async ({
+    shippingInfo,
+    cart,
+    total_amount,
+    subtotal,
+    total_items,
+  }: Pick<
+    CartStateType,
+    'shippingInfo' | 'cart' | 'total_amount' | 'total_items' | 'subtotal'
+  >) => {
     const response = await axios.post(
       '/api/v1/order/paystack/checkout-session',
       {
@@ -22,32 +32,47 @@ export const handlePayStack = createAsyncThunk(
   }
 );
 
+const shippingInfoJSON = JSON.stringify({
+  firstName: '',
+  lastName: '',
+  address: '',
+  city: '',
+  state: '',
+  country: '',
+  countryCode: '',
+  phoneNumber: '',
+  postCode: '',
+  email: '',
+  shippingMethod: '',
+  shippingFee: 0,
+});
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    cart: JSON.parse(localStorage.getItem('cart')) || [],
+    cart: JSON.parse(localStorage.getItem('cart') || '[]'),
     loading: true,
     handle_paystack_error: '',
     total_items: 0,
     subtotal: 0,
     total_amount: 0,
-    shippingInfo: JSON.parse(localStorage.getItem('shipping')) || {
-      firstName: '',
-      lastName: '',
-      address: '',
-      city: '',
-      state: '',
-      country: '',
-      countryCode: '',
-      phoneNumber: '',
-      postCode: '',
-      email: '',
-      shippingMethod: '',
-      shippingFee: 0,
-    },
-  },
+    shippingInfo: JSON.parse(
+      localStorage.getItem('shipping') || shippingInfoJSON
+    ),
+  } as CartStateType,
   reducers: {
-    addToCart: (state, action) => {
+    addToCart: (
+      state,
+      action: {
+        type: string;
+        payload: {
+          id: string;
+          amount: number;
+          product: SingleProductType;
+          size: string;
+        };
+      }
+    ) => {
       const { id, amount, product, size } = action.payload;
 
       const tempItem = state.cart.find(
@@ -168,7 +193,7 @@ const cartSlice = createSlice({
     });
     builder.addCase(handlePayStack.rejected, (state, action) => {
       state.loading = false;
-      state.handle_paystack_error = action.error.message;
+      state.handle_paystack_error = action.error.message as string;
     });
   },
 });

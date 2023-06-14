@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Entry } from '../components';
-import ImageSlider from '../components/ImageSlider';
-import { useSelector } from 'react-redux';
+import { Entry } from '../global_components';
+import ImageSlider from '../global_components/ImageSlider';
 import { featuredSlide1, featuredSlide2 } from '../utils/constants';
+import { useAppSelector } from '../App/hooks';
 
 const HomePage = () => {
-  const { clicked } = useSelector((state) => state.user);
+  const { clicked } = useAppSelector((state) => state.user);
 
   if (clicked === true) {
     return (

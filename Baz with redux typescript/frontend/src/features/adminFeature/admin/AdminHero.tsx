@@ -1,25 +1,26 @@
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import styled from 'styled-components';
-import { periodOption } from '../../utils/constants';
-import { useSelector, useDispatch } from 'react-redux';
-import { changeTimeRange } from '../../features/adminFeature/adminSlice';
+import { periodOption } from '../../../utils/constants';
+import { changeTimeRange } from '../../adminFeature/adminSlice';
+import { ChangeEvent } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 
 const AdminHero = () => {
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
-  const { period } = useSelector((state) => state.admin);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user);
+  const { period } = useAppSelector((state) => state.admin);
   const options = periodOption.map((option, i) => (
     <option key={i} value={option.value}>
       {option.name}
     </option>
   ));
-  const changePeriod = (e) => {
+  const changePeriod = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     dispatch(changeTimeRange(value));
   };
   return (
     <Wrapper className='hero'>
-      <div className='welcome'>Welcome back, {user.name}</div>
+      <div className='welcome'>Welcome back, {user.firstname}</div>
       <div className='period'>
         <select
           name='period'

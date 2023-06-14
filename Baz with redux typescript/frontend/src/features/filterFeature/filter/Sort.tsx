@@ -1,18 +1,15 @@
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from 'react-icons/md';
 import styled from 'styled-components';
-import {
-  updateSort,
-  toggleFilter,
-} from '../features/filterFeature/filterSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { updateSort, toggleFilter } from '../filterSlice';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 
 const Sort = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     filtered_product: products,
     sort,
     openFilter,
-  } = useSelector((state) => state.filter);
+  } = useAppSelector((state) => state.filter);
 
   return (
     <Wrapper>
@@ -28,7 +25,7 @@ const Sort = () => {
             name='sort'
             id='sort'
             value={sort}
-            onChange={() => dispatch(updateSort())}
+            onChange={() => dispatch(updateSort(sort))}
             className='sort-input'>
             <option value='price-lowest'>Price (lowest)</option>
             <option value='price-highest'>Price (highest)</option>

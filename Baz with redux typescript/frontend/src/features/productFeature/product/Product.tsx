@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { priceFormat } from '../../utils/constants';
+import { priceFormat } from '../../../utils/constants';
+import { SingleProductType } from '../../../types';
 
-const Product = ({ images, _id: id, productName: name, price, stock }) => {
+const Product = ({
+  images,
+  id,
+  productName: name,
+  price,
+  stock,
+}: SingleProductType) => {
   return (
     <Wrapper>
       <div className='container '>
@@ -14,20 +20,12 @@ const Product = ({ images, _id: id, productName: name, price, stock }) => {
       <footer className='flex-column'>
         <h5 className='name'>{name}</h5>
         <div className='price-stock'>
-          <p className={stock > 0 ? null : 'soldout'}>{priceFormat(price)}</p>
+          <p className={stock > 0 ? '' : 'soldout'}>{priceFormat(price)}</p>
           <p>{stock > 0 ? null : ' Sold-Out'}</p>
         </div>
       </footer>
     </Wrapper>
   );
-};
-
-Product.propTypes = {
-  images: PropTypes.array.isRequired,
-  _id: PropTypes.string.isRequired,
-  productName: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  stock: PropTypes.number.isRequired,
 };
 
 const Wrapper = styled.article`

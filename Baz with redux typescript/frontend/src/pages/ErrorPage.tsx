@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { setClicked } from '../features/userFeature/userSlice';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../App/hooks';
 
 const ErrorPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(setClicked(true));

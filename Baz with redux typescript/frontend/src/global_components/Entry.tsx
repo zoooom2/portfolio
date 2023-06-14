@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { useAppDispatch } from '../App/hooks';
 import logo from '../assets/image 2.svg';
 import { setClicked } from '../features/userFeature/userSlice';
-import { useDispatch } from 'react-redux';
+
 const Entry = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <Wrapper
       className='flex-column place-center'

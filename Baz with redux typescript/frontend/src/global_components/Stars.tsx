@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs';
-const Stars = ({ stars, reviews }) => {
+const Stars = ({ stars, reviews = 0 }: { stars: number; reviews: number }) => {
   const tempStars = Array.from({ length: 5 }, (_, index) => {
     const number = index + 0.5;
     return (
@@ -24,13 +23,6 @@ const Stars = ({ stars, reviews }) => {
   );
 };
 
-Stars.propTypes = {
-  stars: PropTypes.number.isRequired,
-  reviews: PropTypes.number.isRequired,
-};
-Stars.defaultProps = {
-  reviews: 0,
-};
 const Wrapper = styled.div`
   display: flex;
   align-items: center;

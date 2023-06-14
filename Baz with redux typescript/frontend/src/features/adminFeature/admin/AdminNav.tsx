@@ -2,11 +2,11 @@ import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../../assets/image 2.svg';
 import { CiSearch, CiUser, CiLogout } from 'react-icons/ci';
-import { useDispatch } from 'react-redux';
-import { logOut } from '../../features/userFeature/userSlice';
+import { logOut } from '../../userFeature/userSlice';
+import { useAppDispatch } from '../../../App/hooks';
 
 const AdminNav = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return (
     <Wrapper>

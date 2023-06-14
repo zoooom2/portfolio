@@ -1,16 +1,29 @@
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { priceFormat } from '../../utils/constants';
-import { removeItem, setAmount } from '../../features/cartFeature/cartSlice';
+import { priceFormat } from '../../../utils/constants';
+import { removeItem, setAmount } from '../../cartFeature/cartSlice';
+import { CartItemType } from '../../../types';
+import { ChangeEvent, KeyboardEvent } from 'react';
+import { useAppDispatch } from '../../../App/hooks';
 
-const CartItem = ({ productID, image, name, price, size, amount, max }) => {
-  const dispatch = useDispatch();
+const CartItem = ({
+  productID,
+  image,
+  name,
+  price,
+  size,
+  amount,
+  max,
+}: CartItemType) => {
+  const dispatch = useAppDispatch();
 
-  const handleChange = (e) => {
-    let value = +e.target.value;
-    value = value > max ? max : value;
-    dispatch(setAmount({ id: productID, value, size }));
+  const handleChange = (
+    e: KeyboardEvent<HTMLInputElement> | ChangeEvent<HTMLInputElement>
+  ) => {
+    if (e.target instanceof HTMLInputElement) {
+      let value = +e.target.value;
+      value = value > max ? max : value;
+      dispatch(setAmount({ id: productID, value, size }));
+    }
   };
 
   return (
@@ -27,7 +40,7 @@ const CartItem = ({ productID, image, name, price, size, amount, max }) => {
               type='number'
               name='quantity'
               id='quantity'
-              placeholder={0}
+              // placeholder={0}
               min={0}
               value={amount === 0 ? '' : amount}
               className='quantity'
@@ -43,16 +56,6 @@ const CartItem = ({ productID, image, name, price, size, amount, max }) => {
       </div>
     </Wrapper>
   );
-};
-
-CartItem.propTypes = {
-  productID: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  size: PropTypes.string.isRequired,
-  amount: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
 };
 
 const Wrapper = styled.section`

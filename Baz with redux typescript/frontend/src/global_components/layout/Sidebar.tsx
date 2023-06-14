@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 import { links } from '../../utils/constants';
 import styled from 'styled-components';
-import CartButtons from '../cart/CartButtons';
 import { closeSidebar } from '../../features/productFeature/productSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../App/hooks';
+import { CartButtons } from '../../features/cartFeature/cart';
 
 const Sidebar = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { isSidebarOpen } = useSelector((state) => state.product);
-  const { cart } = useSelector((state) => state.cart);
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isSidebarOpen } = useAppSelector((state) => state.product);
+  const { cart } = useAppSelector((state) => state.cart);
+  const { isAuthenticated } = useAppSelector((state) => state.user);
 
   return (
     <SidebarContainer>

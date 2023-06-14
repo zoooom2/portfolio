@@ -1,7 +1,17 @@
-import PropTypes from 'prop-types';
+import { OrderType } from '../../../types';
 import { priceFormat } from '../../../utils/constants';
 
-const AdminRecentOrderTable = ({ header, content, contentArray }) => {
+type AdminRecentOrderTableProps = {
+  header: ['Name', 'Piece(s)', 'Price', 'Status'];
+  content: ['username', 'total_items', 'total_amount', 'orderStatus'];
+  contentArray: OrderType[];
+};
+
+const AdminRecentOrderTable = ({
+  header,
+  content,
+  contentArray = [],
+}: AdminRecentOrderTableProps) => {
   const headers = header.map((x, i) => <th key={i}>{x}</th>);
   const tableContent = contentArray.map((x, i) => (
     <tr key={i}>
@@ -12,8 +22,10 @@ const AdminRecentOrderTable = ({ header, content, contentArray }) => {
           </td>
         ) : details === 'total_amount' ? (
           <td key={index}>{priceFormat(x[details])}</td>
-        ) : (
+        ) : details === 'total_items' ? (
           <td key={index}>{x[details]}</td>
+        ) : (
+          <td key={index}>{x.user[details]}</td>
         )
       )}
     </tr>
@@ -26,18 +38,6 @@ const AdminRecentOrderTable = ({ header, content, contentArray }) => {
       <tbody>{tableContent}</tbody>
     </table>
   );
-};
-
-AdminRecentOrderTable.propTypes = {
-  header: PropTypes.array.isRequired,
-  content: PropTypes.array.isRequired,
-  contentArray: PropTypes.array.isRequired,
-};
-
-AdminRecentOrderTable.defaultProps = {
-  header: [],
-  content: [],
-  contentArray: [],
 };
 
 export default AdminRecentOrderTable;

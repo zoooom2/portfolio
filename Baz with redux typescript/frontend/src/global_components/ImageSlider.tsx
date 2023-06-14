@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-const ImageSlider = ({ slides, timer }) => {
+import styled, { CSSProperties } from 'styled-components';
+
+const ImageSlider = ({
+  slides,
+  timer,
+}: {
+  slides: string[];
+  timer: number;
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const containerStyle = {
@@ -10,9 +16,9 @@ const ImageSlider = ({ slides, timer }) => {
     height: '100%',
     position: 'relative',
     overflow: 'hidden',
-  };
+  } as CSSProperties;
   useEffect(() => {
-    let slider = setInterval(() => {
+    const slider = setInterval(() => {
       const isLastSlide = currentIndex === slides.length - 1;
       const newIndex = isLastSlide ? 0 : currentIndex + 1;
       setCurrentIndex(newIndex);
@@ -45,11 +51,6 @@ const ImageSlider = ({ slides, timer }) => {
       </div>
     </SlideStyleWrapper>
   );
-};
-
-ImageSlider.propTypes = {
-  slides: PropTypes.array.isRequired,
-  timer: PropTypes.number.isRequired,
 };
 
 const SlideStyleWrapper = styled.section`

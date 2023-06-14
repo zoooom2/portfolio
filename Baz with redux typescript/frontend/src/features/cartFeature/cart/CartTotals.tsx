@@ -1,12 +1,11 @@
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { priceFormat } from '../../utils/constants';
-
+import { priceFormat } from '../../../utils/constants';
 import { Link } from 'react-router-dom';
-import Conditions from '../Conditions';
+import { useAppSelector } from '../../../App/hooks';
+import Conditions from '../checkout/Conditions';
 
 const CartTotals = () => {
-  const { subtotal } = useSelector((state) => state.cart);
+  const { subtotal } = useAppSelector((state) => state.cart);
   return (
     <Wrapper>
       <div className='subtotal-price flex-column'>

@@ -1,7 +1,13 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { UserType } from '../../../types';
 
-const AdminRoutes = ({ isAuthenticated, user }) => {
+const AdminRoutes = ({
+  isAuthenticated,
+  user,
+}: {
+  isAuthenticated: boolean;
+  user: UserType;
+}) => {
   const location = useLocation();
   return !isAuthenticated ? (
     <Navigate to={`/login?redirectTo=${location.pathname}`} />
@@ -10,11 +16,6 @@ const AdminRoutes = ({ isAuthenticated, user }) => {
   ) : (
     <Outlet />
   );
-};
-
-AdminRoutes.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
 };
 
 export default AdminRoutes;

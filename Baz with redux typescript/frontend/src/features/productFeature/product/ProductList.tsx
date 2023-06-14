@@ -1,9 +1,9 @@
 import GridView from './GridView';
 import ListView from './ListView';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../../App/hooks';
 
 const ProductList = () => {
-  const { filtered_product: products, grid_view } = useSelector(
+  const { filtered_product: products, grid_view } = useAppSelector(
     (state) => state.filter
   );
 

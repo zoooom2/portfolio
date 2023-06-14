@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 
-const AmountButtons = ({ increase, decrease, amount }) => {
+type AmountButtonType = {
+  increase: () => void;
+  decrease: () => void;
+  amount: number;
+};
+
+const AmountButtons = ({ increase, decrease, amount }: AmountButtonType) => {
   return (
     <Wrapper className='amount-btns'>
       <button
@@ -20,12 +25,6 @@ const AmountButtons = ({ increase, decrease, amount }) => {
       </button>
     </Wrapper>
   );
-};
-
-AmountButtons.propTypes = {
-  increase: PropTypes.func.isRequired,
-  decrease: PropTypes.func.isRequired,
-  amount: PropTypes.number.isRequired,
 };
 
 const Wrapper = styled.div`

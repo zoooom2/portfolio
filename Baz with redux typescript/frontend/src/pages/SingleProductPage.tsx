@@ -1,36 +1,33 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { priceFormat, single_product_url as url } from '../utils/constants';
-import {
-  Loading,
-  Error,
-  ProductImages,
-  AddToCart,
-  Conditions,
-} from '../components';
 import styled from 'styled-components';
 import { setClicked } from '../features/userFeature/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchSingleProduct } from '../features/productFeature/productSlice';
 import {
   countCartTotal,
   updateCartTotal,
 } from '../features/cartFeature/cartSlice';
 import useLocalStorage from '../utils/customHooks/localStorage';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
+import { Error, Loading } from '../global_components';
+import ProductImages from '../features/productFeature/product/ProductImages';
+import { AddToCart } from '../features/cartFeature/cart';
+import { Conditions } from '../features/cartFeature/checkout';
 
 const SingleProductPage = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // eslint-disable-next-line no-unused-vars
   const [localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
   const navigate = useNavigate();
   const {
-    single_products_loading: loading,
-    single_products_error: error,
+    single_product_loading: loading,
+    single_product_error: error,
     single_product: product,
-  } = useSelector((state) => state.product);
-  const { cart, subtotal } = useSelector((state) => state.cart);
+  } = useAppSelector((state) => state.product);
+  const { cart, subtotal } = useAppSelector((state) => state.cart);
   const { productName, price, description, images, stock } = product;
   useEffect(() => {
     dispatch(setClicked(true));

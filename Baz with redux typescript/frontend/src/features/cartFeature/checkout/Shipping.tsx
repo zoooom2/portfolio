@@ -1,13 +1,18 @@
-import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { updateShipping } from '../../features/cartFeature/cartSlice';
+import { updateShipping } from '../cartSlice';
 import styled from 'styled-components';
-
-import { priceFormat } from '../../utils/constants';
+import { priceFormat } from '../../../utils/constants';
 import { useDispatch } from 'react-redux';
+import { CartShippingTypes } from '../../../types';
 
-const Shipping = ({ setStage, shippingInfo }) => {
+const Shipping = ({
+  setStage,
+  shippingInfo,
+}: {
+  setStage: React.Dispatch<React.SetStateAction<number>>;
+  shippingInfo: CartShippingTypes;
+}) => {
   const dispatch = useDispatch();
 
   const {
@@ -22,7 +27,7 @@ const Shipping = ({ setStage, shippingInfo }) => {
     shippingMethod,
   } = shippingInfo;
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(updateShipping({ detail: 'shippingMethod', info: e.target.id }));
     dispatch(updateShipping({ detail: 'shippingFee', info: +e.target.value }));
   };
@@ -98,10 +103,6 @@ const Shipping = ({ setStage, shippingInfo }) => {
       </Link>
     </Wrapper>
   );
-};
-Shipping.propTypes = {
-  setStage: PropTypes.func.isRequired,
-  shippingInfo: PropTypes.object.isRequired,
 };
 
 const Wrapper = styled.main`

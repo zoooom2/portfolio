@@ -3,12 +3,12 @@ import logo from '../../assets/image 2.svg';
 import { FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { links } from '../../utils/constants';
-import CartButtons from '../cart/CartButtons';
 import { openSidebar } from '../../features/productFeature/productSlice';
-import { useDispatch } from 'react-redux';
+import { CartButtons } from '../../features/cartFeature/cart';
+import { useAppDispatch } from '../../App/hooks';
 
 const Nav = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navlinks = links.map((link) => {
     return (
       <li key={link.id}>
@@ -23,7 +23,7 @@ const Nav = () => {
           <Link to='/'>
             <img src={logo} alt='logo' />
           </Link>
-          <div type='button' className='nav-toggle'>
+          <div className='nav-toggle'>
             <CartButtons />
             <FaBars onClick={() => dispatch(openSidebar())} />
           </div>

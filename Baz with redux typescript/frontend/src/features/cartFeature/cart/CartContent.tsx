@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import CartItem from './CartItem';
 import CartTotals from './CartTotals';
-import { useSelector } from 'react-redux';
-// import { clearCart } from '../../features/cartFeature/cartSlice';
+import { useAppSelector } from '../../../App/hooks';
 
 const CartContent = () => {
-  const { cart } = useSelector((state) => state.cart);
+  const { cart } = useAppSelector((state) => state.cart);
 
   return (
     <Wrapper className='cart-container'>

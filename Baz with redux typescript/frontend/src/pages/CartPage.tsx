@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { CartContent } from '../components';
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { setClicked } from '../features/userFeature/userSlice';
 import {
   countCartTotal,
   updateCartTotal,
 } from '../features/cartFeature/cartSlice';
 import useLocalStorage from '../utils/customHooks/localStorage';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
+import { CartContent } from '../features/cartFeature/cart';
 
 const CartPage = () => {
-  const dispatch = useDispatch();
-  const { cart, subtotal } = useSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+  const { cart, subtotal } = useAppSelector((state) => state.cart);
   // eslint-disable-next-line no-unused-vars
   const [localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
 

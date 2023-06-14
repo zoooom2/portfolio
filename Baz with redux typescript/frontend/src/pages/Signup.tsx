@@ -2,17 +2,17 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
 import logo from '../assets/image 2.svg';
 import { setClicked } from '../features/userFeature/userSlice';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useAppDispatch } from '../App/hooks';
 
 const Signup = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const validationSchema = yup.object().shape({
     username: yup.string().required('Username is required'),
     lastname: yup.string().required('Last name is required'),

@@ -1,48 +1,59 @@
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { adminAnalytics, periodOption } from '../../utils/constants';
+
+import {
+  adminAnalytics,
+  AdminAnalyticsType,
+  periodOption,
+} from '../../../utils/constants';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import RecentOrderTable from './RecentOrderTable';
 import BestSellerTable from './BestSellerTable';
-import { changeTimeRange } from '../../features/adminFeature/adminSlice';
+import { changeTimeRange } from '../../adminFeature/adminSlice';
+import { ChangeEvent } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 
 const AdminOverview = () => {
-  const { user } = useSelector((state) => state.user);
-  const state = useSelector((state) => state.admin);
-  const dispatch = useDispatch();
+  const { user } = useAppSelector((state) => state.user);
+  const state = useAppSelector((state) => state.admin);
+  const dispatch = useAppDispatch();
   const options = periodOption.map((option, i) => (
     <option key={i} value={option.value}>
       {option.name}
     </option>
   ));
 
-  const changePeriod = (e) => {
+  const changePeriod = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     dispatch(changeTimeRange(value));
   };
 
-  const analytics = adminAnalytics.map((x, i) => (
-    <div className='box' key={i}>
-      <div className='top'>
-        <div className='logo'>{x.logo}</div>
-        <div className='detail flex-column'>
-          <div className='detail-name'>{x.topic}</div>
-          <div className='detail-value'>{state[x.value.current]}</div>
+  const analytics = adminAnalytics.map((x: AdminAnalyticsType, i) => {
+    const current_key = x.value.current;
+    const percentage_key = x.percentage;
+
+    return (
+      <div className='box' key={i}>
+        <div className='top'>
+          <div className='logo'>{x.logo}</div>
+          <div className='detail flex-column'>
+            <div className='detail-name'>{x.topic}</div>
+            <div className='detail-value'>{state[current_key]}</div>
+          </div>
+        </div>
+        <div className='bottom'>
+          <span>
+            <span> {state[percentage_key]}%</span> {state.period} change (
+            {state[x.value.previous]})
+          </span>
         </div>
       </div>
-      <div className='bottom'>
-        <span>
-          <span> {state[x.percentage]}%</span> {state.period} change (
-          {state[x.value.previous]})
-        </span>
-      </div>
-    </div>
-  ));
+    );
+  });
 
   return (
     <Wrapper className='flex-column'>
       <div className='hero'>
-        <div className='welcome'>Welcome back, {user.name}</div>
+        <div className='welcome'>Welcome back, {user.firstname}</div>
         <div className='period'>
           <select
             name='period'
@@ -64,7 +75,7 @@ const AdminOverview = () => {
             <RecentOrderTable
               header={['Name', 'Piece(s)', 'Price', 'Status']}
               content={[
-                'lastname',
+                'username',
                 'total_items',
                 'total_amount',
                 'orderStatus',
