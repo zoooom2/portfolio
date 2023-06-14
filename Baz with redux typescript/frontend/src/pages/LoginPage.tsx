@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, FieldValues, useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import axios from 'axios';
 import logo from '../assets/image 2.svg';
@@ -41,7 +41,7 @@ const LoginPage = () => {
     isSubmitSuccessful,
   } = formState;
 
-  const onSubmit = async (data: { email: string; password: string }) => {
+  const onSubmit = async (data: FieldValues) => {
     const response = await dispatch(jwtAuth([data.email, data.password]));
     if (!authentication_error) {
       const redirectTo = searchParams.get('redirectTo');
@@ -54,7 +54,9 @@ const LoginPage = () => {
       }
     }
   };
-  const onError = (errors) => console.log('Form Errors', errors);
+  const onError = (errors: FieldErrors) => {
+    console.log('Form Errors', errors);
+  };
 
   return (
     <Wrapper className='page-100 section section-center'>
@@ -69,20 +71,18 @@ const LoginPage = () => {
                 type='text'
                 className='input'
                 placeholder='Email'
-                name='email'
                 {...register('email')}
               />
-              <p className='error'>{errors.email?.message}</p>
+              <p className='error'>{String(errors.email?.message || '')}</p>
             </div>
             <div className='form-control'>
               <input
                 type='password'
                 className='input'
                 placeholder='Password'
-                name='password'
                 {...register('password')}
               />
-              <p className='error'>{errors.password?.message}</p>
+              <p className='error'>{String(errors.password?.message)}</p>
             </div>
 
             <button
@@ -93,7 +93,9 @@ const LoginPage = () => {
             <DevTool control={control} />
           </form>
           <p className='text'>or</p>
-          <button className='btn zilla-500 place-center' onClick={googleAuth}>
+          <button
+            className='btn zilla-500 place-center'
+            onClick={() => dispatch(googleAuth())}>
             <img src='/google.png' alt='google icon' />
             <span>Sign in with Google</span>
           </button>

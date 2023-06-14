@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import logo from '../assets/image 2.svg';
 import { setClicked } from '../features/userFeature/userSlice';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, FieldValues, useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -31,7 +31,7 @@ const Signup = () => {
       .min(8, 'Password should be at least 8 characters long'),
     passwordConfirm: yup
       .string()
-      .oneOf([yup.ref('password'), null], 'Passwords must match')
+      .oneOf([yup.ref('password'), undefined], 'Passwords must match')
       .required('Password confirmation is required'),
   });
   const form = useForm({
@@ -60,7 +60,7 @@ const Signup = () => {
     isSubmitSuccessful,
   } = formState;
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FieldValues) => {
     try {
       await axios.post('/api/v1/users/signup', data);
       navigate('/');
@@ -69,7 +69,7 @@ const Signup = () => {
     }
   };
 
-  const onError = (errors) => console.log('Form Errors', errors);
+  const onError = (errors: FieldErrors) => console.log('Form Errors', errors);
 
   // const onReset = () => reset();
 
@@ -108,42 +108,38 @@ const Signup = () => {
               <div className='form-control'>
                 <input
                   type='text'
-                  name='firstname'
                   id='firstname'
                   placeholder='Enter First Name'
                   {...register('firstname')}
                 />
-                <p className='error'>{errors.firstname?.message}</p>
+                <p className='error'>{String(errors.firstname?.message)}</p>
               </div>
               <div className='form-control'>
                 <input
                   type='text'
-                  name='lastname'
                   id='lastname'
                   placeholder='Enter Last Name'
                   {...register('lastname')}
                 />
-                <p className='error'>{errors.lastname?.message}</p>
+                <p className='error'>{String(errors.lastname?.message)}</p>
               </div>
             </div>
             <div className='form-control'>
               <input
                 type='username'
-                name='username'
                 id='username'
                 placeholder='Enter User Name'
                 {...register('username')}
               />
-              <p className='error'>{errors.username?.message}</p>
+              <p className='error'>{String(errors.username?.message)}</p>
             </div>
             <div className='form-control'>
               <input
                 type='email'
-                name='email'
                 id='email'
                 placeholder='Enter Email'
                 {...register('email', {
-                  emailAvailable: async (fieldValue) => {
+                  validate: async (fieldValue: string) => {
                     const response = await axios.get(
                       `https://jsonplaceholder.typicode.com/users?email=${fieldValue}`
                     );
@@ -152,39 +148,36 @@ const Signup = () => {
                   },
                 })}
               />
-              <p className='error'>{errors.email?.message}</p>
+              <p className='error'>{String(errors.email?.message)}</p>
             </div>
             <div className='form-control'>
               <input
                 type='date'
-                name='dateOfBirth'
                 {...register('dateOfBirth', {
                   required: { value: true, message: 'Enter Date of Birth' },
                 })}
               />
-              <p className='error'>{errors.dateOfBirth?.message}</p>
+              <p className='error'>{String(errors.dateOfBirth?.message)}</p>
             </div>
             <div className='form-control'>
               <input
                 type='password'
-                name='password'
                 id='password'
                 placeholder='Enter Password'
                 {...register('password', {
                   required: { value: true, message: 'Please enter password' },
                 })}
               />
-              <p className='error'>{errors.password?.message}</p>
+              <p className='error'>{String(errors.password?.message)}</p>
             </div>
             <div className='form-control'>
               <input
                 type='password'
-                name='passwordConfirm'
                 id='passwordConfirm'
                 placeholder='Confirm Password'
                 {...register('passwordConfirm')}
               />
-              <p className='error'>{errors.passwordConfirm?.message}</p>
+              <p className='error'>{String(errors.passwordConfirm?.message)}</p>
             </div>
             <button
               className='btn btn-link'

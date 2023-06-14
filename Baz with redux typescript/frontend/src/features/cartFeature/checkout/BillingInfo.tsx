@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import styled from 'styled-components';
 import { Country, State, City } from 'country-state-city';
 import Select, { SingleValue } from 'react-select';
@@ -136,13 +136,19 @@ const BillingInfo = ({
 
   const onError = (errors: FieldErrors) => console.log('Form Errors', errors);
   console.log(isValid, errors);
+
+  const validateForm = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (isSubmitting || !isValid) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <Wrapper className='flex-column' onSubmit={handleSubmit(onSubmit, onError)}>
       <h5 className='form-title zilla-500'>Contact Information</h5>
       <div className='form-name'>
         <input
           type='text'
-          name='firstName'
           id='firstName'
           placeholder='Enter Firstname'
           {...register('firstName')}
@@ -150,14 +156,12 @@ const BillingInfo = ({
 
         <input
           type='text'
-          name='lastName'
           id='lastName'
           placeholder='Enter Lastname'
           {...register('lastName')}
         />
         <input
           type='text'
-          name='email'
           id='email'
           placeholder='Enter Email'
           {...register('email')}
@@ -165,7 +169,6 @@ const BillingInfo = ({
 
         <input
           type='phoneNumber'
-          name='phoneNumber'
           id='phoneNumber'
           placeholder='Enter Phone Number'
           {...register('phoneNumber')}
@@ -174,7 +177,6 @@ const BillingInfo = ({
       <h5 className='form-title zilla-500'>shipping Address</h5>
       <input
         type='text'
-        name='address'
         id='address'
         placeholder='Enter Street Address'
         {...register('address')}
@@ -259,9 +261,9 @@ const BillingInfo = ({
       />
 
       <Link
-        disabled={isSubmitting || !isValid}
+        onClick={validateForm}
         className='btn place-center zilla-700'
-        to={!isSubmitting && isValid ? '/checkout/shipping' : '#'}>
+        to='/checkout/shipping'>
         NEXT
       </Link>
 
