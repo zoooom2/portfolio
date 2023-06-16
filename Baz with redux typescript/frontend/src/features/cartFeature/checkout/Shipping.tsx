@@ -98,7 +98,14 @@ const Shipping = ({
           <div className='form-price'>{priceFormat(2000)} </div>
         </div>
       </div>
-      <Link to='/checkout/payment' className='btn zilla-700'>
+      <Link
+        to='/checkout/payment'
+        className='btn zilla-700'
+        onClick={(e) => {
+          if (!shippingMethod) {
+            e.preventDefault();
+          }
+        }}>
         Proceed To Payment
       </Link>
     </Wrapper>
@@ -154,6 +161,7 @@ const Wrapper = styled.main`
   input {
     width: 1.8em;
     color: black;
+    cursor: pointer;
   }
   .edit {
     background: transparent;

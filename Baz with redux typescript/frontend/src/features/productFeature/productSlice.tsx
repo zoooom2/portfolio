@@ -27,7 +27,7 @@ const productSlice = createSlice({
     single_product_loading: false,
     single_product_error: '',
     single_product: {
-      id: '',
+      _id: '',
       productName: '',
       description: '',
       featured: false,
@@ -36,7 +36,7 @@ const productSlice = createSlice({
       taxPrice: 0,
       discount: 0,
       category: 'all',
-      collection: 'all',
+      collectionName: 'all',
       quantitySold: 0,
       reviews: [],
       images: [],

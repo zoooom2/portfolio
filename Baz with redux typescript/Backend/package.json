@@ -1,7 +1,7 @@
 {
-  "name": "KAPH BEAD STORE",
+  "name": "baz",
   "version": "1.0.0",
-  "description": "A bead ecommerce website",
+  "description": "A clothing ecommerce website",
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
@@ -15,12 +15,13 @@
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
+    "cloudinary": "^1.37.1",
     "compression": "^1.7.4",
     "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "country-state-city": "^3.1.4",
-    "currency-converter-lt": "^1.3.1",
+    "currency-converter-lt": "^2.0.0",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "express-mongo-sanitize": "^2.2.0",
@@ -31,11 +32,11 @@
     "hpp": "^0.2.3",
     "html-to-text": "^9.0.5",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.2.3",
+    "moment": "^2.29.4",
+    "mongoose": "^7.2.4",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "newrelic": "^10.2.0",
-    "node-fetch": "^3.3.1",
+    "multer-storage-cloudinary": "^4.0.0",
     "nodemailer": "^6.9.3",
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
@@ -56,7 +57,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
-    "parcel-bundler": "^1.3.1",
+    "parcel-bundler": "^1.12.3",
     "prettier": "^2.8.8"
   }
 }

@@ -9,7 +9,7 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 import RecentOrderTable from './RecentOrderTable';
 import BestSellerTable from './BestSellerTable';
 import { changeTimeRange } from '../../adminFeature/adminSlice';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 
 const AdminOverview = () => {
@@ -22,10 +22,13 @@ const AdminOverview = () => {
     </option>
   ));
 
-  const changePeriod = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    dispatch(changeTimeRange(value));
-  };
+  const changePeriod = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      const value = e.target.value;
+      dispatch(changeTimeRange(value));
+    },
+    []
+  );
 
   const analytics = adminAnalytics.map((x: AdminAnalyticsType, i) => {
     const current_key = x.value.current;

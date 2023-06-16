@@ -5,7 +5,7 @@ import { SingleProductType } from '../../../types';
 
 const Product = ({
   images,
-  id,
+  _id: id,
   productName: name,
   price,
   stock,

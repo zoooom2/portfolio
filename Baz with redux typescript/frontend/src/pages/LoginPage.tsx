@@ -6,8 +6,10 @@ import { FieldErrors, FieldValues, useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import axios from 'axios';
 import logo from '../assets/image 2.svg';
+import GoogleButton from 'react-google-button';
 import { jwtAuth, googleAuth } from '../features/userFeature/userSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
+import { useEffect } from 'react';
 axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
@@ -31,7 +33,8 @@ const LoginPage = () => {
     mode: 'onTouched',
   });
 
-  const { register, control, handleSubmit, formState } = form;
+  const { register, control, setError, handleSubmit, formState, trigger } =
+    form;
   const {
     errors,
     isDirty,
@@ -52,11 +55,23 @@ const LoginPage = () => {
       } else {
         navigate('/');
       }
+    } else {
+      setError('formError', { type: 'manual', message: authentication_error });
+      setTimeout(() => {
+        setError('formError', {
+          type: 'manual',
+          message: '',
+        });
+        trigger();
+      }, 5000);
     }
   };
   const onError = (errors: FieldErrors) => {
     console.log('Form Errors', errors);
   };
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
 
   return (
     <Wrapper className='page-100 section section-center'>
@@ -65,15 +80,16 @@ const LoginPage = () => {
           <img src={logo} alt='logo' className='logo' />
 
           <form onSubmit={handleSubmit(onSubmit, onError)}>
-            {!isSubmitSuccessful && <h5>incorrect email/password</h5>}
+            {errors.formError?.message && (
+              <p className='errormsg'>Something went wrong</p>
+            )}
             <div className='form-control'>
               <input
                 type='text'
-                className='input'
+                className='input email'
                 placeholder='Email'
                 {...register('email')}
               />
-              <p className='error'>{String(errors.email?.message || '')}</p>
             </div>
             <div className='form-control'>
               <input
@@ -82,10 +98,10 @@ const LoginPage = () => {
                 placeholder='Password'
                 {...register('password')}
               />
-              <p className='error'>{String(errors.password?.message)}</p>
             </div>
 
             <button
+              type='submit'
               className='btn place-center'
               disabled={!isDirty || !isValid || isSubmitting}>
               Log In
@@ -93,12 +109,7 @@ const LoginPage = () => {
             <DevTool control={control} />
           </form>
           <p className='text'>or</p>
-          <button
-            className='btn zilla-500 place-center'
-            onClick={() => dispatch(googleAuth())}>
-            <img src='/google.png' alt='google icon' />
-            <span>Sign in with Google</span>
-          </button>
+          <GoogleButton onClick={() => dispatch(googleAuth())} />
           <p className='text'>
             New Here ? <Link to='/signup'>Sign Up</Link>
           </p>
@@ -114,31 +125,28 @@ const Wrapper = styled.main`
   justify-content: center;
   align-items: center;
 
-  .right {
-    width: 80%;
-
-    @media (min-width: 1080px) {
-      width: 50%;
-    }
-    @media (min-width: 720px) {
-      width: 65%;
-    }
-  }
-
   .input {
     width: 100%;
     margin-block: 10px;
   }
-
+  .email {
+    margin-top: 20px;
+  }
   .btn {
     width: 100%;
     display: flex;
   }
 
-  .text {
+  p {
+    margin-top: 10px;
     font-size: 14px;
     color: #2c444e;
     font-family: 'Bell-MT';
+  }
+
+  .errormsg {
+    margin-bottom: 5px;
+    color: #cc5151;
   }
 
   .text > a {
@@ -147,38 +155,23 @@ const Wrapper = styled.main`
     color: var(--clr-primary-7);
   }
 
-  .btn {
-    margin: 0 0 20px 0;
-    display: flex;
-    position: relative;
-    gap: 1em;
-  }
-
-  .btn > img {
-    width: 30px;
-    height: 30px;
-    object-fit: cover;
-    border-radius: 50%;
-    background: transparent;
-  }
-  .logo {
-    width: 20%;
-    margin-bottom: 1em;
-  }
-
-  .btn > span {
-    margin-left: 10px;
+  form {
+    width: 100%;
   }
   .form_container {
     padding: 30px;
     box-shadow: var(--light-shadow);
     border-radius: var(--radius);
     background-color: rgba(255, 255, 255, 0.2);
-    width: 60%;
+    width: 40%;
+    max-width: 500px;
     display: grid;
     border: 2px solid rgba(0, 0, 0, 0.1);
     place-items: center;
-    @media (max-width: 720px) {
+    @media (max-width: 900px) {
+      width: 75%;
+    }
+    @media (max-width: 600px) {
       width: 95%;
     }
   }

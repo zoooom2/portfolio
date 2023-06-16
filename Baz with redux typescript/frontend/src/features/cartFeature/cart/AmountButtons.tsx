@@ -12,7 +12,7 @@ const AmountButtons = ({ increase, decrease, amount }: AmountButtonType) => {
     <Wrapper className='amount-btns'>
       <button
         type='button'
-        className='amount-btn place-center'
+        className='amount-btn place-center button'
         onClick={decrease}>
         <FaMinus />
       </button>

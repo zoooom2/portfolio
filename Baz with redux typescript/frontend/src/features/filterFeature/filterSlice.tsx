@@ -88,7 +88,7 @@ const filterSlice = createSlice({
       // }
       temp = temp.filter((product) => product.price <= price);
       if (collection !== 'all') {
-        temp = temp.filter((product) => product.collection === collection);
+        temp = temp.filter((product) => product.collectionName === collection);
       }
       state.filtered_product = temp;
     },

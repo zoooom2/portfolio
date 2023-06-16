@@ -1,10 +1,9 @@
-import { MouseEvent, useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Country, State, City } from 'country-state-city';
 import Select, { SingleValue } from 'react-select';
-import { useDispatch } from 'react-redux';
 import { placeholderStyle, selectStyle } from '../../../utils/constants';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { createShipping } from '../cartSlice';
 import { FieldErrors, FieldValues, useForm } from 'react-hook-form';
@@ -12,6 +11,7 @@ import { DevTool } from '@hookform/devtools';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { countryTypes } from '../../../types';
+import { useAppDispatch } from '../../../App/hooks';
 
 const BillingInfo = ({
   setStage,
@@ -25,7 +25,9 @@ const BillingInfo = ({
     []
   );
 
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
   // const { shippingInfo } = useSelector((state) => state.cart);
   const validationSchema = yup.object().shape({
     firstName: yup.string().required('First Name is required'),
@@ -53,7 +55,7 @@ const BillingInfo = ({
     getValues,
     setValue,
     // reset,
-    // trigger,
+    trigger,
   } = form;
 
   const {
@@ -69,6 +71,10 @@ const BillingInfo = ({
     setStage(1);
   }, []);
 
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
+
   const country = Country.getAllCountries();
   const countryArray: countryTypes[] = [];
   country.forEach((x) =>
@@ -79,69 +85,85 @@ const BillingInfo = ({
     })
   );
 
-  const handleCountry = (selectedOption: SingleValue<countryTypes>) => {
-    if (selectedOption) {
-      const states = State.getStatesOfCountry(selectedOption.countryCode);
-      const stateArray: (countryTypes & { stateCode: string })[] = [];
-      states.forEach((x) =>
-        stateArray.push({
-          value: x.name,
-          label: x.name,
-          stateCode: x.isoCode,
-          countryCode: x.countryCode,
-        })
-      );
+  const handleCountry = useCallback(
+    (selectedOption: SingleValue<countryTypes>) => {
+      if (selectedOption) {
+        const states = State.getStatesOfCountry(selectedOption.countryCode);
+        const stateArray: (countryTypes & { stateCode: string })[] = [];
+        states.forEach((x) =>
+          stateArray.push({
+            value: x.name,
+            label: x.name,
+            stateCode: x.isoCode,
+            countryCode: x.countryCode,
+          })
+        );
 
-      setValue('country', selectedOption.value);
-      setValue('countryCode', selectedOption.countryCode);
-      setState([...stateArray]);
-      setValue('state', undefined);
-      setValue('city', undefined);
-    }
-  };
+        setValue('country', selectedOption.value, {
+          shouldTouch: true,
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+        setValue('countryCode', selectedOption.countryCode, {
+          shouldTouch: true,
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+        setState([...stateArray]);
+        setValue('state', undefined);
+        setValue('city', undefined);
+      }
+    },
+    [setValue]
+  );
 
-  const handleState = (
-    selectedOption: SingleValue<countryTypes & { stateCode: string }>
-  ) => {
-    if (selectedOption) {
-      const cities = City.getCitiesOfState(
-        selectedOption.countryCode,
-        selectedOption.stateCode
-      );
-      const cityArray: (countryTypes & { stateCode: string })[] = [];
-      cities.forEach((x) =>
-        cityArray.push({
-          value: x.name,
-          label: x.name,
-          stateCode: x.stateCode,
-          countryCode: x.countryCode,
-        })
-      );
-      setCity([...cityArray]);
-      setValue('state', selectedOption.value);
-      setValue('city', undefined);
-    }
-  };
+  const handleState = useCallback(
+    (selectedOption: SingleValue<countryTypes & { stateCode: string }>) => {
+      if (selectedOption) {
+        const cities = City.getCitiesOfState(
+          selectedOption.countryCode,
+          selectedOption.stateCode
+        );
+        const cityArray: (countryTypes & { stateCode: string })[] = [];
+        cities.forEach((x) =>
+          cityArray.push({
+            value: x.name,
+            label: x.name,
+            stateCode: x.stateCode,
+            countryCode: x.countryCode,
+          })
+        );
+        setCity([...cityArray]);
+        setValue('state', selectedOption.value, {
+          shouldTouch: true,
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+        setValue('city', undefined);
+      }
+    },
+    [setValue]
+  );
 
-  const handleCity = (
-    selectedOption: SingleValue<countryTypes & { stateCode: string }>
-  ) => {
-    if (selectedOption) setValue('city', selectedOption.value);
-  };
+  const handleCity = useCallback(
+    (selectedOption: SingleValue<countryTypes & { stateCode: string }>) => {
+      if (selectedOption)
+        setValue('city', selectedOption.value, {
+          shouldTouch: true,
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+    },
+    [setValue]
+  );
 
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = (data: FieldValues) => {
     console.log({ ...data });
     dispatch(createShipping(data));
+    navigate('/checkout/shipping');
   };
 
   const onError = (errors: FieldErrors) => console.log('Form Errors', errors);
-  console.log(isValid, errors);
-
-  const validateForm = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (isSubmitting || !isValid) {
-      e.preventDefault();
-    }
-  };
 
   return (
     <Wrapper className='flex-column' onSubmit={handleSubmit(onSubmit, onError)}>
@@ -200,12 +222,9 @@ const BillingInfo = ({
         noOptionsMessage={() => 'No Country Found'}
         placeholder='Enter Country'
         className='selectStyle'
-        value={
-          getValues('country') && {
-            label: getValues('country'),
-            value: getValues('country'),
-          }
-        }
+        loadingMessage={() => 'loading...'}
+        backspaceRemovesValue={true}
+        isClearable={true}
       />
       <Select
         options={state}
@@ -226,12 +245,9 @@ const BillingInfo = ({
         noOptionsMessage={() => 'No State Found'}
         placeholder='Enter State'
         className='selectStyle'
-        value={
-          getValues('state') && {
-            label: getValues('state'),
-            value: getValues('state'),
-          }
-        }
+        loadingMessage={() => 'loading...'}
+        backspaceRemovesValue={true}
+        isClearable={true}
       />
       <Select
         styles={{
@@ -247,25 +263,22 @@ const BillingInfo = ({
           }),
         }}
         options={city}
+        loadingMessage={() => 'loading...'}
+        backspaceRemovesValue={true}
+        isClearable={true}
         {...register('city')}
         onChange={handleCity}
         noOptionsMessage={() => 'No City Found'}
         placeholder='Enter City'
         className='selectStyle'
-        value={
-          getValues('city') && {
-            label: getValues('city'),
-            value: getValues('city'),
-          }
-        }
       />
 
-      <Link
-        onClick={validateForm}
+      <button
+        type='submit'
         className='btn place-center zilla-700'
-        to='/checkout/shipping'>
+        disabled={!isValid || isSubmitting}>
         NEXT
-      </Link>
+      </button>
 
       <DevTool control={control} />
     </Wrapper>

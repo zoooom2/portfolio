@@ -74,6 +74,7 @@ const cartSlice = createSlice({
       }
     ) => {
       const { id, amount, product, size } = action.payload;
+      console.log(action.payload);
 
       const tempItem = state.cart.find(
         (i) => i.productID === id && i.size === size

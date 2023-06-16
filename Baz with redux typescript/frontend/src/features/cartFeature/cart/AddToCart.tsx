@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import AmountButtons from './AmountButtons';
 import { addToCart } from '../../cartFeature/cartSlice';
@@ -6,12 +6,12 @@ import { SingleProductType } from '../../../types';
 import { useAppDispatch } from '../../../App/hooks';
 
 const AddToCart = ({ product }: { product: SingleProductType }) => {
-  const { id, stock } = product;
+  const { _id: id, stock } = product;
   const [amount, setAmount] = useState(1);
   const [size, setSize] = useState('');
   const dispatch = useAppDispatch();
 
-  const increase = () => {
+  const increase = useCallback(() => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount + 1;
       if (tempAmount > stock) {
@@ -19,8 +19,9 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
       }
       return tempAmount;
     });
-  };
-  const decrease = () => {
+  }, [stock]);
+
+  const decrease = useCallback(() => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount - 1;
       if (tempAmount < 1) {
@@ -28,15 +29,11 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
       }
       return tempAmount;
     });
-  };
+  }, []);
 
-  const handleClick = (
-    e: MouseEvent<HTMLButtonElement> | ChangeEvent<HTMLSelectElement>
-  ) => {
-    if (e.target instanceof HTMLInputElement) {
-      const value = e.target.value;
-      setSize(value);
-    }
+  const handleClick = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSize(value);
   };
 
   return (
@@ -60,6 +57,7 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
       <button
         className='btn add-cart-btn zilla-700'
         onClick={() => {
+          console.log({ id, amount, product, size });
           dispatch(addToCart({ id, amount, product, size }));
         }}
         disabled={size ? false : true}>
@@ -105,6 +103,12 @@ const Wrapper = styled.div`
     cursor: pointer;
     &:hover {
       transform: scale(1.01);
+    }
+  }
+  .add-cart-btn {
+    &:disabled {
+      background: rgba(0, 0, 0, 0.3);
+      border: none;
     }
   }
 `;

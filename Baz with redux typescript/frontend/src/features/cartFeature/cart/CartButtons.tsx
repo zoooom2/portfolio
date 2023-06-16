@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { closeSidebar } from '../../productFeature/productSlice';
 import { logOut } from '../../userFeature/userSlice';
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
+import { useEffect } from 'react';
 
 const CartButtons = () => {
   const dispatch = useAppDispatch();
@@ -19,12 +20,15 @@ const CartButtons = () => {
     dispatch(logOut());
     dispatch(closeSidebar());
   };
+
   return (
     <Wrapper className='cart-btn-wrapper'>
       <button
         type='button'
         className='auth-btn'
-        onClick={() => dispatch(closeSidebar())}>
+        onClick={() => {
+          dispatch(closeSidebar());
+        }}>
         <FiSearch />
       </button>
       <Link

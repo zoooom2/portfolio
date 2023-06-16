@@ -1,6 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../../assets/image 2.svg';
+import logo from '../../../assets/image 2.svg';
 import { CiSearch, CiUser, CiLogout } from 'react-icons/ci';
 import { logOut } from '../../userFeature/userSlice';
 import { useAppDispatch } from '../../../App/hooks';

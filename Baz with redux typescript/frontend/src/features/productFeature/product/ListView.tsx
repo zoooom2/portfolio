@@ -6,7 +6,13 @@ const ListView = ({ products }: { products: SingleProductType[] }) => {
   return (
     <Wrapper>
       {products.map((product) => {
-        const { id, images, productName: name, price, description } = product;
+        const {
+          _id: id,
+          images,
+          productName: name,
+          price,
+          description,
+        } = product;
         return (
           <article key={id}>
             <img src={images[0]} alt={name} />

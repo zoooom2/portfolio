@@ -28,6 +28,7 @@ import {
 
 import AdminRoutes from '../features/adminFeature/admin/AdminRoutes';
 import { useAppDispatch, useAppSelector } from './hooks';
+import { countCartTotal } from '../features/cartFeature/cartSlice';
 
 const App = () => {
   const { isAuthenticated, clicked, user, loading } = useAppSelector(
@@ -37,6 +38,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(checkVisitorCount());
+    dispatch(countCartTotal());
     if (!isAuthenticated) {
       dispatch(fetchProfile());
     }

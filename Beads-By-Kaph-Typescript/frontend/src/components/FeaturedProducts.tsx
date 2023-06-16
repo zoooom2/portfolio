@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import Error from './Error';
-import Loading from './Loading';
 import {
   feature1,
   feature2,
@@ -8,7 +6,7 @@ import {
   feature4,
   feature5,
   feature6,
-} from '../assets/featured images/importFeatured images.js';
+} from '../assets/featured images/importFeatured images';
 import { ImageSlider } from './index';
 
 const FeaturedProducts = () => {
@@ -19,6 +17,7 @@ const FeaturedProducts = () => {
   const timer1 = 5000;
   const timer2 = 4000;
   const timer3 = 6000;
+
   return (
     <Wrapper>
       <div className='title'>
@@ -27,13 +26,13 @@ const FeaturedProducts = () => {
       </div>
       <div className='imgCtn'>
         <div className='imageContainer'>
-          <ImageSlider slides={slide1} timer={timer1}></ImageSlider>
+          <ImageSlider slides={slide1} timer={timer1} />
         </div>
         <div className='imageContainer'>
-          <ImageSlider slides={slide2} timer={timer3}></ImageSlider>
+          <ImageSlider slides={slide2} timer={timer3} />
         </div>
         <div className='imageContainer'>
-          <ImageSlider slides={slide3} timer={timer2}></ImageSlider>
+          <ImageSlider slides={slide3} timer={timer2} />
         </div>
       </div>
       <div className='instaBtnCtn'>

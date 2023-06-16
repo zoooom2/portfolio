@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { handlePayStack } from '../cartSlice';
 import styled from 'styled-components';
 import { priceFormat } from '../../../utils/constants';
@@ -35,7 +35,7 @@ const Payment = ({
     shippingMethod,
   } = shippingInfo;
 
-  const handlePayment = () => {
+  const handlePayment = useCallback(() => {
     dispatch(
       handlePayStack({
         shippingInfo,
@@ -45,7 +45,7 @@ const Payment = ({
         subtotal,
       })
     );
-  };
+  }, [cart, shippingInfo, subtotal, total_amount, total_items]);
 
   useEffect(() => {
     setStage(3);

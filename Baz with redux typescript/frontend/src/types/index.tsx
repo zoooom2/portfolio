@@ -96,7 +96,7 @@ export type CategoryType =
   | 'custom';
 
 export type SingleProductType = {
-  id: string;
+  _id: string;
   productName: string;
   description: string;
   featured: boolean;
@@ -105,7 +105,7 @@ export type SingleProductType = {
   taxPrice: number;
   discount: number;
   category: CategoryType;
-  collection: string;
+  collectionName: string;
   reviews: string[];
   images: string[];
   numberOfReviews: number;

@@ -20,7 +20,7 @@ import {
 } from '../../actions';
 
 import useProductsContext from '../contextHooks/useProductContext';
-import { ChildrenProps, FilterContextStatetype } from '../../types';
+import { ChildrenProps } from '../../types';
 import {
   defaultValue,
   FilterContextValue,

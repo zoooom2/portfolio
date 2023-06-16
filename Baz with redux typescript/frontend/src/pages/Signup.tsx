@@ -44,6 +44,7 @@ const Signup = () => {
     control,
     handleSubmit,
     formState,
+    setError,
     // watch,
     // getValues,
     // setValue,
@@ -65,7 +66,16 @@ const Signup = () => {
       await axios.post('/api/v1/users/signup', data);
       navigate('/');
     } catch (error) {
-      console.log(error);
+      setError('submitError', {
+        type: 'manual',
+        message: 'something went wrong',
+      });
+      setTimeout(() => {
+        setError('submitError', {
+          type: 'manual',
+          message: '',
+        });
+      }, 5000);
     }
   };
 
@@ -112,7 +122,9 @@ const Signup = () => {
                   placeholder='Enter First Name'
                   {...register('firstname')}
                 />
-                <p className='error'>{String(errors.firstname?.message)}</p>
+                <p className='error'>
+                  {errors.firstname && errors.firstname.message?.toString()}
+                </p>
               </div>
               <div className='form-control'>
                 <input
@@ -121,7 +133,7 @@ const Signup = () => {
                   placeholder='Enter Last Name'
                   {...register('lastname')}
                 />
-                <p className='error'>{String(errors.lastname?.message)}</p>
+                <p className='error'>{errors.lastname?.message?.toString()}</p>
               </div>
             </div>
             <div className='form-control'>
@@ -131,7 +143,7 @@ const Signup = () => {
                 placeholder='Enter User Name'
                 {...register('username')}
               />
-              <p className='error'>{String(errors.username?.message)}</p>
+              <p className='error'>{errors.username?.message?.toString()}</p>
             </div>
             <div className='form-control'>
               <input
@@ -148,7 +160,7 @@ const Signup = () => {
                   },
                 })}
               />
-              <p className='error'>{String(errors.email?.message)}</p>
+              <p className='error'>{errors.email?.message?.toString()}</p>
             </div>
             <div className='form-control'>
               <input
@@ -157,7 +169,7 @@ const Signup = () => {
                   required: { value: true, message: 'Enter Date of Birth' },
                 })}
               />
-              <p className='error'>{String(errors.dateOfBirth?.message)}</p>
+              <p className='error'>{errors.dateOfBirth?.message?.toString()}</p>
             </div>
             <div className='form-control'>
               <input
@@ -168,7 +180,7 @@ const Signup = () => {
                   required: { value: true, message: 'Please enter password' },
                 })}
               />
-              <p className='error'>{String(errors.password?.message)}</p>
+              <p className='error'>{errors.password?.message?.toString()}</p>
             </div>
             <div className='form-control'>
               <input
@@ -177,7 +189,9 @@ const Signup = () => {
                 placeholder='Confirm Password'
                 {...register('passwordConfirm')}
               />
-              <p className='error'>{String(errors.passwordConfirm?.message)}</p>
+              <p className='error'>
+                {errors.passwordConfirm?.message?.toString()}
+              </p>
             </div>
             <button
               className='btn btn-link'
@@ -185,7 +199,7 @@ const Signup = () => {
               Register
             </button>
             {!isSubmitSuccessful && (
-              <p>Something Wrong Happened. Please try again</p>
+              <p>{errors.submitError?.message?.toString()}</p>
             )}
           </form>
           <DevTool control={control} />
