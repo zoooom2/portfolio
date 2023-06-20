@@ -21,7 +21,7 @@ export const checkVisitorCount = createAsyncThunk(
   async () => {
     if (!Cookies.get('visited')) {
       Cookies.set('visited', 'true', { expires: 1 });
-      const response = await axios.post('/api/v1/visitor');
+      const response = await axios.patch('/api/v1/visitor');
       return response.data.doc.count;
     }
   }
@@ -124,7 +124,6 @@ const userSlice = createSlice({
       (state, action: { payload: UserType }) => {
         state.loading = false;
         state.isAuthenticated = true;
-        state.loading = false;
         state.user = { ...action.payload };
       }
     );
@@ -159,7 +158,7 @@ const userSlice = createSlice({
     );
     builder.addCase(checkVisitorCount.rejected, (state, action) => {
       state.visitor_count_error = action.error.message as string;
-      state.loading = false;
+      // state.loading = false;
     });
     builder.addCase(logOut.pending, (state) => {
       state.loading = true;

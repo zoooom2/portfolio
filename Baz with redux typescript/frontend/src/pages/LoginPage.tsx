@@ -46,8 +46,10 @@ const LoginPage = () => {
 
   const onSubmit = async (data: FieldValues) => {
     const response = await dispatch(jwtAuth([data.email, data.password]));
+
     if (!authentication_error) {
       const redirectTo = searchParams.get('redirectTo');
+
       if (redirectTo) {
         navigate(redirectTo);
       } else if (response.payload.user.role === 'admin') {

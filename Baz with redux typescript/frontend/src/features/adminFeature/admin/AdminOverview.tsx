@@ -22,13 +22,10 @@ const AdminOverview = () => {
     </option>
   ));
 
-  const changePeriod = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      const value = e.target.value;
-      dispatch(changeTimeRange(value));
-    },
-    []
-  );
+  const changePeriod = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    dispatch(changeTimeRange(value));
+  }, []);
 
   const analytics = adminAnalytics.map((x: AdminAnalyticsType, i) => {
     const current_key = x.value.current;

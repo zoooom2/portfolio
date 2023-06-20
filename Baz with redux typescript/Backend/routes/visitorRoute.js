@@ -7,7 +7,7 @@ const {
 
 const router = express.Router();
 
-router.post('/', createOrUpdateVisitorCount);
+router.patch('/', createOrUpdateVisitorCount);
 router.get('/visitorpertime', visitorPerTime);
 router.get('/pctchange', pctChangeVisitor);
 

@@ -42,7 +42,7 @@ const App = () => {
     if (!isAuthenticated) {
       dispatch(fetchProfile());
     }
-  }, []);
+  }, [isAuthenticated]);
 
   if (loading) {
     return <Loading />;
