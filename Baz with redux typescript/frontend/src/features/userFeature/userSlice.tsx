@@ -45,8 +45,7 @@ export const jwtAuth = createAsyncThunk(
         withCredentials: true,
       }
     );
-
-    return response.data.data;
+    return response.data.data.user;
   }
 );
 
@@ -103,7 +102,9 @@ const userSlice = createSlice({
         filePreview: URL.createObjectURL(action.payload),
       };
     },
-
+    stopLoading: (state) => {
+      state.loading = false;
+    },
     removeImage: (state) => {
       state.imageFile = { ...initialState.imageFile };
     },
@@ -181,6 +182,7 @@ const userSlice = createSlice({
       jwtAuth.fulfilled,
       (state, action: { payload: UserType }) => {
         state.isAuthenticated = true;
+
         state.user = { ...action.payload };
         state.loading = false;
         state.authentication_error = '';
@@ -200,5 +202,6 @@ export const {
   removeImage,
   setClicked,
   googleAuth,
+  stopLoading,
 } = userSlice.actions;
 export default userSlice.reducer;

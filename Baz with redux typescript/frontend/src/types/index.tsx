@@ -1,6 +1,8 @@
 //Axios Request Types
 // export type AxiosResponseType = Awaited<ReturnType<typeof axios.get>>['data'];
 
+import { IconType } from 'react-icons';
+
 //User Types
 export type UserType = {
   id: string;
@@ -230,6 +232,7 @@ export type AdminState = {
   percentageOrder: number;
   percentageVisitor: number;
   percentageSales: number;
+  orders: OrderType[];
   recentOrders: OrderType[];
   bestSeller: SingleProductType[];
 };
@@ -249,3 +252,17 @@ export type StoreType = {
   product: ProductStateType;
   user: UserStateType;
 };
+
+export type HeroProps = {
+  title: string;
+  subtitle?: string;
+  description: string;
+  timeBased?: boolean;
+  button?: {
+    icon: IconType;
+    name: string;
+    action: () => void;
+  }[];
+};
+
+export type AdminPageType = 'overview' | 'product' | 'order' | 'users';

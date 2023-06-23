@@ -13,7 +13,6 @@ const AdminRoutes = ({
   user: UserType;
 }) => {
   const location = useLocation();
-
   return !isAuthenticated ? (
     <Navigate to={`/login?redirectTo=${location.pathname}`} />
   ) : user.role !== 'admin' ? (

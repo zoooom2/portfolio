@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,6 +8,7 @@ import {
 import {
   checkVisitorCount,
   fetchProfile,
+  stopLoading,
 } from '../features/userFeature/userSlice';
 import { Navbar, Sidebar, ProtectedRoute, Loading } from '../global_components';
 import {
@@ -29,6 +30,8 @@ import {
 import AdminRoutes from '../features/adminFeature/admin/AdminRoutes';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { countCartTotal } from '../features/cartFeature/cartSlice';
+import { fetchProducts } from '../features/productFeature/productSlice';
+import { products_url } from '../utils/constants';
 
 const App = () => {
   const { isAuthenticated, clicked, user, loading } = useAppSelector(
@@ -37,11 +40,15 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(checkVisitorCount());
-    dispatch(countCartTotal());
-    if (!isAuthenticated) {
-      dispatch(fetchProfile());
-    }
+    dispatch(fetchProducts(products_url));
+    dispatch(checkVisitorCount()).then(() => {
+      dispatch(countCartTotal());
+      if (!isAuthenticated) {
+        dispatch(fetchProfile());
+      } else {
+        dispatch(stopLoading());
+      }
+    });
   }, [isAuthenticated]);
 
   if (loading) {
@@ -86,7 +93,29 @@ const App = () => {
           element={
             <AdminRoutes isAuthenticated={isAuthenticated} user={user} />
           }>
-          <Route path='/admin/:page' element={<AdminPages />} />
+          <Route path='/admin' element={<Navigate to='/admin/overview' />} />
+          <Route path='/admin'>
+            <Route
+              path='/admin/overview'
+              element={<AdminPages page={'overview'} />}
+            />
+            <Route path='/admin/product'>
+              <Route
+                path='/admin/product/'
+                element={<AdminPages page={'product'} />}
+              />
+              <Route
+                path='/admin/product/detail/:id'
+                element={<AdminPages page={'productDetail'} />}
+              />
+              <Route
+                path='/admin/product/create'
+                element={<AdminPages page={'productCreate'} />}
+              />
+            </Route>
+            <Route path='/admin/order' element={<AdminPages page='order' />} />
+            <Route path='/admin/users' element={<AdminPages page='users' />} />
+          </Route>
         </Route>
         <Route path='*' element={<ErrorPage />} />
       </Routes>

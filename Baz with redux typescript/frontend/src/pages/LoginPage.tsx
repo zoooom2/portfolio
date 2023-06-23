@@ -52,7 +52,7 @@ const LoginPage = () => {
 
       if (redirectTo) {
         navigate(redirectTo);
-      } else if (response.payload.user.role === 'admin') {
+      } else if (response.payload.role === 'admin') {
         navigate('/admin/overview');
       } else {
         navigate('/');

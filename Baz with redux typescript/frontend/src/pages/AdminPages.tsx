@@ -7,7 +7,7 @@ import { setClicked } from '../features/userFeature/userSlice';
 import {
   fetchOrderStats,
   fetchVisitorStats,
-  fetchRecentOrder,
+  fetchOrders,
   fetchBestSeller,
 } from '../features/adminFeature/adminSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
@@ -19,32 +19,47 @@ import {
   AdminSidebar,
   AdminUser,
 } from '../features/adminFeature/admin';
+import AdminProductForm from '../features/adminFeature/admin/AdminProducts/AdminProductForm';
 
-const AdminPages = () => {
-  const { page = 'overview' } = useParams() as {
-    page: 'overview' | 'product' | 'order' | 'users';
-  };
+const AdminPages = ({
+  page,
+}: {
+  page:
+    | 'overview'
+    | 'product'
+    | 'order'
+    | 'users'
+    | 'productDetail'
+    | 'productCreate';
+}) => {
   const dispatch = useAppDispatch();
   const { period } = useAppSelector((state) => state.admin);
-
+  const { clicked } = useAppSelector((state) => state.user);
   useEffect(() => {
-    dispatch(fetchRecentOrder());
+    if (clicked) dispatch(setClicked(false));
+    dispatch(fetchOrders());
     dispatch(fetchBestSeller());
     dispatch(fetchOrderStats(period));
     dispatch(fetchVisitorStats(period));
   }, [period]);
 
-  useEffect(() => {
-    dispatch(setClicked(false));
-  }, []);
-
   return (
     <Wrapper>
       <AdminNav />
       <main>
-        <AdminSidebar page={page} />
+        <AdminSidebar
+          page={
+            page === 'productDetail'
+              ? 'product'
+              : page === 'productCreate'
+              ? 'product'
+              : page
+          }
+        />
         {page === 'overview' && <AdminOverview />}
         {page === 'product' && <AdminProduct />}
+        {page === 'productDetail' && <AdminProductForm type={'detail'} />}
+        {page === 'productCreate' && <AdminProductForm type={'create'} />}
         {page === 'order' && <AdminOrders />}
         {page === 'users' && <AdminUser />}
       </main>
@@ -57,9 +72,10 @@ const Wrapper = styled.section`
   main {
     display: grid;
     grid-template-columns: auto 1fr;
+
     section {
       font-size: 40px;
-      height: calc(100vh - 2.8em);
+      // height: fit-content;
     }
   }
 `;

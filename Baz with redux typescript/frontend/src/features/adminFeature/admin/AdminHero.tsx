@@ -20,7 +20,7 @@ const AdminHero = () => {
   };
   return (
     <Wrapper className='hero'>
-      <div className='welcome'>Welcome back, {user.firstname}</div>
+      <div className='welcome '>Welcome back, {user.firstname}</div>
       <div className='period'>
         <select
           name='period'

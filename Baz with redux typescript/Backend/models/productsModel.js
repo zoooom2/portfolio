@@ -23,6 +23,15 @@ const productSchema = new Schema({
     type: Number,
     default: 5,
   },
+  sizes: {
+    type: [
+      {
+        size: { type: String, required: true },
+        quantity: { type: Number, required: true },
+      },
+    ],
+    required: true,
+  },
   quantitySold: { type: Number, required: true, default: 0 },
   collectionName: { type: String, required: true },
   releaseDate: { type: Date, required: true, default: Date.now },

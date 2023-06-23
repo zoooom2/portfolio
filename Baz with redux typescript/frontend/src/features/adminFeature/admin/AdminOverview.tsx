@@ -1,31 +1,13 @@
 import styled from 'styled-components';
-
-import {
-  adminAnalytics,
-  AdminAnalyticsType,
-  periodOption,
-} from '../../../utils/constants';
-import { MdKeyboardArrowDown } from 'react-icons/md';
+import { adminAnalytics, AdminAnalyticsType } from '../../../utils/constants';
 import RecentOrderTable from './RecentOrderTable';
 import BestSellerTable from './BestSellerTable';
-import { changeTimeRange } from '../../adminFeature/adminSlice';
-import { ChangeEvent, useCallback } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../App/hooks';
+import { useAppSelector } from '../../../App/hooks';
+import Hero from './Layout/Hero';
 
 const AdminOverview = () => {
   const { user } = useAppSelector((state) => state.user);
   const state = useAppSelector((state) => state.admin);
-  const dispatch = useAppDispatch();
-  const options = periodOption.map((option, i) => (
-    <option key={i} value={option.value}>
-      {option.name}
-    </option>
-  ));
-
-  const changePeriod = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    dispatch(changeTimeRange(value));
-  }, []);
 
   const analytics = adminAnalytics.map((x: AdminAnalyticsType, i) => {
     const current_key = x.value.current;
@@ -51,23 +33,13 @@ const AdminOverview = () => {
   });
 
   return (
-    <Wrapper className='flex-column'>
-      <div className='hero'>
-        <div className='welcome'>Welcome back, {user.firstname}</div>
-        <div className='period'>
-          <select
-            name='period'
-            id='period'
-            value={state.period}
-            onChange={changePeriod}>
-            {options}
-          </select>
-          <label htmlFor='period'>
-            <MdKeyboardArrowDown />
-          </label>
-        </div>
-      </div>
-      <div className='hero_body flex-column'>
+    <Wrapper className='flex-col'>
+      <Hero
+        title={`Welcome Back, ${user.firstname}`}
+        description={'Stay up to date with your store current status'}
+        timeBased={true}
+      />
+      <div className='hero_body flex-col flex'>
         <div className='analysis'>{analytics}</div>
         <div className='order-sales'>
           <div className='lowerbox recentOrderBox'>
@@ -96,11 +68,11 @@ const AdminOverview = () => {
 const Wrapper = styled.section`
   .hero {
     display: flex;
+    border-left: 1px solid #b6b6b6;
     justify-content: space-between;
     align-items: flex-start;
     padding: 0.5em;
     width: 100%;
-    border-bottom: 1px solid #b6b6b6;
     .welcome {
       font-family: 'Poppins';
       font-weight: 500;
@@ -140,7 +112,7 @@ const Wrapper = styled.section`
     }
   }
   .hero_body {
-    padding: 1em;
+    padding: 0.5em;
     gap: 1em;
     overflow-y: scroll;
   }
@@ -212,7 +184,7 @@ const Wrapper = styled.section`
   }
   .order-sales {
     display: flex;
-    gap: 1em;
+    gap: 0.5em;
     width: 100%;
     flex-wrap: wrap;
   }

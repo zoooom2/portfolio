@@ -8,7 +8,7 @@ export const getUniqueValues = (
   unique = unique.flat();
   const uniqueSet = new Set(unique);
 
-  return ['all', ...uniqueSet];
+  return [...uniqueSet];
 };
 
 // export const axiosInstance = axios.create({ withCredentials: true });

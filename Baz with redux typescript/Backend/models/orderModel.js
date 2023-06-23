@@ -135,6 +135,14 @@ orderSchema.pre(/^find/, function (next) {
   next();
 });
 
+orderSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'firstname lastname username name',
+  });
+  next();
+});
+
 const Order = model('Order', orderSchema);
 
 module.exports = Order;
