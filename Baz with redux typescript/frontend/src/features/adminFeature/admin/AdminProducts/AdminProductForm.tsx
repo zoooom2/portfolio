@@ -23,6 +23,7 @@ import { fetchSingleProduct } from '../../../productFeature/productSlice';
 import Hero from '../Layout/Hero';
 import { SingleProductType } from '../../../../types';
 import axios from 'axios';
+import { createProduct, updateProduct } from '../../adminSlice';
 
 const AdminProductForm = ({
   type,
@@ -49,6 +50,8 @@ const AdminProductForm = ({
   const validationSchema = yup.object().shape({
     productName: yup.string().required('productName is required'),
     price: yup.number().required('price is required'),
+    category: yup.string().required('category is required'),
+    collectionName: yup.string().required('collectionName is required'),
     description: yup
       .string()
       .required()
@@ -59,16 +62,7 @@ const AdminProductForm = ({
         }
         return true;
       }),
-    // images: yup.array().of(
-    //   yup.mixed().required('File is required')
-    //   // .test('fileType', 'Invalid file type', (value) => {
-    //   //   return (
-    //   //     value &&
-    //   //     ['image/jpeg', 'image/png'].includes((value as FileList)[0].type)
-    //   //   );
-    //   // })
-    // ),
-    size: yup
+    sizes: yup
       .array()
       .of(
         yup.object().shape({
@@ -93,7 +87,7 @@ const AdminProductForm = ({
     watch,
     getValues,
     setValue,
-    // reset,
+    reset,
     // trigger,
   } = form;
 
@@ -104,9 +98,11 @@ const AdminProductForm = ({
     type === 'detail' && setValue('description', product?.description);
     type === 'detail' && setValue('images', product?.images);
     type === 'detail' && setValue('productName', product?.productName);
-    type === 'detail' && setValue('sizes', product?.sizes);
-    // : setValue('sizes', [{ name: '', quantity: null }]
-    // );
+    type === 'detail' && setValue('category', product?.category);
+    type === 'detail' && setValue('collectionName', product?.collectionName);
+    type === 'detail'
+      ? setValue('sizes', product?.sizes)
+      : setValue('sizes', [{ name: null, quantity: null }]);
   }, [product, type]);
 
   //   const {
@@ -119,38 +115,45 @@ const AdminProductForm = ({
   //   } = formState;
 
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
     try {
       const formData = new FormData();
-
       formData.append('productName', data.productName);
       formData.append('price', data.price.toString());
-
+      formData.append('collectionName', data.collectionName);
+      formData.append('category', data.category);
       formData.append('description', data.description);
 
       if (imageFile) {
         for (let i = 0; i < imageFile.length; i++) {
-          formData.append('images', imageFile[i]);
+          formData.append('coverImages', imageFile[i]);
         }
       }
 
-      for (let i = 0; i < data.sizes.length; i++) {
-        formData.append(`sizes[${i}].name`, data.sizes[i].name);
-        formData.append(
-          `sizes[${i}].quantity`,
-          data.sizes[i].quantity.toString()
-        );
-      }
+      // for (let i = 0; i < data.sizes.length; i++) {
+      //   formData.append(`sizes[${i}].name`, data.sizes[i].name);
+      //   formData.append(
+      //     `sizes[${i}].quantity`,
+      //     data.sizes[i].quantity.toString()
+      //   );
+      // }
+
+      data.sizes.forEach(
+        (item: { name: string; quantity: number }, index: number) => {
+          formData.append(`sizes[${index}][name]`, item.name);
+          formData.append(
+            `sizes[${index}][quantity]`,
+            item.quantity.toString()
+          );
+        }
+      );
 
       if (type === 'create') {
-        if (formData) await axios.post('/api/v1/products', formData);
-
+        if (formData) dispatch(createProduct(formData));
+        reset();
         console.log('Product created successfully!');
-      } else if (type === 'detail' && product) {
-        await axios.put(`/api/products/${product._id}`, data);
-        if (formData) {
-          await axios.post(`/products/${product._id}/images`, formData);
-        }
+      } else if (type === 'detail' && product && formData) {
+        dispatch(updateProduct({ id: product._id, data: formData }));
+        // reset();
         console.log('Product updated successfully!');
       }
 
@@ -169,7 +172,6 @@ const AdminProductForm = ({
     const { files } = e.target;
     setImageFile(files);
   };
-  console.log(imageFile);
 
   const enableEdit = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -181,7 +183,7 @@ const AdminProductForm = ({
   };
 
   const handleUpdate = () => {
-    console.log('Update');
+    // dispatch(updateProduct)
   };
 
   const handleCancel = (e: SyntheticEvent<HTMLButtonElement>) => {
@@ -229,7 +231,7 @@ const AdminProductForm = ({
             <div className='font-baz1 text-[28px] font-medium'>
               Product Information
             </div>
-            <div className='flex gap-[10%]'>
+            <div className='grid grid-cols-2 gap-[10%]'>
               <div className='flex flex-col gap-1 basis-[45%]'>
                 <label htmlFor='productName' className='font-baz1 text-[20px]'>
                   Product Name
@@ -255,6 +257,36 @@ const AdminProductForm = ({
                   {...register('price')}
                   {...(type === 'detail'
                     ? { defaultValue: product?.price }
+                    : {})}
+                />
+              </div>{' '}
+              <div className='flex flex-col gap-1 basis-[45%]'>
+                <label
+                  htmlFor='category'
+                  className='capitalize font-baz1 text-[20px]'>
+                  category
+                </label>
+                <input
+                  type='text'
+                  {...register('category')}
+                  id='category'
+                  disabled={detailMode === 'fixed' && type === 'detail'}
+                  {...(type === 'detail'
+                    ? { defaultValue: product?.category }
+                    : {})}
+                />
+              </div>{' '}
+              <div className='flex flex-col gap-1 basis-[45%]'>
+                <label htmlFor='collection' className='font-baz1 text-[20px]'>
+                  Collection
+                </label>
+                <input
+                  type='text'
+                  {...register('collectionName')}
+                  id='collection'
+                  disabled={detailMode === 'fixed' && type === 'detail'}
+                  {...(type === 'detail'
+                    ? { defaultValue: product?.collectionName }
                     : {})}
                 />
               </div>
@@ -327,7 +359,7 @@ const AdminProductForm = ({
                         <select
                           id='size'
                           disabled={detailMode === 'fixed' && type === 'detail'}
-                          defaultValue={''}
+                          // defaultValue={''}
                           {...register(`sizes.${index}.name`)}
                           className={'outline-none w-full p-3'}>
                           <option disabled value=''>
@@ -362,7 +394,8 @@ const AdminProductForm = ({
             </div>
             <button
               type={'button'}
-              onClick={() => append({ name: '', quantity: 0 })}
+              onClick={() => append({ name: null, quantity: null })}
+              disabled={detailMode === 'fixed' && type === 'detail'}
               className='flex gap-2 items-center justify-center border border-dashed w-[490px] h-[79px]'>
               <AiOutlinePlus />
               <span className='text-[#2a2a2a] font-baz1'>

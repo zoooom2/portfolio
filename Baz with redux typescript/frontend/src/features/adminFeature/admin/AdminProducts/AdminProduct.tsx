@@ -22,10 +22,12 @@ const AdminProduct = () => {
     navigate('/admin/product/create');
   };
   const handleDeleteProduct = (id: string) => {
-    console.log(openModal);
-    console.log(id);
-    dispatch(openAdminModal());
-    console.log('handleDeleteProduct');
+    dispatch(
+      openAdminModal({
+        id,
+        title: 'Are you sure you want to delete this product?',
+      })
+    );
   };
 
   const body = collection.map((collectionName, index) => {
@@ -38,16 +40,16 @@ const AdminProduct = () => {
           to={showDelBtn ? '#' : `/admin/product/detail/${product._id}`}
           key={product._id}
           className='border border-solid border-[#b6b6b6] px-[15px] w-[280px] h-[300px] relative'>
-          <div className='h-[230px] flex justify-center items-center'>
+          <div className='h-[230px] flex justify-center items-center p-3'>
             <img
               src={product.images[0]}
               alt='productImage'
-              className='object-contain'
+              className='object-contain w-full h-full'
             />
           </div>
           <div className='flex justify-between items-start'>
             <div className='flex flex-col'>
-              <div className='text-black font-baz1 text-[18px]'>
+              <div className='text-black font-baz1 text-[18px] capitalize'>
                 {product.productName}
               </div>
               <div className='text-[#2A2A2A] text-[14px] font-baz1'>sizes</div>
@@ -70,7 +72,7 @@ const AdminProduct = () => {
     return (
       <div key={index} className='px-[48px] '>
         <div className='flex items-end justify-between  border-b border-solid border-[#9b9b9b] pb-[20px] pt-[33px]'>
-          <div className='font-medium text-[28px] leading-[42px] font-baz1'>
+          <div className='font-medium text-[28px] leading-[42px] font-baz1 capitalize'>
             {collectionName}
           </div>
           <div>

@@ -35,16 +35,42 @@ export const fetchBestSeller = createAsyncThunk(
   }
 );
 
+export const createProduct = createAsyncThunk(
+  'admin/createProduct',
+  async (data: FormData) => {
+    await axios.post('/api/v1/products', data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  }
+);
+
+export const updateProduct = createAsyncThunk(
+  'admin/updateProduct',
+  async ({ id, data }: { id: string; data: FormData }) => {
+    await axios.patch(`/api/v1/products/${id}`, data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  }
+);
+
+export const deleteProduct = createAsyncThunk(
+  'admin/deleteProduct',
+  async (id: string) => {
+    await axios.delete(`/api/v1/products/${id}`);
+  }
+);
+
 const initialState = {
   loading: true,
   openModal: false,
   modalTitle: '',
+  modalRef: '',
   fetch_order_stat_error: '',
   fetch_visitor_stat_error: '',
   fetch_recent_order_error: '',
   fetch_best_seller_error: '',
+  product_error: '',
   period: 'monthly',
-
   totalRevenue: 0,
   previousTotalRevenue: 0,
   totalOrder: 0,
@@ -69,94 +95,141 @@ const adminSlice = createSlice({
     changeTimeRange: (state, action: { type: string; payload: string }) => {
       state.period = action.payload;
     },
-    openAdminModal: (state) => {
+    openAdminModal: (
+      state,
+      action: { type: string; payload: { id: string; title: string } }
+    ) => {
       state.openModal = true;
+      state.modalRef = action.payload.id;
+      state.modalTitle = action.payload.title;
     },
     closeAdminModal: (state) => {
       state.openModal = false;
+      state.modalRef = '';
+      state.modalTitle = '';
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchOrderStats.pending, (state) => {
-      state.loading = true;
-    });
+    builder
+      .addCase(fetchOrderStats.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchOrderStats.fulfilled, (state, action) => {
+        state.loading = false;
+        state.fetch_order_stat_error = '';
+        state.totalRevenue = action.payload[1].current;
+        state.percentageRevenue = action.payload[1].percentageDifference;
+        state.totalSale = action.payload[0].current;
+        state.percentageSales = action.payload[0].percentageDifference;
+        state.totalOrder = action.payload[2].current;
+        state.percentageOrder = action.payload[2].percentageDifference;
+        state.previousTotalRevenue = action.payload[1].previous;
+        state.previousTotalSales = action.payload[0].previous;
+        state.previousTotalOrder = action.payload[2].previous;
+      })
+      .addCase(fetchOrderStats.rejected, (state, action) => {
+        state.loading = false;
+        // state.totalRevenue = 0;
+        // state.percentageRevenue = 0;
+        // state.totalSale = 0;
+        // state.percentageSales = 0;
+        // state.totalOrder = 0;
+        // state.percentageOrder = 0;
+        // state.previousTotalRevenue = 0;
+        // state.previousTotalSales = 0;
+        // state.previousTotalOrder = 0;
+        state.fetch_order_stat_error = action.error.message as string;
+      });
+    builder
+      .addCase(fetchVisitorStats.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchVisitorStats.fulfilled, (state, action) => {
+        state.fetch_visitor_stat_error = '';
+        state.loading = false;
+        state.visitor = action.payload[0].current;
+        state.previousVisitor = action.payload[0].previous;
+        state.percentageVisitor = action.payload[0].percentageDifference;
+      })
+      .addCase(fetchVisitorStats.rejected, (state, action) => {
+        state.loading = false;
+        state.fetch_visitor_stat_error = action.error.message as string;
+        // state.visitor = 0;
+        // state.previousVisitor = 0;
+        // state.percentageVisitor = 0;
+      });
+    builder
+      .addCase(fetchBestSeller.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchBestSeller.fulfilled, (state, action) => {
+        state.loading = false;
+        state.fetch_best_seller_error = '';
+        state.bestSeller = action.payload;
+      })
+      .addCase(fetchBestSeller.rejected, (state, action) => {
+        state.loading = false;
+        state.fetch_best_seller_error = action.error.message as string;
+        state.bestSeller = [];
+      });
+    builder
+      .addCase(fetchOrders.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.fetch_recent_order_error = '';
+        state.orders = action.payload;
+        state.recentOrders = action.payload
+          .sort(
+            (a: OrderType, b: OrderType) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+          .slice(0, 5);
+      })
+      .addCase(fetchOrders.rejected, (state, action) => {
+        state.loading = false;
+        state.fetch_recent_order_error = action.error.message as string;
+        state.recentOrders = [];
+        state.orders = [];
+      });
 
-    builder.addCase(fetchOrderStats.fulfilled, (state, action) => {
-      state.loading = false;
-      state.fetch_order_stat_error = '';
-      state.totalRevenue = action.payload[1].current;
-      state.percentageRevenue = action.payload[1].percentageDifference;
-      state.totalSale = action.payload[0].current;
-      state.percentageSales = action.payload[0].percentageDifference;
-      state.totalOrder = action.payload[2].current;
-      state.percentageOrder = action.payload[2].percentageDifference;
-      state.previousTotalRevenue = action.payload[1].previous;
-      state.previousTotalSales = action.payload[0].previous;
-      state.previousTotalOrder = action.payload[2].previous;
-    });
-    builder.addCase(fetchOrderStats.rejected, (state, action) => {
-      state.loading = false;
-      // state.totalRevenue = 0;
-      // state.percentageRevenue = 0;
-      // state.totalSale = 0;
-      // state.percentageSales = 0;
-      // state.totalOrder = 0;
-      // state.percentageOrder = 0;
-      // state.previousTotalRevenue = 0;
-      // state.previousTotalSales = 0;
-      // state.previousTotalOrder = 0;
-      state.fetch_order_stat_error = action.error.message as string;
-    });
-    builder.addCase(fetchVisitorStats.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchVisitorStats.fulfilled, (state, action) => {
-      state.fetch_visitor_stat_error = '';
-      state.loading = false;
-      state.visitor = action.payload[0].current;
-      state.previousVisitor = action.payload[0].previous;
-      state.percentageVisitor = action.payload[0].percentageDifference;
-    });
-    builder.addCase(fetchVisitorStats.rejected, (state, action) => {
-      state.loading = false;
-      state.fetch_visitor_stat_error = action.error.message as string;
-      // state.visitor = 0;
-      // state.previousVisitor = 0;
-      // state.percentageVisitor = 0;
-    });
-    builder.addCase(fetchBestSeller.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchBestSeller.fulfilled, (state, action) => {
-      state.loading = false;
-      state.fetch_best_seller_error = '';
-      state.bestSeller = action.payload;
-    });
-    builder.addCase(fetchBestSeller.rejected, (state, action) => {
-      state.loading = false;
-      state.fetch_best_seller_error = action.error.message as string;
-      state.bestSeller = [];
-    });
-    builder.addCase(fetchOrders.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchOrders.fulfilled, (state, action) => {
-      state.loading = false;
-      state.fetch_recent_order_error = '';
-      state.orders = action.payload;
-      state.recentOrders = action.payload
-        .sort(
-          (a: OrderType, b: OrderType) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )
-        .slice(0, 5);
-    });
-    builder.addCase(fetchOrders.rejected, (state, action) => {
-      state.loading = false;
-      state.fetch_recent_order_error = action.error.message as string;
-      state.recentOrders = [];
-      state.orders = [];
-    });
+    builder
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state) => {
+        state.loading = false;
+        state.product_error = '';
+        state.openModal = false;
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.product_error = action.error.message as string;
+      });
+
+    builder
+      .addCase(createProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createProduct.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(createProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.product_error = action.error.message as string;
+      });
+    builder
+      .addCase(updateProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.product_error = action.error.message as string;
+      });
   },
 });
 

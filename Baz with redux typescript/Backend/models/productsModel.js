@@ -18,7 +18,6 @@ const productSchema = new Schema({
   reviews: [ObjectId],
   images: [{ type: String, required: true }],
   numberofReviews: { type: Number, required: true, default: 0 },
-  stock: { type: Number, required: true },
   ratingsAverage: {
     type: Number,
     default: 5,
@@ -35,7 +34,19 @@ const productSchema = new Schema({
   quantitySold: { type: Number, required: true, default: 0 },
   collectionName: { type: String, required: true },
   releaseDate: { type: Date, required: true, default: Date.now },
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
+
+productSchema.pre(/^find/, function (next) {
+  // this points to the current query
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 const Product = model('Product', productSchema);
 
 module.exports = Product;

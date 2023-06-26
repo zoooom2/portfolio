@@ -219,10 +219,12 @@ export type AdminState = {
   loading: boolean;
   openModal: boolean;
   modalTitle: string;
+  modalRef: string;
   fetch_order_stat_error: string;
   fetch_visitor_stat_error: string;
   fetch_recent_order_error: string;
   fetch_best_seller_error: string;
+  product_error: string;
   period: string;
   totalRevenue: number;
   previousTotalRevenue: number;
@@ -271,10 +273,12 @@ export type HeroProps = {
 };
 
 export type AdminPageType = 'overview' | 'product' | 'order' | 'users';
-export interface FormData {
-  productName: string;
-  price: number;
-  description: string;
-  sizes: { name: string; quantity: number }[];
-  images: FileList | null;
-}
+// export interface FormData {
+//   productName: string;
+//   price: number;
+//   description: string;
+//   sizes: { name: string; quantity: number }[];
+//   coverImages: FileList | null;
+//   category: string;
+//   collectionName: string;
+// }

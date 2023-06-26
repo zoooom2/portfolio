@@ -4,7 +4,7 @@ const Product = require('../models/productsModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
-exports.updateProduct = (id, quantity) =>
+exports.updateStock = (id, quantity) =>
   catchAsync(async () => {
     const product = await Product.findById(id);
     product.stock -= quantity;
@@ -35,8 +35,16 @@ exports.uploadProduct = catchAsync(async (req, res) => {
   res.status(201).json({ response });
 });
 
+exports.deleteProduct = catchAsync(async (req, res) => {
+  await Product.findByIdAndUpdate(req.params.id, { active: false });
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
+
 exports.getAllProducts = factory.getAll(Product);
 exports.getProduct = factory.getOne(Product);
 // exports.uploadProduct = factory.createOne(Product);
 exports.updateProduct = factory.updateOne(Product);
-exports.deleteProduct = factory.deleteOne(Product);
+// exports.deleteProduct = factory.deleteOne(Product);

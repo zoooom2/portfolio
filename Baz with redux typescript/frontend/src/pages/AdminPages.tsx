@@ -10,7 +10,7 @@ import {
   fetchOrders,
   fetchBestSeller,
   closeAdminModal,
-  openAdminModal,
+  deleteProduct,
 } from '../features/adminFeature/adminSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 import {
@@ -36,7 +36,9 @@ const AdminPages = ({
     | 'productCreate';
 }) => {
   const dispatch = useAppDispatch();
-  const { period, openModal } = useAppSelector((state) => state.admin);
+  const { period, openModal, modalRef, modalTitle } = useAppSelector(
+    (state) => state.admin
+  );
   const { clicked } = useAppSelector((state) => state.user);
   const { single_product: product } = useAppSelector((state) => state.product);
   useEffect(() => {
@@ -51,12 +53,12 @@ const AdminPages = ({
     <Wrapper className='relative'>
       {openModal && (
         <Modal
-          title={'Are you sure you want to delete this product?'}
+          title={modalTitle}
           buttons={[
             {
               name: 'Yes, Confirm',
-              action: () => {
-                console.log('id');
+              action: async () => {
+                dispatch(deleteProduct(modalRef));
               },
             },
             { name: 'Cancel', action: () => dispatch(closeAdminModal()) },
