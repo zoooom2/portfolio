@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { adminAnalytics, AdminAnalyticsType } from '../../../utils/constants';
+import {
+  adminAnalytics,
+  AdminAnalyticsType,
+  priceFormat,
+} from '../../../utils/constants';
 import RecentOrderTable from './RecentOrderTable';
 import BestSellerTable from './BestSellerTable';
 import { useAppSelector } from '../../../App/hooks';
@@ -19,13 +23,20 @@ const AdminOverview = () => {
           <div className='logo'>{x.logo}</div>
           <div className='detail flex-column'>
             <div className='detail-name'>{x.topic}</div>
-            <div className='detail-value'>{state[current_key]}</div>
+            <div className='detail-value'>
+              {current_key === 'totalRevenue'
+                ? priceFormat(state[current_key])
+                : state[current_key]}
+            </div>
           </div>
         </div>
         <div className='bottom'>
           <span>
             <span> {state[percentage_key]}%</span> {state.period} change (
-            {state[x.value.previous]})
+            {current_key === 'totalRevenue'
+              ? priceFormat(state[x.value.previous])
+              : state[x.value.previous]}
+            )
           </span>
         </div>
       </div>

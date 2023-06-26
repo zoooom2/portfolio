@@ -25,7 +25,9 @@ const AdminRecentOrderTable = ({
         ) : details === 'total_items' ? (
           <td key={index}>{x[details]}</td>
         ) : (
-          <td key={index}>{x.user[details]}</td>
+          <td className='capitalize' key={index}>
+            {x.user[details]}
+          </td>
         )
       )}
     </tr>

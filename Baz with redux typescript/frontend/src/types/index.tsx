@@ -1,6 +1,7 @@
 //Axios Request Types
 // export type AxiosResponseType = Awaited<ReturnType<typeof axios.get>>['data'];
 
+import { SyntheticEvent } from 'react';
 import { IconType } from 'react-icons';
 
 //User Types
@@ -114,6 +115,7 @@ export type SingleProductType = {
   quantitySold: number;
   stock: number;
   ratingsAverage: number;
+  sizes: { name: string; quantity: number }[];
 };
 export type ProductStateType = {
   isSidebarOpen: boolean;
@@ -215,6 +217,8 @@ export type countryTypes = {
 
 export type AdminState = {
   loading: boolean;
+  openModal: boolean;
+  modalTitle: string;
   fetch_order_stat_error: string;
   fetch_visitor_stat_error: string;
   fetch_recent_order_error: string;
@@ -258,11 +262,19 @@ export type HeroProps = {
   subtitle?: string;
   description: string;
   timeBased?: boolean;
+  buttonType?: boolean;
   button?: {
     icon: IconType;
     name: string;
-    action: () => void;
+    action: (e: SyntheticEvent<HTMLButtonElement>) => void;
   }[];
 };
 
 export type AdminPageType = 'overview' | 'product' | 'order' | 'users';
+export interface FormData {
+  productName: string;
+  price: number;
+  description: string;
+  sizes: { name: string; quantity: number }[];
+  images: FileList | null;
+}

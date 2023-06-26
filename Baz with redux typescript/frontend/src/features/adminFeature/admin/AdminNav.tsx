@@ -9,7 +9,7 @@ const AdminNav = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return (
-    <Wrapper className='flex pt-4 pb-3 border-b border-solid border-[#b6b6b6] items-center justify-between px-8'>
+    <Wrapper className='fixed w-full flex pt-4 pb-3 border-b border-solid border-[#b6b6b6] items-center justify-between px-8 bg-white z-10'>
       <Link to='/admin/overview'>
         <img src={logo} alt='logo' className='logo' />
       </Link>
@@ -37,12 +37,6 @@ const AdminNav = () => {
 };
 
 const Wrapper = styled.nav`
-  // display: flex;
-  // padding-inline: 2em;
-  // padding-top: 1em;
-  // padding-bottom: 1.5em;
-  // justify-content: space-between;
-  // align-items: flex-end;
   .home-search {
     display: flex;
     gap: 1em;

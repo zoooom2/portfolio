@@ -1,19 +1,30 @@
-import { useAppSelector } from '../../../../App/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../App/hooks';
 import Hero from '../Layout/Hero';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { MdKeyboardArrowUp } from 'react-icons/md';
-
+import { useNavigate } from 'react-router-dom';
 import { getUniqueValues } from '../../../../utils/helpers';
 import { priceFormat } from '../../../../utils/constants';
 import { Link } from 'react-router-dom';
+import Modal from '../Layout/Modal';
+import { closeAdminModal, openAdminModal } from '../../adminSlice';
+import { useState } from 'react';
 const AdminProduct = () => {
+  const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.product);
+  const { openModal } = useAppSelector((state) => state.admin);
+  const [showDelBtn, setShowDelBtn] = useState(false);
+
   const collection = getUniqueValues(products, 'collectionName');
+  const navigate = useNavigate();
 
   const handleAddNewProduct = () => {
-    console.log('handleAddNewProduct');
+    navigate('/admin/product/create');
   };
-  const handleDeleteProduct = () => {
+  const handleDeleteProduct = (id: string) => {
+    console.log(openModal);
+    console.log(id);
+    dispatch(openAdminModal());
     console.log('handleDeleteProduct');
   };
 
@@ -24,9 +35,9 @@ const AdminProduct = () => {
     const collectionBody = collectionProduct.map((product) => {
       return (
         <Link
-          to={`/admin/product/detail/${product._id}`}
+          to={showDelBtn ? '#' : `/admin/product/detail/${product._id}`}
           key={product._id}
-          className='border border-solid border-[#b6b6b6] px-[15px] w-[280px] h-[300px]'>
+          className='border border-solid border-[#b6b6b6] px-[15px] w-[280px] h-[300px] relative'>
           <div className='h-[230px] flex justify-center items-center'>
             <img
               src={product.images[0]}
@@ -45,6 +56,13 @@ const AdminProduct = () => {
               {priceFormat(product.price)}
             </div>
           </div>
+          {showDelBtn && (
+            <button
+              className='absolute right-3 top-3 text-black rounded-lg border border-black p-1'
+              onClick={() => handleDeleteProduct(product._id)}>
+              <AiOutlineClose size={18} />
+            </button>
+          )}
         </Link>
       );
     });
@@ -67,25 +85,27 @@ const AdminProduct = () => {
   });
 
   return (
-    <section className='flex flex-col'>
-      <Hero
-        title={'Products'}
-        description={'View your availabe products and edit them'}
-        button={[
-          {
-            name: 'Add new product',
-            icon: AiOutlinePlus,
-            action: handleAddNewProduct,
-          },
-          {
-            name: 'Delete Product',
-            icon: AiOutlineMinus,
-            action: handleDeleteProduct,
-          },
-        ]}
-      />
-      {body}
-    </section>
+    <>
+      <section className='flex flex-col'>
+        <Hero
+          title={'Products'}
+          description={'View your availabe products and edit them'}
+          button={[
+            {
+              name: 'Add new product',
+              icon: AiOutlinePlus,
+              action: handleAddNewProduct,
+            },
+            {
+              name: showDelBtn ? 'Cancel' : 'Delete Product',
+              icon: showDelBtn ? AiOutlineClose : AiOutlineMinus,
+              action: () => setShowDelBtn(!showDelBtn),
+            },
+          ]}
+        />
+        {body}
+      </section>
+    </>
   );
 };
 

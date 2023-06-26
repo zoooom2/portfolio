@@ -11,6 +11,7 @@ const Hero = ({
   description,
   timeBased,
   button,
+  buttonType,
 }: HeroProps) => {
   const { period } = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ const Hero = ({
     <button
       key={index}
       onClick={x.action}
+      {...(buttonType && { type: 'button' })}
       className={`flex items-center font-baz1 text-xl gap-5 px-6 py-4 ${
         index === 0
           ? 'bg-black text-white hover:bg-white hover:border border-black hover:text-black'

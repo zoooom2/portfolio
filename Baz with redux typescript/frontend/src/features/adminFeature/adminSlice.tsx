@@ -37,11 +37,14 @@ export const fetchBestSeller = createAsyncThunk(
 
 const initialState = {
   loading: true,
+  openModal: false,
+  modalTitle: '',
   fetch_order_stat_error: '',
   fetch_visitor_stat_error: '',
   fetch_recent_order_error: '',
   fetch_best_seller_error: '',
   period: 'monthly',
+
   totalRevenue: 0,
   previousTotalRevenue: 0,
   totalOrder: 0,
@@ -65,6 +68,12 @@ const adminSlice = createSlice({
   reducers: {
     changeTimeRange: (state, action: { type: string; payload: string }) => {
       state.period = action.payload;
+    },
+    openAdminModal: (state) => {
+      state.openModal = true;
+    },
+    closeAdminModal: (state) => {
+      state.openModal = false;
     },
   },
   extraReducers: (builder) => {
@@ -151,5 +160,6 @@ const adminSlice = createSlice({
   },
 });
 
-export const { changeTimeRange } = adminSlice.actions;
+export const { changeTimeRange, openAdminModal, closeAdminModal } =
+  adminSlice.actions;
 export default adminSlice.reducer;

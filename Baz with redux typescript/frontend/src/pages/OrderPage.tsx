@@ -46,7 +46,7 @@ const OrderPage = () => {
       localStorage.removeItem('cart');
       localStorage.removeItem('shipping');
     }
-  }, [body]);
+  }, []);
 
   return <h1>order successful</h1>;
 };

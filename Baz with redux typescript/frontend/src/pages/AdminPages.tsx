@@ -9,6 +9,8 @@ import {
   fetchVisitorStats,
   fetchOrders,
   fetchBestSeller,
+  closeAdminModal,
+  openAdminModal,
 } from '../features/adminFeature/adminSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 import {
@@ -20,6 +22,7 @@ import {
   AdminUser,
 } from '../features/adminFeature/admin';
 import AdminProductForm from '../features/adminFeature/admin/AdminProducts/AdminProductForm';
+import Modal from '../features/adminFeature/admin/Layout/Modal';
 
 const AdminPages = ({
   page,
@@ -33,8 +36,9 @@ const AdminPages = ({
     | 'productCreate';
 }) => {
   const dispatch = useAppDispatch();
-  const { period } = useAppSelector((state) => state.admin);
+  const { period, openModal } = useAppSelector((state) => state.admin);
   const { clicked } = useAppSelector((state) => state.user);
+  const { single_product: product } = useAppSelector((state) => state.product);
   useEffect(() => {
     if (clicked) dispatch(setClicked(false));
     dispatch(fetchOrders());
@@ -44,8 +48,23 @@ const AdminPages = ({
   }, [period]);
 
   return (
-    <Wrapper>
+    <Wrapper className='relative'>
+      {openModal && (
+        <Modal
+          title={'Are you sure you want to delete this product?'}
+          buttons={[
+            {
+              name: 'Yes, Confirm',
+              action: () => {
+                console.log('id');
+              },
+            },
+            { name: 'Cancel', action: () => dispatch(closeAdminModal()) },
+          ]}
+        />
+      )}
       <AdminNav />
+      <div className='h-[100px]'></div>
       <main>
         <AdminSidebar
           page={
@@ -58,7 +77,9 @@ const AdminPages = ({
         />
         {page === 'overview' && <AdminOverview />}
         {page === 'product' && <AdminProduct />}
-        {page === 'productDetail' && <AdminProductForm type={'detail'} />}
+        {page === 'productDetail' && (
+          <AdminProductForm type={'detail'} product={product} />
+        )}
         {page === 'productCreate' && <AdminProductForm type={'create'} />}
         {page === 'order' && <AdminOrders />}
         {page === 'users' && <AdminUser />}
