@@ -4,14 +4,18 @@ import * as Cookies from 'js-cookie';
 import { OrderType, UserStateType, UserType } from '../../types';
 
 export const fetchProfile = createAsyncThunk('user/fetchProfile', async () => {
-  const response = await axios.get('/api/v1/users/me');
+  const response = await axios.get(
+    'https://baz-api.onrender.com/api/v1/users/me'
+  );
   return response.data.data;
 });
 
 export const fetchUserOrder = createAsyncThunk(
   'user/fetchUserOrder',
   async () => {
-    const response = await axios.get('/api/v1/order/myorders');
+    const response = await axios.get(
+      'https://baz-api.onrender.com/api/v1/order/myorders'
+    );
     return response.data.data;
   }
 );
@@ -21,14 +25,18 @@ export const checkVisitorCount = createAsyncThunk(
   async () => {
     if (!Cookies.get('visited')) {
       Cookies.set('visited', 'true', { expires: 1 });
-      const response = await axios.patch('/api/v1/visitor');
+      const response = await axios.patch(
+        'https://baz-api.onrender.com/api/v1/visitor'
+      );
       return response.data.doc.count;
     }
   }
 );
 
 export const logOut = createAsyncThunk('user/logOut', async () => {
-  const response = await axios.get('/api/v1/users/logout');
+  const response = await axios.get(
+    'https://baz-api.onrender.com/api/v1/users/logout'
+  );
   return response.data.status;
 });
 
@@ -36,7 +44,7 @@ export const jwtAuth = createAsyncThunk(
   'user/jwtAuth',
   async ([email, password]: string[]) => {
     const response = await axios.post(
-      '/api/v1/users/login',
+      'https://baz-api.onrender.com/api/v1/users/login',
       {
         email,
         password,

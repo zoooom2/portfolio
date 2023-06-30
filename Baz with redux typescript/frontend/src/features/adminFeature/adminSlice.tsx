@@ -5,7 +5,9 @@ import { AdminState, OrderType } from '../../types';
 export const fetchOrderStats = createAsyncThunk(
   'admin/fetchOrderStats',
   async (period: string) => {
-    const response = await axios.get(`/api/v1/order/pctchange?time=${period}`);
+    const response = await axios.get(
+      `https://baz-api.onrender.com/api/v1/order/pctchange?time=${period}`
+    );
 
     return response.data.stats;
   }
@@ -14,14 +16,14 @@ export const fetchVisitorStats = createAsyncThunk(
   'admin/fetchVisitorStats',
   async (period: string) => {
     const response = await axios.get(
-      `/api/v1/visitor/pctchange?time=${period}`
+      `https://baz-api.onrender.com/api/v1/visitor/pctchange?time=${period}`
     );
     return response.data.stats;
   }
 );
 
 export const fetchOrders = createAsyncThunk('admin/fetchOrders', async () => {
-  const response = await axios.get('/api/v1/order');
+  const response = await axios.get('https://baz-api.onrender.com/api/v1/order');
   return response.data.data;
 });
 
@@ -29,7 +31,7 @@ export const fetchBestSeller = createAsyncThunk(
   'admin/fetchBestSeller',
   async () => {
     const response = await axios.get(
-      '/api/v1/products?sort=quantitySold&limit=3'
+      'https://baz-api.onrender.com/api/v1/products?sort=quantitySold&limit=3'
     );
     return response.data.data;
   }
@@ -38,7 +40,7 @@ export const fetchBestSeller = createAsyncThunk(
 export const createProduct = createAsyncThunk(
   'admin/createProduct',
   async (data: FormData) => {
-    await axios.post('/api/v1/products', data, {
+    await axios.post('https://baz-api.onrender.com/api/v1/products', data, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   }
@@ -47,16 +49,20 @@ export const createProduct = createAsyncThunk(
 export const updateProduct = createAsyncThunk(
   'admin/updateProduct',
   async ({ id, data }: { id: string; data: FormData }) => {
-    await axios.patch(`/api/v1/products/${id}`, data, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    await axios.patch(
+      `https://baz-api.onrender.com/api/v1/products/${id}`,
+      data,
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }
+    );
   }
 );
 
 export const deleteProduct = createAsyncThunk(
   'admin/deleteProduct',
   async (id: string) => {
-    await axios.delete(`/api/v1/products/${id}`);
+    await axios.delete(`https://baz-api.onrender.com/api/v1/products/${id}`);
   }
 );
 

@@ -15,7 +15,7 @@ export const handlePayStack = createAsyncThunk(
     'shippingInfo' | 'cart' | 'total_amount' | 'total_items' | 'subtotal'
   >) => {
     const response = await axios.post(
-      '/api/v1/order/paystack/checkout-session',
+      'https://baz-api.onrender.com/api/v1/order/paystack/checkout-session',
       {
         shippingInfo: { ...shippingInfo },
         orderItems: cart,

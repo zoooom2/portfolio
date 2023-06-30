@@ -19,7 +19,7 @@ const OrderPage = () => {
   const getDetails = async () => {
     try {
       if (body.cart && body.shippingInfo) {
-        const url = `/api/v1/order/paystack/createOrder`;
+        const url = `https://baz-api.onrender.com/api/v1/order/paystack/createOrder`;
         await axios.post(
           url,
           { ...body, reference },
