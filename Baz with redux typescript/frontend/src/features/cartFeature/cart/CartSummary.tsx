@@ -11,7 +11,7 @@ const CartSummary = () => {
   const content = cart.map((cartItem, key) => (
     <li key={key}>
       <div className='name-size-quantity'>
-        <div className='name'>{cartItem.name}</div>
+        <div className='name'>{cartItem.productName}</div>
         <div className='size-quantity'>
           {cartItem.size}-[{cartItem.amount}]
         </div>

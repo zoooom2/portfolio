@@ -1,16 +1,13 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../../../assets/image 2.svg';
-import { CiSearch, CiUser, CiLogout } from 'react-icons/ci';
-import { logOut } from '../../userFeature/userSlice';
-import { useAppDispatch, useAppSelector } from '../../../App/hooks';
+
+import { useAppDispatch } from '../../../App/hooks';
 import AdminMenuButtons from './AdminMenuButtons';
 import { FaBars } from 'react-icons/fa';
-import { openSidebar } from '../../productFeature/productSlice';
 import { openAdminSidebar } from '../adminSlice';
 
 const AdminNav = () => {
-  const { showSidebar } = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
   return (
     <Wrapper className='fixed w-full flex pt-4 pb-3 border-b border-solid border-[#b6b6b6] items-center justify-between px-8 bg-white z-10'>

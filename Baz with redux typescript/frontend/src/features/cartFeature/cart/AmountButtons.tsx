@@ -9,7 +9,7 @@ type AmountButtonType = {
 
 const AmountButtons = ({ increase, decrease, amount }: AmountButtonType) => {
   return (
-    <Wrapper className='amount-btns'>
+    <Wrapper className='flex'>
       <button
         type='button'
         className='amount-btn place-center button'

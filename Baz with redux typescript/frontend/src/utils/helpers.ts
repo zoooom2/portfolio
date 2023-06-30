@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export const getUniqueValues = (
   data: Record<string, any>[] = [],
   type: string

@@ -75,7 +75,9 @@ const Payment = ({
       <div className='dashed'></div>
       <div className='shippingMethod'>{shippingMethod}</div>
       <div className='shippingFee'>{priceFormat(shippingFee)}</div>
-      <button className='btn zilla-700' onClick={handlePayment}>
+      <button
+        className='btn zilla-700 flex justify-center items-center'
+        onClick={handlePayment}>
         {!loading ? (
           <SpinnerCircular secondaryColor={'#000'} color='white' size={35} />
         ) : (

@@ -5,11 +5,9 @@ import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 
 const Sort = () => {
   const dispatch = useAppDispatch();
-  const {
-    filtered_product: products,
-    sort,
-    openFilter,
-  } = useAppSelector((state) => state.filter);
+  const { filtered_product: products, openFilter } = useAppSelector(
+    (state) => state.filter
+  );
 
   return (
     <Wrapper>

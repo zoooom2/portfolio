@@ -9,7 +9,6 @@ import styled from 'styled-components';
 import { closeSidebar } from '../../productFeature/productSlice';
 import { logOut } from '../../userFeature/userSlice';
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
-import { useEffect } from 'react';
 
 const CartButtons = () => {
   const dispatch = useAppDispatch();

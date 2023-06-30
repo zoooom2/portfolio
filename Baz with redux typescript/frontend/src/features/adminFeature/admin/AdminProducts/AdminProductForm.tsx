@@ -82,9 +82,9 @@ const AdminProductForm = ({
     control,
     handleSubmit,
     formState,
-    setError,
-    watch,
-    getValues,
+    // setError,
+    // watch,
+    // getValues,
     setValue,
     reset,
     // trigger,
@@ -105,8 +105,8 @@ const AdminProductForm = ({
   }, [product, type]);
 
   const {
-    errors,
-    isDirty,
+    // errors,
+    // isDirty,
     isValid,
     isSubmitting,
     // isSubmitted,

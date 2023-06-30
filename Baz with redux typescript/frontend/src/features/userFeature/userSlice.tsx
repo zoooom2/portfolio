@@ -113,7 +113,7 @@ const userSlice = createSlice({
       state.clicked = action.payload;
     },
     googleAuth: () => {
-      window.open(`http://localhost:2705/api/v1/auth/google/`, '_self');
+      window.open(`https://baz-api.onrender.com/api/v1/auth/google/`, '_self');
     },
   },
   extraReducers: (builder) => {

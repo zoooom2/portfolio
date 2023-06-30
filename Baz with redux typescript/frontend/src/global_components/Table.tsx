@@ -1,5 +1,4 @@
 import { useTable, Column } from 'react-table';
-import { OrderType } from '../types';
 
 interface TableProps {
   columns: Column[];
@@ -29,7 +28,7 @@ const Table = ({ columns, data }: TableProps) => {
         })}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
+        {rows.map((row) => {
           prepareRow(row);
           return (
             <tr className=' hover:bg-[rgba(0,0,0,0.05)]' {...row.getRowProps()}>

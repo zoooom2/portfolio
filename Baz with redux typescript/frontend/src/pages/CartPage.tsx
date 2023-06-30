@@ -14,7 +14,7 @@ const CartPage = () => {
   const dispatch = useAppDispatch();
   const { cart, subtotal } = useAppSelector((state) => state.cart);
   // eslint-disable-next-line no-unused-vars
-  const [localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
+  const [_localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
 
   useEffect(() => {
     dispatch(setClicked(true));

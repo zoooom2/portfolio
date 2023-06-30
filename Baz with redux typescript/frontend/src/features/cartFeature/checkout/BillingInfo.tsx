@@ -52,19 +52,19 @@ const BillingInfo = ({
     handleSubmit,
     formState,
     // watch,
-    getValues,
+    // getValues,
     setValue,
     // reset,
     trigger,
   } = form;
 
   const {
-    errors,
-    isDirty,
+    // errors,
+    // isDirty,
     isValid,
     isSubmitting,
     // isSubmitted,
-    isSubmitSuccessful,
+    // isSubmitSuccessful,
   } = formState;
 
   useEffect(() => {
@@ -158,7 +158,7 @@ const BillingInfo = ({
   );
 
   const onSubmit = (data: FieldValues) => {
-    console.log({ ...data });
+    // console.log({ ...data });
     dispatch(createShipping(data));
     navigate('/checkout/shipping');
   };

@@ -8,7 +8,7 @@ import { useAppDispatch } from '../../../App/hooks';
 const CartItem = ({
   productID,
   image,
-  name,
+  productName,
   price,
   size,
   amount,
@@ -30,7 +30,7 @@ const CartItem = ({
     <Wrapper>
       <img src={image} alt='' className='productImage' />
       <div className='product-details flex-column '>
-        <div className='name'>{name}</div>
+        <div className='name'>{productName}</div>
         <div className='size'>Size: {size}</div>
         <div className='price'>{priceFormat(price)}</div>
         <div className='quantityForm-remove flex-column'>

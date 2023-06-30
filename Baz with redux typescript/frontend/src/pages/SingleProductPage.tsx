@@ -20,7 +20,7 @@ const SingleProductPage = () => {
   const dispatch = useAppDispatch();
 
   // eslint-disable-next-line no-unused-vars
-  const [localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
+  const [_localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
   const navigate = useNavigate();
   const {
     single_product_loading: loading,

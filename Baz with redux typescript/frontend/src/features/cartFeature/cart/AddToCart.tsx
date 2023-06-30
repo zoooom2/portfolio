@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import AmountButtons from './AmountButtons';
 import { addToCart } from '../../cartFeature/cartSlice';
