@@ -31,17 +31,11 @@ app.enable('trust proxy');
 // Implement CORS
 app.use(
   cors({
-    origin: `http://localhost:5173`,
+    origin: `https://bazng.vercel.app`,
     methods: 'GET,POST,PATCH,DELETE',
     credentials: true,
   })
 );
-
-// Access-Control-Allow-Origin *
-// api.natours.com, front-end natours.com
-// app.use(cors({
-//   origin: 'https://www.natours.com'
-// }))
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
@@ -108,7 +102,7 @@ app.use(xss());
 // Prevent parameter pollution
 app.use(
   hpp({
-    whitelist: ['ratingsQuantity', 'ratingsAverage', 'price'],
+    whitelist: [],
   })
 );
 
