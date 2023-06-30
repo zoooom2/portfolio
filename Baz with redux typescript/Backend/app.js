@@ -61,7 +61,7 @@ app.use(
       touchAfter: 24 * 3600, //24 hours
     }),
     cookie: {
-      // secure: true,
+      secure: true,
       httpOnly: true,
       sameSite: 'lax',
       maxAge: 360000,
