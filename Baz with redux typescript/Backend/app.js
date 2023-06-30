@@ -12,7 +12,6 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const compression = require('compression');
 const cors = require('cors');
-
 require('./controllers/passport')(passport);
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');

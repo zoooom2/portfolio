@@ -9,7 +9,7 @@ exports.sendContact = (req, res) => {
   ]);
 
   process.stdout.on('data', (data) => {
-    console.log(`data received from php script :: ${data.toString()}`);
+    // console.log(`data received from php script :: ${data.toString()}`);
     res.json({ data: data.toString() });
   });
 };
