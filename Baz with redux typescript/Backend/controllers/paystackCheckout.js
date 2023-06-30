@@ -4,6 +4,7 @@ const Order = require('../models/orderModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const { updateStock } = require('./productsController');
+const getUniqueValues = require('../utils/uniqueValues');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const { name, email } = req.user;
@@ -41,6 +42,42 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 
   const orderItems = req.body.cart;
 
+  const uniqueID = getUniqueValues(orderItems, 'productID');
+
+  let newOrderItems = [];
+
+  // pick the unique id, check each of the order items for any with the same unique ID, if it is the first copy all of its content into an object else just size and quantity into the sizes array
+
+  newOrderItems = uniqueID.map((id) => {
+    const baseObject = {
+      productName: '',
+      price: 0,
+      image: '',
+      sizes: [],
+      productID: id,
+    };
+    orderItems.forEach((item) => {
+      let count = 0;
+      if (item.productID === id && count === 0) {
+        baseObject.productName = item.productName;
+        baseObject.price = item.price;
+        baseObject.image = item.image;
+        baseObject.sizes.push({
+          size: item.size,
+          quantity: item.amount,
+        });
+        count += 1;
+      } else {
+        baseObject.sizes.push({
+          size: item.size,
+          quantity: item.amount,
+        });
+        count += 1;
+      }
+    });
+    return baseObject;
+  });
+
   //3) create the order
   const {
     shippingInfo,
@@ -55,7 +92,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     total_amount: totalAmount,
     subtotal,
     total_items: totalItems,
-    orderItems,
+    orderItems: newOrderItems,
     paidAt: verification.data.paid_at,
     createdAt: verification.data.created_at,
     paymentInfo: {
@@ -73,9 +110,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 
   //4) update the stock of each product
   await Promise.all(
-    orderItems.map(
-      async (item) => await updateStock(item.product, item.quantity)
-    )
+    orderItems.map(async (item) => await updateStock(item.product, item))
   );
 
   // 5) Create session as response

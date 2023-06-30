@@ -22,7 +22,6 @@ import { useAppDispatch } from '../../../../App/hooks';
 import { fetchSingleProduct } from '../../../productFeature/productSlice';
 import Hero from '../Layout/Hero';
 import { SingleProductType } from '../../../../types';
-import axios from 'axios';
 import { createProduct, updateProduct } from '../../adminSlice';
 
 const AdminProductForm = ({
@@ -66,7 +65,7 @@ const AdminProductForm = ({
       .array()
       .of(
         yup.object().shape({
-          name: yup.string().required('Size name is required'),
+          size: yup.string().required('Size name is required'),
           quantity: yup.number().required('Quantity is required'),
         })
       )
@@ -102,65 +101,57 @@ const AdminProductForm = ({
     type === 'detail' && setValue('collectionName', product?.collectionName);
     type === 'detail'
       ? setValue('sizes', product?.sizes)
-      : setValue('sizes', [{ name: null, quantity: null }]);
+      : setValue('sizes', [{ size: null, quantity: null }]);
   }, [product, type]);
 
-  //   const {
-  //     errors,
-  //     isDirty,
-  //     isValid,
-  //     isSubmitting,
-  //     // isSubmitted,
-  //     isSubmitSuccessful,
-  //   } = formState;
+  const {
+    errors,
+    isDirty,
+    isValid,
+    isSubmitting,
+    // isSubmitted,
+    isSubmitSuccessful,
+  } = formState;
 
   const onSubmit = async (data: FieldValues) => {
-    try {
-      const formData = new FormData();
-      formData.append('productName', data.productName);
-      formData.append('price', data.price.toString());
-      formData.append('collectionName', data.collectionName);
-      formData.append('category', data.category);
-      formData.append('description', data.description);
+    if (isValid && !isSubmitting) {
+      try {
+        const formData = new FormData();
+        formData.append('productName', data.productName);
+        formData.append('price', data.price.toString());
+        formData.append('collectionName', data.collectionName);
+        formData.append('category', data.category);
+        formData.append('description', data.description);
 
-      if (imageFile) {
-        for (let i = 0; i < imageFile.length; i++) {
-          formData.append('coverImages', imageFile[i]);
+        if (imageFile) {
+          for (let i = 0; i < imageFile.length; i++) {
+            formData.append('coverImages', imageFile[i]);
+          }
         }
-      }
 
-      // for (let i = 0; i < data.sizes.length; i++) {
-      //   formData.append(`sizes[${i}].name`, data.sizes[i].name);
-      //   formData.append(
-      //     `sizes[${i}].quantity`,
-      //     data.sizes[i].quantity.toString()
-      //   );
-      // }
-
-      data.sizes.forEach(
-        (item: { name: string; quantity: number }, index: number) => {
-          formData.append(`sizes[${index}][name]`, item.name);
+        for (let i = 0; i < data.sizes.length; i++) {
+          formData.append(`sizes[${i}][size]`, data.sizes[i].size);
           formData.append(
-            `sizes[${index}][quantity]`,
-            item.quantity.toString()
+            `sizes[${i}][quantity]`,
+            data.sizes[i].quantity.toString()
           );
         }
-      );
 
-      if (type === 'create') {
-        if (formData) dispatch(createProduct(formData));
-        reset();
-        console.log('Product created successfully!');
-      } else if (type === 'detail' && product && formData) {
-        dispatch(updateProduct({ id: product._id, data: formData }));
-        // reset();
-        console.log('Product updated successfully!');
+        if (type === 'create') {
+          if (formData) dispatch(createProduct(formData));
+          reset();
+          console.log('Product created successfully!');
+        } else if (type === 'detail' && product && formData) {
+          dispatch(updateProduct({ id: product._id, data: formData }));
+          // reset();
+          console.log('Product updated successfully!');
+        }
+
+        // Redirect or perform other actions after submission
+        isSubmitSuccessful && navigate('/admin/product');
+      } catch (error) {
+        console.log('An error occurred while submitting the form:', error);
       }
-
-      // Redirect or perform other actions after submission
-      // navigate('/admin/product');
-    } catch (error) {
-      console.log('An error occurred while submitting the form:', error);
     }
   };
 
@@ -179,7 +170,7 @@ const AdminProductForm = ({
   };
   const handlePublish = () => {
     // e.preventDefault();
-    console.log('Publish');
+    // console.log('Publish');
   };
 
   const handleUpdate = () => {
@@ -196,8 +187,11 @@ const AdminProductForm = ({
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
+    <div className='w-full'>
+      <form
+        onSubmit={handleSubmit(onSubmit, onError)}
+        className='w-full
+      '>
         <Hero
           title={'Product'}
           subtitle={'Product Details'}
@@ -226,14 +220,16 @@ const AdminProductForm = ({
           ]}
         />
 
-        <div className='flex flex-col pl-[48px] pt-[32px] pb-[80px] w-4/6'>
+        <div className='flex flex-col pl-[48px] pt-[32px] pb-[80px] w-4/6 max-md:w-5/6'>
           <div className='flex flex-col gap-[25px]'>
             <div className='font-baz1 text-[28px] font-medium'>
               Product Information
             </div>
             <div className='grid grid-cols-2 gap-[10%]'>
               <div className='flex flex-col gap-1 basis-[45%]'>
-                <label htmlFor='productName' className='font-baz1 text-[20px]'>
+                <label
+                  htmlFor='productName'
+                  className='font-baz1 text-[20px] max-sm:text-sm'>
                   Product Name
                 </label>
                 <input
@@ -247,7 +243,9 @@ const AdminProductForm = ({
                 />
               </div>
               <div className='flex flex-col gap-1 basis-[45%]'>
-                <label htmlFor='price' className='font-baz1 text-[20px]'>
+                <label
+                  htmlFor='price'
+                  className='max-sm:text-sm font-baz1 text-[20px]'>
                   Price
                 </label>
                 <input
@@ -263,7 +261,7 @@ const AdminProductForm = ({
               <div className='flex flex-col gap-1 basis-[45%]'>
                 <label
                   htmlFor='category'
-                  className='capitalize font-baz1 text-[20px]'>
+                  className='capitalize font-baz1 text-[20px] max-sm:text-sm'>
                   category
                 </label>
                 <input
@@ -277,7 +275,9 @@ const AdminProductForm = ({
                 />
               </div>{' '}
               <div className='flex flex-col gap-1 basis-[45%]'>
-                <label htmlFor='collection' className='font-baz1 text-[20px]'>
+                <label
+                  htmlFor='collection'
+                  className='font-baz1 text-[20px] max-sm:text-sm'>
                   Collection
                 </label>
                 <input
@@ -292,7 +292,9 @@ const AdminProductForm = ({
               </div>
             </div>
             <div className='flex flex-col gap-2'>
-              <label htmlFor='description' className='font-baz1 text-[20px]'>
+              <label
+                htmlFor='description'
+                className='font-baz1 text-[20px] max-sm:text-sm'>
                 Description
               </label>
               <textarea
@@ -308,7 +310,7 @@ const AdminProductForm = ({
               />
             </div>
             <div className='flex flex-col gap-1'>
-              <div className='font-baz1 text-[20px]'>Media</div>
+              <div className='font-baz1 text-[20px] max-sm:text-sm'>Media</div>
               <div className='flex gap-2'>
                 {type === 'detail' &&
                   product?.images.map((image, index) => {
@@ -353,14 +355,14 @@ const AdminProductForm = ({
                 return (
                   <div
                     key={field.id}
-                    className='grid grid-cols-3 gap-[10px] justify-between w-[491px]'>
+                    className='grid grid-cols-2 gap-[10px] justify-between w-full'>
                     <div className='flex flex-col gap-1 basis-[45%]'>
                       <div className='flex justify-around border border-solid border-[#b6b6b6] mt-2 pr-2'>
                         <select
                           id='size'
                           disabled={detailMode === 'fixed' && type === 'detail'}
                           // defaultValue={''}
-                          {...register(`sizes.${index}.name`)}
+                          {...register(`sizes.${index}.size`)}
                           className={'outline-none w-full p-3'}>
                           <option disabled value=''>
                             Select size
@@ -396,7 +398,7 @@ const AdminProductForm = ({
               type={'button'}
               onClick={() => append({ name: null, quantity: null })}
               disabled={detailMode === 'fixed' && type === 'detail'}
-              className='flex gap-2 items-center justify-center border border-dashed w-[490px] h-[79px]'>
+              className='flex gap-2 items-center justify-center border border-dashed w-full h-[79px]'>
               <AiOutlinePlus />
               <span className='text-[#2a2a2a] font-baz1'>
                 add new size and quantity

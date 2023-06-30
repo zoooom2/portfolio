@@ -34,6 +34,7 @@ const productSlice = createSlice({
       price: 0,
       priceID: '',
       taxPrice: 0,
+      sizes: [],
       discount: 0,
       category: 'all',
       collectionName: 'all',
@@ -51,6 +52,11 @@ const productSlice = createSlice({
     },
     closeSidebar: (state) => {
       state.isSidebarOpen = false;
+    },
+    removeProduct: (state, action) => {
+      state.products = state.products.filter(
+        (product) => product._id !== action.payload
+      );
     },
   },
   extraReducers: (builder) => {
@@ -91,5 +97,6 @@ const productSlice = createSlice({
   },
 });
 
-export const { openSidebar, closeSidebar } = productSlice.actions;
+export const { openSidebar, closeSidebar, removeProduct } =
+  productSlice.actions;
 export default productSlice.reducer;

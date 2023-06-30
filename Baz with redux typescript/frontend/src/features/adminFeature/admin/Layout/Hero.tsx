@@ -31,7 +31,7 @@ const Hero = ({
       key={index}
       onClick={x.action}
       {...(buttonType && { type: 'button' })}
-      className={`flex items-center font-baz1 text-xl gap-5 px-6 py-4 ${
+      className={`max-lg:p-3 max-lg:text-sm flex items-center font-baz1 text-xl gap-5 px-6 py-4 ${
         index === 0
           ? 'bg-black text-white hover:bg-white hover:border border-black hover:text-black'
           : 'bg-white text-black border border-black hover:bg-black hover:border-none hover:text-white'
@@ -41,7 +41,7 @@ const Hero = ({
   ));
 
   return (
-    <div className='flex justify-between items-center px-10 py-5 w-full border-b  border-solid border-[#b6b6b6]'>
+    <div className='max-md:flex-col max-md:items-start max-md:gap-4 flex justify-between items-center px-10 py-5 w-full border-b  border-solid border-[#b6b6b6]'>
       <div>
         <div className='font-baz1 font-medium min-[900px]:text-adminHero text-2xl '>
           <span className='capitalize'>{`${title} `}</span>

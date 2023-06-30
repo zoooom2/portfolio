@@ -10,7 +10,7 @@ const BestSellerTable = ({
   const tableContent = contentArray.map((content, index) => {
     const total = content.quantitySold * content.price;
     return (
-      <tr key={index}>
+      <tr key={index} className=''>
         <td className='productItem'>
           <img src={content.images[0]} alt='product' className='product-img' />
           <div className='product-details flex-column'>
@@ -19,14 +19,14 @@ const BestSellerTable = ({
           </div>
         </td>
         <td>{content.quantitySold}</td>
-        <td>{total}</td>
+        <td>{priceFormat(total)}</td>
       </tr>
     );
   });
   return (
     <Wrapper>
-      <thead>
-        <tr className='w'>
+      <thead className=''>
+        <tr className=''>
           <th>Item</th>
           <th>Piece(s)</th>
           <th>Total</th>
@@ -38,6 +38,8 @@ const BestSellerTable = ({
 };
 
 const Wrapper = styled.table`
+  border-collapse: separate;
+  border-spacing: 20px;
   .productItem {
     display: flex;
     gap: 23px;
@@ -65,9 +67,9 @@ const Wrapper = styled.table`
     text-align: left;
   }
 
-  thead {
-    border: 1px solid red;
-  }
+  // thead {
+  //   border: 1px solid red;
+  // }
 `;
 
 export default BestSellerTable;

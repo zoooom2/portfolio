@@ -4,14 +4,9 @@ const { Schema, model } = mongoose;
 
 const orderSchema = new Schema({
   shippingInfo: {
-    address: {
-      type: String,
-      required: [true, 'please enter a shipping address'],
-    },
-    city: {
-      type: String,
-      required: true,
-    },
+    firstName: { type: String, required: [true, 'first name is required'] },
+    lastName: { type: String, required: [true, 'last name is required'] },
+    email: { type: String, required: [true, 'email is required'] },
     phoneNumber: {
       type: String,
       required: true,
@@ -22,6 +17,15 @@ const orderSchema = new Schema({
         message: (props) => `${props.value} is not a valid phone number!`,
       },
     },
+    address: {
+      type: String,
+      required: [true, 'shipping address is required'],
+    },
+    city: {
+      type: String,
+      required: [true, 'city is required'],
+    },
+    state: { type: String, required: [true, 'please enter a state'] },
     postCode: {
       type: Number,
       // required: [true, 'please enter a postal Code'],
@@ -29,6 +33,10 @@ const orderSchema = new Schema({
     country: {
       type: String,
       required: [true, 'please enter a shipping address'],
+    },
+    countryCode: {
+      type: String,
+      required: [true, 'country code is required'],
     },
     shippingFee: {
       type: Number,
@@ -47,13 +55,9 @@ const orderSchema = new Schema({
   },
   orderItems: [
     {
-      name: {
+      productName: {
         type: String,
         required: [true, 'Order must have a name'],
-      },
-      amount: {
-        type: Number,
-        required: [true, 'Order must have a quantity'],
       },
       price: {
         type: Number,
@@ -63,10 +67,15 @@ const orderSchema = new Schema({
         type: String,
         required: [true, 'order must have a image'],
       },
-      size: {
-        type: String,
-        required: [true, 'order must have a size'],
-      },
+      sizes: [
+        {
+          size: { type: String, required: [true, 'order must have a size'] },
+          quantity: {
+            type: Number,
+            required: [true, 'order must have a quantity'],
+          },
+        },
+      ],
       productID: {
         type: Schema.ObjectId,
         required: [true, 'order must have a product'],
@@ -130,7 +139,7 @@ const orderSchema = new Schema({
 orderSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
-    select: 'firstname lastname',
+    select: 'firstname lastname phoneNumber email ',
   });
   next();
 });
@@ -138,7 +147,7 @@ orderSchema.pre(/^find/, function (next) {
 orderSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
-    select: 'firstname lastname username name',
+    select: 'firstname lastname username name email',
   });
   next();
 });

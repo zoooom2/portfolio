@@ -63,8 +63,10 @@ export const deleteProduct = createAsyncThunk(
 const initialState = {
   loading: true,
   openModal: false,
+  showSidebar: false,
   modalTitle: '',
   modalRef: '',
+  showDelBtn: false,
   fetch_order_stat_error: '',
   fetch_visitor_stat_error: '',
   fetch_recent_order_error: '',
@@ -108,6 +110,15 @@ const adminSlice = createSlice({
       state.modalRef = '';
       state.modalTitle = '';
     },
+    toggleDelBtn: (state) => {
+      state.showDelBtn = !state.showDelBtn;
+    },
+    openAdminSidebar: (state) => {
+      state.showSidebar = true;
+    },
+    closeAdminSidebar: (state) => {
+      state.showSidebar = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -129,15 +140,6 @@ const adminSlice = createSlice({
       })
       .addCase(fetchOrderStats.rejected, (state, action) => {
         state.loading = false;
-        // state.totalRevenue = 0;
-        // state.percentageRevenue = 0;
-        // state.totalSale = 0;
-        // state.percentageSales = 0;
-        // state.totalOrder = 0;
-        // state.percentageOrder = 0;
-        // state.previousTotalRevenue = 0;
-        // state.previousTotalSales = 0;
-        // state.previousTotalOrder = 0;
         state.fetch_order_stat_error = action.error.message as string;
       });
     builder
@@ -154,9 +156,6 @@ const adminSlice = createSlice({
       .addCase(fetchVisitorStats.rejected, (state, action) => {
         state.loading = false;
         state.fetch_visitor_stat_error = action.error.message as string;
-        // state.visitor = 0;
-        // state.previousVisitor = 0;
-        // state.percentageVisitor = 0;
       });
     builder
       .addCase(fetchBestSeller.pending, (state) => {
@@ -233,6 +232,12 @@ const adminSlice = createSlice({
   },
 });
 
-export const { changeTimeRange, openAdminModal, closeAdminModal } =
-  adminSlice.actions;
+export const {
+  changeTimeRange,
+  openAdminModal,
+  closeAdminModal,
+  toggleDelBtn,
+  openAdminSidebar,
+  closeAdminSidebar,
+} = adminSlice.actions;
 export default adminSlice.reducer;

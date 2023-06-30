@@ -6,6 +6,7 @@ export default {
     extend: {
       fontFamily: {
         baz1: ['Poppins', ...defaultTheme.fontFamily.sans],
+        baz2: ['Zilla Slab', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         adminHero: ['32px', '48px'],

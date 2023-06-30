@@ -4,12 +4,16 @@ const Product = require('../models/productsModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
-exports.updateStock = (id, quantity) =>
+exports.updateStock = (id, orderItem) =>
   catchAsync(async () => {
     const product = await Product.findById(id);
-    product.stock -= quantity;
-    product.quantitySold += quantity;
-    product.save({ validateBeforeSave: false });
+    orderItem.sizes.forEach((orderSize) => {
+      const size = product.sizes.find(
+        (productSize) => productSize.size === orderSize.size
+      );
+      size.quantity -= orderSize.quantity;
+    });
+    product.save();
   });
 
 exports.uploadProduct = catchAsync(async (req, res) => {

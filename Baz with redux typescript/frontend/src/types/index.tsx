@@ -45,16 +45,17 @@ export type ShippingInfoTypes = {
   phoneNumber: string;
   postCode: string;
   country: string;
+  shippingFee: number;
+  shippingMethod: string;
 };
 
 export type OrderItemType = {
-  firstname: string;
-  lastname: string;
+  productName: string;
   amount: number;
   price: number;
   image: string;
   size: string;
-  product: string;
+  productID: string;
 };
 
 export type PaymentInfoType = {
@@ -65,6 +66,7 @@ export type PaymentInfoType = {
 };
 
 export type OrderType = {
+  _id: string;
   shippingInfo: ShippingInfoTypes;
   user: UserType;
   orderItems: OrderItemType[];
@@ -72,8 +74,6 @@ export type OrderType = {
   createdAt: string;
   paidAt?: string;
   taxPrice: number;
-  shippingPrice: number;
-  totalPrice: number;
   deliveredAt: string;
   total_amount: number;
   subtotal: number;
@@ -115,7 +115,7 @@ export type SingleProductType = {
   quantitySold: number;
   stock: number;
   ratingsAverage: number;
-  sizes: { name: string; quantity: number }[];
+  sizes: { size: string; quantity: number }[];
 };
 export type ProductStateType = {
   isSidebarOpen: boolean;
@@ -145,8 +145,8 @@ export type FilterStatetype = {
 export type FilterType = {
   text: string;
   category: CategoryType;
-  min_price: number;
-  max_price: number;
+  min_price?: number;
+  max_price?: number;
   price: number;
   shipping: boolean;
   collection: string;
@@ -162,7 +162,7 @@ export type FilterActionType = {
 //Cart types
 
 export type CartItemType = {
-  name: string;
+  productName: string;
   amount: number;
   size: string;
   image: string;
@@ -220,6 +220,8 @@ export type AdminState = {
   openModal: boolean;
   modalTitle: string;
   modalRef: string;
+  showSidebar: boolean;
+  showDelBtn: boolean;
   fetch_order_stat_error: string;
   fetch_visitor_stat_error: string;
   fetch_recent_order_error: string;
@@ -282,3 +284,7 @@ export type AdminPageType = 'overview' | 'product' | 'order' | 'users';
 //   category: string;
 //   collectionName: string;
 // }
+
+export type orderTableDataProps = (Omit<OrderType, '_id'> & {
+  _id: JSX.Element;
+})[];

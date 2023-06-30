@@ -3,33 +3,30 @@ import styled from 'styled-components';
 import logo from '../../../assets/image 2.svg';
 import { CiSearch, CiUser, CiLogout } from 'react-icons/ci';
 import { logOut } from '../../userFeature/userSlice';
-import { useAppDispatch } from '../../../App/hooks';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
+import AdminMenuButtons from './AdminMenuButtons';
+import { FaBars } from 'react-icons/fa';
+import { openSidebar } from '../../productFeature/productSlice';
+import { openAdminSidebar } from '../adminSlice';
 
 const AdminNav = () => {
+  const { showSidebar } = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   return (
     <Wrapper className='fixed w-full flex pt-4 pb-3 border-b border-solid border-[#b6b6b6] items-center justify-between px-8 bg-white z-10'>
       <Link to='/admin/overview'>
         <img src={logo} alt='logo' className='logo' />
       </Link>
+      <div className='max-xl:hidden'>
+        <AdminMenuButtons />
+      </div>
 
-      <div className='home-search'>
-        <button>
-          <CiSearch />
-        </button>
-        <button>
-          <CiUser />
-        </button>
-
+      <div className='xl:hidden'>
         <button
-          type='button'
-          className='auth-btn'
           onClick={() => {
-            dispatch(logOut());
-            navigate('/login');
+            dispatch(openAdminSidebar());
           }}>
-          <CiLogout />
+          <FaBars />
         </button>
       </div>
     </Wrapper>
@@ -37,15 +34,11 @@ const AdminNav = () => {
 };
 
 const Wrapper = styled.nav`
-  .home-search {
-    display: flex;
-    gap: 1em;
-    button {
-      border: none;
-      background-color: transparent;
-      font-size: 2em;
-      cursor: pointer;
-    }
+  button {
+    border: none;
+    background-color: transparent;
+    font-size: 2em;
+    cursor: pointer;
   }
 `;
 export default AdminNav;

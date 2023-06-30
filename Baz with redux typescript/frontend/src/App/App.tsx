@@ -113,7 +113,16 @@ const App = () => {
                 element={<AdminPages page={'productCreate'} />}
               />
             </Route>
-            <Route path='/admin/order' element={<AdminPages page='order' />} />
+            <Route path='/admin/order'>
+              <Route
+                path='/admin/order/'
+                element={<AdminPages page='order' />}
+              />
+              <Route
+                path='/admin/order/detail/:id'
+                element={<AdminPages page={'orderDetail'} />}
+              />
+            </Route>
             <Route path='/admin/users' element={<AdminPages page='users' />} />
           </Route>
         </Route>

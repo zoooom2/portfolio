@@ -50,24 +50,15 @@ const AdminOverview = () => {
         description={'Stay up to date with your store current status'}
         timeBased={true}
       />
-      <div className='hero_body flex-col flex'>
+      <div className='hero_body flex-col flex max-md:p-0'>
         <div className='analysis'>{analytics}</div>
-        <div className='order-sales'>
-          <div className='lowerbox recentOrderBox'>
+        <div className='order-sales w-full flex max-lg:flex-col'>
+          <div className='p-5  max-lg:w-[65%] max-md:w-[75%] max-sm:w-[95%] w-[45%] flex flex-col border border-black gap-9'>
             <div className='table-title'>Recent Orders</div>
-            <RecentOrderTable
-              header={['Name', 'Piece(s)', 'Price', 'Status']}
-              content={[
-                'username',
-                'total_items',
-                'total_amount',
-                'orderStatus',
-              ]}
-              contentArray={state.recentOrders}
-            />
+            <RecentOrderTable contentArray={state.recentOrders} />
           </div>
-          <div className='lowerbox bestSellerBox'>
-            <div className='table-title'>Best Sellers</div>
+          <div className='lowerbox bestSellerBox max-lg:w-[65%] max-md:w-[75%] max-sm:w-[95%] w-[45%] flex flex-col gap-9'>
+            <div className='table-title justify-self-start'>Best Sellers</div>
             <BestSellerTable contentArray={state.bestSeller} />
           </div>
         </div>
@@ -123,7 +114,8 @@ const Wrapper = styled.section`
     }
   }
   .hero_body {
-    padding: 0.5em;
+    padding-left: 0.5em;
+    padding-block: 0.5em;
     gap: 1em;
     overflow-y: scroll;
   }
@@ -189,17 +181,17 @@ const Wrapper = styled.section`
   }
   td {
     font-family: 'Poppins';
-    font-size: 18px;
+    font-size: 16px;
     line-height: 27px;
-    text-align: center;
+    // text-align: center;
   }
   .order-sales {
     display: flex;
     gap: 0.5em;
     width: 100%;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
   }
-  table {
+  .seller-table {
     border-collapse: separate;
     border-spacing: 1em 20px;
   }

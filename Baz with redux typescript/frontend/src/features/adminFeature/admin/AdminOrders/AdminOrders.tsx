@@ -2,12 +2,18 @@ import Hero from '../Layout/Hero';
 import { useAppSelector } from '../../../../App/hooks';
 import Table from '../../../../global_components/Table';
 import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { orderTableDataProps } from '../../../../types';
 
 const AdminOrders = () => {
   const { orders } = useAppSelector((state) => state.admin);
 
   const tableData = orders.map((order) => {
-    return { ...order, createdAt: order.createdAt.substring(0, 10) };
+    return {
+      ...order,
+      _id: <Link to={`/admin/order/detail/${order._id}`}>{order._id}</Link>,
+      createdAt: order.createdAt.substring(0, 10),
+    };
   });
 
   const columns = useMemo(
@@ -42,7 +48,7 @@ const AdminOrders = () => {
   );
 
   return (
-    <div>
+    <div className='w-full'>
       <Hero
         title={'Orders'}
         description={"Stay up to date with your store's current status"}
@@ -52,7 +58,7 @@ const AdminOrders = () => {
           Order List ({orders.length})
         </div>
         <div className='w-full'>
-          <Table columns={columns} data={tableData} />
+          <Table columns={columns} data={tableData as orderTableDataProps} />
         </div>
       </div>
     </div>

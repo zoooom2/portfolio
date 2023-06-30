@@ -38,6 +38,29 @@ export const links = [
   },
 ];
 
+export const adminLinks = [
+  {
+    id: 1,
+    text: 'Overview',
+    url: '/admin/Overview',
+  },
+  {
+    id: 2,
+    text: 'Product',
+    url: '/admin/product',
+  },
+  {
+    id: 3,
+    text: 'Order',
+    url: '/admin/order',
+  },
+  {
+    id: 4,
+    text: 'User',
+    url: '/admin/users',
+  },
+];
+
 export const checkoutStage = [
   {
     stage: 'information',

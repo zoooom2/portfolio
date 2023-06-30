@@ -17,8 +17,8 @@ const filterSlice = createSlice({
     filters: {
       text: '',
       category: 'all',
-      min_price: 0,
-      max_price: 0,
+      min_price: undefined,
+      max_price: undefined,
       price: 0,
       shipping: false,
       collection: 'all',
@@ -26,14 +26,16 @@ const filterSlice = createSlice({
   } as FilterStatetype,
   reducers: {
     loadProducts: (state, action: { payload: SingleProductType[] }) => {
-      const maxPrice = action.payload.map((p) => p.price);
-      const max = Math.max(...maxPrice);
+      const productPrices = action.payload.map((p) => p.price);
+      const max = Math.max(...productPrices);
+      const min = Math.min(...productPrices);
       state.all_products = [...action.payload];
       state.filtered_product = [...action.payload];
       state.filters = {
         ...state.filters,
         max_price: max,
         price: max,
+        min_price: min,
       };
     },
     setGridView: (state) => {
@@ -68,7 +70,7 @@ const filterSlice = createSlice({
 
       state.filtered_product = tempProducts;
     },
-    updateSort: (state, action) => {
+    updateSort: (state, action: { payload: string }) => {
       state.sort = action.payload;
     },
     filterProduct: (state) => {
@@ -111,7 +113,7 @@ const filterSlice = createSlice({
         category: 'all',
         min_price: 0,
         max_price: state.filters.max_price,
-        price: state.filters.max_price,
+        price: state.filters.max_price || 0,
         shipping: false,
         collection: 'all',
       };

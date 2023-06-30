@@ -17,7 +17,10 @@ const Filters = () => {
   const handleFilter = (
     e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>
   ) => {
-    if (e.target instanceof HTMLInputElement) {
+    if (
+      e.target instanceof HTMLInputElement ||
+      e.target instanceof HTMLSelectElement
+    ) {
       const name = e.target.name;
       let value;
       value = e.target.value as string;
@@ -25,7 +28,7 @@ const Filters = () => {
       if (name === 'color') {
         value = e.target.dataset.color as string;
       }
-      if (name === 'shipping') {
+      if (name === 'shipping' && e.target instanceof HTMLInputElement) {
         value = e.target.checked as boolean;
       }
       dispatch(updateFilters({ name, value }));
@@ -33,7 +36,7 @@ const Filters = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper className='w-full'>
       <div className='content'>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className='form-control'>
@@ -48,10 +51,15 @@ const Filters = () => {
           </div>
           <div className='form-control sub-control'>
             <span className='label'>Category:</span>
-            <select name='category' onChange={handleFilter} value={category}>
+            <select
+              name='category'
+              onChange={handleFilter}
+              className='bg-[rgba(0,0,0,0.05)] p-2 outline-none cursor-pointer'>
+              <option value={'all'}>all</option>
               {categories.map((c, index) => (
                 <option
                   key={index}
+                  value={c}
                   className={`${
                     category.toLowerCase() === c.toLowerCase() ? 'active' : null
                   }`}>
@@ -67,13 +75,14 @@ const Filters = () => {
             <input
               type='range'
               name='price'
+              className='cursor-pointer '
               onChange={handleFilter}
               min={min_price ? min_price : 0}
-              max={min_price ? max_price : 0}
+              max={min_price ? max_price : 100}
               value={min_price ? price : 0}
             />
           </div>
-          <div className='form-control shipping'>
+          <div className='form-control shipping hidden'>
             <label htmlFor='shipping' className='label'>
               free shipping
             </label>
@@ -81,6 +90,7 @@ const Filters = () => {
               type='checkbox'
               name='shipping'
               id='shipping'
+              className='cursor-pointer'
               onChange={handleFilter}
               checked={shipping}
             />
@@ -111,16 +121,19 @@ const Wrapper = styled.section`
 
   form {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 2em;
+    justify-content: center;
 
-    @media (max-width: 768px) {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1em;
-    }
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5em;
+
+    // @media (max-width: 900px) {
+    //   display: flex;
+    //   flex-direction: column;
+    //   align-items: flex-start;
+    //   width: 100%;
+    //   gap: 1em;
+    // }
   }
 
   input {

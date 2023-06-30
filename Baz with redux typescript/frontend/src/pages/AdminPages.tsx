@@ -18,11 +18,14 @@ import {
   AdminOrders,
   AdminOverview,
   AdminProduct,
-  AdminSidebar,
+  AdminSideMenu,
   AdminUser,
 } from '../features/adminFeature/admin';
 import AdminProductForm from '../features/adminFeature/admin/AdminProducts/AdminProductForm';
 import Modal from '../features/adminFeature/admin/Layout/Modal';
+import AdminOrderDetail from '../features/adminFeature/admin/AdminOrders/AdminOrderDetail';
+import { removeProduct } from '../features/productFeature/productSlice';
+import AdminSidebar from '../features/adminFeature/admin/Layout/AdminSidebar';
 
 const AdminPages = ({
   page,
@@ -33,14 +36,15 @@ const AdminPages = ({
     | 'order'
     | 'users'
     | 'productDetail'
-    | 'productCreate';
+    | 'productCreate'
+    | 'orderDetail';
 }) => {
   const dispatch = useAppDispatch();
   const { period, openModal, modalRef, modalTitle } = useAppSelector(
     (state) => state.admin
   );
   const { clicked } = useAppSelector((state) => state.user);
-  const { single_product: product } = useAppSelector((state) => state.product);
+  const { single_product } = useAppSelector((state) => state.product);
   useEffect(() => {
     if (clicked) dispatch(setClicked(false));
     dispatch(fetchOrders());
@@ -59,6 +63,7 @@ const AdminPages = ({
               name: 'Yes, Confirm',
               action: async () => {
                 dispatch(deleteProduct(modalRef));
+                dispatch(removeProduct(modalRef));
               },
             },
             { name: 'Cancel', action: () => dispatch(closeAdminModal()) },
@@ -67,23 +72,43 @@ const AdminPages = ({
       )}
       <AdminNav />
       <div className='h-[100px]'></div>
-      <main>
-        <AdminSidebar
-          page={
-            page === 'productDetail'
-              ? 'product'
-              : page === 'productCreate'
-              ? 'product'
-              : page
-          }
-        />
+      <AdminSidebar />
+      <main className='relative'>
+        <div className='fixed '>
+          <AdminSideMenu
+            page={
+              page === 'productDetail'
+                ? 'product'
+                : page === 'productCreate'
+                ? 'product'
+                : page === 'orderDetail'
+                ? 'order'
+                : page
+            }
+          />
+        </div>
+        <div className='invisible '>
+          <AdminSideMenu
+            page={
+              page === 'productDetail'
+                ? 'product'
+                : page === 'productCreate'
+                ? 'product'
+                : page === 'orderDetail'
+                ? 'order'
+                : page
+            }
+          />
+        </div>
+
         {page === 'overview' && <AdminOverview />}
         {page === 'product' && <AdminProduct />}
         {page === 'productDetail' && (
-          <AdminProductForm type={'detail'} product={product} />
+          <AdminProductForm type={'detail'} product={single_product} />
         )}
         {page === 'productCreate' && <AdminProductForm type={'create'} />}
         {page === 'order' && <AdminOrders />}
+        {page === 'orderDetail' && <AdminOrderDetail />}
         {page === 'users' && <AdminUser />}
       </main>
     </Wrapper>
@@ -93,8 +118,8 @@ const AdminPages = ({
 const Wrapper = styled.section`
   overflow-y: none;
   main {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
+    // grid-template-columns: auto 1fr;
 
     section {
       font-size: 40px;

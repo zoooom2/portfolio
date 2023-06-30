@@ -4,14 +4,14 @@ import { AdminPageType } from '../../../types';
 
 import { adminSidebarLinks } from '../../../utils/constants';
 
-const AdminSidebar = ({ page = 'overview' }: { page: AdminPageType }) => {
+const AdminSideMenu = ({ page = 'overview' }: { page: AdminPageType }) => {
   const links = adminSidebarLinks.map((link, index) => (
     <li key={index} className={page === link.tag ? 'active' : ''}>
       <Link to={link.link}>{link.name}</Link>
     </li>
   ));
   return (
-    <Wrapper className='h-[calc(100vh-6.5em)] border-r border-[#b6b6b6]'>
+    <Wrapper className='h-[calc(100vh-6.5em)] border-r border-[#666060] max-xl:hidden'>
       <ul className='flex-column'>{links}</ul>
     </Wrapper>
   );
@@ -37,4 +37,4 @@ const Wrapper = styled.aside`
     color: #2a2a2a;
   }
 `;
-export default AdminSidebar;
+export default AdminSideMenu;

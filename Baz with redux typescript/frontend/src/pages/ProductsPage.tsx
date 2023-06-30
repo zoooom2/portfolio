@@ -49,6 +49,9 @@ const ProductsPage = () => {
               )
             }
             name='collection'>
+            <option className='capitalize' value={'all'}>
+              All
+            </option>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
                 {collection}

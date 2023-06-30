@@ -24,8 +24,10 @@ const Sort = () => {
           <select
             name='sort'
             id='sort'
-            value={sort}
-            onChange={() => dispatch(updateSort(sort))}
+            // value={sort}
+            onChange={(e) => {
+              dispatch(updateSort(e.target.value));
+            }}
             className='sort-input'>
             <option value='price-lowest'>Price (lowest)</option>
             <option value='price-highest'>Price (highest)</option>

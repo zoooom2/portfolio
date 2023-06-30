@@ -4,7 +4,7 @@ import AdminOrders from './AdminOrders/AdminOrders';
 import AdminOverview from './AdminOverview';
 import AdminProduct from './AdminProducts/AdminProduct';
 import AdminRoutes from './AdminRoutes';
-import AdminSidebar from './AdminSidebar';
+import AdminSideMenu from './AdminSideMenu';
 import AdminUser from './AdminUser';
 import BestSellerTable from './BestSellerTable';
 import AdminRecentOrderTable from './RecentOrderTable';
@@ -16,7 +16,7 @@ export {
   AdminOverview,
   AdminProduct,
   AdminRoutes,
-  AdminSidebar,
+  AdminSideMenu,
   AdminUser,
   BestSellerTable,
   AdminRecentOrderTable,

@@ -3,7 +3,7 @@ import { OrderType } from '../types';
 
 interface TableProps {
   columns: Column[];
-  data: OrderType[];
+  data: any[];
 }
 
 const Table = ({ columns, data }: TableProps) => {
@@ -19,7 +19,7 @@ const Table = ({ columns, data }: TableProps) => {
               {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th
-                  className='text-center p-3 font-baz1 text-[16px] text-[#2a2a2a]'
+                  className='text-left p-3 font-baz1 text-[16px] text-[#2a2a2a]'
                   {...column.getHeaderProps()}>
                   {column.render('Header')}
                 </th>
@@ -32,11 +32,11 @@ const Table = ({ columns, data }: TableProps) => {
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr className=' hover:bg-[rgba(0,0,0,0.05)]' {...row.getRowProps()}>
               {row.cells.map((cell) => {
                 return (
                   <td
-                    className='text-[18px] font-baz1 px-2 pt-8 text-left'
+                    className='text-[18px] max-md:text-sm font-baz1 px-2 py-6 text-left'
                     {...cell.getCellProps()}>
                     {cell.render('Cell')}
                   </td>

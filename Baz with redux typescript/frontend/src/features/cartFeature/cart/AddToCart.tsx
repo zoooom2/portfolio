@@ -57,7 +57,6 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
       <button
         className='btn add-cart-btn zilla-700'
         onClick={() => {
-          console.log({ id, amount, product, size });
           dispatch(addToCart({ id, amount, product, size }));
         }}
         disabled={size ? false : true}>

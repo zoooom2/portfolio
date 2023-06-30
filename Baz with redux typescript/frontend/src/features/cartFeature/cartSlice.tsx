@@ -95,7 +95,7 @@ const cartSlice = createSlice({
         state.cart = tempCart;
       } else {
         const newItem = {
-          name: product.productName,
+          productName: product.productName,
           amount,
           size,
           image: product.images[0],
