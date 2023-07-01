@@ -23,12 +23,13 @@ const Wrapper = styled.section`
 
   .products-container {
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
-  @media (min-width: 480px) {
-    .products-container {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+  // @media (min-width: 480px) {
+  //   .products-container {
+  //     grid-template-columns: repeat(2, 1fr);
+  //   }
+  // }
 
   @media (min-width: 768px) {
     .products-container {
