@@ -78,7 +78,7 @@ const Payment = ({
       <button
         className='btn zilla-700 flex justify-center items-center'
         onClick={handlePayment}>
-        {!loading ? (
+        {loading ? (
           <SpinnerCircular secondaryColor={'#000'} color='white' size={35} />
         ) : (
           'Pay Now'
