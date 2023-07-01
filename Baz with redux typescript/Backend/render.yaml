@@ -1,4 +1,0 @@
-version:1
-services:
-  - name:baz-ng
-  startCommand:npm run pm2-start
