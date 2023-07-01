@@ -31,7 +31,7 @@ app.enable('trust proxy');
 // Implement CORS
 app.use(
   cors({
-    origin: `https://baz-ng.netlify.app`,
+    origin: `https://bazng.vercel.app/`,
     methods: 'GET,POST,PATCH,DELETE',
     credentials: true,
   })

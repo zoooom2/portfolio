@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import logo from '../assets/image 2.svg';
-import { setClicked } from '../features/userFeature/userSlice';
+import { setClicked, signup } from '../features/userFeature/userSlice';
 import { FieldErrors, FieldValues, useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAppDispatch } from '../App/hooks';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { authentication_error } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const validationSchema = yup.object().shape({
     username: yup.string().required('Username is required'),
@@ -62,13 +63,13 @@ const Signup = () => {
   } = formState;
 
   const onSubmit = async (data: FieldValues) => {
-    try {
-      await axios.post('/api/v1/users/signup', data);
+    await dispatch(signup(data));
+    if (!authentication_error) {
       navigate('/');
-    } catch (error) {
+    } else {
       setError('submitError', {
         type: 'manual',
-        message: 'something went wrong',
+        message: authentication_error,
       });
       setTimeout(() => {
         setError('submitError', {
@@ -107,14 +108,14 @@ const Signup = () => {
 
   return (
     <main>
-      <Wrapper className='page-100 section section-center'>
+      <Wrapper className='page-100 section section-center flex flex-col justify-center items-center'>
         <div className='details'>
           <img src={logo} alt='logo' />
           <form
             className='shipping-details'
             onSubmit={handleSubmit(onSubmit, onError)}>
             <h5 className='form-title zilla-700'>Sign Up</h5>
-            <div className='form-name'>
+            <div className='form-name w-full'>
               <div className='form-control'>
                 <input
                   type='text'
@@ -210,10 +211,6 @@ const Signup = () => {
 };
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   .form-head {
     color: black !important;
   }
@@ -232,7 +229,6 @@ const Wrapper = styled.div`
     padding: 30px;
     box-shadow: var(--light-shadow);
     border-radius: var(--radius);
-
     width: 60%;
     display: grid;
     place-items: center;
@@ -242,6 +238,7 @@ const Wrapper = styled.div`
   }
   .details input {
     border: 1px solid black;
+    width: 100%;
   }
   .selectStyle {
     margin-block: 1em;
@@ -252,7 +249,7 @@ const Wrapper = styled.div`
 
     gap: 4%;
     input {
-      width: 48%;
+      width: 100%;
     }
 
     @media (max-width: 1080px) {
@@ -281,6 +278,9 @@ const Wrapper = styled.div`
     font-size: 12px;
     font-family: monospace;
     margin-top: 5px;
+  }
+  .form-control {
+    width: 100%;
   }
 `;
 

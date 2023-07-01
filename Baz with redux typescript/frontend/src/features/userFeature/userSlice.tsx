@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import * as Cookies from 'js-cookie';
 import { OrderType, UserStateType, UserType } from '../../types';
+import { FieldValues } from 'react-hook-form';
 
 export const fetchProfile = createAsyncThunk('user/fetchProfile', async () => {
   const response = await axios.get(
@@ -53,6 +54,14 @@ export const jwtAuth = createAsyncThunk(
         withCredentials: true,
       }
     );
+    return response.data.data.user;
+  }
+);
+
+export const signup = createAsyncThunk(
+  'user/signup',
+  async (data: FieldValues) => {
+    const response = await axios.post('/api/v1/users/signup', data);
     return response.data.data.user;
   }
 );
@@ -200,6 +209,20 @@ const userSlice = createSlice({
       state.loading = false;
       state.authentication_error = action.error.message as string;
     });
+    builder
+      .addCase(signup.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(signup.fulfilled, (state, action: { payload: UserType }) => {
+        state.isAuthenticated = true;
+        state.user = { ...action.payload };
+        state.loading = false;
+        state.authentication_error = '';
+      })
+      .addCase(signup.rejected, (state, action) => {
+        state.loading = false;
+        state.authentication_error = action.error.message as string;
+      });
   },
 });
 
