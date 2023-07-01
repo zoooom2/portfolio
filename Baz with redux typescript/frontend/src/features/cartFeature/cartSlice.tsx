@@ -155,6 +155,7 @@ const cartSlice = createSlice({
       // return { ...state, total_items, subtotal };
       state.total_items = total_items;
       state.subtotal = subtotal;
+      state.loading = false;
     },
     updateShipping: (state, action) => {
       const { detail, info } = action.payload;
