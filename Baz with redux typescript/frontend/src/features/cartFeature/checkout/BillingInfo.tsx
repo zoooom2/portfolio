@@ -11,7 +11,7 @@ import { DevTool } from '@hookform/devtools';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { countryTypes } from '../../../types';
-import { useAppDispatch } from '../../../App/hooks';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 
 const BillingInfo = ({
   setStage,
@@ -24,6 +24,7 @@ const BillingInfo = ({
   const [city, setCity] = useState<(countryTypes & { stateCode: string })[]>(
     []
   );
+  const { user } = useAppSelector((state) => state.user);
 
   const navigate = useNavigate();
 
@@ -196,7 +197,7 @@ const BillingInfo = ({
           {...register('phoneNumber')}
         />
       </div>
-      <h5 className='form-title zilla-500'>shipping Address</h5>
+      <h5 className='form-title zilla-500'>Shipping Address</h5>
       <input
         type='text'
         id='address'

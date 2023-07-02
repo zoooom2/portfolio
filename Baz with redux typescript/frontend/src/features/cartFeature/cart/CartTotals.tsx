@@ -5,7 +5,7 @@ import { useAppSelector } from '../../../App/hooks';
 import Conditions from '../checkout/Conditions';
 
 const CartTotals = () => {
-  const { subtotal } = useAppSelector((state) => state.cart);
+  const { subtotal, total_items } = useAppSelector((state) => state.cart);
   return (
     <Wrapper>
       <div className='subtotal-price flex-column'>
@@ -14,7 +14,10 @@ const CartTotals = () => {
       </div>
       <Conditions />
       <div className='toCheckout'>
-        <Link to='/checkout/information' className='btn checkout-btn zilla-700'>
+        <Link
+          to='/checkout/information'
+          style={{ pointerEvents: total_items > 0 ? undefined : 'none' }}
+          className='btn checkout-btn zilla-700'>
           Checkout
         </Link>
       </div>
