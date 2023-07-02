@@ -24,7 +24,6 @@ const BillingInfo = ({
   const [city, setCity] = useState<(countryTypes & { stateCode: string })[]>(
     []
   );
-  const { user } = useAppSelector((state) => state.user);
 
   const navigate = useNavigate();
 
