@@ -9,7 +9,7 @@ type AmountButtonType = {
 
 const AmountButtons = ({ increase, decrease, amount }: AmountButtonType) => {
   return (
-    <Wrapper className='flex'>
+    <Wrapper className='flex gap-2'>
       <button
         type='button'
         className='amount-btn place-center button'
@@ -28,10 +28,8 @@ const AmountButtons = ({ increase, decrease, amount }: AmountButtonType) => {
 };
 
 const Wrapper = styled.div`
-  display: grid;
-  width: 140px;
-  justify-items: center;
-  grid-template-columns: repeat(3, 1fr);
+  // width: 140px;
+  justify-content: flex-start;
   align-items: center;
   h2 {
     margin-bottom: 0;
