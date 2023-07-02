@@ -28,6 +28,7 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     dispatch(setClicked(true));
+    document.title = 'Checkout | Baz Official Store';
   }, []);
 
   useEffect(() => {

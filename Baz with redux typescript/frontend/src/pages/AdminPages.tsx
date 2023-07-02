@@ -45,6 +45,7 @@ const AdminPages = ({
   const { clicked } = useAppSelector((state) => state.user);
   const { single_product } = useAppSelector((state) => state.product);
   useEffect(() => {
+    document.title = 'Admin | Baz Official Store';
     if (clicked) dispatch(setClicked(false));
     dispatch(fetchOrders());
     dispatch(fetchBestSeller());

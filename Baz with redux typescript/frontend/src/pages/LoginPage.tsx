@@ -75,6 +75,10 @@ const LoginPage = () => {
     trigger();
   }, [trigger]);
 
+  useEffect(() => {
+    document.title = 'Login | Baz Official Store';
+  }, []);
+
   return (
     <Wrapper className='page-100 section section-center'>
       <div className='form_container'>

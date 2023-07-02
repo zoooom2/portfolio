@@ -8,6 +8,8 @@ const ContactPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    document.title = 'Contact | Baz Official Store';
+
     dispatch(setClicked(true));
   }, []);
 

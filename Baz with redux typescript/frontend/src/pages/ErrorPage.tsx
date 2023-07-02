@@ -8,6 +8,7 @@ const ErrorPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    document.title = 'Error | Baz Official Store';
     dispatch(setClicked(true));
   }, []);
 

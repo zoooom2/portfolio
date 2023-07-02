@@ -39,6 +39,7 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
+    document.title = 'Order | Baz Official Store';
     dispatch(countCartTotal());
     dispatch(updateCartTotal());
     if (body.subtotal && body.total_amount) {

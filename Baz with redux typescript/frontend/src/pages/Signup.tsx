@@ -103,6 +103,7 @@ const Signup = () => {
   // }, [isSubmitSuccessful, reset]);
 
   useEffect(() => {
+    document.title = 'Signup | Baz Official Store';
     dispatch(setClicked(true));
   }, []);
 

@@ -6,6 +6,7 @@ const ThesisPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    document.title = 'Thesis | Baz Official Store';
     dispatch(setClicked(true));
   }, []);
 

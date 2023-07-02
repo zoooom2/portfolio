@@ -18,6 +18,7 @@ const CartPage = () => {
 
   useEffect(() => {
     dispatch(setClicked(true));
+    document.title = 'Cart | Baz Official Store';
   }, []);
 
   useEffect(() => {
