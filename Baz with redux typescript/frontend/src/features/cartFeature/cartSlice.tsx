@@ -191,7 +191,11 @@ const cartSlice = createSlice({
     builder.addCase(handlePayStack.fulfilled, (state, action) => {
       state.loading = false;
       state.handle_paystack_error = '';
-      window.location.replace(action.payload);
+      try {
+        window.location.replace(action.payload);
+      } catch (e) {
+        window.location = action.payload;
+      }
     });
     builder.addCase(handlePayStack.rejected, (state, action) => {
       state.loading = false;
