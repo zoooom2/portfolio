@@ -67,7 +67,7 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
         Add To Cart
       </button>
       <ToastContainer
-        position='top-right'
+        position='bottom-center'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
