@@ -6,7 +6,10 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
 
   return (
     <Wrapper>
-      <img src={images[index]} alt='main' className='main' />
+      <div className='w-full h-[500px] p-5'>
+        <img src={images[index]} alt='main' className='object-contain' />
+      </div>
+
       <div className='gallery'>
         {images.map((image, count) => {
           return (
@@ -29,11 +32,11 @@ const Wrapper = styled.section`
   place-items: center;
 
   .main {
-    height: 500px;
-    width: auto;
-    max-width: 100%;
-    border-radius: var(--radius);
-    object-fit: cover;
+    // height: 500px;
+    // width: auto;
+    // max-width: 100%;
+    // border-radius: var(--radius);
+    // object-fit: cover;
   }
 
   .gallery {
