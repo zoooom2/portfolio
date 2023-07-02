@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AmountButtons from './AmountButtons';
 import { addToCart } from '../../cartFeature/cartSlice';
@@ -12,7 +12,6 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
   const [amount, setAmount] = useState(1);
   const [size, setSize] = useState('');
   const dispatch = useAppDispatch();
-  const notify = () => toast('Added to cart successfully');
 
   const increase = useCallback(() => {
     setAmount((oldAmount) => {
@@ -61,7 +60,6 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
         className='btn add-cart-btn zilla-700'
         onClick={() => {
           dispatch(addToCart({ id, amount, product, size }));
-          notify();
         }}
         disabled={size ? false : true}>
         Add To Cart
@@ -70,13 +68,14 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
         position='bottom-center'
         autoClose={5000}
         hideProgressBar={false}
-        newestOnTop={false}
+        newestOnTop={true}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
         theme='dark'
+        style={{ fontFamily: 'Poppins', textAlign: 'center' }}
       />
     </Wrapper>
   );

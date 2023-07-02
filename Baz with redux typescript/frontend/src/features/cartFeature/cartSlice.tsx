@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { CartStateType, SingleProductType } from '../../types';
+import { toast } from 'react-toastify';
 
 export const handlePayStack = createAsyncThunk(
   'cart/handlePayStack',
@@ -106,6 +107,7 @@ const cartSlice = createSlice({
         state.cart.push(newItem);
         // state.cart = [...state.cart, newItem];
       }
+      toast.success('Added to cart successfully');
     },
     removeItem: (state, action) => {
       // console.log(action.payload);
