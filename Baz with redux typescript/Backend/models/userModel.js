@@ -28,10 +28,10 @@ const userSchema = new Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email'],
   },
-  dateOfBirth: {
-    type: Date,
-    required: [true, 'Please provide date of birth'],
-  },
+  // dateOfBirth: {
+  //   type: Date,
+  //   required: [true, 'Please provide date of birth'],
+  // },
   photo: {
     type: String,
   },
