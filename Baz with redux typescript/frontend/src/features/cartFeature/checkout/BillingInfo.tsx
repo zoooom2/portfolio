@@ -11,7 +11,7 @@ import { DevTool } from '@hookform/devtools';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { countryTypes } from '../../../types';
-import { useAppDispatch, useAppSelector } from '../../../App/hooks';
+import { useAppDispatch } from '../../../App/hooks';
 
 const BillingInfo = ({
   setStage,
