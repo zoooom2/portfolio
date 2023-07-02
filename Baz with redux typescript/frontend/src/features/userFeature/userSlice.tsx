@@ -61,7 +61,10 @@ export const jwtAuth = createAsyncThunk(
 export const signup = createAsyncThunk(
   'user/signup',
   async (data: FieldValues) => {
-    const response = await axios.post('/api/v1/users/signup', data);
+    const response = await axios.post(
+      'https://baz-api.onrender.com/api/v1/users/signup',
+      data
+    );
     return response.data.data.user;
   }
 );
@@ -136,6 +139,7 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchProfile.pending, (state) => {
       state.loading = true;
+      state.fetch_user_error = '';
     });
     builder.addCase(
       fetchProfile.fulfilled,
@@ -151,6 +155,7 @@ const userSlice = createSlice({
     });
     builder.addCase(fetchUserOrder.pending, (state) => {
       state.loading = true;
+      state.fetch_order_error = '';
     });
     builder.addCase(
       fetchUserOrder.fulfilled,
@@ -166,6 +171,7 @@ const userSlice = createSlice({
     });
     builder.addCase(checkVisitorCount.pending, (state) => {
       state.loading = true;
+      state.visitor_count_error = '';
     });
     builder.addCase(
       checkVisitorCount.fulfilled,
@@ -194,6 +200,7 @@ const userSlice = createSlice({
     });
     builder.addCase(jwtAuth.pending, (state) => {
       state.loading = false;
+      state.authentication_error = '';
     });
     builder.addCase(
       jwtAuth.fulfilled,
@@ -212,6 +219,7 @@ const userSlice = createSlice({
     builder
       .addCase(signup.pending, (state) => {
         state.loading = true;
+        state.authentication_error = '';
       })
       .addCase(signup.fulfilled, (state, action: { payload: UserType }) => {
         state.isAuthenticated = true;
