@@ -31,11 +31,11 @@ const SingleProductPage = () => {
   const { productName, price, description, images, stock } = product;
   useEffect(() => {
     dispatch(setClicked(true));
+    document.title = `Shop | Baz Official Store`;
   }, []);
 
   useEffect(() => {
     dispatch(fetchSingleProduct(`${url}${id}`));
-    document.title = `${productName} | Baz Official Store`;
   }, [id]);
 
   useEffect(() => {
