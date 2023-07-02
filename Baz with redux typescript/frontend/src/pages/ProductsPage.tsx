@@ -22,7 +22,7 @@ const ProductsPage = () => {
   const { products } = useAppSelector((state) => state.product);
 
   useEffect(() => {
-    document.title = 'Products | Baz Official Store';
+    document.title = 'Shop | Baz Official Store';
     dispatch(setClicked(true));
     dispatch(fetchProducts(url));
   }, []);
