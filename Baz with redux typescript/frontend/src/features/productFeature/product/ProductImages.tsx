@@ -7,7 +7,11 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
   return (
     <Wrapper>
       <div className='w-full h-[500px] p-5'>
-        <img src={images[index]} alt='main' className='object-contain' />
+        <img
+          src={images[index]}
+          alt='main'
+          className='object-contain border h-full'
+        />
       </div>
 
       <div className='gallery'>
