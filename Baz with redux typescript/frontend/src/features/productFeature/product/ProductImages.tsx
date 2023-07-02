@@ -5,13 +5,9 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
   const [index, setIndex] = useState(0);
 
   return (
-    <Wrapper>
-      <div className='w-full h-[500px] p-5'>
-        <img
-          src={images[index]}
-          alt='main'
-          className='object-contain border h-full'
-        />
+    <Wrapper className='p-5'>
+      <div className='w-full h-[500px] flex justify-between'>
+        <img src={images[index]} alt='main' className='object-contain h-full' />
       </div>
 
       <div className='gallery'>
@@ -34,14 +30,6 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
 const Wrapper = styled.section`
   display: grid;
   place-items: center;
-
-  .main {
-    // height: 500px;
-    // width: auto;
-    // max-width: 100%;
-    // border-radius: var(--radius);
-    // object-fit: cover;
-  }
 
   .gallery {
     margin-top: 1rem;
