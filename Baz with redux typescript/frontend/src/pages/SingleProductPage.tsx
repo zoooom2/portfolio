@@ -30,7 +30,7 @@ const SingleProductPage = () => {
   const { cart, subtotal } = useAppSelector((state) => state.cart);
   const { productName, price, description, images, stock } = product;
   useEffect(() => {
-    document.title = 'Single Product | Baz Official Store';
+    document.title = `${productName} | Baz Official Store`;
     dispatch(setClicked(true));
   }, []);
 
