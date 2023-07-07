@@ -14,7 +14,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
         {images.map((image, count) => {
           return (
             <div
-              className={`flex items-center${
+              className={`flex items-center ${
                 image === images[index] ? 'active' : null
               } p-3 h-[150px] w-[125px] cursor-pointer object-contain`}>
               <img
