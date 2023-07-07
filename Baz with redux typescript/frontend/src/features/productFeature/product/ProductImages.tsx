@@ -6,20 +6,24 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
 
   return (
     <Wrapper className='p-5'>
-      <div className='w-full h-[500px] flex justify-center'>
+      <div className='w-full h-auto flex justify-center'>
         <img src={images[index]} alt='main' className='object-contain h-full' />
       </div>
 
       <div className='gallery'>
         {images.map((image, count) => {
           return (
-            <img
-              src={image}
-              alt=''
-              key={count}
-              className={`preview ${image === images[index] ? 'active' : null}`}
-              onClick={() => setIndex(count)}
-            />
+            <div>
+              <img
+                src={image}
+                alt=''
+                key={count}
+                className={`preview ${
+                  image === images[index] ? 'active' : null
+                }`}
+                onClick={() => setIndex(count)}
+              />
+            </div>
           );
         })}
       </div>
