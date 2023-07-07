@@ -16,7 +16,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
             <div
               className={`flex items-center ${
                 image === images[index] ? 'active' : null
-              } p-3 h-[150px] w-[125px] cursor-pointer object-contain`}>
+              } p-3 h-[130px] w-[125px] cursor-pointer object-contain`}>
               <img
                 src={image}
                 alt=''
@@ -45,7 +45,8 @@ const Wrapper = styled.section`
   }
 
   .active {
-    box-shadow: 0px 0px 0px 2px var(--clr-primary-5);
+    background-color:gray; 
+    box-shadow:var(--light-shadow);
   }
 
   // @media (max-width: 576px) {
