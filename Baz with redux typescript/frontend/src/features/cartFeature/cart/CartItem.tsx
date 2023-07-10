@@ -28,8 +28,10 @@ const CartItem = ({
 
   return (
     <Wrapper>
-      <img src={image} alt='' className='productImage' />
-      <div className='product-details flex-column '>
+      <div className='flex-1'>
+        <img src={image} alt='' className='object-contain' />
+      </div>
+      <div className='product-details flex-column flex-1'>
         <div className='name'>{productName}</div>
         <div className='size'>Size: {size}</div>
         <div className='price'>{priceFormat(price)}</div>
@@ -63,9 +65,9 @@ const Wrapper = styled.section`
   justify-content: center;
   gap: 2em;
 
-  .productImage {
-    width: 50%;
-  }
+  // .productImage {
+  //   width: 50%;
+  // }
   input {
     margin-block: 0;
   }

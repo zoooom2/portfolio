@@ -6,7 +6,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
 
   return (
     <Wrapper className='p-5'>
-      <div className='w-full h-auto flex justify-center'>
+      <div className='w-full h-auto flex justify-center p-8'>
         <img src={images[index]} alt='main' className='object-contain h-full' />
       </div>
 
