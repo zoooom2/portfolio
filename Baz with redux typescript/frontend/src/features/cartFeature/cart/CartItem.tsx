@@ -28,10 +28,10 @@ const CartItem = ({
 
   return (
     <Wrapper>
-      <div className='flex-1'>
+      <div className='flex-1 w-[45%]'>
         <img src={image} alt='' className='object-contain' />
       </div>
-      <div className='product-details flex-column flex-1'>
+      <div className='product-details flex-column flex-1 w-[45%]'>
         <div className='name'>{productName}</div>
         <div className='size'>Size: {size}</div>
         <div className='price'>{priceFormat(price)}</div>
