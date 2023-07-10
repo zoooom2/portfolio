@@ -28,7 +28,7 @@ const CartItem = ({
 
   return (
     <Wrapper>
-      <div className='flex-1 w-[45%]'>
+      <div className='flex-1 w-[45%] flex justify-between'>
         <img src={image} alt='' className='object-contain' />
       </div>
       <div className='product-details flex-column flex-1 w-[45%]'>
