@@ -17,6 +17,7 @@ exports.updateStock = (id, orderItem) =>
   });
 
 exports.uploadProduct = catchAsync(async (req, res) => {
+  req.body.images = req.files.map((image) => image.path);
   const stripeProduct = await stripe.products.create({
     name: req.body.productName,
     active: true,
@@ -31,8 +32,6 @@ exports.uploadProduct = catchAsync(async (req, res) => {
   });
 
   req.body.priceID = stripePrice.id;
-
-  req.body.images = req.files.map((image) => image.path);
 
   const response = await Product.create(req.body);
 
