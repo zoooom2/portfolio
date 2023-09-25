@@ -28,6 +28,7 @@ const app = express();
 app.enable('trust proxy');
 
 // 1) GLOBAL MIDDLEWARES
+console.log(process.env.NODE_ENV);
 // Implement CORS
 app.use(
   cors({
