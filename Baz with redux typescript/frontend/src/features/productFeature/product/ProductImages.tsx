@@ -51,7 +51,7 @@ const Wrapper = styled.section`
   }
 
   .active {
-    background-color:gray; 
+    background-color:white; 
     box-shadow:var(--light-shadow);
   }
 

@@ -43,7 +43,7 @@ const Filters = () => {
             <input
               type='text'
               name='text'
-              className='search-input'
+              className='search-input bg-white'
               value={text}
               onChange={handleFilter}
               placeholder='search'
@@ -54,7 +54,7 @@ const Filters = () => {
             <select
               name='category'
               onChange={handleFilter}
-              className='bg-baz-black p-2 outline-none cursor-pointer'>
+              className='bg-white p-2 outline-none cursor-pointer'>
               <option value={'all'}>all</option>
               {categories.map((c, index) => (
                 <option
