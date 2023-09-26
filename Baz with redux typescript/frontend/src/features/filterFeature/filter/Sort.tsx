@@ -26,7 +26,7 @@ const Sort = () => {
             onChange={(e) => {
               dispatch(updateSort(e.target.value));
             }}
-            className='sort-input'>
+            className='sort-input bg-baz-white'>
             <option value='price-lowest'>Price (lowest)</option>
             <option value='price-highest'>Price (highest)</option>
             <option value='name-a'>name (a - z)</option>

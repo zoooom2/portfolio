@@ -47,7 +47,6 @@ const NavContainer = styled.nav`
   top: 0;
   width: 100%;
   z-index: 100;
-  background-color: white;
   .nav-center {
     width: 90vw;
     margin: 0 auto;

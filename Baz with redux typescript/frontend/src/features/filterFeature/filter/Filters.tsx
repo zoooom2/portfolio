@@ -37,7 +37,7 @@ const Filters = () => {
 
   return (
     <Wrapper className='w-full'>
-      <div className='content'>
+      <div className='bg-baz-white'>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className='form-control'>
             <input
@@ -54,7 +54,7 @@ const Filters = () => {
             <select
               name='category'
               onChange={handleFilter}
-              className='bg-[rgba(0,0,0,0.05)] p-2 outline-none cursor-pointer'>
+              className='bg-baz-black p-2 outline-none cursor-pointer'>
               <option value={'all'}>all</option>
               {categories.map((c, index) => (
                 <option
@@ -112,7 +112,6 @@ const Wrapper = styled.section`
   width: 100%;
 
   .content {
-    background-color: white;
     width: 100%;
     display: flex;
     align-items: flex-start;

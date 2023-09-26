@@ -43,7 +43,7 @@ const ProductsPage = () => {
       <Wrapper className='page flex-column'>
         <div className='pageHero'>
           <select
-            className='pageName'
+            className='pageName bg-baz-white'
             onChange={(e) =>
               dispatch(
                 updateFilters({ name: 'collection', value: e.target.value })
