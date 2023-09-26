@@ -33,6 +33,7 @@ const url =
     ? 'http://localhost:5173'
     : 'https://bazng.vercel.app';
 
+console.log(process.env.NODE_ENV);
 // Implement CORS
 app.use(
   cors({
