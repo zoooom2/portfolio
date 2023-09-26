@@ -7,7 +7,12 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
   return (
     <Wrapper className='p-5'>
       <div className='w-full h-auto flex justify-center p-8'>
-        <img src={images[index]} alt='main' className='object-contain h-full' />
+        <img
+          loading='lazy'
+          src={images[index]}
+          alt='main'
+          className='object-contain h-full'
+        />
       </div>
 
       <div className='gallery'>
@@ -19,6 +24,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
               } p-3 h-[130px] w-[125px] cursor-pointer object-contain`}>
               <img
                 src={image}
+                loading='lazy'
                 alt=''
                 key={count}
                 onClick={() => setIndex(count)}

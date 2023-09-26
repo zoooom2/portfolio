@@ -15,7 +15,12 @@ const Product = ({
       <Link
         to={`/shop/${id}`}
         className='w-full h-full flex items-center justify-center'>
-        <img src={images && images[0]} alt={name} className='object-contain' />
+        <img
+          src={images && images[0]}
+          alt={name}
+          loading='lazy'
+          className='object-contain'
+        />
       </Link>
 
       <footer className='flex-column'>
