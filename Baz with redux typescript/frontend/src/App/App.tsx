@@ -12,17 +12,6 @@ import {
 } from '../features/userFeature/userSlice';
 import { Navbar, Sidebar, ProtectedRoute, Loading } from '../global_components';
 
-import // SingleProductPage,
-// ThesisPage,
-// ErrorPage,
-// ContactPage,
-// OrderPage,
-// Signup,
-// LoginPage,
-// PaymentGateway,
-// CheckoutPage,
-'../pages';
-
 const HomePage = lazy(() => import('../pages/HomePage'));
 const ThesisPage = lazy(() => import('../pages/ThesisPage'));
 const CartPage = lazy(() => import('../pages/CartPage'));
