@@ -28,16 +28,11 @@ const app = express();
 app.enable('trust proxy');
 
 // 1) GLOBAL MIDDLEWARES
-const url =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:5173'
-    : 'https://bazng.vercel.app';
 
-console.log(process.env.NODE_ENV);
 // Implement CORS
 app.use(
   cors({
-    origin: url,
+    origin: 'https://bazng.vercel.app',
     methods: 'GET,POST,PATCH,DELETE',
     credentials: true,
   })
