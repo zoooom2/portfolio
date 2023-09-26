@@ -17,6 +17,7 @@ import { HomePage } from '../pages';
 const ThesisPage = lazy(() => import('../pages/ThesisPage'));
 const CartPage = lazy(() => import('../pages/CartPage'));
 const ProductPage = lazy(() => import('../pages/ProductsPage'));
+const SingleProductPage = lazy(() => import('../pages/SingleProductPage'));
 const ErrorPage = lazy(() => import('../pages/ErrorPage'));
 const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
 const PaymentGateway = lazy(() => import('../pages/PaymentGatewayPage'));
