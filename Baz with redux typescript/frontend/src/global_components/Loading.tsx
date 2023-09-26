@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logo from '../assets/image 2.svg';
+import logo from '../assets/image_2-removebg-preview.png';
 
 const Loading = () => {
   return (
