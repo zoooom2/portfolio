@@ -12,11 +12,12 @@ import {
 } from '../features/userFeature/userSlice';
 import { Navbar, Sidebar, ProtectedRoute, Loading } from '../global_components';
 
+import { SingleProductPage } from '../pages';
+
 const HomePage = lazy(() => import('../pages/HomePage'));
 const ThesisPage = lazy(() => import('../pages/ThesisPage'));
 const CartPage = lazy(() => import('../pages/CartPage'));
 const ProductPage = lazy(() => import('../pages/ProductsPage'));
-const SingleProductPage = lazy(() => import('../pages/SingleProductPage'));
 const ErrorPage = lazy(() => import('../pages/ErrorPage'));
 const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
 const PaymentGateway = lazy(() => import('../pages/PaymentGatewayPage'));
@@ -55,13 +56,14 @@ const App = () => {
   }
   return (
     <Router>
-      {clicked && (
-        <>
-          <Navbar />
-          <Sidebar />
-        </>
-      )}
       <Suspense fallback={<Loading />}>
+        {clicked && (
+          <>
+            <Navbar />
+            <Sidebar />
+          </>
+        )}
+
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/contact' element={<ContactPage />} />

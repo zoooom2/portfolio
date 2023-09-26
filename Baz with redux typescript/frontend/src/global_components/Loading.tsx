@@ -3,7 +3,7 @@ import logo from '../assets/image 2.svg';
 
 const Loading = () => {
   return (
-    <Wrapper className='page-100 section section-center'>
+    <Wrapper className='page-100 section section-center bg-baz-white'>
       <img src={logo} alt='logo' />
     </Wrapper>
   );
