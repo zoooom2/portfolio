@@ -24,7 +24,7 @@ const CartButtons = () => {
     <Wrapper className='cart-btn-wrapper'>
       <button
         type='button'
-        className='auth-btn'
+        className='auth-btn text-baz-black'
         onClick={() => {
           dispatch(closeSidebar());
         }}>
@@ -32,11 +32,11 @@ const CartButtons = () => {
       </button>
       <Link
         to='cart'
-        className='cart-btn'
+        className='cart-btn text-baz-black'
         onClick={() => dispatch(closeSidebar())}>
         <span className='cart-container'>
           <FiShoppingCart />
-          <span className='cart-value'>{total_items}</span>
+          <span className='cart-value text-baz-white'>{total_items}</span>
         </span>
       </Link>
 
@@ -67,10 +67,8 @@ const Wrapper = styled.div`
   width: 100px;
 
   .cart-btn {
-    color: var(--clr-grey-1);
     font-size: 1.5rem;
     letter-spacing: var(--spacing);
-    color: var(--clr-grey-1);
     display: flex;
     font-family: 'Cinzel', serif;
     align-items: center;
@@ -96,7 +94,6 @@ const Wrapper = styled.div`
     justify-content: center;
     border-radius: 50%;
     font-size: 0.75rem;
-    color: var(--clr-white);
     padding: 10px;
   }
   .auth-btn {
@@ -106,7 +103,6 @@ const Wrapper = styled.div`
     border-color: transparent;
     font-size: 1.5rem;
     cursor: pointer;
-    color: var(--clr-grey-1);
     letter-spacing: var(--spacing);
     svg {
       margin-left: 5px;

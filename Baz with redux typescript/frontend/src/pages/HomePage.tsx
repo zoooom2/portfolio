@@ -10,8 +10,8 @@ const HomePage = () => {
 
   if (clicked === true) {
     return (
-      <Wrapper>
-        <div className='left-section'>
+      <Wrapper className='border border-baz-black'>
+        <div className='left-section border-r border-baz-black'>
           <ImageSlider slides={featuredSlide1} timer={3001} />
         </div>
         <div className='right-section'>
@@ -32,7 +32,6 @@ const HomePage = () => {
 
 const Wrapper = styled.main`
   height: calc(100vh - (5em + 70px));
-  border: 1px solid rgba(0, 0, 0, 0.7);
   margin: 1em;
   display: flex;
   flex: 1;
@@ -40,13 +39,12 @@ const Wrapper = styled.main`
   .left-section {
     height: 100%;
     width: 50%;
-    border-right: 1px solid rgba(0, 0, 0, 0.7);
   }
   .right-section {
     width: 50%;
   }
   .discover-btn {
-    background: white;
+    background: #f9f8f8;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -62,8 +60,8 @@ const Wrapper = styled.main`
     border-radius: 3px;
     &:hover {
       background: rgba(0, 0, 0, 0.8);
-      color: white;
       border: none;
+      color: #f9f8f8;
     }
   }
 `;

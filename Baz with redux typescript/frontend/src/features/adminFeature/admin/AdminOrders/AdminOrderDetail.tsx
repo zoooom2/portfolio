@@ -25,12 +25,12 @@ const AdminOrderDetail = () => {
         </div>
         <div className='flex justify-between items-start'>
           <div className='flex flex-col'>
-            <div className='text-black font-baz1 text-[18px] capitalize'>
+            <div className='text-baz-black font-baz1 text-[18px] capitalize'>
               {product.productName}
             </div>
-            <div className='text-[#2A2A2A] text-[14px] font-baz1'>sizes</div>
+            <div className='text-baz-black text-[14px] font-baz1'>sizes</div>
           </div>
-          <div className='text-[#2A2A2A] text-[18px] font-baz1'>
+          <div className='text-baz-black text-[18px] font-baz1'>
             {priceFormat(product.price)}
           </div>
         </div>
@@ -39,7 +39,7 @@ const AdminOrderDetail = () => {
   });
 
   return (
-    <section className='flex flex-col pb-14 w-full'>
+    <section className='flex flex-col pb-14 w-full bg-baz-white'>
       <Hero
         title='Orders'
         subtitle='Order Detail'

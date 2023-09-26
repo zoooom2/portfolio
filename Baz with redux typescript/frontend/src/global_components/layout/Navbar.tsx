@@ -17,7 +17,7 @@ const Nav = () => {
     );
   });
   return (
-    <NavContainer className='place-center'>
+    <NavContainer className='place-center bg-baz-white'>
       <div className='nav-center'>
         <div className='nav-header'>
           <Link to='/'>
@@ -25,7 +25,10 @@ const Nav = () => {
           </Link>
           <div className='nav-toggle'>
             <CartButtons />
-            <FaBars onClick={() => dispatch(openSidebar())} />
+            <FaBars
+              className='text-baz-black'
+              onClick={() => dispatch(openSidebar())}
+            />
           </div>
         </div>
         <ul className='nav-links'>{navlinks}</ul>
