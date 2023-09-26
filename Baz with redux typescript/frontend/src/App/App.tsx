@@ -12,32 +12,18 @@ import {
 } from '../features/userFeature/userSlice';
 import { Navbar, Sidebar, ProtectedRoute, Loading } from '../global_components';
 
-import {
-  SingleProductPage,
-  ThesisPage,
-  ErrorPage,
-  ContactPage,
-  OrderPage,
-  Signup,
-  LoginPage,
-  PaymentGateway,
-  CheckoutPage,
-  HomePage,
-  CartPage,
-} from '../pages';
+import { HomePage } from '../pages';
 
-// const HomePage = lazy(() => import('../pages/HomePage'));
-// const ThesisPage = lazy(() => import('../pages/ThesisPage'));
-// const CartPage = lazy(() => import('../pages/CartPage'));
+const ThesisPage = lazy(() => import('../pages/ThesisPage'));
+const CartPage = lazy(() => import('../pages/CartPage'));
 const ProductPage = lazy(() => import('../pages/ProductsPage'));
-
-// const ErrorPage = lazy(() => import('../pages/ErrorPage'));
-// const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
-// const PaymentGateway = lazy(() => import('../pages/PaymentGatewayPage'));
-// const LoginPage = lazy(() => import('../pages/LoginPage'));
-// const Signup = lazy(() => import('../pages/Signup'));
-// const OrderPage = lazy(() => import('../pages/OrderPage'));
-// const ContactPage = lazy(() => import('../pages/ContactPage'));
+const ErrorPage = lazy(() => import('../pages/ErrorPage'));
+const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
+const PaymentGateway = lazy(() => import('../pages/PaymentGatewayPage'));
+const LoginPage = lazy(() => import('../pages/LoginPage'));
+const Signup = lazy(() => import('../pages/Signup'));
+const OrderPage = lazy(() => import('../pages/OrderPage'));
+const ContactPage = lazy(() => import('../pages/ContactPage'));
 const AdminPages = lazy(() => import('../pages/AdminPages'));
 
 import AdminRoutes from '../features/adminFeature/admin/AdminRoutes';
