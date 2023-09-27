@@ -39,11 +39,12 @@ const App = () => {
   useEffect(() => {
     dispatch(checkVisitorCount());
     dispatch(countCartTotal());
-    if (!isAuthenticated) {
-      dispatch(fetchProfile());
-    } else {
-      dispatch(stopLoading());
-    }
+    // if (!isAuthenticated) {
+    //   dispatch(fetchProfile());
+    // } else {
+    //   dispatch(stopLoading());
+    // }
+    dispatch(stopLoading());
   }, []);
 
   if (loading) {
