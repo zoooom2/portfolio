@@ -1,20 +1,6 @@
 import { MdSell, MdShoppingCart } from 'react-icons/md';
 import { FaUsers, FaMoneyCheckAlt } from 'react-icons/fa';
 
-import {
-  image1,
-  image2,
-  image3,
-  img,
-  img1,
-  img2,
-  img3,
-  img4,
-  img5,
-  img6,
-  img7,
-} from '../assets/productImage';
-
 export const links = [
   {
     id: 1,
@@ -174,8 +160,21 @@ export const adminAnalytics = [
 export const priceFormat = (price: number) =>
   `₦${new Intl.NumberFormat('currency').format(price)}`;
 
-export const featuredSlide1 = [image1, image2, image3, img, img2];
-export const featuredSlide2 = [img1, img3, img4, img5, img6, img7];
+export const featuredSlide1 = [
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742709/image3_z9xdzm.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742709/img5_ewodvu.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742708/img7_yoain9.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742707/img6_rhoszr.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742707/img4_u6rumj.jpg',
+];
+export const featuredSlide2 = [
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742707/img3_owfvt7.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742707/image2_du0uhr.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742704/image1_lmznd7.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742704/img1_w3bfs7.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742704/img2_zjmdzb.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742704/img_g3j9p9.jpg',
+];
 
 export const products_url = 'https://baz-api.onrender.com/api/v1/products';
 export const single_product_url = `https://baz-api.onrender.com/api/v1/products/`;
