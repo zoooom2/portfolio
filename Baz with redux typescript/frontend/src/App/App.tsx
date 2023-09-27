@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import {
   checkVisitorCount,
-  fetchProfile,
   stopLoading,
 } from '../features/userFeature/userSlice';
 import { Navbar, Sidebar, ProtectedRoute, Loading } from '../global_components';
