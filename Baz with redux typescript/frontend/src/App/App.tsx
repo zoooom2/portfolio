@@ -29,8 +29,6 @@ const AdminPages = lazy(() => import('../pages/AdminPages'));
 import AdminRoutes from '../features/adminFeature/admin/AdminRoutes';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { countCartTotal } from '../features/cartFeature/cartSlice';
-import { fetchProducts } from '../features/productFeature/productSlice';
-import { products_url } from '../utils/constants';
 
 const App = () => {
   const { isAuthenticated, clicked, user, loading } = useAppSelector(
@@ -39,16 +37,14 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts(products_url));
-    dispatch(checkVisitorCount()).then(() => {
-      dispatch(countCartTotal());
-      if (!isAuthenticated) {
-        dispatch(fetchProfile());
-      } else {
-        dispatch(stopLoading());
-      }
-    });
-  }, [isAuthenticated]);
+    dispatch(checkVisitorCount());
+    dispatch(countCartTotal());
+    if (!isAuthenticated) {
+      dispatch(fetchProfile());
+    } else {
+      dispatch(stopLoading());
+    }
+  }, []);
 
   if (loading) {
     return <Loading />;

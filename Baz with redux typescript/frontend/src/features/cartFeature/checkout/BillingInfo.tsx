@@ -110,8 +110,8 @@ const BillingInfo = ({
           shouldDirty: true,
         });
         setState([...stateArray]);
-        setValue('state', undefined);
-        setValue('city', undefined);
+        setValue('state', '');
+        setValue('city', '');
       }
     },
     [setValue]
@@ -139,7 +139,7 @@ const BillingInfo = ({
           shouldValidate: true,
           shouldDirty: true,
         });
-        setValue('city', undefined);
+        setValue('city', '');
       }
     },
     [setValue]

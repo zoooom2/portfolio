@@ -67,12 +67,12 @@ const Signup = () => {
     if (!authentication_error) {
       navigate('/');
     } else {
-      setError('submitError', {
+      setError('root', {
         type: 'manual',
         message: authentication_error,
       });
       setTimeout(() => {
-        setError('submitError', {
+        setError('root', {
           type: 'manual',
           message: '',
         });
@@ -200,9 +200,7 @@ const Signup = () => {
               disabled={!isDirty || !isValid || isSubmitting}>
               Register
             </button>
-            {!isSubmitSuccessful && (
-              <p>{errors.submitError?.message?.toString()}</p>
-            )}
+            {!isSubmitSuccessful && <p>{errors.root?.message?.toString()}</p>}
           </form>
           <DevTool control={control} />
         </div>

@@ -58,9 +58,9 @@ const LoginPage = () => {
         navigate('/');
       }
     } else {
-      setError('formError', { type: 'manual', message: authentication_error });
+      setError('root', { type: 'manual', message: authentication_error });
       setTimeout(() => {
-        setError('formError', {
+        setError('root', {
           type: 'manual',
           message: '',
         });
@@ -86,7 +86,7 @@ const LoginPage = () => {
           <img src={logo} alt='logo' className='logo' />
 
           <form onSubmit={handleSubmit(onSubmit, onError)}>
-            {errors.formError?.message && (
+            {errors.root?.message && (
               <p className='errormsg'>Something went wrong</p>
             )}
             <div className='form-control'>

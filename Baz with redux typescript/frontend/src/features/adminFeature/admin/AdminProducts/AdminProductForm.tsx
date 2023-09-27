@@ -61,6 +61,7 @@ const AdminProductForm = ({
         }
         return true;
       }),
+    images: yup.array(),
     sizes: yup
       .array()
       .of(
@@ -92,16 +93,16 @@ const AdminProductForm = ({
 
   const { fields, append, remove } = useFieldArray({ name: 'sizes', control });
   useEffect(() => {
-    type === 'detail' && setValue('productName', product?.productName);
-    type === 'detail' && setValue('price', product?.price);
-    type === 'detail' && setValue('description', product?.description);
+    type === 'detail' && setValue('productName', product?.productName || '');
+    type === 'detail' && setValue('price', product?.price || 0);
+    type === 'detail' && setValue('description', product?.description || '');
     type === 'detail' && setValue('images', product?.images);
-    type === 'detail' && setValue('productName', product?.productName);
-    type === 'detail' && setValue('category', product?.category);
-    type === 'detail' && setValue('collectionName', product?.collectionName);
+    type === 'detail' && setValue('category', product?.category || '');
+    type === 'detail' &&
+      setValue('collectionName', product?.collectionName || '');
     type === 'detail'
       ? setValue('sizes', product?.sizes)
-      : setValue('sizes', [{ size: null, quantity: null }]);
+      : setValue('sizes', [{ size: '', quantity: 0 }]);
   }, [product, type]);
 
   const {
@@ -396,7 +397,7 @@ const AdminProductForm = ({
             </div>
             <button
               type={'button'}
-              onClick={() => append({ name: null, quantity: null })}
+              onClick={() => append({ size: '', quantity: 0 })}
               disabled={detailMode === 'fixed' && type === 'detail'}
               className='flex gap-2 items-center justify-center border border-dashed w-full h-[79px]'>
               <AiOutlinePlus />

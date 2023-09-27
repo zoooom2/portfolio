@@ -23,6 +23,7 @@ const ProductsPage = () => {
 
   useEffect(() => {
     document.title = 'Shop | Baz Official Store';
+    dispatch(fetchProducts(url));
     dispatch(setClicked(true));
     dispatch(fetchProducts(url));
   }, []);
