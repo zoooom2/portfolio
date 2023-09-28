@@ -7,8 +7,7 @@ import {
 } from 'react-router-dom';
 import {
   checkVisitorCount,
-  fetchProfile,
-  // stopLoading,
+  stopLoading,
 } from '../features/userFeature/userSlice';
 import { Navbar, Sidebar, ProtectedRoute, Loading } from '../global_components';
 import { HomePage } from '../pages';
@@ -37,13 +36,9 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    (async () => {
-      dispatch(checkVisitorCount());
-      dispatch(countCartTotal());
-      dispatch(fetchProfile());
-    })();
-
-    // dispatch(stopLoading());
+    dispatch(checkVisitorCount());
+    dispatch(countCartTotal());
+    dispatch(stopLoading());
   }, []);
 
   if (loading) {
@@ -84,7 +79,10 @@ const App = () => {
             <Route path='/pay' element={<PaymentGateway />} />
             <Route path='/order' element={<OrderPage />} />
           </Route>
-          <Route element={<AdminRoutes user={user} />}>
+          <Route
+            element={
+              <AdminRoutes isAuthenticated={isAuthenticated} user={user} />
+            }>
             <Route path='/admin' element={<Navigate to='/admin/overview' />} />
             <Route path='/admin'>
               <Route
