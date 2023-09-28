@@ -37,9 +37,12 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(checkVisitorCount());
-    dispatch(countCartTotal());
-    dispatch(fetchProfile());
+    (async () => {
+      dispatch(checkVisitorCount());
+      dispatch(countCartTotal());
+      dispatch(fetchProfile());
+    })();
+
     // dispatch(stopLoading());
   }, []);
 
