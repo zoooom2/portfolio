@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import {
   checkVisitorCount,
+  fetchProfile,
   stopLoading,
 } from '../features/userFeature/userSlice';
 import { Navbar, Sidebar, ProtectedRoute, Loading } from '../global_components';
@@ -38,7 +39,8 @@ const App = () => {
   useEffect(() => {
     dispatch(checkVisitorCount());
     dispatch(countCartTotal());
-    dispatch(stopLoading());
+    dispatch(fetchProfile());
+    // dispatch(stopLoading());
   }, []);
 
   if (loading) {
