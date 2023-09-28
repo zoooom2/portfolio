@@ -38,11 +38,6 @@ const App = () => {
   useEffect(() => {
     dispatch(checkVisitorCount());
     dispatch(countCartTotal());
-    // if (!isAuthenticated) {
-    //   dispatch(fetchProfile());
-    // } else {
-    //   dispatch(stopLoading());
-    // }
     dispatch(stopLoading());
   }, []);
 
@@ -84,10 +79,7 @@ const App = () => {
             <Route path='/pay' element={<PaymentGateway />} />
             <Route path='/order' element={<OrderPage />} />
           </Route>
-          <Route
-            element={
-              <AdminRoutes isAuthenticated={isAuthenticated} user={user} />
-            }>
+          <Route element={<AdminRoutes user={user} />}>
             <Route path='/admin' element={<Navigate to='/admin/overview' />} />
             <Route path='/admin'>
               <Route
