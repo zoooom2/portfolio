@@ -60,6 +60,9 @@ const App = () => {
           <Route path='/thesis' element={<ThesisPage />} />
           <Route path='/shop' element={<ProductPage />} />
           <Route path='/shop/:id' element={<SingleProductPage />} />
+          <Route path='/checkout/:params' element={<CheckoutPage />} />
+          <Route path='/pay' element={<PaymentGateway />} />
+          <Route path='/order' element={<OrderPage />} />
           <Route
             path='/login'
             element={isAuthenticated ? <Navigate to='/' /> : <LoginPage />}
@@ -74,11 +77,6 @@ const App = () => {
           element={isAuthenticated ? <Profile /> : <LoginPage />}
         /> */}
 
-          <Route element={<ProtectedRoute />}>
-            <Route path='/checkout/:params' element={<CheckoutPage />} />
-            <Route path='/pay' element={<PaymentGateway />} />
-            <Route path='/order' element={<OrderPage />} />
-          </Route>
           <Route
             element={
               <AdminRoutes isAuthenticated={isAuthenticated} user={user} />
