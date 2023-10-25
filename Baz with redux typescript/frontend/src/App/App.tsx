@@ -9,7 +9,7 @@ import {
   checkVisitorCount,
   stopLoading,
 } from '../features/userFeature/userSlice';
-import { Navbar, Sidebar, ProtectedRoute, Loading } from '../global_components';
+import { Navbar, Sidebar, Loading } from '../global_components';
 import { HomePage } from '../pages';
 
 const ThesisPage = lazy(() => import('../pages/ThesisPage'));
