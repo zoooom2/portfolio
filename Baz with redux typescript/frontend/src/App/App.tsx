@@ -13,15 +13,15 @@ import { Navbar, Sidebar, Loading } from '../global_components';
 import { HomePage } from '../pages';
 
 const ThesisPage = lazy(() => import('../pages/ThesisPage'));
-// const CartPage = lazy(() => import('../pages/CartPage'));
-// const ProductPage = lazy(() => import('../pages/ProductsPage'));
-// const SingleProductPage = lazy(() => import('../pages/SingleProductPage'));
+const CartPage = lazy(() => import('../pages/CartPage'));
+const ProductPage = lazy(() => import('../pages/ProductsPage'));
+const SingleProductPage = lazy(() => import('../pages/SingleProductPage'));
 const ErrorPage = lazy(() => import('../pages/ErrorPage'));
-// const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
-// const PaymentGateway = lazy(() => import('../pages/PaymentGatewayPage'));
+const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
+const PaymentGateway = lazy(() => import('../pages/PaymentGatewayPage'));
 // const LoginPage = lazy(() => import('../pages/LoginPage'));
 // const Signup = lazy(() => import('../pages/Signup'));
-// const OrderPage = lazy(() => import('../pages/OrderPage'));
+const OrderPage = lazy(() => import('../pages/OrderPage'));
 const ContactPage = lazy(() => import('../pages/ContactPage'));
 // const AdminPages = lazy(() => import('../pages/AdminPages'));
 
@@ -60,14 +60,16 @@ const App = () => {
           <Route path='/' element={<HomePage />} />
           <Route path='/contact' element={<ContactPage />} />
           <Route path='/thesis' element={<ThesisPage />} />
-          {/* 
           <Route path='/cart' element={<CartPage />} />
-          
           <Route path='/shop' element={<ProductPage />} />
           <Route path='/shop/:id' element={<SingleProductPage />} />
           <Route path='/checkout/:params' element={<CheckoutPage />} />
           <Route path='/pay' element={<PaymentGateway />} />
           <Route path='/order' element={<OrderPage />} />
+          {/* 
+          
+          
+          
           <Route
             path='/login'
             element={isAuthenticated ? <Navigate to='/' /> : <LoginPage />}
