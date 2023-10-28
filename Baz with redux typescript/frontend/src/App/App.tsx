@@ -19,8 +19,8 @@ const SingleProductPage = lazy(() => import('../pages/SingleProductPage'));
 const ErrorPage = lazy(() => import('../pages/ErrorPage'));
 // const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
 // const PaymentGateway = lazy(() => import('../pages/PaymentGatewayPage'));
-// const LoginPage = lazy(() => import('../pages/LoginPage'));
-// const Signup = lazy(() => import('../pages/Signup'));
+const LoginPage = lazy(() => import('../pages/LoginPage'));
+const Signup = lazy(() => import('../pages/Signup'));
 const OrderPage = lazy(() => import('../pages/OrderPage'));
 const ContactPage = lazy(() => import('../pages/ContactPage'));
 const AdminPages = lazy(() => import('../pages/AdminPages'));
@@ -64,10 +64,7 @@ const App = () => {
           {/* <Route path='/checkout/:params' element={<CheckoutPage />} /> */}
           {/* <Route path='/pay' element={<PaymentGateway />} /> */}
           <Route path='/order' element={<OrderPage />} />
-          {/* 
-          
-          
-          
+
           <Route
             path='/login'
             element={isAuthenticated ? <Navigate to='/' /> : <LoginPage />}
@@ -77,7 +74,7 @@ const App = () => {
             // element={isAuthenticated ? <Navigate to='/' /> : <Signup />}
             element={<Signup />}
           />
-          */}
+
           <Route
             element={
               <AdminRoutes isAuthenticated={isAuthenticated} user={user} />
