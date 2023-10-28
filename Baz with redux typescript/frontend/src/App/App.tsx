@@ -14,8 +14,8 @@ import { HomePage } from '../pages';
 
 const ThesisPage = lazy(() => import('../pages/ThesisPage'));
 const CartPage = lazy(() => import('../pages/CartPage'));
-const ProductPage = lazy(() => import('../pages/ProductsPage'));
-const SingleProductPage = lazy(() => import('../pages/SingleProductPage'));
+// const ProductPage = lazy(() => import('../pages/ProductsPage'));
+// const SingleProductPage = lazy(() => import('../pages/SingleProductPage'));
 const ErrorPage = lazy(() => import('../pages/ErrorPage'));
 const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
 const PaymentGateway = lazy(() => import('../pages/PaymentGatewayPage'));
@@ -61,8 +61,8 @@ const App = () => {
           <Route path='/contact' element={<ContactPage />} />
           <Route path='/thesis' element={<ThesisPage />} />
           <Route path='/cart' element={<CartPage />} />
-          <Route path='/shop' element={<ProductPage />} />
-          <Route path='/shop/:id' element={<SingleProductPage />} />
+          {/* <Route path='/shop' element={<ProductPage />} /> */}
+          {/* <Route path='/shop/:id' element={<SingleProductPage />} /> */}
           <Route path='/checkout/:params' element={<CheckoutPage />} />
           <Route path='/pay' element={<PaymentGateway />} />
           <Route path='/order' element={<OrderPage />} />
