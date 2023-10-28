@@ -12,7 +12,7 @@ import {
 import { Navbar, Sidebar, Loading } from '../global_components';
 import { HomePage } from '../pages';
 
-// const ThesisPage = lazy(() => import('../pages/ThesisPage'));
+const ThesisPage = lazy(() => import('../pages/ThesisPage'));
 // const CartPage = lazy(() => import('../pages/CartPage'));
 // const ProductPage = lazy(() => import('../pages/ProductsPage'));
 // const SingleProductPage = lazy(() => import('../pages/SingleProductPage'));
@@ -22,7 +22,7 @@ const ErrorPage = lazy(() => import('../pages/ErrorPage'));
 // const LoginPage = lazy(() => import('../pages/LoginPage'));
 // const Signup = lazy(() => import('../pages/Signup'));
 // const OrderPage = lazy(() => import('../pages/OrderPage'));
-// const ContactPage = lazy(() => import('../pages/ContactPage'));
+const ContactPage = lazy(() => import('../pages/ContactPage'));
 // const AdminPages = lazy(() => import('../pages/AdminPages'));
 
 // import AdminRoutes from '../features/adminFeature/admin/AdminRoutes';
@@ -58,9 +58,11 @@ const App = () => {
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path='/' element={<HomePage />} />
-          {/* <Route path='/contact' element={<ContactPage />} />
-          <Route path='/cart' element={<CartPage />} />
+          <Route path='/contact' element={<ContactPage />} />
           <Route path='/thesis' element={<ThesisPage />} />
+          {/* 
+          <Route path='/cart' element={<CartPage />} />
+          
           <Route path='/shop' element={<ProductPage />} />
           <Route path='/shop/:id' element={<SingleProductPage />} />
           <Route path='/checkout/:params' element={<CheckoutPage />} />
