@@ -25,10 +25,11 @@ const OrderPage = lazy(() => import('../pages/OrderPage'));
 const ContactPage = lazy(() => import('../pages/ContactPage'));
 const AdminPages = lazy(() => import('../pages/AdminPages'));
 
-// import AdminRoutes from '../features/adminFeature/admin/AdminRoutes';
+const AdminRoutes = lazy(
+  () => import('../features/adminFeature/admin/AdminRoutes')
+);
 import { useAppDispatch, useAppSelector } from './hooks';
 import { countCartTotal } from '../features/cartFeature/cartSlice';
-import { AdminRoutes } from '../features/adminFeature/admin';
 
 const App = () => {
   const { isAuthenticated, clicked, user, loading } = useAppSelector(
