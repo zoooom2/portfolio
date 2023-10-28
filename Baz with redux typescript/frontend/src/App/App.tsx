@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  // Navigate,
+  Navigate,
 } from 'react-router-dom';
 import {
   checkVisitorCount,
@@ -23,19 +23,17 @@ const ErrorPage = lazy(() => import('../pages/ErrorPage'));
 // const Signup = lazy(() => import('../pages/Signup'));
 const OrderPage = lazy(() => import('../pages/OrderPage'));
 const ContactPage = lazy(() => import('../pages/ContactPage'));
-// const AdminPages = lazy(() => import('../pages/AdminPages'));
+const AdminPages = lazy(() => import('../pages/AdminPages'));
 
 // import AdminRoutes from '../features/adminFeature/admin/AdminRoutes';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { countCartTotal } from '../features/cartFeature/cartSlice';
+import { AdminRoutes } from '../features/adminFeature/admin';
 
 const App = () => {
-  const {
-    // isAuthenticated,
-    clicked,
-    //  user,
-    loading,
-  } = useAppSelector((state) => state.user);
+  const { isAuthenticated, clicked, user, loading } = useAppSelector(
+    (state) => state.user
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -79,6 +77,7 @@ const App = () => {
             // element={isAuthenticated ? <Navigate to='/' /> : <Signup />}
             element={<Signup />}
           />
+          */}
           <Route
             element={
               <AdminRoutes isAuthenticated={isAuthenticated} user={user} />
@@ -118,7 +117,7 @@ const App = () => {
                 element={<AdminPages page='users' />}
               />
             </Route>
-          </Route> */}
+          </Route>
           <Route path='*' element={<ErrorPage />} />
         </Routes>
       </Suspense>
