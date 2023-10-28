@@ -55,7 +55,7 @@ const App = () => {
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='/contact' element={<ContactPage />} />
+          {/* <Route path='/contact' element={<ContactPage />} />
           <Route path='/cart' element={<CartPage />} />
           <Route path='/thesis' element={<ThesisPage />} />
           <Route path='/shop' element={<ProductPage />} />
@@ -72,11 +72,6 @@ const App = () => {
             // element={isAuthenticated ? <Navigate to='/' /> : <Signup />}
             element={<Signup />}
           />
-          {/* <Route
-          path='/profile'
-          element={isAuthenticated ? <Profile /> : <LoginPage />}
-        /> */}
-
           <Route
             element={
               <AdminRoutes isAuthenticated={isAuthenticated} user={user} />
@@ -116,7 +111,7 @@ const App = () => {
                 element={<AdminPages page='users' />}
               />
             </Route>
-          </Route>
+          </Route> */}
           <Route path='*' element={<ErrorPage />} />
         </Routes>
       </Suspense>

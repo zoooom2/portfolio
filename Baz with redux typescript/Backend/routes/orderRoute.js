@@ -18,8 +18,6 @@ const {
   percentageChangeOrder,
 } = OrderController;
 
-router.use(protect);
-
 //user order history
 router.get('/myOrders', getMyOrders);
 
@@ -37,6 +35,7 @@ router.route('/paypal/:orderID/pay').post(paypalCheckout.captureOrder);
 router.route('/stripe-checkout').post(getCheckoutSession);
 // router.route('//stripe-payment').post(stripeOrder);
 
+router.use(protect);
 router.use(restrictTo('admin'));
 
 router.route('/paystack/:id').patch(paystackCheckout.updatePayStackOrder);
