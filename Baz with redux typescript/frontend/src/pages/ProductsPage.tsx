@@ -46,9 +46,11 @@ const ProductsPage = () => {
     <main>
       <Wrapper className='page flex-column'>
         <div className='pageHero'>
-          <div>{products.length} Results</div>
+          <div className='font-baz1 text-[14px] font-normal tracking-[1.4px]'>
+            {products.length} Results
+          </div>
           <select
-            className='pageName bg-baz-white'
+            className='pageName bg-baz-white text-baz-black'
             onChange={(e) =>
               dispatch(
                 updateFilters({ name: 'collection', value: e.target.value })
@@ -89,17 +91,21 @@ const Wrapper = styled.div`
     width: 100%;
     border-bottom: 1px solid black;
     justify-content: space-between;
+    align-items: center;
   }
   .pageName {
-    font-family: 'Zilla Slab';
-    font-weight: 600;
-    font-size: 20px;
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 14px;
     line-height: 24px;
     /* identical to box height */
     border: none;
     outline: none;
     cursor: pointer;
-    letter-spacing: 0.1em;
+    letter-spacing: 1.4px;
+    appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
   }
   option {
     background-color: black;
