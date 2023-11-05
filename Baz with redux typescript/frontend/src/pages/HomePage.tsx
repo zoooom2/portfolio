@@ -38,7 +38,7 @@ const Wrapper = styled.main`
   position: relative;
 
   .discover-btn {
-    background: #f9f8f8;
+    background: transparent;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -51,7 +51,7 @@ const Wrapper = styled.main`
     line-height: 24px;
     letter-spacing: 0.1em;
     cursor: pointer;
-    border-radius: 3px;
+    border: 1px solid #fff;
     &:hover {
       background: rgba(0, 0, 0, 0.8);
       border: none;
