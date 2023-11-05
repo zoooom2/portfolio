@@ -19,7 +19,7 @@ const HomePage = () => {
         </div>
         <Link
           to='/shop'
-          className='border border-[#f9f8f8] leading-[24px] text-[20px] discover-btn bg-transparent text-baz-white absolute left-1/2 top-1/2 py-[16px] px-[24px] cursor-pointer font-semibold'>
+          className='border border-[#f9f8f8] leading-[24px] text-[20px] discover-btn bg-[rgba(0,0,0,0.8)] text-baz-white absolute left-1/2 top-1/2 py-[16px] px-[24px] cursor-pointer font-semibold'>
           DISCOVER
         </Link>
       </Wrapper>
@@ -45,9 +45,7 @@ const Wrapper = styled.main`
     letter-spacing: 0.1em;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.8);
       border: none;
-      color: #f9f8f8;
     }
   }
 `;
