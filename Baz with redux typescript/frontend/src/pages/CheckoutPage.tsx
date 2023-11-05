@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { setClicked } from '../features/userFeature/userSlice';
 import useLocalStorage from '../utils/customHooks/localStorage';
@@ -9,7 +9,7 @@ import {
 } from '../features/cartFeature/cartSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 import {
-  BillingInfo,
+  // BillingInfo,
   CheckoutStage,
   // Payment,
   // Shipping,
@@ -17,8 +17,8 @@ import {
 import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
-  // const { params } = useParams();
-  const [stage, setStage] = useState(1);
+  const { params } = useParams();
+  const [stage, _setStage] = useState(1);
   const dispatch = useAppDispatch();
   const { shippingInfo } = useAppSelector((state) => state.cart);
 
@@ -37,6 +37,8 @@ const CheckoutPage = () => {
     setLocalShipping(shippingInfo);
   }, [shippingInfo]);
 
+  console.log(params);
+
   return (
     <main>
       <Wrapper className='flex-column place-center'>
@@ -46,7 +48,7 @@ const CheckoutPage = () => {
         </div>
         <div className='details'>
           <CheckoutStage position={stage} />
-          {<BillingInfo setStage={setStage} />}
+          {/* {params === 'information' && <BillingInfo setStage={setStage} />} */}
           {/* {params === 'shipping' && (
             <Shipping setStage={setStage} shippingInfo={localShipping} />
           )}
