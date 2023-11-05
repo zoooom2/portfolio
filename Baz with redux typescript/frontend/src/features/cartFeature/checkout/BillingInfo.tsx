@@ -1,10 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Country, State, City } from 'country-state-city';
 import Select, { SingleValue } from 'react-select';
-import { placeholderStyle, selectStyle } from '../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { createShipping } from '../cartSlice';
 import { FieldErrors, FieldValues, useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
@@ -12,24 +10,22 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { countryTypes } from '../../../types';
 import { useAppDispatch } from '../../../App/hooks';
+import { placeholderStyle, selectStyle } from '../../../utils/constants';
 
 const BillingInfo = ({
   setStage,
 }: {
   setStage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  return <>Billing</>;
   const [state, setState] = useState<(countryTypes & { stateCode: string })[]>(
     []
   );
   const [city, setCity] = useState<(countryTypes & { stateCode: string })[]>(
     []
   );
-
   const navigate = useNavigate();
-
   const dispatch = useAppDispatch();
-  // const { shippingInfo } = useSelector((state) => state.cart);
+
   const validationSchema = yup.object().shape({
     firstName: yup.string().required('First Name is required'),
     lastName: yup.string().required('Last Name is required'),
@@ -39,7 +35,6 @@ const BillingInfo = ({
     country: yup.string().required('Country is required'),
     countryCode: yup.string().required('Country Code is required'),
     phoneNumber: yup.string().required('Phone Number is required'),
-    // postCode: yup.string().required('Post Code is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
   });
 
@@ -47,119 +42,91 @@ const BillingInfo = ({
     resolver: yupResolver(validationSchema),
     mode: 'onTouched',
   });
+
   const {
     register,
     control,
     handleSubmit,
-    formState,
-    // watch,
-    // getValues,
+    formState: { isValid, isSubmitting },
     setValue,
-    // reset,
     trigger,
   } = form;
 
-  const {
-    // errors,
-    // isDirty,
-    isValid,
-    isSubmitting,
-    // isSubmitted,
-    // isSubmitSuccessful,
-  } = formState;
-
   useEffect(() => {
     setStage(1);
-  }, []);
+    trigger(); // Trigger validation on component mount
+  }, [setStage, trigger]);
 
-  useEffect(() => {
-    trigger();
-  }, [trigger]);
+  const countryArray = Country.getAllCountries().map((x) => ({
+    value: x.name,
+    label: x.name,
+    countryCode: x.isoCode,
+  }));
 
-  const country = Country.getAllCountries();
-  const countryArray: countryTypes[] = [];
-  country.forEach((x) =>
-    countryArray.push({
-      value: x.name,
-      label: x.name,
-      countryCode: x.isoCode,
-    })
-  );
+  const handleCountry = (selectedOption: SingleValue<countryTypes>) => {
+    if (selectedOption) {
+      const states = State.getStatesOfCountry(selectedOption.countryCode);
+      const stateArray = states.map((x) => ({
+        value: x.name,
+        label: x.name,
+        stateCode: x.isoCode,
+        countryCode: x.countryCode,
+      }));
 
-  const handleCountry = useCallback(
-    (selectedOption: SingleValue<countryTypes>) => {
-      if (selectedOption) {
-        const states = State.getStatesOfCountry(selectedOption.countryCode);
-        const stateArray: (countryTypes & { stateCode: string })[] = [];
-        states.forEach((x) =>
-          stateArray.push({
-            value: x.name,
-            label: x.name,
-            stateCode: x.isoCode,
-            countryCode: x.countryCode,
-          })
-        );
+      setValue('country', selectedOption.value, {
+        shouldTouch: true,
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      setValue('countryCode', selectedOption.countryCode, {
+        shouldTouch: true,
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      setState(stateArray);
+      setValue('state', '');
+      setValue('city', '');
+    }
+  };
 
-        setValue('country', selectedOption.value, {
-          shouldTouch: true,
-          shouldValidate: true,
-          shouldDirty: true,
-        });
-        setValue('countryCode', selectedOption.countryCode, {
-          shouldTouch: true,
-          shouldValidate: true,
-          shouldDirty: true,
-        });
-        setState([...stateArray]);
-        setValue('state', '');
-        setValue('city', '');
-      }
-    },
-    [setValue]
-  );
+  const handleState = (
+    selectedOption: SingleValue<countryTypes & { stateCode: string }>
+  ) => {
+    if (selectedOption) {
+      const cities = City.getCitiesOfState(
+        selectedOption.countryCode,
+        selectedOption.stateCode
+      );
+      const cityArray = cities.map((x) => ({
+        value: x.name,
+        label: x.name,
+        stateCode: x.stateCode,
+        countryCode: x.countryCode,
+      }));
 
-  const handleState = useCallback(
-    (selectedOption: SingleValue<countryTypes & { stateCode: string }>) => {
-      if (selectedOption) {
-        const cities = City.getCitiesOfState(
-          selectedOption.countryCode,
-          selectedOption.stateCode
-        );
-        const cityArray: (countryTypes & { stateCode: string })[] = [];
-        cities.forEach((x) =>
-          cityArray.push({
-            value: x.name,
-            label: x.name,
-            stateCode: x.stateCode,
-            countryCode: x.countryCode,
-          })
-        );
-        setCity([...cityArray]);
-        setValue('state', selectedOption.value, {
-          shouldTouch: true,
-          shouldValidate: true,
-          shouldDirty: true,
-        });
-        setValue('city', '');
-      }
-    },
-    [setValue]
-  );
+      setCity(cityArray);
+      setValue('state', selectedOption.value, {
+        shouldTouch: true,
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      setValue('city', '');
+    }
+  };
 
-  const handleCity = useCallback(
-    (selectedOption: SingleValue<countryTypes & { stateCode: string }>) => {
-      if (selectedOption)
-        setValue('city', selectedOption.value, {
-          shouldTouch: true,
-          shouldValidate: true,
-          shouldDirty: true,
-        });
-    },
-    [setValue]
-  );
+  const handleCity = (
+    selectedOption: SingleValue<countryTypes & { stateCode: string }>
+  ) => {
+    if (selectedOption) {
+      setValue('city', selectedOption.value, {
+        shouldTouch: true,
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    }
+  };
 
   const onSubmit = (data: FieldValues) => {
-    // console.log({ ...data });
     dispatch(createShipping(data));
     navigate('/checkout/shipping');
   };
