@@ -13,7 +13,6 @@ import { products_url as url } from '../utils/constants';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 // import { Filters, Sort } from '../features/filterFeature/filter';
 import ProductList from '../features/productFeature/product/ProductList';
-import { MdKeyboardArrowDown } from 'react-icons/md';
 
 const ProductsPage = () => {
   const dispatch = useAppDispatch();
