@@ -1,41 +1,41 @@
-// import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 // import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-// import { setClicked } from '../features/userFeature/userSlice';
+import { setClicked } from '../features/userFeature/userSlice';
 // import useLocalStorage from '../utils/customHooks/localStorage';
-// import {
-//   countCartTotal,
-//   updateCartTotal,
-// } from '../features/cartFeature/cartSlice';
-// import { useAppDispatch, useAppSelector } from '../App/hooks';
-// import {
-//   BillingInfo,
-//   CheckoutStage,
-//   Payment,
-//   Shipping,
-// } from '../features/cartFeature/checkout';
+import {
+  countCartTotal,
+  updateCartTotal,
+} from '../features/cartFeature/cartSlice';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
+import {
+  // BillingInfo,
+  CheckoutStage,
+  // Payment,
+  // Shipping,
+} from '../features/cartFeature/checkout';
 import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
   // const { params } = useParams();
-  // const [stage, setStage] = useState(1);
-  // const dispatch = useAppDispatch();
-  // const { shippingInfo } = useAppSelector((state) => state.cart);
+  const [stage, _setStage] = useState(1);
+  const dispatch = useAppDispatch();
+  const { shippingInfo } = useAppSelector((state) => state.cart);
 
   // const [localShipping, setLocalShipping] = useLocalStorage('shipping', {
   //   ...shippingInfo,
   // });
 
-  // useEffect(() => {
-  //   dispatch(setClicked(true));
-  //   document.title = 'Checkout | Baz Official Store';
-  // }, []);
+  useEffect(() => {
+    dispatch(setClicked(true));
+    document.title = 'Checkout | Baz Official Store';
+  }, []);
 
-  // useEffect(() => {
-  //   dispatch(updateCartTotal());
-  //   dispatch(countCartTotal());
-  //   setLocalShipping(shippingInfo);
-  // }, [shippingInfo]);
+  useEffect(() => {
+    dispatch(updateCartTotal());
+    dispatch(countCartTotal());
+    //   setLocalShipping(shippingInfo);
+  }, [shippingInfo]);
 
   return (
     <main>
@@ -45,7 +45,7 @@ const CheckoutPage = () => {
           <button className='backToCart-btn'>Back to Cart</button>
         </div>
         <div className='details'>
-          {/* <CheckoutStage position={stage} /> */}
+          <CheckoutStage position={stage} />
           {/* {params === 'information' && <BillingInfo setStage={setStage} />} */}
           {/* {params === 'shipping' && (
             <Shipping setStage={setStage} shippingInfo={localShipping} />
