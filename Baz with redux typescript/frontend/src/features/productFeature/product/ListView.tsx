@@ -12,8 +12,12 @@ const ListView = ({ products }: { products: SingleProductType[] }) => {
             to={`/shop/${id}`}
             key={id}
             className='border-b border-black flex flex-col h-[50vh]'>
-            <figure className='place-items-center h-3/4'>
-              <img src={images[0]} alt={name} className='aspect-[230/317]' />
+            <figure className='place-items-center h-3/4 flex justify-center'>
+              <img
+                src={images[0]}
+                alt={name}
+                className='aspect-[230/317] h-full object-contain'
+              />
             </figure>
             <div className='h-1/4'>
               <h4>{name}</h4>
