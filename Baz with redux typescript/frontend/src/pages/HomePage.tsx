@@ -11,10 +11,10 @@ const HomePage = () => {
   if (clicked === true) {
     return (
       <Wrapper className='border border-baz-black'>
-        <div className='left-section border-r border-baz-black'>
+        <div className='tablet:w-1/2 h-full border-r border-baz-black w-full'>
           <ImageSlider slides={featuredSlide1} timer={3001} />
         </div>
-        <div className='right-section'>
+        <div className='tablet:w-1/2 max-tablet:hidden'>
           <ImageSlider slides={featuredSlide2} timer={5001} />
         </div>
         <Link to='/shop' className='discover-btn'>
@@ -36,13 +36,7 @@ const Wrapper = styled.main`
   display: flex;
   flex: 1;
   position: relative;
-  .left-section {
-    height: 100%;
-    width: 50%;
-  }
-  .right-section {
-    width: 50%;
-  }
+
   .discover-btn {
     background: #f9f8f8;
     position: absolute;
