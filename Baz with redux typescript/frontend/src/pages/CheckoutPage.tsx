@@ -9,7 +9,7 @@ import {
 } from '../features/cartFeature/cartSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 import {
-  BillingInfo,
+  // BillingInfo,
   CheckoutStage,
   Payment,
   Shipping,
