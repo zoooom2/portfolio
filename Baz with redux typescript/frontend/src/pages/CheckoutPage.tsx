@@ -14,7 +14,7 @@ import styled from 'styled-components';
 //   Payment,
 //   Shipping,
 // } from '../features/cartFeature/checkout';
-// import { CartSummary } from '../features/cartFeature/cart';
+import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
   // const { params } = useParams();
@@ -37,29 +37,27 @@ const CheckoutPage = () => {
   //   setLocalShipping(shippingInfo);
   // }, [shippingInfo]);
 
-  // return (
-  //   <main>
-  //     <Wrapper className='flex-column place-center'>
-  //       <div className='pageHero flex-column place-center'>
-  //         <h3 className='pageName'>Checkout</h3>
-  //         <button className='backToCart-btn'>Back to Cart</button>
-  //       </div>
-  //       <div className='details'>
-  //         <CheckoutStage position={stage} />
-  //         {params === 'information' && <BillingInfo setStage={setStage} />}
-  //         {params === 'shipping' && (
-  //           <Shipping setStage={setStage} shippingInfo={localShipping} />
-  //         )}
-  //         {params === 'payment' && (
-  //           <Payment setStage={setStage} shippingInfo={localShipping} />
-  //         )}
-  //         <CartSummary />
-  //       </div>
-  //     </Wrapper>
-  //   </main>
-  // );
-
-  return <Wrapper>checkout</Wrapper>;
+  return (
+    <main>
+      <Wrapper className='flex-column place-center'>
+        <div className='pageHero flex-column place-center'>
+          <h3 className='pageName'>Checkout</h3>
+          <button className='backToCart-btn'>Back to Cart</button>
+        </div>
+        <div className='details'>
+          {/* <CheckoutStage position={stage} /> */}
+          {/* {params === 'information' && <BillingInfo setStage={setStage} />} */}
+          {/* {params === 'shipping' && (
+            <Shipping setStage={setStage} shippingInfo={localShipping} />
+          )}
+          {params === 'payment' && (
+            <Payment setStage={setStage} shippingInfo={localShipping} />
+          )} */}
+          <CartSummary />
+        </div>
+      </Wrapper>
+    </main>
+  );
 };
 const Wrapper = styled.div`
   margin-inline: 0;
