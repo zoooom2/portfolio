@@ -168,12 +168,12 @@ export const featuredSlide1 = [
   'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742707/img4_u6rumj.jpg',
 ];
 export const featuredSlide2 = [
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_500/v1695742707/img3_owfvt7.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_500/v1695742707/image2_du0uhr.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_500/v1695742704/image1_lmznd7.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_500/v1695742704/img1_w3bfs7.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_500/v1695742704/img2_zjmdzb.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_500/v1695742704/img_g3j9p9.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742707/img3_owfvt7.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742707/image2_du0uhr.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742704/image1_lmznd7.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742704/img1_w3bfs7.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742704/img2_zjmdzb.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742704/img_g3j9p9.jpg',
 ];
 
 export const products_url = 'https://baz-api.onrender.com/api/v1/products';
