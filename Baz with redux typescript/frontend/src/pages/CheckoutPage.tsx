@@ -17,7 +17,7 @@ import {
 import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
-  const { params } = useParams();
+  // const { params } = useParams();
   const [stage, setStage] = useState(1);
   const dispatch = useAppDispatch();
   const { shippingInfo } = useAppSelector((state) => state.cart);
