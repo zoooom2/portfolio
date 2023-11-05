@@ -59,9 +59,9 @@ const ProductsPage = () => {
             }
             name='collection'>
             <option className='capitalize flex justify-around' value={'all'}>
-              <div>Shop All</div>
-
-              <MdKeyboardArrowDown size={10} />
+              <div>
+                Shop All <MdKeyboardArrowDown />
+              </div>
             </option>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
