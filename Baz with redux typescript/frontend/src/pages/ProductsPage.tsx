@@ -43,6 +43,7 @@ const ProductsPage = () => {
     <main>
       <Wrapper className='page flex-column'>
         <div className='pageHero'>
+          <div>{products.length} Results</div>
           <select
             className='pageName bg-baz-white'
             onChange={(e) =>
@@ -61,12 +62,12 @@ const ProductsPage = () => {
             ))}
           </select>
         </div>
-        <div className='sort-filter'>
+        {/* <div className='sort-filter max-tablet:hidden'>
           <Sort />
           <div className={`filter ${openFilter && 'open'}`}>
             <Filters />
           </div>
-        </div>
+        </div> */}
 
         <div className='product-list'>
           <ProductList />
@@ -84,7 +85,7 @@ const Wrapper = styled.div`
     padding: 1.2em;
     width: 100%;
     border-bottom: 1px solid black;
-    justify-content: center;
+    justify-content: space-between;
   }
   .pageName {
     font-family: 'Zilla Slab';
