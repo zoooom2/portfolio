@@ -11,14 +11,14 @@ import { useAppDispatch, useAppSelector } from '../App/hooks';
 import {
   // BillingInfo,
   CheckoutStage,
-  // Payment,
+  Payment,
   Shipping,
 } from '../features/cartFeature/checkout';
 import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
   const { params } = useParams();
-  const [stage, setStage] = useState(1);
+  const [stage, setStage] = useState(2);
   const dispatch = useAppDispatch();
   const { shippingInfo } = useAppSelector((state) => state.cart);
 
@@ -52,9 +52,9 @@ const CheckoutPage = () => {
           {params === 'shipping' && (
             <Shipping setStage={setStage} shippingInfo={localShipping} />
           )}
-          {/* {params === 'payment' && (
+          {params === 'payment' && (
             <Payment setStage={setStage} shippingInfo={localShipping} />
-          )} */}
+          )}
           <CartSummary />
         </div>
       </Wrapper>
