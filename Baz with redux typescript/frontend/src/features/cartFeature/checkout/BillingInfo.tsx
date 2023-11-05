@@ -18,6 +18,7 @@ const BillingInfo = ({
 }: {
   setStage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
+  return <>Billing</>;
   const [state, setState] = useState<(countryTypes & { stateCode: string })[]>(
     []
   );
