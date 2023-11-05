@@ -4,27 +4,22 @@ import { Link } from 'react-router-dom';
 import { SingleProductType } from '../../../types';
 const ListView = ({ products }: { products: SingleProductType[] }) => {
   return (
-    <Wrapper>
+    <Wrapper className='flex flex-col'>
       {products.map((product) => {
-        const {
-          _id: id,
-          images,
-          productName: name,
-          price,
-          description,
-        } = product;
+        const { _id: id, images, productName: name, price } = product;
         return (
-          <article key={id}>
-            <img src={images[0]} alt={name} />
+          <Link
+            to={`/product/${id}`}
+            key={id}
+            className='border-b border-black flex flex-col'>
+            <figure className='place-items-center'>
+              <img src={images[0]} alt={name} className='aspect-[230/317]' />
+            </figure>
             <div>
               <h4>{name}</h4>
               <h5 className='price'>{`₦${price}`}</h5>
-              <p>{description.substring(0, 150)}...</p>
-              <Link to={`/product/${id}`} className='btn'>
-                Details
-              </Link>
             </div>
-          </article>
+          </Link>
         );
       })}
     </Wrapper>
@@ -32,41 +27,41 @@ const ListView = ({ products }: { products: SingleProductType[] }) => {
 };
 
 const Wrapper = styled.section`
-  display: grid;
-  row-gap: 3rem;
+  // display: grid;
+  // row-gap: 3rem;
 
-  img {
-    width: 100%;
-    display: block;
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: var(--radius);
-    margin-bottom: 1rem;
-  }
-  h4 {
-    margin-bottom: 0.5rem;
-  }
-  .price {
-    color: var(--clr-primary-6);
-    margin-bottom: 0.75rem;
-  }
-  p {
-    max-width: 45em;
-    margin-bottom: 1rem;
-  }
-  .btn {
-    font-size: 0.5rem;
-    padding: 0.25rem 0.5rem;
-  }
-  @media (min-width: 992px) {
-    article {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      column-gap: 2rem;
-      align-items: center;
-    }
-  }
+  // img {
+  //   width: 100%;
+  //   display: block;
+  //   width: 300px;
+  //   height: 200px;
+  //   object-fit: cover;
+  //   border-radius: var(--radius);
+  //   margin-bottom: 1rem;
+  // }
+  // h4 {
+  //   margin-bottom: 0.5rem;
+  // }
+  // .price {
+  //   color: var(--clr-primary-6);
+  //   margin-bottom: 0.75rem;
+  // }
+  // p {
+  //   max-width: 45em;
+  //   margin-bottom: 1rem;
+  // }
+  // .btn {
+  //   font-size: 0.5rem;
+  //   padding: 0.25rem 0.5rem;
+  // }
+  // @media (min-width: 992px) {
+  //   article {
+  //     display: grid;
+  //     grid-template-columns: auto 1fr;
+  //     column-gap: 2rem;
+  //     align-items: center;
+  //   }
+  // }
 `;
 
 export default ListView;
