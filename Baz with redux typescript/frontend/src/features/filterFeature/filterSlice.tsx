@@ -11,7 +11,7 @@ const filterSlice = createSlice({
   initialState: {
     filtered_product: [],
     all_products: [],
-    grid_view: true,
+    grid_view: false,
     sort: 'price-lowest',
     openFilter: false,
     filters: {
