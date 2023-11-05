@@ -12,17 +12,17 @@ import {
   // BillingInfo,
   CheckoutStage,
   // Payment,
-  // Shipping,
+  Shipping,
 } from '../features/cartFeature/checkout';
 import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
   const { params } = useParams();
-  const [stage, _setStage] = useState(1);
+  const [stage, setStage] = useState(1);
   const dispatch = useAppDispatch();
   const { shippingInfo } = useAppSelector((state) => state.cart);
 
-  const [_localShipping, setLocalShipping] = useLocalStorage('shipping', {
+  const [localShipping, setLocalShipping] = useLocalStorage('shipping', {
     ...shippingInfo,
   });
 
@@ -49,10 +49,10 @@ const CheckoutPage = () => {
         <div className='details'>
           <CheckoutStage position={stage} />
           {/* {params === 'information' && <BillingInfo setStage={setStage} />} */}
-          {/* {params === 'shipping' && (
+          {params === 'shipping' && (
             <Shipping setStage={setStage} shippingInfo={localShipping} />
           )}
-          {params === 'payment' && (
+          {/* {params === 'payment' && (
             <Payment setStage={setStage} shippingInfo={localShipping} />
           )} */}
           <CartSummary />
