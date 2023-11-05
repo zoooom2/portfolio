@@ -9,7 +9,7 @@ import {
 } from '../features/cartFeature/cartSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 import {
-  // BillingInfo,
+  BillingInfo,
   CheckoutStage,
   // Payment,
   // Shipping,
@@ -18,7 +18,7 @@ import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
   const { params } = useParams();
-  const [stage, _setStage] = useState(1);
+  const [stage, setStage] = useState(1);
   const dispatch = useAppDispatch();
   const { shippingInfo } = useAppSelector((state) => state.cart);
 
@@ -37,8 +37,6 @@ const CheckoutPage = () => {
     setLocalShipping(shippingInfo);
   }, [shippingInfo]);
 
-  console.log(params);
-
   return (
     <main>
       <Wrapper className='flex-column place-center'>
@@ -48,7 +46,7 @@ const CheckoutPage = () => {
         </div>
         <div className='details'>
           <CheckoutStage position={stage} />
-          {/* {params === 'information' && <BillingInfo setStage={setStage} />} */}
+          {params === 'information' && <BillingInfo setStage={setStage} />}
           {/* {params === 'shipping' && (
             <Shipping setStage={setStage} shippingInfo={localShipping} />
           )}
