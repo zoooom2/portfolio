@@ -59,9 +59,7 @@ const ProductsPage = () => {
             }
             name='collection'>
             <option className='capitalize flex justify-around' value={'all'}>
-              <div>
-                Shop All <MdKeyboardArrowDown />
-              </div>
+              <div>Shop All</div>
             </option>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
@@ -106,9 +104,9 @@ const Wrapper = styled.div`
     outline: none;
     cursor: pointer;
     letter-spacing: 1.4px;
-    appearance: none;
-    text-indent: 1px;
-    text-overflow: '';
+    // appearance: none;
+    // text-indent: 1px;
+    // text-overflow: '';
   }
   option {
     background-color: black;
