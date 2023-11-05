@@ -1,63 +1,65 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useEffect, useState } from 'react';
+// import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { setClicked } from '../features/userFeature/userSlice';
-import useLocalStorage from '../utils/customHooks/localStorage';
-import {
-  countCartTotal,
-  updateCartTotal,
-} from '../features/cartFeature/cartSlice';
-import { useAppDispatch, useAppSelector } from '../App/hooks';
-import {
-  BillingInfo,
-  CheckoutStage,
-  Payment,
-  Shipping,
-} from '../features/cartFeature/checkout';
-import { CartSummary } from '../features/cartFeature/cart';
+// import { setClicked } from '../features/userFeature/userSlice';
+// import useLocalStorage from '../utils/customHooks/localStorage';
+// import {
+//   countCartTotal,
+//   updateCartTotal,
+// } from '../features/cartFeature/cartSlice';
+// import { useAppDispatch, useAppSelector } from '../App/hooks';
+// import {
+//   BillingInfo,
+//   CheckoutStage,
+//   Payment,
+//   Shipping,
+// } from '../features/cartFeature/checkout';
+// import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
-  const { params } = useParams();
-  const [stage, setStage] = useState(1);
-  const dispatch = useAppDispatch();
-  const { shippingInfo } = useAppSelector((state) => state.cart);
+  // const { params } = useParams();
+  // const [stage, setStage] = useState(1);
+  // const dispatch = useAppDispatch();
+  // const { shippingInfo } = useAppSelector((state) => state.cart);
 
-  const [localShipping, setLocalShipping] = useLocalStorage('shipping', {
-    ...shippingInfo,
-  });
+  // const [localShipping, setLocalShipping] = useLocalStorage('shipping', {
+  //   ...shippingInfo,
+  // });
 
-  useEffect(() => {
-    dispatch(setClicked(true));
-    document.title = 'Checkout | Baz Official Store';
-  }, []);
+  // useEffect(() => {
+  //   dispatch(setClicked(true));
+  //   document.title = 'Checkout | Baz Official Store';
+  // }, []);
 
-  useEffect(() => {
-    dispatch(updateCartTotal());
-    dispatch(countCartTotal());
-    setLocalShipping(shippingInfo);
-  }, [shippingInfo]);
+  // useEffect(() => {
+  //   dispatch(updateCartTotal());
+  //   dispatch(countCartTotal());
+  //   setLocalShipping(shippingInfo);
+  // }, [shippingInfo]);
 
-  return (
-    <main>
-      <Wrapper className='flex-column place-center'>
-        <div className='pageHero flex-column place-center'>
-          <h3 className='pageName'>Checkout</h3>
-          <button className='backToCart-btn'>Back to Cart</button>
-        </div>
-        <div className='details'>
-          <CheckoutStage position={stage} />
-          {params === 'information' && <BillingInfo setStage={setStage} />}
-          {params === 'shipping' && (
-            <Shipping setStage={setStage} shippingInfo={localShipping} />
-          )}
-          {params === 'payment' && (
-            <Payment setStage={setStage} shippingInfo={localShipping} />
-          )}
-          <CartSummary />
-        </div>
-      </Wrapper>
-    </main>
-  );
+  // return (
+  //   <main>
+  //     <Wrapper className='flex-column place-center'>
+  //       <div className='pageHero flex-column place-center'>
+  //         <h3 className='pageName'>Checkout</h3>
+  //         <button className='backToCart-btn'>Back to Cart</button>
+  //       </div>
+  //       <div className='details'>
+  //         <CheckoutStage position={stage} />
+  //         {params === 'information' && <BillingInfo setStage={setStage} />}
+  //         {params === 'shipping' && (
+  //           <Shipping setStage={setStage} shippingInfo={localShipping} />
+  //         )}
+  //         {params === 'payment' && (
+  //           <Payment setStage={setStage} shippingInfo={localShipping} />
+  //         )}
+  //         <CartSummary />
+  //       </div>
+  //     </Wrapper>
+  //   </main>
+  // );
+
+  return <Wrapper>checkout</Wrapper>;
 };
 const Wrapper = styled.div`
   margin-inline: 0;
