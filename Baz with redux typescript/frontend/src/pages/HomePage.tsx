@@ -17,7 +17,9 @@ const HomePage = () => {
         <div className='tablet:w-1/2 max-tablet:hidden'>
           <ImageSlider slides={featuredSlide2} timer={5001} />
         </div>
-        <Link to='/shop' className='discover-btn'>
+        <Link
+          to='/shop'
+          className='border border-[#f9f8f8] leading-[24px] text-[20px] discover-btn bg-transparent text-baz-white absolute left-1/2 top-1/2 px-[16px] py-[24px] cursor-pointer font-semibold'>
           DISCOVER
         </Link>
       </Wrapper>
@@ -38,20 +40,10 @@ const Wrapper = styled.main`
   position: relative;
 
   .discover-btn {
-    background: transparent;
-    position: absolute;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
-    padding: 16px 24px;
     font-family: Zilla Slab, serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
     letter-spacing: 0.1em;
-    cursor: pointer;
-    border: 1px solid #fff;
+
     &:hover {
       background: rgba(0, 0, 0, 0.8);
       border: none;
