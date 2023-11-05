@@ -11,14 +11,17 @@ import {
 import { fetchProducts } from '../features/productFeature/productSlice';
 import { products_url as url } from '../utils/constants';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
-import { Filters, Sort } from '../features/filterFeature/filter';
+// import { Filters, Sort } from '../features/filterFeature/filter';
 import ProductList from '../features/productFeature/product/ProductList';
 
 const ProductsPage = () => {
   const dispatch = useAppDispatch();
-  const { all_products, openFilter, sort, filters } = useAppSelector(
-    (state) => state.filter
-  );
+  const {
+    all_products,
+    // openFilter,
+    sort,
+    filters,
+  } = useAppSelector((state) => state.filter);
   const { products } = useAppSelector((state) => state.product);
 
   useEffect(() => {
