@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { setClicked } from '../features/userFeature/userSlice';
 import useLocalStorage from '../utils/customHooks/localStorage';
@@ -17,7 +17,7 @@ import {
 import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
-  // const { params } = useParams();
+  const { params } = useParams();
   const [stage, _setStage] = useState(1);
   const dispatch = useAppDispatch();
   const { shippingInfo } = useAppSelector((state) => state.cart);
@@ -36,6 +36,8 @@ const CheckoutPage = () => {
     dispatch(countCartTotal());
     setLocalShipping(shippingInfo);
   }, [shippingInfo]);
+
+  console.log(params);
 
   return (
     <main>
