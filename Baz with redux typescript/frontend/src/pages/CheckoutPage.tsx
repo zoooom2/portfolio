@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { setClicked } from '../features/userFeature/userSlice';
 import useLocalStorage from '../utils/customHooks/localStorage';
