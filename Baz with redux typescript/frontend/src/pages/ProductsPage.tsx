@@ -13,6 +13,7 @@ import { products_url as url } from '../utils/constants';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 // import { Filters, Sort } from '../features/filterFeature/filter';
 import ProductList from '../features/productFeature/product/ProductList';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 
 const ProductsPage = () => {
   const dispatch = useAppDispatch();
@@ -50,15 +51,18 @@ const ProductsPage = () => {
             {products.length} Results
           </div>
           <select
-            className='pageName bg-baz-white text-baz-black'
+            className='pageName bg-baz-white text-baz-black '
             onChange={(e) =>
               dispatch(
                 updateFilters({ name: 'collection', value: e.target.value })
               )
             }
             name='collection'>
-            <option className='capitalize' value={'all'}>
-              Shop All
+            <option className='capitalize flex justify-around' value={'all'}>
+              <div>Shop All</div>
+              <div>
+                <MdKeyboardArrowDown />
+              </div>
             </option>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
