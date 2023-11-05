@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 // import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { setClicked } from '../features/userFeature/userSlice';
-// import useLocalStorage from '../utils/customHooks/localStorage';
+import useLocalStorage from '../utils/customHooks/localStorage';
 import {
   countCartTotal,
   updateCartTotal,
@@ -22,9 +22,9 @@ const CheckoutPage = () => {
   const dispatch = useAppDispatch();
   const { shippingInfo } = useAppSelector((state) => state.cart);
 
-  // const [localShipping, setLocalShipping] = useLocalStorage('shipping', {
-  //   ...shippingInfo,
-  // });
+  const [_localShipping, setLocalShipping] = useLocalStorage('shipping', {
+    ...shippingInfo,
+  });
 
   useEffect(() => {
     dispatch(setClicked(true));
@@ -34,7 +34,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     dispatch(updateCartTotal());
     dispatch(countCartTotal());
-    //   setLocalShipping(shippingInfo);
+    setLocalShipping(shippingInfo);
   }, [shippingInfo]);
 
   return (
