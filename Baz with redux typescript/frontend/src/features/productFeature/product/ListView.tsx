@@ -9,13 +9,13 @@ const ListView = ({ products }: { products: SingleProductType[] }) => {
         const { _id: id, images, productName: name, price } = product;
         return (
           <Link
-            to={`/product/${id}`}
+            to={`/shop/${id}`}
             key={id}
-            className='border-b border-black flex flex-col'>
-            <figure className='place-items-center'>
+            className='border-b border-black flex flex-col h-[50vh]'>
+            <figure className='place-items-center h-3/4'>
               <img src={images[0]} alt={name} className='aspect-[230/317]' />
             </figure>
-            <div>
+            <div className='h-1/4'>
               <h4>{name}</h4>
               <h5 className='price'>{`₦${price}`}</h5>
             </div>
