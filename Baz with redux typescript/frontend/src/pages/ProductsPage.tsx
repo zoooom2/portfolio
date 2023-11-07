@@ -16,7 +16,7 @@ import ProductList from '../features/productFeature/product/ProductList';
 
 const ProductsPage = () => {
   const dispatch = useAppDispatch();
-  const { filtered_product, sort, filters } = useAppSelector(
+  const { all_products, filtered_product, sort, filters } = useAppSelector(
     (state) => state.filter
   );
   const { products } = useAppSelector((state) => state.product);
@@ -37,7 +37,7 @@ const ProductsPage = () => {
     dispatch(loadProducts(products));
   }, [products]);
 
-  const categories = getUniqueValues(filtered_product, 'category');
+  const categories = getUniqueValues(all_products, 'category');
   const collections = getUniqueValues(filtered_product, 'collectionName');
 
   return (
