@@ -41,7 +41,7 @@ const ProductsPage = () => {
   }, [products]);
 
   const categories = getUniqueValues(all_products, 'category');
-  const collections = getUniqueValues(all_products, 'collection');
+  const collections = getUniqueValues(all_products, 'collectionName');
 
   return (
     <main>
