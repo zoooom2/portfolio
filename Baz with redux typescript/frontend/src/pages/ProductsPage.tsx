@@ -16,7 +16,7 @@ import ProductList from '../features/productFeature/product/ProductList';
 
 const ProductsPage = () => {
   const dispatch = useAppDispatch();
-  const { all_products, filtered_product, sort, filters } = useAppSelector(
+  const { filtered_product, sort, filters } = useAppSelector(
     (state) => state.filter
   );
   const { products } = useAppSelector((state) => state.product);
