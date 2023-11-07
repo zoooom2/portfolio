@@ -40,11 +40,29 @@ const ProductsPage = () => {
     dispatch(loadProducts(products));
   }, [products]);
 
-  const collections = getUniqueValues(all_products, 'category');
+  const categories = getUniqueValues(all_products, 'category');
+  const collections = getUniqueValues(all_products, 'collection');
 
   return (
     <main>
       <Wrapper className='page flex-column'>
+        <div className='flex justify-center'>
+          <select
+            name='collectionName'
+            className='pt-[51px] pb-[55px] font-baz2 text-[20px] font-semibold tracking-[2px]'
+            onChange={(e) =>
+              dispatch(
+                updateFilters({ name: 'collectionName', value: e.target.value })
+              )
+            }>
+            <option>All Collection</option>
+            {collections.map((collection, index) => (
+              <option value={collection} key={index}>
+                {collection}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className='pageHero'>
           <div className='font-baz3 text-[14px] font-normal tracking-[1.4px]'>
             {products.length} Results
@@ -60,9 +78,9 @@ const ProductsPage = () => {
             <option className='capitalize flex justify-around' value={'all'}>
               <div>Shop All</div>
             </option>
-            {collections.map((collection, index) => (
-              <option value={collection} key={index}>
-                {collection}
+            {categories.map((category, index) => (
+              <option value={category} key={index}>
+                {category}
               </option>
             ))}
           </select>
