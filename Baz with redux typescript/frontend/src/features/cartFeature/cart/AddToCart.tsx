@@ -1,37 +1,40 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AmountButtons from './AmountButtons';
+// import AmountButtons from './AmountButtons';
 import { addToCart } from '../../cartFeature/cartSlice';
 import { SingleProductType } from '../../../types';
 import { useAppDispatch } from '../../../App/hooks';
 
 const AddToCart = ({ product }: { product: SingleProductType }) => {
-  const { _id: id, stock } = product;
-  const [amount, setAmount] = useState(1);
+  const {
+    _id: id,
+    // stock
+  } = product;
+  const [amount, _setAmount] = useState(1);
   const [size, setSize] = useState('');
   const dispatch = useAppDispatch();
 
-  const increase = useCallback(() => {
-    setAmount((oldAmount) => {
-      let tempAmount = oldAmount + 1;
-      if (tempAmount > stock) {
-        tempAmount = stock;
-      }
-      return tempAmount;
-    });
-  }, [stock]);
+  // const increase = useCallback(() => {
+  //   setAmount((oldAmount) => {
+  //     let tempAmount = oldAmount + 1;
+  //     if (tempAmount > stock) {
+  //       tempAmount = stock;
+  //     }
+  //     return tempAmount;
+  //   });
+  // }, [stock]);
 
-  const decrease = useCallback(() => {
-    setAmount((oldAmount) => {
-      let tempAmount = oldAmount - 1;
-      if (tempAmount < 1) {
-        tempAmount = 1;
-      }
-      return tempAmount;
-    });
-  }, []);
+  // const decrease = useCallback(() => {
+  //   setAmount((oldAmount) => {
+  //     let tempAmount = oldAmount - 1;
+  //     if (tempAmount < 1) {
+  //       tempAmount = 1;
+  //     }
+  //     return tempAmount;
+  //   });
+  // }, []);
 
   const handleClick = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -40,22 +43,25 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
 
   return (
     <Wrapper className='size flex-column'>
-      <AmountButtons increase={increase} decrease={decrease} amount={amount} />
-      <div className='size-guide'>size guide</div>
-      <select
-        name='size'
-        className='size-select'
-        defaultValue={'none'}
-        onChange={handleClick}>
-        <option value='none' disabled>
-          Select a Size
-        </option>
-        <option value='small'>Small</option>
-        <option value='medium'>Medium</option>
-        <option value='large'>Large</option>
-        <option value='x-large'>X-Large</option>
-        <option value='2x-large'>2x-large</option>
-      </select>
+      {/* <AmountButtons increase={increase} decrease={decrease} amount={amount} /> */}
+      <div className='flex flex-col gap-[16px]'>
+        <div className='size-guide'>size guide</div>
+        <select
+          name='size'
+          className='size-select'
+          defaultValue={'none'}
+          onChange={handleClick}>
+          <option value='none' disabled>
+            Select a Size
+          </option>
+          <option value='small'>Small</option>
+          <option value='medium'>Medium</option>
+          <option value='large'>Large</option>
+          <option value='x-large'>X-Large</option>
+          <option value='2x-large'>2x-large</option>
+        </select>
+      </div>
+
       <button
         className='btn add-cart-btn zilla-700'
         onClick={() => {

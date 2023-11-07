@@ -65,12 +65,19 @@ const SingleProductPage = () => {
         <ProductImages images={images} />
       </div>
       <div className='product-details'>
-        <div className='product-details-center flex-column'>
-          <div className='name-price'>
-            <div className='product-name'>{productName}</div>
-            <div className='product-price'>{priceFormat(price)}</div>
+        <div className='product-details-center flex-column max-tablet:gap-[46px]'>
+          <div className='flex flex-col gap-[18px] tablet:gap-[48px]'>
+            <div className='name-price'>
+              <div className='product-name max-tablet:text-[18px] max-tablet:tracking-[1.6px]'>
+                {productName}
+              </div>
+              <div className='product-price tablet:font-normal tablet:text-[24px]'>
+                {priceFormat(price)}
+              </div>
+            </div>
+            <p className='desc'>{description}</p>
           </div>
-          <p className='desc'>{description}</p>
+
           {stock > 0 ? (
             <AddToCart product={product} />
           ) : (
@@ -114,16 +121,15 @@ const Wrapper = styled.main`
     justify-content: space-between;
   }
   .product-name {
-    font-family: 'Zilla Slab';
-    font-size: 24px;
-    line-height: 29px;
+    font-family: 'Poppins';
+    font-size: 16px;
     /* identical to box height */
-    letter-spacing: 0.1em;
+    letter-spacing: 2.4px;
+    font-weight: 600;
   }
   .product-price {
     font-family: 'Poppins';
-    font-size: 24px;
-    line-height: 36px;
+    font-size: 16px;
   }
   .desc {
     font-family: 'Poppins';
