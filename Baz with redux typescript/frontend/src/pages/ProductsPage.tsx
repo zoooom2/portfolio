@@ -48,11 +48,11 @@ const ProductsPage = () => {
       <Wrapper className='page flex-column'>
         <div className='flex justify-center pt-[51px] pb-[55px] border-b border-black'>
           <select
-            name='collectionName'
+            name='collection'
             className='font-baz2 text-[20px] font-semibold tracking-[2px] bg-baz-white outline-none'
             onChange={(e) =>
               dispatch(
-                updateFilters({ name: 'collectionName', value: e.target.value })
+                updateFilters({ name: 'collection', value: e.target.value })
               )
             }>
             <option>All Collection</option>
