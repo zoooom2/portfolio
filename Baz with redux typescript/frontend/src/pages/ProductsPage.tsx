@@ -46,7 +46,7 @@ const ProductsPage = () => {
   return (
     <main>
       <Wrapper className='page flex-column'>
-        <div className='flex justify-center pt-[51px] pb-[55px] border-b'>
+        <div className='flex justify-center pt-[51px] pb-[55px] border-b border-black'>
           <select
             name='collectionName'
             className='font-baz2 text-[20px] font-semibold tracking-[2px] bg-baz-white'
