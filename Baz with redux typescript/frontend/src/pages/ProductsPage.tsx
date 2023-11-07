@@ -16,12 +16,9 @@ import ProductList from '../features/productFeature/product/ProductList';
 
 const ProductsPage = () => {
   const dispatch = useAppDispatch();
-  const {
-    all_products,
-    // openFilter,
-    sort,
-    filters,
-  } = useAppSelector((state) => state.filter);
+  const { all_products, filtered_product, sort, filters } = useAppSelector(
+    (state) => state.filter
+  );
   const { products } = useAppSelector((state) => state.product);
 
   useEffect(() => {
@@ -65,7 +62,7 @@ const ProductsPage = () => {
         </div>
         <div className='pageHero'>
           <div className='font-baz3 text-[14px] font-normal tracking-[1.4px]'>
-            {products.length} Results
+            {filtered_product.length} Results
           </div>
           <select
             className='pageName bg-baz-white text-baz-black text-[14px] tracking-[1.4px] font-baz3 cursor-pointer'
