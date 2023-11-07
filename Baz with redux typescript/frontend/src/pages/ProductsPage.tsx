@@ -58,7 +58,9 @@ const ProductsPage = () => {
             }
             name='category'>
             <option className='capitalize flex justify-around' value={'all'}>
-              <div>Shop All</div>
+              <div className='font-baz3 text-[14px] tracking-[1.4px]'>
+                Shop All
+              </div>
             </option>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
