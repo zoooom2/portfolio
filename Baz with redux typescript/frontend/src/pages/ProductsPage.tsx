@@ -52,7 +52,7 @@ const ProductsPage = () => {
                 updateFilters({ name: 'collection', value: e.target.value })
               )
             }>
-            <option>All Collection</option>
+            <option value={'all'}>All Collection</option>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
                 {collection}
