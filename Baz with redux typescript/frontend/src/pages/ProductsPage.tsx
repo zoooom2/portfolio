@@ -51,8 +51,10 @@ const ProductsPage = () => {
               dispatch(
                 updateFilters({ name: 'collection', value: e.target.value })
               );
-              const filtered = all_products.filter(
-                (p) => p.collectionName === e.target.value
+              const filtered = all_products.filter((p) =>
+                e.target.value === 'all'
+                  ? all_products
+                  : p.collectionName === e.target.value
               );
               dispatch(updateCollectionProduct(filtered));
             }}>
