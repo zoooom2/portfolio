@@ -58,9 +58,7 @@ const ProductsPage = () => {
             }
             name='category'>
             <option className='capitalize flex justify-around' value={'all'}>
-              <div className='font-baz3 text-[14px] tracking-[1.4px]'>
-                Shop All
-              </div>
+              <div>Shop All</div>
             </option>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
@@ -112,8 +110,10 @@ const Wrapper = styled.div`
   option {
     background-color: black;
     color: white;
-    font-size: 15px;
+    font-size: 14px;
     padding: 1em;
+    font-family: 'Bell MT';
+    letter-spacing: 1.4px;
   }
   .sort-filter {
     width: 100%;
