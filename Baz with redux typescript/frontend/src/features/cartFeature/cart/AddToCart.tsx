@@ -48,7 +48,7 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
         <div className='size-guide'>size guide</div>
         <select
           name='size'
-          className='size-select py-[21px] px-[16px] tablet:py-[31.5px] tablet:px-[24px]'
+          className='size-select py-[21px] px-[16px] tablet:py-[31.5px] tablet:px-[24px] bg-baz-white'
           defaultValue={'none'}
           onChange={handleClick}>
           <option value='none' disabled>
@@ -102,10 +102,9 @@ const Wrapper = styled.div`
     text-decoration-line: underline;
   }
   .size-select {
-    // padding: 31.5px 24px;
     gap: 15px;
     width: 100%;
-    // border: 1.5px solid black;
+
     // drop down arrow
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -115,12 +114,6 @@ const Wrapper = styled.div`
     cursor: pointer;
   }
   .btn {
-    // gap: 15px;
-    // background: #000000;
-    // width: 100%;
-    // font-size: 24px;
-    // color: #ffffff;
-    // cursor: pointer;
     &:hover {
       transform: scale(1.01);
     }
