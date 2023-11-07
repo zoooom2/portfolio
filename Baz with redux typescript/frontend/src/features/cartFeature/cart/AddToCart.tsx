@@ -44,11 +44,11 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
   return (
     <Wrapper className='size flex-column'>
       {/* <AmountButtons increase={increase} decrease={decrease} amount={amount} /> */}
-      <div className='flex flex-col gap-[16px]'>
+      <div className='flex flex-col gap-[16px] w-full'>
         <div className='size-guide'>size guide</div>
         <select
           name='size'
-          className='size-select'
+          className='size-select py-[21px] px-[16px] tablet:py-[31.5px] tablet:px-[24px]'
           defaultValue={'none'}
           onChange={handleClick}>
           <option value='none' disabled>
@@ -63,7 +63,7 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
       </div>
 
       <button
-        className='btn add-cart-btn zilla-700'
+        className='cursor-pointer btn add-cart-btn py-[20px] font-baz2 text-[16px] font-semibold tablet:py-[30px] w-full tablet:font-bold tablet:text-[24px] bg-baz-white text-baz-black'
         onClick={() => {
           dispatch(addToCart({ id, amount, product, size }));
         }}
@@ -102,7 +102,7 @@ const Wrapper = styled.div`
     text-decoration-line: underline;
   }
   .size-select {
-    padding: 31.5px 24px;
+    // padding: 31.5px 24px;
     gap: 15px;
     width: 100%;
     // border: 1.5px solid black;
@@ -115,12 +115,12 @@ const Wrapper = styled.div`
     cursor: pointer;
   }
   .btn {
-    gap: 15px;
-    background: #000000;
-    width: 100%;
-    font-size: 24px;
-    color: #ffffff;
-    cursor: pointer;
+    // gap: 15px;
+    // background: #000000;
+    // width: 100%;
+    // font-size: 24px;
+    // color: #ffffff;
+    // cursor: pointer;
     &:hover {
       transform: scale(1.01);
     }

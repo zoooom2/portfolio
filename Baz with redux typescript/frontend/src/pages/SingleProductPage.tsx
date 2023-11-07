@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Swiper from 'swiper';
 import { priceFormat, single_product_url as url } from '../utils/constants';
 import styled from 'styled-components';
 import { setClicked } from '../features/userFeature/userSlice';
