@@ -106,9 +106,10 @@ const filterSlice = createSlice({
       } = action.payload;
       state.filters = { ...state.filters, [name]: value };
     },
-    updateProductCollection: (state, action) => {
+    updateCollectionProduct: (state, action) => {
       state.filtered_collection = [...action.payload];
     },
+
     toggleFilter: (state) => {
       state.openFilter = !state.openFilter;
     },
@@ -136,7 +137,7 @@ export const {
   updateFilters,
   toggleFilter,
   clearFilters,
-  updateProductCollection,
+  updateCollectionProduct,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;
