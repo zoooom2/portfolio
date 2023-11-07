@@ -10,6 +10,7 @@ const filterSlice = createSlice({
   name: 'filter',
   initialState: {
     filtered_product: [],
+    filtered_collection: [],
     all_products: [],
     grid_view: false,
     sort: 'price-lowest',
@@ -31,6 +32,7 @@ const filterSlice = createSlice({
       const min = Math.min(...productPrices);
       state.all_products = [...action.payload];
       state.filtered_product = [...action.payload];
+      state.filtered_collection = [...action.payload];
       state.filters = {
         ...state.filters,
         max_price: max,
@@ -104,6 +106,9 @@ const filterSlice = createSlice({
       } = action.payload;
       state.filters = { ...state.filters, [name]: value };
     },
+    updateProductCollection: (state, action) => {
+      state.filtered_collection = [...action.payload];
+    },
     toggleFilter: (state) => {
       state.openFilter = !state.openFilter;
     },
@@ -131,6 +136,7 @@ export const {
   updateFilters,
   toggleFilter,
   clearFilters,
+  updateProductCollection,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

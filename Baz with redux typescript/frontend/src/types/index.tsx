@@ -136,6 +136,7 @@ export type ProductActionType = {
 export type FilterStatetype = {
   filtered_product: SingleProductType[];
   all_products: SingleProductType[];
+  filtered_collection: SingleProductType[];
   grid_view: boolean;
   sort: string | undefined;
   openFilter: boolean;

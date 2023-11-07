@@ -7,6 +7,7 @@ import {
   loadProducts,
   sortProduct,
   updateFilters,
+  updateProductCollection,
 } from '../features/filterFeature/filterSlice';
 import { fetchProducts } from '../features/productFeature/productSlice';
 import { products_url as url } from '../utils/constants';
@@ -16,9 +17,8 @@ import ProductList from '../features/productFeature/product/ProductList';
 
 const ProductsPage = () => {
   const dispatch = useAppDispatch();
-  const { all_products, filtered_product, sort, filters } = useAppSelector(
-    (state) => state.filter
-  );
+  const { all_products, filtered_product, filtered_collection, sort, filters } =
+    useAppSelector((state) => state.filter);
   const { products } = useAppSelector((state) => state.product);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const ProductsPage = () => {
     dispatch(loadProducts(products));
   }, [products]);
 
-  const categories = getUniqueValues(filtered_product, 'category');
+  const categories = getUniqueValues(filtered_collection, 'category');
   const collections = getUniqueValues(all_products, 'collectionName');
 
   return (
@@ -47,11 +47,12 @@ const ProductsPage = () => {
           <select
             name='collection'
             className='font-baz2 text-[20px] font-semibold tracking-[2px] bg-baz-white outline-none'
-            onChange={(e) =>
+            onChange={(e) => {
               dispatch(
                 updateFilters({ name: 'collection', value: e.target.value })
-              )
-            }>
+              );
+              dispatch(updateProductCollection(filtered_product));
+            }}>
             <option value={'all'}>All Collection</option>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
