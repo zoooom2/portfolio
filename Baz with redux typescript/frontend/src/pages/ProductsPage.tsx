@@ -40,23 +40,23 @@ const ProductsPage = () => {
     dispatch(loadProducts(products));
   }, [products]);
 
-  const collections = getUniqueValues(all_products, 'collectionName');
+  const collections = getUniqueValues(all_products, 'category');
 
   return (
     <main>
       <Wrapper className='page flex-column'>
         <div className='pageHero'>
-          <div className='font-baz1 text-[14px] font-normal tracking-[1.4px]'>
+          <div className='font-baz3 text-[14px] font-normal tracking-[1.4px]'>
             {products.length} Results
           </div>
           <select
             className='pageName bg-baz-white text-baz-black '
             onChange={(e) =>
               dispatch(
-                updateFilters({ name: 'collection', value: e.target.value })
+                updateFilters({ name: 'category', value: e.target.value })
               )
             }
-            name='collection'>
+            name='category'>
             <option className='capitalize flex justify-around' value={'all'}>
               <div>Shop All</div>
             </option>

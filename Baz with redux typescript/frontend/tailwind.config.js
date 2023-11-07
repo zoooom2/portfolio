@@ -27,6 +27,7 @@ export default {
       fontFamily: {
         baz1: ['Poppins', ...defaultTheme.fontFamily.sans],
         baz2: ['Zilla Slab', ...defaultTheme.fontFamily.sans],
+        baz3: ['Bell MT', ...defaultTheme.fontFamily.serif],
       },
       fontSize: {
         adminHero: ['32px', '48px'],
