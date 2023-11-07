@@ -101,10 +101,10 @@ const Wrapper = styled.div`
   }
   option {
     background-color: black;
-    color: white;
-    font-size: 14px;
+    color: #d3d3d3;
+    font-size: 10px;
     padding: 1em;
-    font-family: 'Bell MT';
+    font-family: 'Poppins';
     letter-spacing: 1.4px;
   }
   .sort-filter {
