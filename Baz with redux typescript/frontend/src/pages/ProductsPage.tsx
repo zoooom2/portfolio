@@ -50,7 +50,7 @@ const ProductsPage = () => {
             {products.length} Results
           </div>
           <select
-            className='pageName bg-baz-white text-baz-black '
+            className='pageName bg-baz-white text-baz-black text-[14px] tracking-[1.4px] font-baz3 cursor-pointer'
             onChange={(e) =>
               dispatch(
                 updateFilters({ name: 'category', value: e.target.value })
@@ -94,18 +94,10 @@ const Wrapper = styled.div`
     align-items: center;
   }
   .pageName {
-    font-family: 'Poppins';
-    font-weight: 400;
-    font-size: 14px;
     line-height: 24px;
     /* identical to box height */
     border: none;
     outline: none;
-    cursor: pointer;
-    letter-spacing: 1.4px;
-    // appearance: none;
-    // text-indent: 1px;
-    // text-overflow: '';
   }
   option {
     background-color: black;
