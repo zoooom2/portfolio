@@ -41,6 +41,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
 
   return (
     <Swiper
+      className='w-9'
       spaceBetween={50}
       slidesPerView={1}
       modules={[Pagination]}
