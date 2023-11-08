@@ -41,12 +41,12 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
   return (
     <Swiper
       spaceBetween={50}
-      slidesPerView={1}
+      slidesPerView={2}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}>
       {images.map((image, index) => (
         <SwiperSlide key={index}>
-          <img src={image} alt='' />
+          <img src={image} alt='' style={{ width: '100%' }} />
         </SwiperSlide>
       ))}
     </Swiper>
