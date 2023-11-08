@@ -2,7 +2,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
-import 'swiper.min.css';
+import 'swiper.css';
 
 const ProductImages = ({ images = [] }: { images: string[] }) => {
   //   return (
