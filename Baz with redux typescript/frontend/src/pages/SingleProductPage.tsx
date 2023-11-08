@@ -62,7 +62,7 @@ const SingleProductPage = () => {
 
   return (
     <Wrapper>
-      <div className='product-picture'>
+      <div className='product-picture w-full'>
         <ProductImages images={images} />
       </div>
       <div className='product-details'>

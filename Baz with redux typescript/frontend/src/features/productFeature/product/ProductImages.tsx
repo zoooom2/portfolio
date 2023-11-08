@@ -47,15 +47,9 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
       pagination={{ clickable: true }}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}>
-      <SwiperSlide>
-        <img src={images[0]} alt='' />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img src={images[0]} alt='' />
-      </SwiperSlide>
       {images.map((image, index) => (
         <SwiperSlide key={index}>
-          <img src={image} alt='' />
+          <img src={image} alt='' style={{ width: '100%' }} />
         </SwiperSlide>
       ))}
     </Swiper>
