@@ -2,7 +2,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
-import 'swiper/css';
+import 'swiper/swiper.min.css';
 
 const ProductImages = ({ images = [] }: { images: string[] }) => {
   //   return (
@@ -44,11 +44,11 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
       slidesPerView={1}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}>
-      <SwiperSlide>
-        {images.map((image, index) => (
-          <img key={index} src={image} alt='' />
-        ))}{' '}
-      </SwiperSlide>
+      {images.map((image, index) => (
+        <SwiperSlide key={index}>
+          <img src={image} alt='' />
+        </SwiperSlide>
+      ))}
     </Swiper>
   );
 };
