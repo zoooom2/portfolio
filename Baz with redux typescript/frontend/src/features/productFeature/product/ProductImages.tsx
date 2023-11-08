@@ -41,16 +41,21 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
 
   return (
     <Swiper
-      className='w-screen'
       spaceBetween={50}
-      slidesPerView={1}
+      slidesPerView={3}
       modules={[Pagination]}
       pagination={{ clickable: true }}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}>
+      <SwiperSlide>
+        <img src={images[0]} alt='' />
+      </SwiperSlide>
+      <SwiperSlide>
+        <img src={images[0]} alt='' />
+      </SwiperSlide>
       {images.map((image, index) => (
-        <SwiperSlide key={index} className='flex justify-center'>
-          <img src={image} alt='' className='object-contain' />
+        <SwiperSlide key={index}>
+          <img src={image} alt='' />
         </SwiperSlide>
       ))}
     </Swiper>
