@@ -1,42 +1,25 @@
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
 
 // Import Swiper styles
+import 'swiper/css/bundle';
 
 const ProductImages = ({ images = [] }: { images: string[] }) => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-  console.log(images);
   return (
-    <div>
-      <h2> Single Item</h2>
-      <Slider {...settings}>
-        <div>
-          <h3>1</h3>
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div>
-      </Slider>
-    </div>
+    <Swiper
+      spaceBetween={50}
+      slidesPerView={3}
+      modules={[Pagination]}
+      pagination={{ clickable: true }}
+      onSlideChange={() => console.log('slide change')}
+      onSwiper={(swiper) => console.log(swiper)}>
+      {images.map((image, index) => (
+        <SwiperSlide key={index}>
+          <img src={image} alt='' style={{ width: '100%' }} />
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 };
 export default ProductImages;
