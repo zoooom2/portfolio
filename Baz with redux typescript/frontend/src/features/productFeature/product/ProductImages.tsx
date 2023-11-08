@@ -1,58 +1,39 @@
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
+import { Component } from 'react';
+import Slider from 'react-slick';
 
-// Import Swiper styles
-import 'swiper/css/bundle';
-
-const ProductImages = ({ images = [] }: { images: string[] }) => {
-  //   return (
-  //     <Wrapper className='p-5'>
-  //       <div className='w-full h-auto flex justify-center p-8'>
-  //         <img
-  //           loading='lazy'
-  //           src={images[index]}
-  //           alt='main'
-  //           className='object-contain h-full'
-  //         />
-  //       </div>
-
-  //       <div className='gallery'>
-  //         {images.map((image, count) => {
-  //           return (
-  //             <div
-  //               className={`flex items-center ${
-  //                 image === images[index] ? 'active' : null
-  //               } p-3 h-[130px] w-[125px] cursor-pointer object-contain`}>
-  //               <img
-  //                 src={image}
-  //                 loading='lazy'
-  //                 alt=''
-  //                 key={count}
-  //                 onClick={() => setIndex(count)}
-  //               />
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     </Wrapper>
-  //   );
-  // };
-
-  return (
-    <Swiper
-      spaceBetween={50}
-      slidesPerView={3}
-      modules={[Pagination]}
-      pagination={{ clickable: true }}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}>
-      {images.map((image, index) => (
-        <SwiperSlide key={index}>
-          <img src={image} alt='' style={{ width: '100%' }} />
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  );
-};
-export default ProductImages;
+export default class SimpleSlider extends Component {
+  render() {
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    };
+    return (
+      <div>
+        <h2> Single Item</h2>
+        <Slider {...settings}>
+          <div>
+            <h3>1</h3>
+          </div>
+          <div>
+            <h3>2</h3>
+          </div>
+          <div>
+            <h3>3</h3>
+          </div>
+          <div>
+            <h3>4</h3>
+          </div>
+          <div>
+            <h3>5</h3>
+          </div>
+          <div>
+            <h3>6</h3>
+          </div>
+        </Slider>
+      </div>
+    );
+  }
+}
