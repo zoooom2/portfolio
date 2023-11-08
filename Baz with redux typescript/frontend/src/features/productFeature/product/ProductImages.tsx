@@ -50,7 +50,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
       onSwiper={(swiper) => console.log(swiper)}>
       {images.map((image, index) => (
         <SwiperSlide key={index}>
-          <img src={image} alt='' style={{ width: '100%' }} />
+          <img src={image} alt='' className='object-contain' />
         </SwiperSlide>
       ))}
     </Swiper>
