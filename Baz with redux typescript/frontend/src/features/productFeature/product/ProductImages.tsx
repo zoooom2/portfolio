@@ -19,7 +19,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
           <img
             src={image}
             alt=''
-            style={{ width: '100%', maxHeight: '500px' }}
+            style={{ maxWidth: '100vh', maxHeight: '500px' }}
           />
         </SwiperSlide>
       ))}
