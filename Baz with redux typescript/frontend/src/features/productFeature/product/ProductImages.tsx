@@ -2,7 +2,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
-import 'swiper.css';
+import 'swiper/css';
 
 const ProductImages = ({ images = [] }: { images: string[] }) => {
   //   return (
@@ -41,7 +41,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
   return (
     <Swiper
       spaceBetween={50}
-      slidesPerView={1}
+      slidesPerView={3}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}>
       {images.map((image, index) => (
