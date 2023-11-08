@@ -49,7 +49,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}>
       {images.map((image, index) => (
-        <SwiperSlide key={index} className='flex justify-centerd'>
+        <SwiperSlide key={index} className='flex justify-center'>
           <img src={image} alt='' className='object-contain' />
         </SwiperSlide>
       ))}
