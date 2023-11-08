@@ -44,11 +44,11 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
       slidesPerView={1}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}>
-      {images.map((image, index) => (
-        <SwiperSlide key={index}>
-          <img src={image} alt='' />
-        </SwiperSlide>
-      ))}
+      <SwiperSlide>
+        {images.map((image, index) => (
+          <img key={index} src={image} alt='' />
+        ))}{' '}
+      </SwiperSlide>
     </Swiper>
   );
 };
