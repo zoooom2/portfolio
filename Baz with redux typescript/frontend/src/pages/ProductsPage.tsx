@@ -37,6 +37,8 @@ const ProductsPage = () => {
     dispatch(loadProducts(products));
   }, [products]);
 
+  const { category } = filters;
+
   const categories = getUniqueValues(filtered_collection, 'category');
   const collections = getUniqueValues(all_products, 'collectionName');
 
@@ -73,6 +75,7 @@ const ProductsPage = () => {
           </div>
           <select
             className='pageName bg-baz-white text-baz-black text-[14px] tracking-[1.4px] font-baz3 cursor-pointer'
+            value={category}
             onChange={(e) =>
               dispatch(
                 updateFilters({ name: 'category', value: e.target.value })
