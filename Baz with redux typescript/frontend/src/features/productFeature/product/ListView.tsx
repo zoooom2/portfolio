@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { SingleProductType } from '../../../types';
+import { priceFormat } from '../../../utils/constants';
 const ListView = ({ products }: { products: SingleProductType[] }) => {
   return (
     <Wrapper className='flex flex-col'>
@@ -23,7 +24,7 @@ const ListView = ({ products }: { products: SingleProductType[] }) => {
               <h4 className='text-baz-black font-baz2 text-[16px] font-semibold tracking-[1.6px]'>
                 {name}
               </h4>
-              <h5 className='font-baz1 text-[16px]'>{`₦${price}`}</h5>
+              <h5 className='font-baz1 text-[16px]'>{priceFormat(price)}</h5>
             </div>
           </Link>
         );
