@@ -9,7 +9,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
   return (
     <Swiper
       spaceBetween={50}
-      slidesPerView={3}
+      slidesPerView={1}
       modules={[Pagination]}
       pagination={{ clickable: true }}
       onSlideChange={() => console.log('slide change')}
