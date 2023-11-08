@@ -2,6 +2,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 
+
 // Import Swiper styles
 import 'swiper/css/bundle';
 
@@ -16,11 +17,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
       onSwiper={(swiper) => console.log(swiper)}>
       {images.map((image, index) => (
         <SwiperSlide key={index}>
-          <img
-            src={image}
-            alt=''
-            style={{ maxWidth: '100vh', maxHeight: '500px' }}
-          />
+          <img src={image} alt='' />
         </SwiperSlide>
       ))}
     </Swiper>
