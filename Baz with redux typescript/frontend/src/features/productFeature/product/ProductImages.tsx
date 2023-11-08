@@ -2,9 +2,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 
-
 // Import Swiper styles
-import 'swiper/css/bundle';
+import 'swiper/swiper.min.css';
 
 const ProductImages = ({ images = [] }: { images: string[] }) => {
   return (
