@@ -114,7 +114,8 @@ const Wrapper = styled.main`
     padding-inline: 4rem;
     padding-top: 4em;
     @media (max-width: 768px) {
-      padding: 2rem;
+      padding-inline: 2rem;
+      padding-top: 2rem;
     }
   }
   .product-details-center {
