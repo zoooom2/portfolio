@@ -67,10 +67,10 @@ const SingleProductPage = () => {
 
   return (
     <Wrapper>
-      <div className='tablet:border-r border-[rgba(0,0,0,0.7)] px-6 py-2 max-tablet:border-b w-full tablet:h-[80vh] min-h-[50vh] flex items-center justify-center'>
+      <div className='px-6 py-2 max-tablet:border-b w-full tablet:h-[80vh] min-h-[50vh] flex items-center justify-center'>
         <ProductImages images={images} />
       </div>
-      <div className='product-details'>
+      <div className='product-details tablet:border-l border-[rgba(0,0,0,0.7)] min-h-screen'>
         <div className='product-details-center flex-column gap-[46px]'>
           <div className='flex flex-col gap-[18px] tablet:gap-[48px]'>
             <div className='name-price'>
