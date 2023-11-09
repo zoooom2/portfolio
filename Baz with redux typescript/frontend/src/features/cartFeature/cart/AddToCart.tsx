@@ -113,12 +113,11 @@ const Wrapper = styled.div`
     background-size: 1em;
     cursor: pointer;
   }
-  .btn {
+
+  .add-cart-btn {
     &:hover {
       transform: scale(1.01);
     }
-  }
-  .add-cart-btn {
     &:disabled {
       background: rgba(0, 0, 0, 0.3);
       border: none;
