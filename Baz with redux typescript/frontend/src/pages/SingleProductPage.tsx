@@ -67,7 +67,7 @@ const SingleProductPage = () => {
 
   return (
     <Wrapper>
-      <div className='tablet:border-r border-[rgba(0,0,0,0.7)] p-6 tablet:p-2 max-tablet:border-b w-full tablet:h-[80vh] min-h-[50vh] flex items-center justify-center'>
+      <div className='tablet:border-r border-[rgba(0,0,0,0.7)] p-6 tablet:p-2 max-tablet:border-b w-full tablet:h-screen min-h-[50vh] flex items-center justify-center'>
         <ProductImages images={images} />
       </div>
       <div className='product-details'>
@@ -106,10 +106,7 @@ const Wrapper = styled.main`
   @media (max-width: 720px) {
     grid-template-columns: 1fr;
   }
-  // .product-picture {
-  //   border-right: 1px solid rgba(0, 0, 0, 0.7);
-  //   padding: 1rem;
-  // }
+
   .product-details {
     padding-inline: 4rem;
     padding-top: 4em;
