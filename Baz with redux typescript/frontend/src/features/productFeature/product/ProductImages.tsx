@@ -13,12 +13,12 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
         previousSlide: voidFunc;
       }) => (
         <button onClick={previousSlide}>
-          <MdKeyboardArrowLeft />
+          <MdKeyboardArrowLeft size={10} />
         </button>
       )}
       renderCenterRightControls={({ nextSlide }: { nextSlide: voidFunc }) => (
         <button onClick={nextSlide}>
-          <MdKeyboardArrowRight />
+          <MdKeyboardArrowRight size={10} />
         </button>
       )}
       className='h-full '>
