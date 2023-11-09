@@ -114,7 +114,7 @@ const Wrapper = styled.main`
   .product-details-center {
     justify-content: space-around;
     height: 100%;
-    gap: 69px;
+    // gap: 69px;
   }
   .name-price {
     display: flex;
