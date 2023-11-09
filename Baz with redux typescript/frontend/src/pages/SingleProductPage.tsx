@@ -111,7 +111,7 @@ const Wrapper = styled.main`
   //   padding: 1rem;
   // }
   .product-details {
-    padding-block: 4rem;
+    padding-inline: 4rem;
     padding-top: 4em;
     @media (max-width: 768px) {
       padding: 2rem;
