@@ -67,7 +67,7 @@ const SingleProductPage = () => {
 
   return (
     <Wrapper>
-      <div className='tablet:border-r border-[rgba(0,0,0,0.7)] p-6 max-tablet:border-b w-full tablet:h-screen min-h-[50vh]'>
+      <div className='tablet:border-r border-[rgba(0,0,0,0.7)] p-6 max-tablet:border-b w-full tablet:h-screen min-h-[50vh] flex items-center'>
         <ProductImages images={images} />
       </div>
       <div className='product-details'>
