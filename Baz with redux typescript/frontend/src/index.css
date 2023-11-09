@@ -254,5 +254,5 @@ input::placeholder {
   justify-content: center;
 }
 .slider {
-  width: 70%;
+  width: 70% !important;
 }
