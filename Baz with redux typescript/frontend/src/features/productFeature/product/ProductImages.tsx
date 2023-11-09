@@ -17,8 +17,8 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
         </button>
       )}
       renderCenterRightControls={({ nextSlide }: { nextSlide: voidFunc }) => (
-        <button onClick={nextSlide}>
-          <MdKeyboardArrowRight size={10} />
+        <button onClick={nextSlide} className='text-2xl'>
+          <MdKeyboardArrowRight />
         </button>
       )}
       className='h-full '>
