@@ -66,7 +66,7 @@ const SingleProductPage = () => {
         <ProductImages images={images} />
       </div>
       <div className='product-details'>
-        <div className='product-details-center flex-column max-tablet:gap-[46px]'>
+        <div className='product-details-center flex-column max-tablet:gap-[46px] gap-[69px]'>
           <div className='flex flex-col gap-[18px] tablet:gap-[48px]'>
             <div className='name-price'>
               <div className='product-name max-tablet:text-[18px] max-tablet:tracking-[1.6px]'>
