@@ -250,3 +250,9 @@ input::placeholder {
   width: 100%;
   padding-bottom: 2em;
 }
+.slider-list {
+  justify-content: center;
+}
+.slider {
+  width: 70%;
+}
