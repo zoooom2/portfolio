@@ -2,9 +2,16 @@ import Carousel from 'nuka-carousel';
 
 const ProductImages = ({ images = [] }: { images: string[] }) => {
   return (
-    <Carousel withoutControls={true} className='h-full'>
+    <Carousel className='h-full'>
       {images.map((image, index) => (
-        <img key={index} src={image} alt='' className='w-full object-contain' />
+        <div className='pb-4 flex items-center justify-center'>
+          <img
+            key={index}
+            src={image}
+            alt=''
+            className='w-full object-contain'
+          />
+        </div>
       ))}
     </Carousel>
   );
