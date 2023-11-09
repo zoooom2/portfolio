@@ -112,7 +112,7 @@ const Wrapper = styled.main`
   // }
   .product-details {
     padding-block: 4rem;
-    padding-top: 2em;
+    padding-top: 4em;
     @media (max-width: 768px) {
       padding: 2rem;
     }
