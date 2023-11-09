@@ -246,3 +246,6 @@ input::placeholder {
   align-items: center;
   justify-content: center;
 }
+.slider-container {
+  width: 100%;
+}
