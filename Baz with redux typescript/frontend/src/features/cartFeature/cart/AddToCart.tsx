@@ -54,11 +54,31 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
           <option value='none' disabled>
             Select a Size
           </option>
-          <option value='small'>Small</option>
-          <option value='medium'>Medium</option>
-          <option value='large'>Large</option>
-          <option value='x-large'>X-Large</option>
-          <option value='2x-large'>2x-large</option>
+          <option
+            value='small'
+            className='text-[10px] font-baz1 tablet:text-[15px]'>
+            Small
+          </option>
+          <option
+            value='medium'
+            className='text-[10px] font-baz1 tablet:text-[15px]'>
+            Medium
+          </option>
+          <option
+            value='large'
+            className='text-[10px] font-baz1 tablet:text-[15px]'>
+            Large
+          </option>
+          <option
+            value='x-large'
+            className='text-[10px] font-baz1 tablet:text-[15px]'>
+            X-Large
+          </option>
+          <option
+            value='2x-large'
+            className='text-[10px] font-baz1 tablet:text-[15px]'>
+            2x-large
+          </option>
         </select>
       </div>
 
