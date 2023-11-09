@@ -60,9 +60,14 @@ const SingleProductPage = () => {
     return <Error />;
   }
 
+  // .product-picture {
+  //     border-right: 1px solid rgba(0, 0, 0, 0.7);
+  //     padding: 1rem;
+  //   }
+
   return (
     <Wrapper>
-      <div className='product-picture w-full'>
+      <div className='border-r border-[rgba(0,0,0,0.7)] p-[1em]border-b w-full'>
         <ProductImages images={images} />
       </div>
       <div className='product-details'>
@@ -101,10 +106,10 @@ const Wrapper = styled.main`
   @media (max-width: 720px) {
     grid-template-columns: 1fr;
   }
-  .product-picture {
-    border-right: 1px solid rgba(0, 0, 0, 0.7);
-    padding: 1rem;
-  }
+  // .product-picture {
+  //   border-right: 1px solid rgba(0, 0, 0, 0.7);
+  //   padding: 1rem;
+  // }
   .product-details {
     padding: 4rem;
     @media (max-width: 768px) {
