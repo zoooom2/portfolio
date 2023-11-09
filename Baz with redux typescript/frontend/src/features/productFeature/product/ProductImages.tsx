@@ -2,7 +2,7 @@ import Carousel from 'nuka-carousel';
 
 const ProductImages = ({ images = [] }: { images: string[] }) => {
   return (
-    <Carousel>
+    <Carousel withoutControls={true}>
       {images.map((image, index) => (
         <img key={index} src={image} alt='' />
       ))}
