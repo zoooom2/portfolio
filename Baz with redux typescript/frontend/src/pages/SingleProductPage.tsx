@@ -74,14 +74,16 @@ const SingleProductPage = () => {
         <div className='product-details-center flex-column gap-[46px]'>
           <div className='flex flex-col gap-[18px] tablet:gap-[48px]'>
             <div className='name-price'>
-              <div className='product-name max-tablet:text-[18px] max-tablet:tracking-[1.6px]'>
+              <div className='font-baz2 text-[16px] font-semibold tablet:text-[24px] tablet:font-normal tablet:tracking-[2.4px] max-tablet:tracking-[1.6px]'>
                 {productName}
               </div>
-              <div className='product-price tablet:font-normal tablet:text-[24px]'>
+              <div className='font-baz2 text-[16px] font-semibold tablet:text-[24px] tablet:font-normal'>
                 {priceFormat(price)}
               </div>
             </div>
-            <p className='desc'>{description}</p>
+            <p className='font-baz1 text-justify text-[12px] leading-[200%] tracking-[0.24px] tablet:text-[15px] tablet:leading-[165%] tablet:tracking-[0.3px]'>
+              {description}
+            </p>
           </div>
 
           {stock > 0 ? (
@@ -125,23 +127,23 @@ const Wrapper = styled.main`
     width: 100%;
     justify-content: space-between;
   }
-  .product-name {
-    font-family: 'Poppins';
-    font-size: 16px;
-    /* identical to box height */
-    letter-spacing: 2.4px;
-    font-weight: 600;
-  }
-  .product-price {
-    font-family: 'Poppins';
-    font-size: 16px;
-  }
-  .desc {
-    font-family: 'Poppins';
-    font-size: 15px;
-    line-height: 25px;
-    letter-spacing: 0.02em;
-  }
+  // .product-name {
+  //   font-family: 'Poppins';
+  //   font-size: 16px;
+  //   /* identical to box height */
+  //   letter-spacing: 2.4px;
+  //   font-weight: 600;
+  // }
+  // .product-price {
+  //   font-family: 'Poppins';
+  //   font-size: 16px;
+  // }
+  // .desc {
+  //   font-family: 'Poppins';
+  //   font-size: 15px;
+  //   line-height: 25px;
+  //   letter-spacing: 0.02em;
+  // }
   .size {
     display: flex;
     flex-direction: column;

@@ -21,7 +21,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
           <MdKeyboardArrowRight />
         </button>
       )}
-      className='h-full'>
+      className=''>
       {images.map((image, index) => (
         <img key={index} src={image} alt='' className='w-full object-contain' />
       ))}

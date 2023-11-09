@@ -48,7 +48,7 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
         <div className='size-guide'>size guide</div>
         <select
           name='size'
-          className='size-select py-[21px] px-[16px] tablet:py-[31.5px] tablet:px-[24px] bg-baz-white'
+          className='focus:bg-baz-black focus:text-baz-white size-select font-baz1 text-[14px] py-[21px] px-[16px] tablet:py-[31.5px] tablet:px-[24px] bg-baz-white tablet:font-baz2 tablet:text-[24px] tablet:font-medium'
           defaultValue={'none'}
           onChange={handleClick}>
           <option value='none' disabled>
@@ -63,7 +63,7 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
       </div>
 
       <button
-        className='capitalize cursor-pointer add-cart-btn py-[20px] font-baz2 text-[16px] font-semibold tablet:py-[30px] w-full tablet:font-bold tablet:text-[24px] bg-baz-white text-baz-black'
+        className='tablet:border-[1.5px] capitalize cursor-pointer add-cart-btn py-[20px] font-baz2 text-[16px] font-semibold tablet:py-[30px] w-full tablet:font-bold tablet:text-[24px] bg-baz-white text-baz-black'
         onClick={() => {
           dispatch(addToCart({ id, amount, product, size }));
         }}
@@ -104,7 +104,6 @@ const Wrapper = styled.div`
   .size-select {
     gap: 15px;
     width: 100%;
-
     // drop down arrow
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
