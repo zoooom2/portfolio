@@ -63,7 +63,7 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
       </div>
 
       <button
-        className='cursor-pointer btn add-cart-btn py-[20px] font-baz2 text-[16px] font-semibold tablet:py-[30px] w-full tablet:font-bold tablet:text-[24px] bg-baz-white text-baz-black'
+        className='capitalize cursor-pointer add-cart-btn py-[20px] font-baz2 text-[16px] font-semibold tablet:py-[30px] w-full tablet:font-bold tablet:text-[24px] bg-baz-white text-baz-black'
         onClick={() => {
           dispatch(addToCart({ id, amount, product, size }));
         }}
