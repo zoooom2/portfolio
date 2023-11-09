@@ -60,14 +60,9 @@ const SingleProductPage = () => {
     return <Error />;
   }
 
-  // .product-picture {
-  //     border-right: 1px solid rgba(0, 0, 0, 0.7);
-  //     padding: 1rem;
-  //   }
-
   return (
     <Wrapper>
-      <div className='px-6 py-2 max-tablet:border-b w-full tablet:h-[80vh] min-h-[50vh] flex items-center justify-center'>
+      <div className='px-6 py-2 max-tablet:border-b w-full min-h-[50vh] flex items-center justify-center'>
         <ProductImages images={images} />
       </div>
       <div className='product-details tablet:border-l border-[rgba(0,0,0,0.7)] min-h-screen'>
