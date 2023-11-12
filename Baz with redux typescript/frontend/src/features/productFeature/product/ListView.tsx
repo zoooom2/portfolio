@@ -5,7 +5,7 @@ import { SingleProductType } from '../../../types';
 import { priceFormat } from '../../../utils/constants';
 const ListView = ({ products }: { products: SingleProductType[] }) => {
   return (
-    <Wrapper className='flex flex-col'>
+    <Wrapper className='flex flex-col tablet:hidden'>
       {products.map((product) => {
         const { _id: id, images, productName: name, price } = product;
         return (

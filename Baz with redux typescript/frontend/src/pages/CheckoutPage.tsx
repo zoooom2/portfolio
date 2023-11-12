@@ -9,7 +9,7 @@ import {
 } from '../features/cartFeature/cartSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 import {
-  // BillingInfo,
+  BillingInfo,
   CheckoutStage,
   Payment,
   Shipping,
@@ -48,7 +48,7 @@ const CheckoutPage = () => {
         </div>
         <div className='details'>
           <CheckoutStage position={stage} />
-          {/* {params === 'information' && <BillingInfo setStage={setStage} />} */}
+          {params === 'information' && <BillingInfo setStage={setStage} />}
           {params === 'shipping' && (
             <Shipping setStage={setStage} shippingInfo={localShipping} />
           )}

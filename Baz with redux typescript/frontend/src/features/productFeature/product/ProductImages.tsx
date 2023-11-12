@@ -23,7 +23,14 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
       )}
       className=''>
       {images.map((image, index) => (
-        <img key={index} src={image} alt='' className='w-full object-contain' />
+        <div className='h-full'>
+          <img
+            key={index}
+            src={image}
+            alt=''
+            className='h-full object-contain'
+          />
+        </div>
       ))}
     </Carousel>
   );

@@ -1,6 +1,7 @@
 import GridView from './GridView';
 import ListView from './ListView';
 import { useAppSelector } from '../../../App/hooks';
+import { Fragment } from 'react';
 
 const ProductList = () => {
   const { filtered_product: products, grid_view } = useAppSelector(
@@ -20,8 +21,12 @@ const ProductList = () => {
         Sorry, no product match your search
       </h5>
     );
-  if (grid_view === false) return <ListView products={products} />;
-  return <GridView products={products} />;
+  return (
+    <Fragment>
+      <ListView products={products} />
+      <GridView products={products} />
+    </Fragment>
+  );
 };
 
 export default ProductList;

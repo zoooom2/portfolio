@@ -1,4 +1,4 @@
-import BillingInfo from './BillingInfo';
+import BillingInfo from './BillingInfo1';
 import CheckoutStage from './checkoutStage';
 import Conditions from './Conditions';
 import Payment from './Payment';

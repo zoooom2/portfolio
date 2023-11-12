@@ -4,7 +4,7 @@ import Product from './Product';
 
 const GridView = ({ products }: { products: SingleProductType[] }) => {
   return (
-    <Wrapper>
+    <Wrapper className='max-tablet:hidden'>
       <div className='products-container'>
         {products.map((product) => {
           const { _id: id } = product;

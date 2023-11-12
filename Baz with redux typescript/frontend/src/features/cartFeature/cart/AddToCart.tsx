@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,33 +9,12 @@ import { SingleProductType } from '../../../types';
 import { useAppDispatch } from '../../../App/hooks';
 
 const AddToCart = ({ product }: { product: SingleProductType }) => {
-  const {
-    _id: id,
-    // stock
-  } = product;
+  const { _id: id, stock } = product;
   const [amount, _setAmount] = useState(1);
   const [size, setSize] = useState('');
   const dispatch = useAppDispatch();
 
-  // const increase = useCallback(() => {
-  //   setAmount((oldAmount) => {
-  //     let tempAmount = oldAmount + 1;
-  //     if (tempAmount > stock) {
-  //       tempAmount = stock;
-  //     }
-  //     return tempAmount;
-  //   });
-  // }, [stock]);
-
-  // const decrease = useCallback(() => {
-  //   setAmount((oldAmount) => {
-  //     let tempAmount = oldAmount - 1;
-  //     if (tempAmount < 1) {
-  //       tempAmount = 1;
-  //     }
-  //     return tempAmount;
-  //   });
-  // }, []);
+  const navigate = useNavigate();
 
   const handleClick = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
@@ -85,7 +65,8 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
       <button
         className='tablet:border-[1.5px] capitalize cursor-pointer add-cart-btn py-[20px] font-baz2 text-[16px] font-semibold tablet:py-[30px] w-full tablet:font-bold tablet:text-[24px] bg-baz-white text-baz-black'
         onClick={() => {
-          dispatch(addToCart({ id, amount, product, size }));
+          dispatch(addToCart({ id, amount, product, size, stock }));
+          navigate('/cart');
         }}
         disabled={size ? false : true}>
         Add To Cart

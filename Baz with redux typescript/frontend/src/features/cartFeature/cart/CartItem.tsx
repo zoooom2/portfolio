@@ -26,28 +26,60 @@ const CartItem = ({
     }
   };
 
+  const increase = () => {
+    dispatch(setAmount({ id: productID, value: amount + 1, size }));
+  };
+  const decrease = () => {
+    dispatch(setAmount({ id: productID, value: amount - 1, size }));
+  };
+
   return (
-    <Wrapper>
-      <div className='flex-1 w-[45%] flex justify-between'>
-        <img src={image} alt='' className='object-contain' />
+    <Wrapper className='flex gap-[27px]'>
+      <div className='flex-1 flex justify-between'>
+        <img src={image} alt='' className='object-contain h-[249px] w-full' />
       </div>
-      <div className='product-details flex-column flex-1 w-[45%]'>
-        <div className='name'>{productName}</div>
-        <div className='size'>Size: {size}</div>
-        <div className='price'>{priceFormat(price)}</div>
+      <div className='product-details flex-column'>
+        <div className='flex flex-col'>
+          <div className='font-baz2 text-[16px] max-tablet:font-semibold tracking-[1.6px] tablet:text-[21px] tablet:tracking-[2.1px]'>
+            {productName}
+          </div>
+          <div className='text-[#6c6c6c] font-baz1 text-[10px] tablet:text-[16px] tracking-[1.5px] tablet:tracking-[2.1px] uppercase'>
+            {size}
+          </div>
+        </div>
+
+        <div className='font-baz1 text-[16px] tablet:text-[24px] font-semibold'>
+          {priceFormat(price)}
+        </div>
         <div className='quantityForm-remove flex-column'>
           <div className='quantityForm flex-column'>
-            <label htmlFor='quantity'>Quantity</label>
-            <input
-              type='number'
-              name='quantity'
-              id='quantity'
-              // placeholder={0}
-              min={0}
-              value={amount === 0 ? '' : amount}
-              className='quantity'
-              onChange={handleChange}
-            />
+            <label
+              htmlFor='quantity'
+              className='font-baz2 text-[12px] tablet:font-baz3 tablet:text-[15px] '>
+              Quantity
+            </label>
+            <div className='flex gap-[8px]'>
+              <button
+                className='w-[24px] h-[24px] bg-baz-black text-baz-white flex items-center justify-center'
+                onClick={decrease}>
+                -
+              </button>
+              <input
+                type='number'
+                name='quantity'
+                id='quantity'
+                // placeholder={0}
+                min={0}
+                value={amount === 0 ? '' : amount}
+                className='w-[40px] h-[24px]'
+                onChange={handleChange}
+              />
+              <button
+                className='w-[24px] h-[24px] bg-baz-black text-baz-white flex items-center justify-center'
+                onClick={increase}>
+                +
+              </button>
+            </div>
           </div>
           <button
             className='remove-btn'
@@ -63,7 +95,7 @@ const CartItem = ({
 const Wrapper = styled.section`
   display: flex;
   justify-content: center;
-  gap: 2em;
+  // gap: 2em;
 
   // .productImage {
   //   width: 50%;
@@ -83,28 +115,28 @@ const Wrapper = styled.section`
     line-height: 25px;
     letter-spacing: 0.1em;
   }
-  .name {
-    font-family: 'Bell-MT';
-    font-size: 20px;
-    line-height: 45px;
-    text-transform: capitalize;
-  }
+  // .name {
+  //   font-family: 'Bell-MT';
+  //   font-size: 20px;
+  //   line-height: 45px;
+  //   text-transform: capitalize;
+  // }
 
-  .price {
-    font-family: 'Poppins';
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 36px;
-    /* identical to box height */
-    color: #000000;
-  }
-  label {
-    font-family: 'Bell MT';
-    font-size: 15px;
-    line-height: 17px;
-    /* identical to box height */
-    color: #000000;
-  }
+  // .price {
+  //   font-family: 'Poppins';
+  //   font-weight: 600;
+  //   font-size: 24px;
+  //   line-height: 36px;
+  //   /* identical to box height */
+  //   color: #000000;
+  // }
+  // label {
+  //   font-family: 'Bell MT';
+  // font-size: 15px;
+  // line-height: 17px;
+  // /* identical to box height */
+  // color: #000000;
+  // }
   .quantityForm-remove {
     align-items: flex-start;
     padding: 0px;
@@ -133,7 +165,7 @@ const Wrapper = styled.section`
     line-height: 27px;
     /* identical to box height */
     letter-spacing: 0.1em;
-    width: 100px;
+    // width: 50px;
   }
   .remove-btn {
     font-family: 'Bell MT';

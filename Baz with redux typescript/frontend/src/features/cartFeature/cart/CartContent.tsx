@@ -10,7 +10,9 @@ const CartContent = () => {
     <Wrapper className='cart-container'>
       <section className='cartContent'>
         {cart.map((item, index) => (
-          <section key={index} className='column-cart'>
+          <section
+            key={index}
+            className='column-cart border-b border-baz-black'>
             <CartItem {...item} />
           </section>
         ))}
@@ -30,6 +32,7 @@ const Wrapper = styled.main`
     padding-block: 3em;
     @media (max-width: 768px) {
       padding-block: 1em;
+      border-right: none;
     }
   }
   .column-cart {
