@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../App/hooks';
 import { Fragment } from 'react';
 
 const ProductList = () => {
-  const { filtered_product: products, grid_view } = useAppSelector(
+  const { filtered_product: products } = useAppSelector(
     (state) => state.filter
   );
 

@@ -9,7 +9,7 @@ import { SingleProductType } from '../../../types';
 import { useAppDispatch } from '../../../App/hooks';
 
 const AddToCart = ({ product }: { product: SingleProductType }) => {
-  const { _id: id, stock } = product;
+  const { _id: id } = product;
   const [amount, _setAmount] = useState(1);
   const [size, setSize] = useState('');
   const dispatch = useAppDispatch();
@@ -65,7 +65,7 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
       <button
         className='tablet:border-[1.5px] capitalize cursor-pointer add-cart-btn py-[20px] font-baz2 text-[16px] font-semibold tablet:py-[30px] w-full tablet:font-bold tablet:text-[24px] bg-baz-white text-baz-black'
         onClick={() => {
-          dispatch(addToCart({ id, amount, product, size, stock }));
+          dispatch(addToCart({ id, amount, product, size }));
           navigate('/cart');
         }}
         disabled={size ? false : true}>
