@@ -52,10 +52,10 @@ export const checkoutStage = [
     stage: 'information',
     id: 1,
   },
-  {
-    stage: 'shipping',
-    id: 2,
-  },
+  // {
+  //   stage: 'shipping',
+  //   id: 2,
+  // },
   {
     stage: 'payment',
     id: 3,
@@ -79,7 +79,9 @@ export const selectStyle = {
   color: 'black',
   border: '1.5px solid #a6a6a6',
   borderRadius: 'none',
-  padding: '1em',
+  padding: '0.5em',
+  backgroundColor: 'transparent',
+  // textTransform: 'capitalize',
 };
 
 export const adminSidebarLinks = [
@@ -179,3 +181,42 @@ export const featuredSlide2 = [
 export const products_url = 'https://baz-api.onrender.com/api/v1/products';
 export const single_product_url = `https://baz-api.onrender.com/api/v1/products/`;
 export const auth_url = 'https://baz-api.onrender.com/api/v1/auth/google';
+
+export const shippingChart = {
+  abia: 4500,
+  'abuja federal capital territory': 4500,
+  adamawa: 4500,
+  'akwa ibom': 4500,
+  anambra: 4500,
+  bauchi: 4500,
+  benue: 4500,
+  borno: 4500,
+  'cross river': 4500,
+  delta: 4500,
+  ebonyi: 4500,
+  edo: 2500,
+  ekiti: 3500,
+  enugu: 3500,
+  gombe: 4500,
+  imo: 4500,
+  jigawa: 4500,
+  kaduna: 4500,
+  kano: 4500,
+  katsina: 4500,
+  kebbi: 4500,
+  kogi: 4500,
+  kwara: 1000,
+  lagos: 2500,
+  nassarawa: 4500,
+  niger: 4500,
+  ogun: 2500,
+  ondo: 2500,
+  osun: 2500,
+  oyo: 2500,
+  plateau: 4500,
+  rivers: 4500,
+  sokoto: 4500,
+  taraba: 4500,
+  yobe: 4500,
+  zamfara: 4500,
+} as Record<string, number>;

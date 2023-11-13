@@ -34,7 +34,7 @@ const Wrapper = styled.ul`
   li {
     display: grid;
     place-items: center;
-    width: calc(100% / 3);
+    width: calc(100% / 2);
     padding: 0.5em;
   }
   .active {

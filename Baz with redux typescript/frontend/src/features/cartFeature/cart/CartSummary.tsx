@@ -5,7 +5,9 @@ import { priceFormat } from '../../../utils/constants';
 import { useAppSelector } from '../../../App/hooks';
 
 const CartSummary = () => {
-  const { cart, total_amount } = useAppSelector((state) => state.cart);
+  const { cart, total_amount, subtotal, shippingInfo } = useAppSelector(
+    (state) => state.cart
+  );
   const [show, setShow] = useState(false);
 
   const content = cart.map((cartItem, key) => (
@@ -35,11 +37,13 @@ const CartSummary = () => {
         <div className='dashed'></div>
         <li key={1}>
           <div className='subtotal'>Subtotal</div>
-          <div className='subtotal-price'>{priceFormat(total_amount)}</div>
+          <div className='subtotal-price'>{priceFormat(subtotal)}</div>
         </li>
         <li key={2}>
           <div className='shipping'>Shipping</div>
-          <div className='shipping-price'>{priceFormat(0)}</div>
+          <div className='shipping-price'>
+            {priceFormat(shippingInfo.shippingFee)}
+          </div>
         </li>
         <div className='dashed'></div>
         <li key={3}>
