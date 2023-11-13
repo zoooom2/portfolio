@@ -11,44 +11,60 @@ const CartSummary = () => {
   const [show, setShow] = useState(false);
 
   const content = cart.map((cartItem, key) => (
-    <li key={key}>
+    <li key={key} className='grid grid-cols-2'>
       <div className='name-size-quantity'>
-        <div className='name'>{cartItem.productName}</div>
-        <div className='size-quantity'>
+        <div className='font-baz2 text-[14px] tracking-[1.4px]'>
+          {cartItem.productName}
+        </div>
+        <div className='font-baz2 text-[14px] tablet:text-[21px] tracking-[1.4px] tablet:tracking-[2.1px]'>
           {cartItem.size}-[{cartItem.amount}]
         </div>
       </div>
-      <div className='price'>
-        ₦{new Intl.NumberFormat('currency').format(cartItem.price)}
+      <div className='font-baz1 text-[16px] tablet:text-[24px] text-right'>
+        {priceFormat(cartItem.price)}
       </div>
     </li>
   ));
   return (
-    <Wrapper>
+    <Wrapper className='tablet:py-[75px] py-[45px]'>
       <div className='summary-title'>
-        <h5 className='summary-header' onClick={() => setShow((x) => !x)}>
+        <h5
+          className='font-baz2 text-[16px] font-medium tracking-[1.6px] flex items-center'
+          onClick={() => setShow((x) => !x)}>
           Summary
           {show ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
         </h5>
-        <h5 className='summary-total'>{priceFormat(total_amount)}</h5>
+        <h5 className='font-baz1 text-[16px] font-semibold'>
+          {priceFormat(total_amount)}
+        </h5>
       </div>
       <ul className={show ? 'show' : ''}>
         {content}
         <div className='dashed'></div>
         <li key={1}>
-          <div className='subtotal'>Subtotal</div>
-          <div className='subtotal-price'>{priceFormat(subtotal)}</div>
+          <div className='subtotal text-[14px] tablet:text-[21px] tracking-[1.4px] tablet:tracking-[2.1px]'>
+            Subtotal
+          </div>
+          <div className='font-baz1 text-[16px] tablet:text-[24px]'>
+            {priceFormat(subtotal)}
+          </div>
         </li>
         <li key={2}>
-          <div className='shipping'>Shipping</div>
-          <div className='shipping-price'>
-            {priceFormat(shippingInfo.shippingFee)}
+          <div className='shipping text-[14px] tablet:text-[21px] tracking-[1.4px] tablet:tracking-[2.1px]'>
+            Shipping
+          </div>
+          <div className='font-baz1 text-[16px] tablet:text-[24px]'>
+            {priceFormat(shippingInfo.shippingFee || 0)}
           </div>
         </li>
         <div className='dashed'></div>
         <li key={3}>
-          <div className='total'>Total</div>
-          <div className='total-price'>{priceFormat(total_amount)}</div>
+          <div className='total text-[14px] tablet:text-[21px] tracking-[1.4px] tablet:tracking-[2.1px]'>
+            Total
+          </div>
+          <div className='font-baz1 text-[16px] tablet:text-[24px]'>
+            {priceFormat(total_amount)}
+          </div>
         </li>
       </ul>
     </Wrapper>
@@ -126,9 +142,6 @@ const Wrapper = styled.div`
   .shipping,
   .total {
     font-family: 'Blaak Thin PERSONAL USE';
-    font-size: 21px;
-    line-height: 28px;
-    letter-spacing: 0.1em;
   }
 `;
 export default CartSummary;

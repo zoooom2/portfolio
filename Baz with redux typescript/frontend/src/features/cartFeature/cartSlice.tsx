@@ -181,7 +181,8 @@ const cartSlice = createSlice({
       };
     },
     updateCartTotal: (state) => {
-      state.total_amount = state.subtotal + state.shippingInfo.shippingFee;
+      state.total_amount =
+        state.subtotal + (state.shippingInfo.shippingFee || 0);
     },
   },
   extraReducers: (builder) => {

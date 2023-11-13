@@ -103,12 +103,12 @@ const BillingInfo = ({
   };
 
   return (
-    <FormWrapper className='border w-full px-[35px] flex flex-col gap-[75px] py-[54px]'>
+    <FormWrapper className='border-b border-black w-full px-[35px] flex flex-col gap-[75px] py-[54px]'>
       <div className='flex flex-col gap-8'>
         <h3 className='font-baz2 text-[16px] tablet:text-[24px] tablet:tracking-[2.4px] font-medium tracking-[1.6px]'>
           Contact Information
         </h3>
-        <div className='grid grid-cols-2 gap-x-[34px] gap-y-4'>
+        <div className='grid grid-cols-2 gap-x-[16px] tablet:gap-x-[34px] gap-y-4'>
           <FormInput
             type='text'
             name='firstName'
@@ -161,7 +161,7 @@ const BillingInfo = ({
             required
           />
 
-          <div className='grid grid-cols-2 gap-x-[34px]'>
+          <div className='grid grid-cols-2 gap-x-[16px] tablet:gap-x-[34px]'>
             <Select
               styles={{
                 placeholder: (defaultStyles) => {
@@ -226,7 +226,7 @@ const BillingInfo = ({
       </div>
       <button
         onClick={handleSubmit}
-        className='hover:bg-baz-black hover:text-white py-[30px] border-[1.5px] border-black font-baz1 text-[16px] tablet:text-[24px] tracking-wide font-bold'>
+        className='hover:bg-baz-black hover:text-white py-[20px] tablet:py-[30px] border-[1.5px] border-black font-baz1 text-[16px] tablet:text-[24px] tracking-wide font-bold'>
         NEXT
       </button>
     </FormWrapper>
