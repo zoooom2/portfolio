@@ -20,13 +20,14 @@ const OrderPage = () => {
     try {
       if (body.cart && body.shippingInfo) {
         const url = `https://baz-api.onrender.com/api/v1/order/paystack/createOrder`;
-        await axios.post(
+        const response = await axios.post(
           url,
           { ...body, reference },
           {
             withCredentials: true,
           }
         );
+        console.log(response);
         dispatch(clearCart());
         dispatch(clearShipping());
       }
@@ -42,7 +43,7 @@ const OrderPage = () => {
     document.title = 'Order | Baz Official Store';
     dispatch(countCartTotal());
     dispatch(updateCartTotal());
-    if (body.subtotal && body.total_amount) {
+    if (body.cart) {
       getDetails();
       localStorage.removeItem('cart');
       localStorage.removeItem('shipping');
