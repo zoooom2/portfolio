@@ -9,7 +9,7 @@ const orderSchema = new Schema({
     email: { type: String, required: [true, 'email is required'] },
     phoneNumber: {
       type: String,
-      required: true,
+      // required: true,
       validate: {
         validator: function (v) {
           return /\d{3}\d{3}\d{4}/.test(v);
@@ -33,10 +33,12 @@ const orderSchema = new Schema({
     country: {
       type: String,
       required: [true, 'please enter a shipping address'],
+      default: 'Nigeria',
     },
     countryCode: {
       type: String,
       required: [true, 'country code is required'],
+      default: 'NG',
     },
     shippingFee: {
       type: Number,
@@ -45,14 +47,14 @@ const orderSchema = new Schema({
     },
     shippingMethod: {
       type: String,
-      required: true,
+      // required: true,
     },
   },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User',
-    required: [true, 'Order must belong to a User!'],
-  },
+  // user: {
+  //   type: Schema.ObjectId,
+  //   ref: 'User',
+  //   required: [true, 'Order must belong to a User!'],
+  // },
   orderItems: [
     {
       productName: {
@@ -136,21 +138,21 @@ const orderSchema = new Schema({
   },
 });
 
-orderSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'user',
-    select: 'firstname lastname phoneNumber email ',
-  });
-  next();
-});
+// orderSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'user',
+//     select: 'firstname lastname phoneNumber email ',
+//   });
+//   next();
+// });
 
-orderSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'user',
-    select: 'firstname lastname username name email',
-  });
-  next();
-});
+// orderSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'user',
+//     select: 'firstname lastname username name email',
+//   });
+//   next();
+// });
 
 const Order = model('Order', orderSchema);
 

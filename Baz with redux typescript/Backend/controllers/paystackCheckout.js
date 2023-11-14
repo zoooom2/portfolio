@@ -102,7 +102,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
       status: verification.data.status,
       gateway: 'PAYSTACK',
     },
-    user: req.user.id,
+    // user: req.user.id,
   });
 
   if (!order) {
