@@ -6,6 +6,7 @@ import { links } from '../../utils/constants';
 import { openSidebar } from '../../features/productFeature/productSlice';
 import { CartButtons } from '../../features/cartFeature/cart';
 import { useAppDispatch } from '../../App/hooks';
+import { BsSearch } from 'react-icons/bs';
 
 const Nav = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ const Nav = () => {
     );
   });
   return (
-    <NavContainer className='place-center bg-baz-white'>
+    <NavContainer className='place-center bg-baz-white flex flex-col gap-4'>
       <div className='nav-center'>
         <div className='nav-header'>
           <Link to='/'>
@@ -34,15 +35,25 @@ const Nav = () => {
         <ul className='nav-links'>{navlinks}</ul>
         <CartButtons />
       </div>
+      <div className='search-container w-full'>
+        <input
+          type='text'
+          className='search-input w-full'
+          placeholder='what are you looking for'
+        />
+        <i className='search-icon'>
+          <BsSearch />
+        </i>
+      </div>
     </NavContainer>
   );
 };
 
 const NavContainer = styled.nav`
   border-bottom: 1px solid rgba(0, 0, 0, 0.7);
-  display: flex;
+  // display: flex;
   padding-top: 2em;
-  padding-bottom: 0.5em;
+  // padding-bottom: 0.5em;
   position: sticky;
   top: 0;
   width: 100%;
@@ -110,6 +121,22 @@ const NavContainer = styled.nav`
     .cart-btn-wrapper {
       display: grid;
     }
+  }
+  .search-container {
+    position: relative;
+  }
+
+  .search-input {
+    padding-left: 70px; /* Adjust as needed */
+    border-inline: none;
+    // border-bottom: none;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 30px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
   }
 `;
 

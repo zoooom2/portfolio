@@ -1,24 +1,24 @@
 import {
   FiSearch,
-  FiUserMinus,
-  FiUserPlus,
+  // FiUserMinus,
+  // FiUserPlus,
   FiShoppingCart,
 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { closeSidebar } from '../../productFeature/productSlice';
-import { logOut } from '../../userFeature/userSlice';
+// import { logOut } from '../../userFeature/userSlice';
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 
 const CartButtons = () => {
   const dispatch = useAppDispatch();
   const { total_items } = useAppSelector((state) => state.cart);
-  const { isAuthenticated } = useAppSelector((state) => state.user);
+  // const { isAuthenticated } = useAppSelector((state) => state.user);
 
-  const logOutUser = async () => {
-    dispatch(logOut());
-    dispatch(closeSidebar());
-  };
+  // const logOutUser = async () => {
+  //   dispatch(logOut());
+  //   dispatch(closeSidebar());
+  // };
 
   return (
     <Wrapper className='cart-btn-wrapper'>
@@ -30,6 +30,7 @@ const CartButtons = () => {
         }}>
         <FiSearch />
       </button>
+
       <Link
         to='cart'
         className='cart-btn text-baz-black'
@@ -40,7 +41,7 @@ const CartButtons = () => {
         </span>
       </Link>
 
-      {isAuthenticated ? (
+      {/* {isAuthenticated ? (
         <button type='button' className='auth-btn' onClick={logOutUser}>
           <FiUserMinus />
         </button>
@@ -53,7 +54,7 @@ const CartButtons = () => {
             <FiUserPlus />
           </button>
         </Link>
-      )}
+      )} */}
     </Wrapper>
   );
 };
