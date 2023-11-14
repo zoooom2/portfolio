@@ -2,8 +2,8 @@ import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  clearCart,
-  clearShipping,
+  // clearCart,
+  // clearShipping,
   countCartTotal,
   updateCartTotal,
 } from '../features/cartFeature/cartSlice';
@@ -43,11 +43,11 @@ const OrderPage = () => {
     document.title = 'Order | Baz Official Store';
     dispatch(countCartTotal());
     dispatch(updateCartTotal());
-    // console.log(body);
+    console.log(body);
     if (body.cart) {
       getDetails();
-      localStorage.removeItem('cart');
-      localStorage.removeItem('shipping');
+      // localStorage.removeItem('cart');
+      // localStorage.removeItem('shipping');
     }
   }, []);
 
