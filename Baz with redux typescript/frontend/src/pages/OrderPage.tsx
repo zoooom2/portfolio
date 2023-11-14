@@ -41,6 +41,9 @@ const OrderPage = () => {
 
   useEffect(() => {
     document.title = 'Order | Baz Official Store';
+    const res = localStorage.getItem('shipping');
+    const req = localStorage.getItem('cart');
+    console.log(req, res);
     dispatch(countCartTotal());
     dispatch(updateCartTotal());
     console.log(body);
