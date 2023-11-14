@@ -13,7 +13,7 @@ const CartSummary = () => {
   const content = cart.map((cartItem, key) => (
     <li key={key} className='grid grid-cols-2'>
       <div className='name-size-quantity'>
-        <div className='font-baz2 text-[14px] tracking-[1.4px]'>
+        <div className='font-baz2 text-[14px] tracking-[1.4px] tablet:text-[21px] tablet:tracking-[2.1px]'>
           {cartItem.productName}
         </div>
         <div className='font-baz2 text-[14px] tablet:text-[21px] tracking-[1.4px] tablet:tracking-[2.1px]'>
@@ -26,15 +26,15 @@ const CartSummary = () => {
     </li>
   ));
   return (
-    <Wrapper className='tablet:py-[75px] py-[45px]'>
-      <div className='summary-title'>
+    <Wrapper className='w-full tablet:py-[75px] py-[45px] border-t border-black border-dashed'>
+      <div className='grid grid-cols-2'>
         <h5
-          className='font-baz2 text-[16px] font-medium tracking-[1.6px] flex items-center'
+          className='font-baz2 text-[16px] tablet:text-[24px] font-medium tracking-[1.6px] flex items-center'
           onClick={() => setShow((x) => !x)}>
           Summary
           {show ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
         </h5>
-        <h5 className='font-baz1 text-[16px] font-semibold'>
+        <h5 className='font-baz1 text-[16px] font-semibold text-right tablet:text-[24px]'>
           {priceFormat(total_amount)}
         </h5>
       </div>
@@ -72,7 +72,7 @@ const CartSummary = () => {
 };
 
 const Wrapper = styled.div`
-  width: 90%;
+  // width: 90%;
   display: flex;
   flex-direction: column;
   margin-block: 1em;

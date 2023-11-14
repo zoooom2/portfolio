@@ -1,10 +1,10 @@
-import { useCallback, useEffect } from 'react';
+import { KeyboardEvent, MouseEvent, useCallback, useEffect } from 'react';
 import { handlePayStack } from '../cartSlice';
 import styled from 'styled-components';
-import { priceFormat } from '../../../utils/constants';
 import { SpinnerCircular } from 'spinners-react';
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 import { CartShippingTypes } from '../../../types';
+import { CartSummary } from '../cart';
 
 const Payment = ({
   setStage,
@@ -31,52 +31,61 @@ const Payment = ({
     state,
     country,
     phoneNumber,
-    shippingFee,
-    shippingMethod,
   } = shippingInfo;
 
-  const handlePayment = useCallback(() => {
-    dispatch(
-      handlePayStack({
-        shippingInfo,
-        cart,
-        total_amount,
-        total_items,
-        subtotal,
-      })
-    );
-  }, [cart, shippingInfo, subtotal, total_amount, total_items]);
+  const handlePayment = useCallback(
+    (e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      dispatch(
+        handlePayStack({
+          shippingInfo,
+          cart,
+          total_amount,
+          total_items,
+          subtotal,
+        })
+      );
+    },
+    [cart, shippingInfo, subtotal, total_amount, total_items]
+  );
 
   useEffect(() => {
     setStage(3);
   }, []);
 
   return (
-    <Wrapper className='flex-column'>
-      <div className='personal-info'>
+    <Wrapper className='flex-column w-full tablet:w-4/5 max-tablet:px-[26px] pt-12'>
+      <div className='personal-info '>
         <div className='info'>
-          <div className='full-name'>
+          <div className='text-[16px] font-baz1 text-[#5c5c5c] tablet:text-[21px]'>
             {lastName} {firstName}
           </div>
-          <div className='email'>{email}</div>
-          <div className='phoneNumber'>{phoneNumber}</div>
+          <div className='text-[16px] font-baz1 text-[#5c5c5c] tablet:text-[21px]'>
+            {email}
+          </div>
+          <div className='text-[16px] font-baz1 text-[#5c5c5c] tablet:text-[21px]'>
+            {phoneNumber}
+          </div>
         </div>
       </div>
       <div className='dashed'></div>
-      <div className='location'>
+      <div className='location pb-4'>
         <div className='actual-location'>
-          <div className='address'>{address}</div>
-          <div className='city-state'>
+          <div className='text-[16px] font-baz1 text-[#5c5c5c] tablet:text-[21px]'>
+            {address}
+          </div>
+          <div className='text-[16px] font-baz1 text-[#5c5c5c] tablet:text-[21px]'>
             {city}, {state}
           </div>
-          <div className='country'>{country}</div>
+          <div className='text-[16px] font-baz1 text-[#5c5c5c] tablet:text-[21px]'>
+            {country}
+          </div>
         </div>
       </div>
-      <div className='dashed'></div>
-      <div className='shippingMethod'>{shippingMethod}</div>
-      <div className='shippingFee'>{priceFormat(shippingFee)}</div>
+      {/* <div className='dashed'></div> */}
+      <CartSummary />
       <button
-        className='btn zilla-700 flex justify-center items-center'
+        className='w-full laptop:w-3/5 self-center zilla-700 flex justify-center items-center border border-black py-[20px] hover:text-baz-white hover:bg-baz-black tablet:text-[24px] text-[16px]'
         onClick={handlePayment}>
         {loading ? (
           <SpinnerCircular secondaryColor={'#000'} color='white' size={35} />
@@ -89,8 +98,6 @@ const Payment = ({
 };
 
 const Wrapper = styled.main`
-  margin-block: 3em;
-  width: 60%;
   .personal-info,
   .location {
     display: flex;
@@ -109,11 +116,6 @@ const Wrapper = styled.main`
     /* identical to box height */
     text-transform: uppercase;
     color: #5c5c5c;
-  }
-  .btn {
-    width: 100%;
-    margin-top: 2em;
-    font-size: 24px;
   }
 `;
 export default Payment;

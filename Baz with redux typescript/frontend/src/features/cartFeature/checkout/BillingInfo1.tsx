@@ -1,4 +1,4 @@
-import { Country, State } from 'country-state-city';
+import { City, State } from 'country-state-city';
 import {
   ChangeEvent,
   KeyboardEvent,
@@ -18,6 +18,7 @@ import {
 import styled from 'styled-components';
 import FormInput from '../../../global_components/FormInput';
 import { updateCartTotal, updateShipping } from '../cartSlice';
+import { CartSummary } from '../cart';
 
 const BillingInfo = ({
   setStage,
@@ -27,46 +28,51 @@ const BillingInfo = ({
   useEffect(() => {
     setStage(1);
   }, [setStage]);
-  const [state, setState] = useState<(countryTypes & { stateCode: string })[]>(
+
+  const [city, setCity] = useState<(countryTypes & { stateCode: string })[]>(
     []
   );
-  const [selectedCountry, setSelectedCountry] =
-    useState<SingleValue<countryTypes> | null>(null);
+  const [selectedCity, setSelectedCity] = useState<
+    (countryTypes & { stateCode: string }) | null
+  >(null);
   const [selectedState, setSelectedState] = useState<SingleValue<
     countryTypes & { stateCode: string }
   > | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const countryArray = Country.getAllCountries().map((x) => ({
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowError(false);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, [showError]);
+
+  const stateArray = State.getStatesOfCountry('NG').map((x) => ({
     value: x.name,
     label: x.name,
-    countryCode: x.isoCode,
+    stateCode: x.isoCode,
+    countryCode: x.countryCode,
   }));
-
-  const handleCountry = (selectedOption: SingleValue<countryTypes>) => {
-    if (selectedOption) {
-      const states = State.getStatesOfCountry(selectedOption.countryCode);
-      const stateArray = states.map((x) => ({
-        value: x.name,
-        label: x.name,
-        stateCode: x.isoCode,
-        countryCode: x.countryCode,
-      }));
-      setState(stateArray);
-      dispatch(
-        updateShipping({ detail: 'country', info: selectedOption.value })
-      );
-      setSelectedCountry(selectedOption);
-    }
-  };
 
   const handleState = (
     selectedOption: SingleValue<countryTypes & { stateCode: string }>
   ) => {
     if (selectedOption) {
+      const cities = City.getCitiesOfState(
+        selectedOption.countryCode,
+        selectedOption.stateCode
+      );
+      const cityArray = cities.map((x) => ({
+        value: x.name,
+        label: x.name,
+        stateCode: x.stateCode,
+        countryCode: x.countryCode,
+      }));
+      setCity(cityArray);
       dispatch(updateShipping({ detail: 'state', info: selectedOption.value }));
       dispatch(
         updateShipping({
@@ -76,6 +82,15 @@ const BillingInfo = ({
       );
       dispatch(updateCartTotal());
       setSelectedState(selectedOption);
+    }
+  };
+
+  const handleCity = (
+    selectedOption: SingleValue<countryTypes & { stateCode: string }>
+  ) => {
+    if (selectedOption) {
+      dispatch(updateShipping({ detail: 'city', info: selectedOption.value }));
+      setSelectedCity(selectedOption);
     }
   };
 
@@ -95,9 +110,10 @@ const BillingInfo = ({
     e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    if (isFormValid && selectedCountry && selectedState) {
+    if (isFormValid && selectedCity && selectedState) {
       navigate('/checkout/payment');
     } else {
+      setShowError(true);
       console.log('form is not valid');
     }
   };
@@ -105,6 +121,12 @@ const BillingInfo = ({
   return (
     <FormWrapper className='border-b border-black w-full px-[35px] flex flex-col gap-[75px] py-[54px]'>
       <div className='flex flex-col gap-8'>
+        <div
+          className={`text-[#ed0000] font-baz1 text-[12px] tablet:text-[19px] ${
+            !showError && 'hidden'
+          }`}>
+          *Complete filling the information
+        </div>
         <h3 className='font-baz2 text-[16px] tablet:text-[24px] tablet:tracking-[2.4px] font-medium tracking-[1.6px]'>
           Contact Information
         </h3>
@@ -162,31 +184,9 @@ const BillingInfo = ({
           />
 
           <div className='grid grid-cols-2 gap-x-[16px] tablet:gap-x-[34px]'>
+            {' '}
             <Select
-              styles={{
-                placeholder: (defaultStyles) => {
-                  return {
-                    ...defaultStyles,
-                    ...placeholderStyle,
-                  };
-                },
-                control: (baseStyles) => ({
-                  ...baseStyles,
-                  ...selectStyle,
-                }),
-              }}
-              options={countryArray}
-              onChange={handleCountry}
-              noOptionsMessage={() => 'No Country Found'}
-              placeholder='Country'
-              className='selectStyle'
-              loadingMessage={() => 'loading...'}
-              backspaceRemovesValue={true}
-              isClearable={true}
-            />
-
-            <Select
-              options={state}
+              options={stateArray}
               styles={{
                 placeholder: (defaultStyles) => {
                   return {
@@ -207,6 +207,28 @@ const BillingInfo = ({
               backspaceRemovesValue={true}
               isClearable={true}
               onChange={handleState}
+            />
+            <Select
+              styles={{
+                placeholder: (defaultStyles) => {
+                  return {
+                    ...defaultStyles,
+                    ...placeholderStyle,
+                  };
+                },
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  ...selectStyle,
+                }),
+              }}
+              options={city}
+              onChange={handleCity}
+              noOptionsMessage={() => 'No Country Found'}
+              placeholder='City'
+              className='selectStyle'
+              loadingMessage={() => 'loading...'}
+              backspaceRemovesValue={true}
+              isClearable={true}
             />
           </div>
         </div>
@@ -229,6 +251,7 @@ const BillingInfo = ({
         className='hover:bg-baz-black hover:text-white py-[20px] tablet:py-[30px] border-[1.5px] border-black font-baz1 text-[16px] tablet:text-[24px] tracking-wide font-bold'>
         NEXT
       </button>
+      <CartSummary />
     </FormWrapper>
   );
 };

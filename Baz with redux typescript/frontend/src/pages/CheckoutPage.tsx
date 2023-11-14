@@ -14,7 +14,7 @@ import {
   Payment,
   // Shipping,
 } from '../features/cartFeature/checkout';
-import { CartSummary } from '../features/cartFeature/cart';
+// import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
   const { params } = useParams();
@@ -48,7 +48,7 @@ const CheckoutPage = () => {
           {params === 'payment' && (
             <Payment setStage={setStage} shippingInfo={shippingInfo} />
           )}
-          <CartSummary />
+          {/* <CartSummary /> */}
         </div>
       </Wrapper>
     </main>
