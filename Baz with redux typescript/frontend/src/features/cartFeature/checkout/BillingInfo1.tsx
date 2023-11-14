@@ -1,4 +1,7 @@
-import { City, State } from 'country-state-city';
+import {
+  // City,
+  State,
+} from 'country-state-city';
 import {
   ChangeEvent,
   KeyboardEvent,
@@ -31,12 +34,12 @@ const BillingInfo = ({
 
   const { shippingInfo } = useAppSelector((state) => state.cart);
 
-  const [city, setCity] = useState<(countryTypes & { stateCode: string })[]>(
-    []
-  );
-  const [selectedCity, setSelectedCity] = useState<
-    (countryTypes & { stateCode: string }) | null
-  >(null);
+  // const [city, setCity] = useState<(countryTypes & { stateCode: string })[]>(
+  //   []
+  // );
+  // const [selectedCity, setSelectedCity] = useState<
+  //   (countryTypes & { stateCode: string }) | null
+  // >(null);
   const [selectedState, setSelectedState] = useState<SingleValue<
     countryTypes & { stateCode: string }
   > | null>(null);
@@ -64,17 +67,17 @@ const BillingInfo = ({
     selectedOption: SingleValue<countryTypes & { stateCode: string }>
   ) => {
     if (selectedOption) {
-      const cities = City.getCitiesOfState(
-        selectedOption.countryCode,
-        selectedOption.stateCode
-      );
-      const cityArray = cities.map((x) => ({
-        value: x.name,
-        label: x.name,
-        stateCode: x.stateCode,
-        countryCode: x.countryCode,
-      }));
-      setCity(cityArray);
+      // const cities = City.getCitiesOfState(
+      //   selectedOption.countryCode,
+      //   selectedOption.stateCode
+      // );
+      // const cityArray = cities.map((x) => ({
+      //   value: x.name,
+      //   label: x.name,
+      //   stateCode: x.stateCode,
+      //   countryCode: x.countryCode,
+      // }));
+      // setCity(cityArray);
       dispatch(updateShipping({ detail: 'state', info: selectedOption.value }));
       dispatch(
         updateShipping({
@@ -87,14 +90,14 @@ const BillingInfo = ({
     }
   };
 
-  const handleCity = (
-    selectedOption: SingleValue<countryTypes & { stateCode: string }>
-  ) => {
-    if (selectedOption) {
-      dispatch(updateShipping({ detail: 'city', info: selectedOption.value }));
-      setSelectedCity(selectedOption);
-    }
-  };
+  // const handleCity = (
+  //   selectedOption: SingleValue<countryTypes & { stateCode: string }>
+  // ) => {
+  //   if (selectedOption) {
+  //     dispatch(updateShipping({ detail: 'city', info: selectedOption.value }));
+  //     setSelectedCity(selectedOption);
+  //   }
+  // };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, validity } = e.target;
@@ -112,7 +115,11 @@ const BillingInfo = ({
     e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    if (isFormValid && selectedCity && selectedState) {
+    if (
+      isFormValid &&
+      // &&       selectedCity
+      selectedState
+    ) {
       navigate('/checkout/payment');
     } else {
       setShowError(true);
@@ -214,7 +221,7 @@ const BillingInfo = ({
               isClearable={true}
               onChange={handleState}
             />
-            <Select
+            {/* <Select
               styles={{
                 placeholder: (defaultStyles) => {
                   return {
@@ -235,7 +242,7 @@ const BillingInfo = ({
               loadingMessage={() => 'loading...'}
               backspaceRemovesValue={true}
               isClearable={true}
-            />
+            /> */}
           </div>
         </div>
       </div>
