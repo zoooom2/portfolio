@@ -5,7 +5,8 @@ interface FormInputProps {
   [key: string]:
     | ((event: React.ChangeEvent<HTMLInputElement>) => void)
     | string
-    | boolean;
+    | boolean
+    | null;
 }
 
 const FormInput = (props: FormInputProps) => {

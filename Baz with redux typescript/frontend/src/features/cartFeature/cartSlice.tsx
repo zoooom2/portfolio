@@ -33,7 +33,7 @@ export const handlePayStack = createAsyncThunk(
   }
 );
 
-const shippingInfoJSON = {
+const shippingInfoJSON = JSON.stringify({
   firstName: '',
   lastName: '',
   address: '',
@@ -46,7 +46,7 @@ const shippingInfoJSON = {
   email: '',
   shippingMethod: '',
   shippingFee: 0,
-};
+});
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -57,7 +57,9 @@ const cartSlice = createSlice({
     total_items: 0,
     subtotal: 0,
     total_amount: 0,
-    shippingInfo: shippingInfoJSON,
+    shippingInfo: JSON.parse(
+      localStorage.getItem('shipping') || shippingInfoJSON
+    ),
   } as CartStateType,
   reducers: {
     addToCart: (

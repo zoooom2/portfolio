@@ -14,13 +14,20 @@ import {
   Payment,
   // Shipping,
 } from '../features/cartFeature/checkout';
+import useLocalStorage from '../utils/customHooks/localStorage';
 // import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
   const { params } = useParams();
   const [stage, setStage] = useState(1);
+  const [_localStorageShipping, setLocalStorageShipping] = useLocalStorage(
+    'shipping',
+    []
+  );
+
   const dispatch = useAppDispatch();
   const { shippingInfo } = useAppSelector((state) => state.cart);
+  // const
 
   useEffect(() => {
     dispatch(setClicked(true));
@@ -31,6 +38,10 @@ const CheckoutPage = () => {
     dispatch(updateCartTotal());
     dispatch(countCartTotal());
   }, []);
+
+  useEffect(() => {
+    setLocalStorageShipping(shippingInfo);
+  }, [shippingInfo]);
 
   return (
     <main>

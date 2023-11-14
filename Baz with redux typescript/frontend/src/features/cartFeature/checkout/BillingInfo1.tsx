@@ -9,7 +9,7 @@ import {
 import Select, { SingleValue } from 'react-select';
 import { countryTypes } from '../../../types';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../../App/hooks';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 import {
   placeholderStyle,
   selectStyle,
@@ -28,6 +28,8 @@ const BillingInfo = ({
   useEffect(() => {
     setStage(1);
   }, [setStage]);
+
+  const { shippingInfo } = useAppSelector((state) => state.cart);
 
   const [city, setCity] = useState<(countryTypes & { stateCode: string })[]>(
     []
@@ -136,6 +138,7 @@ const BillingInfo = ({
             name='firstName'
             placeholder='Firstname'
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
+            value={shippingInfo.firstName || null}
             onChange={onChange}
             required
           />
@@ -145,6 +148,7 @@ const BillingInfo = ({
             name='lastName'
             placeholder='Lastname'
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
+            value={shippingInfo.lastName || null}
             required
             onChange={onChange}
           />
@@ -155,6 +159,7 @@ const BillingInfo = ({
             name='email'
             placeholder='Email Address'
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
+            value={shippingInfo.email || null}
             required
           />
 
@@ -163,6 +168,7 @@ const BillingInfo = ({
             onChange={onChange}
             name='phoneNumber'
             placeholder='Phone Number'
+            value={shippingInfo.phoneNumber}
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
             // pattern='^(\+\d{1,2}\s?)?(\()?((\+234)|(0))[789][01]\d{8}(\))?[\s.\-]?\d{3}[\s.\-]?\d{4}$'
             // required
@@ -180,11 +186,11 @@ const BillingInfo = ({
             placeholder='Address'
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
             name='address'
+            value={shippingInfo.address}
             required
           />
 
           <div className='grid grid-cols-2 gap-x-[16px] tablet:gap-x-[34px]'>
-            {' '}
             <Select
               options={stateArray}
               styles={{
