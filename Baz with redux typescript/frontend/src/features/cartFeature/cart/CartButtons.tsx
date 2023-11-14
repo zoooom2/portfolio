@@ -4,14 +4,16 @@ import {
   // FiUserPlus,
   FiShoppingCart,
 } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { closeSidebar } from '../../productFeature/productSlice';
 // import { logOut } from '../../userFeature/userSlice';
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
+import { toggleSearchBar } from '../../filterFeature/filterSlice';
 
 const CartButtons = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { total_items } = useAppSelector((state) => state.cart);
   // const { isAuthenticated } = useAppSelector((state) => state.user);
 
@@ -27,6 +29,8 @@ const CartButtons = () => {
         className='auth-btn text-baz-black'
         onClick={() => {
           dispatch(closeSidebar());
+          dispatch(toggleSearchBar());
+          navigate('/shop');
         }}>
         <FiSearch />
       </button>

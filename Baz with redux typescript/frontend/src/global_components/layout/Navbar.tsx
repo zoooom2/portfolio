@@ -5,11 +5,14 @@ import { Link } from 'react-router-dom';
 import { links } from '../../utils/constants';
 import { openSidebar } from '../../features/productFeature/productSlice';
 import { CartButtons } from '../../features/cartFeature/cart';
-import { useAppDispatch } from '../../App/hooks';
+import { useAppDispatch, useAppSelector } from '../../App/hooks';
 import { BsSearch } from 'react-icons/bs';
+import { updateFilters } from '../../features/filterFeature/filterSlice';
+import { ChangeEvent } from 'react';
 
 const Nav = () => {
   const dispatch = useAppDispatch();
+  const { openSearchBar } = useAppSelector((state) => state.filter);
   const navlinks = links.map((link) => {
     return (
       <li key={link.id}>
@@ -17,6 +20,10 @@ const Nav = () => {
       </li>
     );
   });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    dispatch(updateFilters({ name: 'text', value }));
+  };
   return (
     <NavContainer className='place-center bg-baz-white flex flex-col gap-4'>
       <div className='nav-center'>
@@ -35,11 +42,15 @@ const Nav = () => {
         <ul className='nav-links'>{navlinks}</ul>
         <CartButtons />
       </div>
-      <div className='search-container w-full'>
+      <div
+        className={`search-container w-full border-t border-black ${
+          !openSearchBar && 'hidden'
+        }`}>
         <input
           type='text'
-          className='search-input w-full'
+          className='search-input w-full outline-none border-none'
           placeholder='what are you looking for'
+          onChange={handleChange}
         />
         <i className='search-icon'>
           <BsSearch />

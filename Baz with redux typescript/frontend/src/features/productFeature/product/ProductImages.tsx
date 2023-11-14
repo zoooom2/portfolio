@@ -23,7 +23,7 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
       )}
       className=''>
       {images.map((image, index) => (
-        <div className='h-full'>
+        <div key={index} className='h-full'>
           <img
             key={index}
             src={image}

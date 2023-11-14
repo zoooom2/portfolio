@@ -140,6 +140,7 @@ export type FilterStatetype = {
   grid_view: boolean;
   sort: string | undefined;
   openFilter: boolean;
+  openSearchBar: boolean;
   filters: FilterType;
 };
 

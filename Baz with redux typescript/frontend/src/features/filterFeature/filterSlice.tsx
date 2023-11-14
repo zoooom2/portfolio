@@ -15,6 +15,7 @@ const filterSlice = createSlice({
     grid_view: false,
     sort: 'price-lowest',
     openFilter: false,
+    openSearchBar: false,
     filters: {
       text: '',
       category: 'all',
@@ -124,6 +125,9 @@ const filterSlice = createSlice({
         collection: 'all',
       };
     },
+    toggleSearchBar: (state) => {
+      state.openSearchBar = !state.openSearchBar;
+    },
   },
 });
 
@@ -138,6 +142,7 @@ export const {
   toggleFilter,
   clearFilters,
   updateCollectionProduct,
+  toggleSearchBar,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;
