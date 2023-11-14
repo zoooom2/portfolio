@@ -1,4 +1,4 @@
-import { City, State } from 'country-state-city';
+import { State } from 'country-state-city';
 import {
   ChangeEvent,
   KeyboardEvent,
@@ -31,12 +31,6 @@ const BillingInfo = ({
 
   const { shippingInfo } = useAppSelector((state) => state.cart);
 
-  const [city, setCity] = useState<(countryTypes & { stateCode: string })[]>(
-    []
-  );
-  const [selectedCity, setSelectedCity] = useState<
-    (countryTypes & { stateCode: string }) | null
-  >(null);
   const [selectedState, setSelectedState] = useState<SingleValue<
     countryTypes & { stateCode: string }
   > | null>(null);
@@ -64,18 +58,6 @@ const BillingInfo = ({
     selectedOption: SingleValue<countryTypes & { stateCode: string }>
   ) => {
     if (selectedOption) {
-      const cities = City.getCitiesOfState(
-        selectedOption.countryCode,
-        selectedOption.stateCode
-      );
-      console.log(cities);
-      const cityArray = cities.map((x) => ({
-        value: x.name,
-        label: x.name,
-        stateCode: x.stateCode,
-        countryCode: x.countryCode,
-      }));
-      setCity(cityArray);
       dispatch(updateShipping({ detail: 'state', info: selectedOption.value }));
       dispatch(
         updateShipping({
@@ -85,15 +67,6 @@ const BillingInfo = ({
       );
       dispatch(updateCartTotal());
       setSelectedState(selectedOption);
-    }
-  };
-
-  const handleCity = (
-    selectedOption: SingleValue<countryTypes & { stateCode: string }>
-  ) => {
-    if (selectedOption) {
-      dispatch(updateShipping({ detail: 'city', info: selectedOption.value }));
-      setSelectedCity(selectedOption);
     }
   };
 
@@ -113,7 +86,7 @@ const BillingInfo = ({
     e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    if (isFormValid && selectedCity && selectedState) {
+    if (isFormValid && selectedState) {
       navigate('/checkout/payment');
     } else {
       setShowError(true);
@@ -215,27 +188,15 @@ const BillingInfo = ({
               isClearable={true}
               onChange={handleState}
             />
-            <Select
-              styles={{
-                placeholder: (defaultStyles) => {
-                  return {
-                    ...defaultStyles,
-                    ...placeholderStyle,
-                  };
-                },
-                control: (baseStyles) => ({
-                  ...baseStyles,
-                  ...selectStyle,
-                }),
-              }}
-              options={city}
-              onChange={handleCity}
-              noOptionsMessage={() => 'No Country Found'}
+
+            <FormInput
+              type='text'
+              name='city'
               placeholder='City'
-              className='selectStyle'
-              loadingMessage={() => 'loading...'}
-              backspaceRemovesValue={true}
-              isClearable={true}
+              className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
+              value={shippingInfo.city || ''}
+              required
+              onChange={onChange}
             />
           </div>
         </div>
