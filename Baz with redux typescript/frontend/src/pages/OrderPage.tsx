@@ -2,8 +2,8 @@ import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  // clearCart,
-  // clearShipping,
+  clearCart,
+  clearShipping,
   countCartTotal,
   updateCartTotal,
 } from '../features/cartFeature/cartSlice';
@@ -28,8 +28,8 @@ const OrderPage = () => {
           }
         );
 
-        // dispatch(clearCart());
-        // dispatch(clearShipping());
+        dispatch(clearCart());
+        dispatch(clearShipping());
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -41,16 +41,11 @@ const OrderPage = () => {
 
   useEffect(() => {
     document.title = 'Order | Baz Official Store';
-    const res = localStorage.getItem('shipping');
-    const req = localStorage.getItem('cart');
-    console.log(req, res);
     dispatch(countCartTotal());
     dispatch(updateCartTotal());
     console.log(body);
     if (body.cart) {
       getDetails();
-      // localStorage.removeItem('cart');
-      // localStorage.removeItem('shipping');
     }
   }, []);
 
