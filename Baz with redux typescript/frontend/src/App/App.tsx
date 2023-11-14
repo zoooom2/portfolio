@@ -28,7 +28,6 @@ const AdminRoutes = lazy(
 );
 import { useAppDispatch, useAppSelector } from './hooks';
 import { countCartTotal } from '../features/cartFeature/cartSlice';
-import SearchBar from '../global_components/layout/SearchBar';
 
 const App = () => {
   const { isAuthenticated, clicked, user, loading } = useAppSelector(
