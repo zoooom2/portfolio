@@ -32,12 +32,12 @@ const orderSchema = new Schema({
     },
     country: {
       type: String,
-      required: [true, 'please enter a shipping address'],
+      // required: [true, 'please enter a shipping address'],
       default: 'Nigeria',
     },
     countryCode: {
       type: String,
-      required: [true, 'country code is required'],
+      // required: [true, 'country code is required'],
       default: 'NG',
     },
     shippingFee: {
