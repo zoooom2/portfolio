@@ -43,6 +43,7 @@ const OrderPage = () => {
     document.title = 'Order | Baz Official Store';
     dispatch(countCartTotal());
     dispatch(updateCartTotal());
+    console.log(body);
     if (body.cart) {
       getDetails();
       localStorage.removeItem('cart');
