@@ -7,8 +7,9 @@ const { updateStock } = require('./productsController');
 const getUniqueValues = require('../utils/uniqueValues');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
-  const { name, email } = req.user;
+  const { firstName, lastName, email } = req.body.shippingInfo;
   const helper = new paystack.FeeHelper();
+  const name = `${firstName} ${lastName}`;
 
   //1) Initialize the transaction
   const session = await paystack.transaction.initialize({

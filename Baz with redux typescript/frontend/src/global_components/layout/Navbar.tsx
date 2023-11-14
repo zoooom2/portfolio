@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 import logo from '../../assets/image 2.svg';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { links } from '../../utils/constants';
 import { openSidebar } from '../../features/productFeature/productSlice';
 import { CartButtons } from '../../features/cartFeature/cart';
 import { useAppDispatch, useAppSelector } from '../../App/hooks';
 import { BsSearch } from 'react-icons/bs';
-import { updateFilters } from '../../features/filterFeature/filterSlice';
+import {
+  toggleSearchBar,
+  updateFilters,
+} from '../../features/filterFeature/filterSlice';
 import { ChangeEvent } from 'react';
 
 const Nav = () => {
@@ -23,6 +26,9 @@ const Nav = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     dispatch(updateFilters({ name: 'text', value }));
+  };
+  const closeSearchBar = () => {
+    dispatch(toggleSearchBar());
   };
   return (
     <NavContainer className='place-center bg-baz-white flex flex-col gap-4'>
@@ -55,6 +61,9 @@ const Nav = () => {
         <i className='search-icon'>
           <BsSearch />
         </i>
+        <button className='close-icon text-baz-danger' onClick={closeSearchBar}>
+          <FaTimes />
+        </button>
       </div>
     </NavContainer>
   );
@@ -148,6 +157,13 @@ const NavContainer = styled.nav`
     left: 30px; /* Adjust as needed */
     top: 50%;
     transform: translateY(-50%);
+  }
+  .close-icon {
+    position: absolute;
+    right: 30px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
   }
 `;
 
