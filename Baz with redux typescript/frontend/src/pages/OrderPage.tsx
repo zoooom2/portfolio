@@ -46,8 +46,8 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
-    setLocalStorageShipping(shippingInfo);
-  }, [shippingInfo]);
+    setLocalStorageShipping(body.shippingInfo);
+  }, [body.shippingInfo]);
 
   useEffect(() => {
     document.title = 'Order | Baz Official Store';
