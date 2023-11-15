@@ -12,6 +12,7 @@ import OrderPage from './OrderPage';
 import Profile from './UserProfilePage';
 import ContactPage from './ContactPage';
 import AdminPages from './AdminPages';
+import DeliveryPage from './DeliveryPage';
 
 export {
   ThesisPage,
@@ -28,4 +29,5 @@ export {
   Profile,
   ContactPage,
   AdminPages,
+  DeliveryPage,
 };

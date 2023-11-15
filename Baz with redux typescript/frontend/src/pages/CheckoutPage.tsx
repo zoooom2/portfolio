@@ -46,7 +46,7 @@ const CheckoutPage = () => {
   return (
     <main>
       <Wrapper className='flex-column place-center'>
-        <div className='pageHero flex-column place-center'>
+        <div className='flex flex-col items-center py-[45px] justify-center border-b w-full border-black'>
           <h3 className='pageName'>Checkout</h3>
           <button className='backToCart-btn'>Back to Cart</button>
         </div>

@@ -10,7 +10,12 @@ import {
   stopLoading,
 } from '../features/userFeature/userSlice';
 import { Navbar, Sidebar, Loading } from '../global_components';
-import { HomePage, SingleProductPage, ProductPage } from '../pages';
+import {
+  HomePage,
+  SingleProductPage,
+  ProductPage,
+  DeliveryPage,
+} from '../pages';
 
 const ThesisPage = lazy(() => import('../pages/ThesisPage'));
 const CartPage = lazy(() => import('../pages/CartPage'));
@@ -64,6 +69,7 @@ const App = () => {
           <Route path='/checkout/:params' element={<CheckoutPage />} />
           <Route path='/pay' element={<PaymentGateway />} />
           <Route path='/order' element={<OrderPage />} />
+          <Route path='/delivery' element={<DeliveryPage />} />
 
           <Route
             path='/login'

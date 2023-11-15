@@ -30,7 +30,7 @@ const CartPage = () => {
   if (cart.length < 1) {
     return (
       <Wrapper className='page-100'>
-        <div className='pageHero flex-column'>
+        <div className='flex flex-col items-center py-[45px] justify-center border-b w-full border-black'>
           <h3 className='pageName'>Shopping Cart</h3>
           <Link to='/shop' className='shopping-btn'>
             Continue Shopping
@@ -47,7 +47,7 @@ const CartPage = () => {
   }
   return (
     <Wrapper className='page flex-column'>
-      <div className='pageHero flex-column place-center'>
+      <div className='flex flex-col items-center py-[45px] justify-center border-b w-full border-black'>
         <h3 className='pageName'>Cart</h3>
         <Link to='/shop' className='shopping-btn'>
           Continue Shopping

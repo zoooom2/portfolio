@@ -9,8 +9,14 @@ import {
 } from '../features/cartFeature/cartSlice';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../App/hooks';
+import useLocalStorage from '../utils/customHooks/localStorage';
 
 const OrderPage = () => {
+  const [_localStorageShipping, setLocalStorageShipping] = useLocalStorage(
+    'shipping',
+    []
+  );
+
   const body = useAppSelector((state) => state.cart);
   const query = new URLSearchParams(useLocation().search);
   const reference = query.get('reference');
@@ -38,6 +44,10 @@ const OrderPage = () => {
       }
     }
   };
+
+  useEffect(() => {
+    setLocalStorageShipping(shippingInfo);
+  }, [shippingInfo]);
 
   useEffect(() => {
     document.title = 'Order | Baz Official Store';

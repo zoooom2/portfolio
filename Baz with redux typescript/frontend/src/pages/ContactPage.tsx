@@ -15,7 +15,9 @@ const ContactPage = () => {
 
   return (
     <Wrapper className='flex-column'>
-      <h3 className='pageName'>Contact</h3>
+      <h3 className='font-baz2 font-semibold py-[45px] text-[20px] tablet:text-[24px] tracking-[2px] tablet:tracking-[2.4px]'>
+        Contact
+      </h3>
       <main>
         <div className='call'>
           <h3> Call Baz @</h3>
