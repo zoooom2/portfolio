@@ -1,4 +1,15 @@
+import { useEffect } from 'react';
+import { useAppDispatch } from '../App/hooks';
+import { setClicked } from '../features/userFeature/userSlice';
+
 const DeliveryPage = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    document.title = 'Delivery | Baz Official Store';
+
+    dispatch(setClicked(true));
+  }, []);
   return (
     <div>
       <div className='flex flex-col items-center py-[45px] justify-center border-b w-full border-black font-baz2 text-[20px] font-semibold tracking-[2px] tablet:text-[24px] tablet:tracking-[2.4px]'>

@@ -290,3 +290,9 @@ export type AdminPageType = 'overview' | 'product' | 'order' | 'users';
 export type orderTableDataProps = (Omit<OrderType, '_id'> & {
   _id: JSX.Element;
 })[];
+
+export type OrderStateType = {
+  loading: boolean;
+  orders: OrderType[];
+  create_order_error: string;
+};

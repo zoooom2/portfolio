@@ -31,7 +31,7 @@ const Nav = () => {
     dispatch(toggleSearchBar());
   };
   return (
-    <NavContainer className='place-center bg-baz-white flex flex-col gap-4'>
+    <NavContainer className='place-center bg-baz-white flex flex-col gap-4 pb-[18px]'>
       <div className='nav-center'>
         <div className='nav-header'>
           <Link to='/'>
@@ -54,7 +54,7 @@ const Nav = () => {
         }`}>
         <input
           type='text'
-          className='search-input w-full outline-none border-none'
+          className='search-input w-full outline-none border-none pt-[25px]'
           placeholder='what are you looking for'
           onChange={handleChange}
         />
@@ -155,13 +155,13 @@ const NavContainer = styled.nav`
   .search-icon {
     position: absolute;
     left: 30px; /* Adjust as needed */
-    top: 50%;
+    top: 60%;
     transform: translateY(-50%);
   }
   .close-icon {
     position: absolute;
     right: 30px; /* Adjust as needed */
-    top: 50%;
+    top: 60%;
     transform: translateY(-50%);
     cursor: pointer;
   }
