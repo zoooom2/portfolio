@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logo from '../../assets/image 2.svg';
+// import logo from '../../assets/image 2.svg';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { links } from '../../utils/constants';
@@ -35,7 +35,12 @@ const Nav = () => {
       <div className='nav-center'>
         <div className='nav-header'>
           <Link to='/'>
-            <img src={logo} alt='logo' />
+            <img
+              src={
+                'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1700295242/image_2-removebg-preview_s5cssh.png'
+              }
+              alt='logo'
+            />
           </Link>
           <div className='nav-toggle'>
             <CartButtons />
@@ -87,11 +92,11 @@ const NavContainer = styled.nav`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    img {
-      width: 90px;
-      height: 70px;
-      margin-left: -15px;
-    }
+    // img {
+    //   width: 90px;
+    //   height: 70px;
+    //   margin-left: -15px;
+    // }
   }
   .nav-toggle {
     background: transparent;

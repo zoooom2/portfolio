@@ -1,4 +1,4 @@
-import logo from '../../assets/image 2.svg';
+// import logo from '../../assets/image 2.svg';
 import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 import { links } from '../../utils/constants';
@@ -30,7 +30,13 @@ const Sidebar = () => {
         </div>
         <div className='flex flex-col items-center gap-[60px] justify-center'>
           <div className='w-[130px] flex justify-center aspect-[130/101]'>
-            <img src={logo} alt='logo' className='w-full' />
+            <img
+              src={
+                'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1700295242/image_2-removebg-preview_s5cssh.png'
+              }
+              alt='logo'
+              className='w-full'
+            />
           </div>
           <ul className='flex flex-col gap-[32px] font-baz2 text-[20px] font-semibold tracking-[2px] capitalize'>
             {links.map(({ id, text, url }) => {
