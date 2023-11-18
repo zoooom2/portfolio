@@ -119,6 +119,7 @@ export type SingleProductType = {
 };
 export type ProductStateType = {
   isSidebarOpen: boolean;
+  showModal: boolean;
   products_loading: boolean;
   products_error: string;
   products: SingleProductType[];

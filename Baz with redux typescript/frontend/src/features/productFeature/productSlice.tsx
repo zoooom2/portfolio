@@ -26,6 +26,7 @@ const productSlice = createSlice({
     featured_products: [],
     single_product_loading: false,
     single_product_error: '',
+    showModal: false,
     single_product: {
       _id: '',
       productName: '',
@@ -57,6 +58,12 @@ const productSlice = createSlice({
       state.products = state.products.filter(
         (product) => product._id !== action.payload
       );
+    },
+    openModal: (state) => {
+      state.showModal = true;
+    },
+    closeModal: (state) => {
+      state.showModal = false;
     },
   },
   extraReducers: (builder) => {
@@ -97,6 +104,11 @@ const productSlice = createSlice({
   },
 });
 
-export const { openSidebar, closeSidebar, removeProduct } =
-  productSlice.actions;
+export const {
+  openSidebar,
+  closeSidebar,
+  removeProduct,
+  openModal,
+  closeModal,
+} = productSlice.actions;
 export default productSlice.reducer;

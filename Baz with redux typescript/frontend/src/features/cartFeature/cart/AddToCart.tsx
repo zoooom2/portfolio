@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { addToCart } from '../../cartFeature/cartSlice';
 import { SingleProductType } from '../../../types';
 import { useAppDispatch } from '../../../App/hooks';
+import { openModal } from '../../productFeature/productSlice';
 
 const AddToCart = ({ product }: { product: SingleProductType }) => {
   const { _id: id } = product;
@@ -25,7 +26,13 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
     <Wrapper className='size flex-column'>
       {/* <AmountButtons increase={increase} decrease={decrease} amount={amount} /> */}
       <div className='flex flex-col gap-[16px] w-full'>
-        <div className='size-guide'>size guide</div>
+        <button
+          className='size-guide'
+          onClick={() => {
+            dispatch(openModal());
+          }}>
+          size guide
+        </button>
         <select
           name='size'
           className='focus:bg-baz-black focus:text-baz-white size-select font-baz1 text-[14px] py-[21px] px-[16px] tablet:py-[31.5px] tablet:px-[24px] bg-baz-white tablet:font-baz2 tablet:text-[24px] tablet:font-medium'

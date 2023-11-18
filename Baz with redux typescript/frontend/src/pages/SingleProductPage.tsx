@@ -15,6 +15,7 @@ import { Error, Loading } from '../global_components';
 import ProductImages from '../features/productFeature/product/ProductImages';
 import { AddToCart } from '../features/cartFeature/cart';
 import { Conditions } from '../features/cartFeature/checkout';
+import Modal from '../features/productFeature/product/SizeGuideModal';
 
 const SingleProductPage = () => {
   const { id } = useParams();
@@ -91,11 +92,13 @@ const SingleProductPage = () => {
           <Conditions />
         </div>
       </div>
+      <Modal />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.main`
+  position: relative;
   display: grid;
   justify-content: center;
   width: 100%;

@@ -12,14 +12,15 @@ const Sidebar = () => {
 
   const { isSidebarOpen } = useAppSelector((state) => state.product);
   const { cart } = useAppSelector((state) => state.cart);
-  const { isAuthenticated } = useAppSelector((state) => state.user);
 
   return (
     <SidebarContainer>
       <aside
-        className={`${isSidebarOpen ? 'sidebar show-sidebar' : 'sidebar'}`}>
-        <div className='sidebar-header'>
-          <img src={logo} className='logo' alt='logo' />
+        className={`${
+          isSidebarOpen ? 'sidebar show-sidebar' : 'sidebar'
+        } flex flex-col justify-center`}>
+        <div className='sidebar-header justify-end absolute right-2 top-2'>
+          {/* <img src={logo} className='logo' alt='logo' /> */}
           <button
             type='button'
             className='close-btn'
@@ -27,27 +28,33 @@ const Sidebar = () => {
             <FaTimes />
           </button>
         </div>
-        <ul className='links'>
-          {links.map(({ id, text, url }) => {
-            return (
-              <li key={id}>
-                <Link to={url} onClick={() => dispatch(closeSidebar())}>
-                  {text}
+        <div className='flex flex-col items-center gap-[60px] justify-center'>
+          <div className='w-[130px] flex justify-center aspect-[130/101]'>
+            <img src={logo} alt='logo' className='w-full' />
+          </div>
+          <ul className='flex flex-col gap-[32px] font-baz2 text-[20px] font-semibold tracking-[2px] capitalize'>
+            {links.map(({ id, text, url }) => {
+              return (
+                <li key={id}>
+                  <Link to={url} onClick={() => dispatch(closeSidebar())}>
+                    {text}
+                  </Link>
+                </li>
+              );
+            })}
+            {cart && (
+              <li>
+                <Link
+                  to='/checkout/information'
+                  onClick={() => dispatch(closeSidebar())}>
+                  checkout
                 </Link>
               </li>
-            );
-          })}
-          {isAuthenticated && cart && (
-            <li>
-              <Link
-                to='/checkout/information'
-                onClick={() => dispatch(closeSidebar())}>
-                checkout
-              </Link>
-            </li>
-          )}
-        </ul>
-        <CartButtons />
+            )}
+          </ul>
+
+          <CartButtons />
+        </div>
       </aside>
     </SidebarContainer>
   );
@@ -57,7 +64,6 @@ const SidebarContainer = styled.div`
   text-align: center;
   .sidebar-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
   }
@@ -79,14 +85,15 @@ const SidebarContainer = styled.div`
     height: 45px;
   }
   .links {
-    margin-bottom: 2rem;
+    // margin-bottom: 2rem;
   }
   .links a {
     display: block;
-    text-align: left;
+    text-align: center;
     font-size: 1rem;
     text-transform: capitalize;
-    padding: 1rem 1.5rem;
+    // padding: 1rem 1.5rem;
+    gap: 32px;
     color: var(--clr-grey-3);
     transition: var(--transition);
     letter-spacing: var(--spacing);
