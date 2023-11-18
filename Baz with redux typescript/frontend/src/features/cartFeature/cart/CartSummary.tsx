@@ -32,13 +32,13 @@ const CartSummary = () => {
           className='font-baz2 text-[16px] tablet:text-[24px] font-medium tracking-[1.6px] flex items-center'
           onClick={() => setShow((x) => !x)}>
           Summary
-          {show ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
+          {show ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
         </h5>
         <h5 className='font-baz1 text-[16px] font-semibold text-right tablet:text-[24px]'>
           {priceFormat(total_amount)}
         </h5>
       </div>
-      <ul className={show ? 'show' : ''}>
+      <ul className={`${show ? 'show' : ''} pt-3`}>
         {content}
         <div className='dashed'></div>
         <li key={1}>
