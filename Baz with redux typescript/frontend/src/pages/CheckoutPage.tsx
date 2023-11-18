@@ -66,9 +66,6 @@ const CheckoutPage = () => {
   );
 };
 const Wrapper = styled.div`
-  margin-inline: 0;
-  width: 100%;
-  padding-block: 1em;
   .pageHero {
     padding-block: 0.8em;
     width: 100%;

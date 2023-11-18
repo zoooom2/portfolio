@@ -29,7 +29,7 @@ const CartPage = () => {
 
   if (cart.length < 1) {
     return (
-      <Wrapper className='page-100'>
+      <Wrapper className=''>
         <div className='flex flex-col items-center py-[45px] justify-center border-b w-full border-black'>
           <h3 className='pageName'>Shopping Cart</h3>
           <Link to='/shop' className='shopping-btn'>
@@ -59,7 +59,7 @@ const CartPage = () => {
 };
 
 const Wrapper = styled.main`
-  padding-block: 0.5rem;
+  // padding-block: 0.5rem;
   align-items: center;
   .pageHero {
     padding-block: 0.8em;
