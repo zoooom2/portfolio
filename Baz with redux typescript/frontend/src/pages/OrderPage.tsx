@@ -13,7 +13,6 @@ import { useAppDispatch, useAppSelector } from '../App/hooks';
 import useLocalStorage from '../utils/customHooks/localStorage';
 import { setClicked } from '../features/userFeature/userSlice';
 import { OrderGreenSVG } from '../assets';
-import { FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const OrderPage = () => {
