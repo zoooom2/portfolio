@@ -8,7 +8,6 @@ import { CartButtons } from '../../features/cartFeature/cart';
 import { useAppDispatch, useAppSelector } from '../../App/hooks';
 import { BsSearch } from 'react-icons/bs';
 import {
-  openSearchBar,
   closeSearchBar,
   updateFilters,
 } from '../../features/filterFeature/filterSlice';
