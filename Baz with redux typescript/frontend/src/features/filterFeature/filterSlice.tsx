@@ -125,8 +125,11 @@ const filterSlice = createSlice({
         collection: 'all',
       };
     },
-    toggleSearchBar: (state) => {
-      state.openSearchBar = !state.openSearchBar;
+    openSearchBar: (state) => {
+      state.openSearchBar = true;
+    },
+    closeSearchBar: (state) => {
+      state.openSearchBar = false;
     },
   },
 });
@@ -142,7 +145,8 @@ export const {
   toggleFilter,
   clearFilters,
   updateCollectionProduct,
-  toggleSearchBar,
+  openSearchBar,
+  closeSearchBar,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

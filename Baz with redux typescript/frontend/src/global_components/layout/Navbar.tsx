@@ -8,7 +8,8 @@ import { CartButtons } from '../../features/cartFeature/cart';
 import { useAppDispatch, useAppSelector } from '../../App/hooks';
 import { BsSearch } from 'react-icons/bs';
 import {
-  toggleSearchBar,
+  openSearchBar,
+  closeSearchBar,
   updateFilters,
 } from '../../features/filterFeature/filterSlice';
 import { ChangeEvent } from 'react';
@@ -27,8 +28,9 @@ const Nav = () => {
     const { value } = e.target;
     dispatch(updateFilters({ name: 'text', value: value.toLowerCase() }));
   };
-  const closeSearchBar = () => {
-    dispatch(toggleSearchBar());
+  const hideSearchBar = () => {
+    dispatch(updateFilters({ name: 'text', value: '' }));
+    dispatch(closeSearchBar());
   };
   return (
     <NavContainer className='place-center bg-baz-white flex flex-col gap-4 pb-[18px]'>
@@ -66,7 +68,7 @@ const Nav = () => {
         <i className='search-icon'>
           <BsSearch />
         </i>
-        <button className='close-icon text-baz-danger' onClick={closeSearchBar}>
+        <button className='close-icon text-baz-danger' onClick={hideSearchBar}>
           <FaTimes />
         </button>
       </div>

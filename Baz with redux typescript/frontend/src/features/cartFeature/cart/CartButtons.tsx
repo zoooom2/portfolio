@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { closeSidebar } from '../../productFeature/productSlice';
 // import { logOut } from '../../userFeature/userSlice';
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
-import { toggleSearchBar } from '../../filterFeature/filterSlice';
+import { openSearchBar } from '../../filterFeature/filterSlice';
 
 const CartButtons = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ const CartButtons = () => {
         className='auth-btn text-baz-black'
         onClick={() => {
           dispatch(closeSidebar());
-          dispatch(toggleSearchBar());
+          dispatch(openSearchBar());
           navigate('/shop');
         }}>
         <FiSearch />
