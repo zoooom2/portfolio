@@ -98,9 +98,9 @@ const Wrapper = styled.div`
     display: grid;
     place-items: center;
 
-    padding-inline: 1em;
+    // padding-inline: 1em;
     @media (min-width: 480px) {
-      width: 95%;
+      // width: 95%;
     }
     @media (min-width: 768px) {
       width: 70%;

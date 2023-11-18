@@ -21,6 +21,7 @@ export const createOrder = createAsyncThunk(
 const initialState = {
   loading: false,
   create_order_error: '',
+  order_created: false,
 } as OrderStateType;
 
 const orderSlice = createSlice({

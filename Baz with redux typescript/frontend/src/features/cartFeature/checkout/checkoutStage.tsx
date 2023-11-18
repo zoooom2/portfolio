@@ -27,6 +27,7 @@ const Wrapper = styled.ul`
   font-size: 21px;
   line-height: 25px;
   letter-spacing: 0.1em;
+
   border-bottom: 1px solid black;
   @media (max-width: 768px) {
     font-size: 1em;
@@ -35,7 +36,8 @@ const Wrapper = styled.ul`
     display: grid;
     place-items: center;
     width: calc(100% / 2);
-    padding: 0.5em;
+    padding-inline: 0.5em;
+    padding-block: 1.2em;
   }
   .active {
     background: black;
