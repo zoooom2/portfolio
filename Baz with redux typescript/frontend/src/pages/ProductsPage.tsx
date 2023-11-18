@@ -61,9 +61,11 @@ const ProductsPage = () => {
               );
               dispatch(updateCollectionProduct(filtered));
             }}>
-            <option value={'all'}>All</option>
+            <option value={'all'} className='text-center'>
+              All
+            </option>
             {collections.map((collection, index) => (
-              <option value={collection} key={index}>
+              <option value={collection} key={index} className='text-center'>
                 {collection}
               </option>
             ))}
