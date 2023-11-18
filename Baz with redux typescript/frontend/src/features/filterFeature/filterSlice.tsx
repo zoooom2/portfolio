@@ -82,7 +82,7 @@ const filterSlice = createSlice({
       let temp = [...all_products];
       if (text) {
         temp = temp.filter((product) =>
-          product.productName.toLowerCase().startsWith(text)
+          product.productName.toLowerCase().includes(text)
         );
       }
       if (category !== 'all') {
