@@ -33,7 +33,7 @@ const Nav = () => {
   return (
     <NavContainer className='place-center bg-baz-white flex flex-col gap-4 pb-[18px]'>
       <div className='nav-center'>
-        <div className='nav-header'>
+        <div className='nav-header bg-baz-white'>
           <Link to='/'>
             <img
               src={

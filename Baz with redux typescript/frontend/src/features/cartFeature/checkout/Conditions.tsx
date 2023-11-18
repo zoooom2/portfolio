@@ -7,7 +7,7 @@ const Conditions = () => {
   const terms = [
     {
       icons: <RxCube />,
-      meaning: 'Delivered between 9-12 business days',
+      meaning: 'Delivery within 9-12 business days',
     },
     {
       icons: <FiTruck />,

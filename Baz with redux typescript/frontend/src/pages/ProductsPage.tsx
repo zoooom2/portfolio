@@ -61,7 +61,7 @@ const ProductsPage = () => {
               );
               dispatch(updateCollectionProduct(filtered));
             }}>
-            <option value={'all'}>All Collection</option>
+            <option value={'all'}>All</option>
             {collections.map((collection, index) => (
               <option value={collection} key={index}>
                 {collection}

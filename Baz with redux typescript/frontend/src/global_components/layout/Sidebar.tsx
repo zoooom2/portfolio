@@ -11,7 +11,6 @@ const Sidebar = () => {
   const dispatch = useAppDispatch();
 
   const { isSidebarOpen } = useAppSelector((state) => state.product);
-  const { cart } = useAppSelector((state) => state.cart);
 
   return (
     <SidebarContainer>
@@ -20,7 +19,6 @@ const Sidebar = () => {
           isSidebarOpen ? 'sidebar show-sidebar' : 'sidebar'
         } flex flex-col justify-center`}>
         <div className='sidebar-header justify-end absolute right-2 top-2'>
-          {/* <img src={logo} className='logo' alt='logo' /> */}
           <button
             type='button'
             className='close-btn'
@@ -48,15 +46,6 @@ const Sidebar = () => {
                 </li>
               );
             })}
-            {cart && (
-              <li>
-                <Link
-                  to='/checkout/information'
-                  onClick={() => dispatch(closeSidebar())}>
-                  checkout
-                </Link>
-              </li>
-            )}
           </ul>
 
           <CartButtons />
