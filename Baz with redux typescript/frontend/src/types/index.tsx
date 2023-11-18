@@ -295,6 +295,5 @@ export type orderTableDataProps = (Omit<OrderType, '_id'> & {
 export type OrderStateType = {
   loading: boolean;
   orders: OrderType[];
-  order_created: boolean;
   create_order_error: string;
 };

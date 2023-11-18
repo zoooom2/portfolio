@@ -22,7 +22,7 @@ const OrderPage = () => {
   );
 
   const body = useAppSelector((state) => state.cart);
-  const { order_created } = useAppSelector((state) => state.order);
+
   const query = new URLSearchParams(useLocation().search);
   const reference = query.get('reference');
   const dispatch = useAppDispatch();
