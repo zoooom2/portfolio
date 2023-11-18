@@ -25,7 +25,7 @@ const Nav = () => {
   });
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    dispatch(updateFilters({ name: 'text', value }));
+    dispatch(updateFilters({ name: 'text', value: value.toLowerCase() }));
   };
   const closeSearchBar = () => {
     dispatch(toggleSearchBar());
