@@ -48,7 +48,7 @@ const ProductsPage = () => {
         <div className='flex justify-center py-[45px] border-b border-black'>
           <select
             name='collection'
-            className='font-baz2 text-[20px] font-semibold tracking-[2px] bg-baz-white outline-none'
+            className='font-baz2 text-[20px] font-semibold tracking-[2px] bg-baz-white outline-none text-center'
             onChange={(e) => {
               dispatch(
                 updateFilters({ name: 'collection', value: e.target.value })
