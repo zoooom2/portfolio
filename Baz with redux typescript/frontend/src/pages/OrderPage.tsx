@@ -13,7 +13,6 @@ import { useAppDispatch, useAppSelector } from '../App/hooks';
 import useLocalStorage from '../utils/customHooks/localStorage';
 import { setClicked } from '../features/userFeature/userSlice';
 import { OrderGreenSVG } from '../assets';
-import { Link } from 'react-router-dom';
 
 const OrderPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -76,53 +75,25 @@ const OrderPage = () => {
                 {order_created ? 'Confirmed' : 'unsuccessful'}
               </div>
             </div>
-            {order_created ? (
-              <div className='flex flex-col py-[50px] gap-[48px] items-center'>
-                <div className='w-1/3 flex'>
-                  <img
-                    src={OrderGreenSVG}
-                    alt='order successful'
-                    className='w-full object-contain'
-                  />
-                </div>
-                <div className='flex flex-col font-baz2 tracking-[1.2px] tablet:tracking-[1.6px] text-[12px] tablet:text-[16px] items-center'>
-                  <div className='font-semibold capitalize text-center'>
-                    estimated delivery
-                  </div>
-                  <div className=''>3-7 working days</div>
-                </div>
-                <div className='flex flex-col font-baz2 tracking-[1.2px] tablet:tracking-[1.6px] text-[12px] tablet:text-[16px] items-center text-center'>
-                  check your mail to view order details
-                </div>
+
+            <div className='flex flex-col py-[50px] gap-[48px] items-center'>
+              <div className='w-1/3 flex'>
+                <img
+                  src={OrderGreenSVG}
+                  alt='order successful'
+                  className='w-full object-contain'
+                />
               </div>
-            ) : (
-              <div className='flex flex-col pt-[50px] gap-[32px] items-center justify-center'>
-                <div className='w-4/5 flex'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='173'
-                    height='135'
-                    viewBox='0 0 173 135'
-                    fill='none'>
-                    <path
-                      d='M5 5L168 130'
-                      stroke='#ED0000'
-                      stroke-width='9'
-                      stroke-linecap='round'
-                    />
-                    <path
-                      d='M5 130L168 5'
-                      stroke='#ED0000'
-                      stroke-width='9'
-                      stroke-linecap='round'
-                    />
-                  </svg>
+              <div className='flex flex-col font-baz2 tracking-[1.2px] tablet:tracking-[1.6px] text-[12px] tablet:text-[16px] items-center'>
+                <div className='font-semibold capitalize text-center'>
+                  estimated delivery
                 </div>
-                <div className='underline flex flex-col font-baz2 tracking-[1.2px] tablet:tracking-[1.6px] text-[12px] tablet:text-[16px] items-center text-center'>
-                  <Link to={'/shop'}>Return to shop</Link>
-                </div>
+                <div className=''>3-7 working days</div>
               </div>
-            )}
+              <div className='flex flex-col font-baz2 tracking-[1.2px] tablet:tracking-[1.6px] text-[12px] tablet:text-[16px] items-center text-center'>
+                check your mail to view order details
+              </div>
+            </div>
           </div>
           <div className='text-center font-baz2 text-[15px] tablet:text-[36px] tracking-[1.5px] tablet:tracking-[3.6px] uppercase'>
             IF YOU WANT To
