@@ -69,10 +69,9 @@ const OrderPage = () => {
                 order
               </div>
               <div
-                className={`${
-                  order_created ? 'text-[#05E201]' : 'text-[#ed0000]'
-                }  text-[16px] font-semibold tracking-[1.6px] tablet:text-[32px]  tablet:tracking-[3.2px] uppercase text-center`}>
-                {order_created ? 'Confirmed' : 'unsuccessful'}
+                className={`
+                   text-[#05E201] text-[16px] font-semibold tracking-[1.6px] tablet:text-[32px]  tablet:tracking-[3.2px] uppercase text-center`}>
+                'Confirmed'
               </div>
             </div>
 
