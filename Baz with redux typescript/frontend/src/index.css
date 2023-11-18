@@ -194,7 +194,7 @@ p {
   transition: var(--transition);
   font-size: 0.875rem;
   cursor: pointer;
-  margin-top: 2em;
+  /* margin-top: 2em; */
   color: black;
 }
 .btn:hover {

@@ -27,6 +27,9 @@ const CartTotals = () => {
 
 const Wrapper = styled.section`
   padding: 5em;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   @media (max-width: 768px) {
     padding: 3em;
   }
