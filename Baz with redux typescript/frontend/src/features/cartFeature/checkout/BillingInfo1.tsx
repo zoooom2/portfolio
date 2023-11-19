@@ -34,7 +34,7 @@ const BillingInfo = ({
   const [selectedState, setSelectedState] = useState<SingleValue<
     countryTypes & { stateCode: string }
   > | null>(null);
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(true);
   const [showError, setShowError] = useState(false);
 
   const navigate = useNavigate();
@@ -71,13 +71,7 @@ const BillingInfo = ({
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, validity } = e.target;
-
-    if (!validity.valid) {
-      setIsFormValid(false);
-    } else {
-      setIsFormValid(true);
-    }
+    const { name, value } = e.target;
 
     dispatch(updateShipping({ detail: name, info: value }));
   };
@@ -86,12 +80,34 @@ const BillingInfo = ({
     e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    if (isFormValid && selectedState) {
-      navigate('/checkout/payment');
-    } else {
-      setShowError(true);
-      console.log('form is not valid');
+
+    // Get all form elements
+    const form = e.currentTarget.form;
+    if (!form) {
+      console.error('Form not found');
+      return;
     }
+
+    const formElements = form.elements;
+
+    // Check validity for each form element
+    for (let i = 0; i < formElements.length; i++) {
+      const element = formElements[i] as HTMLInputElement;
+
+      if (element instanceof HTMLInputElement) {
+        if (!element.validity.valid) {
+          setIsFormValid(false);
+          setShowError(true);
+          console.log('form is not valid');
+          return; // Stop checking if any field is invalid
+        }
+      }
+    }
+
+    if (!selectedState?.value) setShowError(true);
+
+    // If all fields are valid, navigate to the next stage
+    if (selectedState?.value && isFormValid) navigate('/checkout/payment');
   };
 
   return (
@@ -112,7 +128,7 @@ const BillingInfo = ({
             name='firstName'
             placeholder='Firstname'
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
-            value={shippingInfo.firstName || null}
+            value={shippingInfo.firstName}
             onChange={onChange}
             required
           />
@@ -122,7 +138,7 @@ const BillingInfo = ({
             name='lastName'
             placeholder='Lastname'
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
-            value={shippingInfo.lastName || null}
+            value={shippingInfo.lastName}
             required
             onChange={onChange}
           />
@@ -133,7 +149,7 @@ const BillingInfo = ({
             name='email'
             placeholder='Email Address'
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
-            value={shippingInfo.email || null}
+            value={shippingInfo.email}
             required
           />
 
