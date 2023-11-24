@@ -8,7 +8,7 @@ import QuenchingImage from './QuenchingImage.svg';
 import Sanitation from './sanitation.svg';
 import Tap from './Tap.svg';
 import Hygeine from './bi_phone.svg';
-import Community from './Community.svg';
+import Community from './bi_phone.svg';
 import LatestImg1 from './LatestImg1.png';
 import LatestImg2 from './LatestImg2.png';
 import LatestImg3 from './LatestImg3.png';
