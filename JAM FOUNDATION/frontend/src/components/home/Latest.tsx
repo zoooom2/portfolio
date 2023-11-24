@@ -2,7 +2,7 @@ import Blog from './Blog';
 
 const Latest = () => {
   return (
-    <div className='pl-[63px] pr-[70px] pt-[42px] flex flex-col gap-[45px] bg-[#fcfcfd]'>
+    <div className='pl-[63px] pr-[70px] pt-[42px] flex flex-col gap-[45px] bg-[#fcfcfd] pb-[18px]'>
       <div className='font-satoshi text-[38px] font-medium leading-[60px] tracking-[-0.76px]  text-[#01248c] underline underline-offset-[12px] w-fit'>
         Latest from JAM foundation
       </div>
