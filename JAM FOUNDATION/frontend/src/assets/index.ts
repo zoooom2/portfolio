@@ -7,7 +7,7 @@ import Twitter from './Twitter.svg';
 import QuenchingImage from './QuenchingImage.svg';
 import Sanitation from './sanitation.svg';
 import Tap from './Tap.svg';
-import Hygeine from './Hygeine.svg';
+import Hygeine from './bi_phone.svg';
 import Community from './Community.svg';
 import LatestImg1 from './LatestImg1.png';
 import LatestImg2 from './LatestImg2.png';
