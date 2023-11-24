@@ -1,0 +1,11 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Facebook" clip-path="url(#clip0_6588_2066)">
+<path id="Vector" d="M4 0.5H28C29.9299 0.5 31.5 2.07014 31.5 4V28C31.5 29.9299 29.9299 31.5 28 31.5H4C2.07014 31.5 0.5 29.9299 0.5 28V4C0.5 2.07014 2.07014 0.5 4 0.5Z" stroke="#303B7E"/>
+<path id="Vector_2" fill-rule="evenodd" clip-rule="evenodd" d="M27 16H22V12C22 10.896 22.896 11 24 11H26V6H22C20.4087 6 18.8826 6.63214 17.7574 7.75736C16.6321 8.88258 16 10.4087 16 12V16H12V21H16V32H22V21H25L27 16Z" fill="#303B7E"/>
+</g>
+<defs>
+<clipPath id="clip0_6588_2066">
+<rect width="32" height="32" fill="white"/>
+</clipPath>
+</defs>
+</svg>
