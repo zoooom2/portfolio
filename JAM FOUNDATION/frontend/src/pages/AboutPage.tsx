@@ -1,17 +1,28 @@
 import { AboutUsImg } from '../assets';
-import { coreActivitiesData } from '../utils/constants';
+import { aboutBody } from '../utils/constants';
 
 const AboutPage = () => {
-  const coreActivities = coreActivitiesData.map(
-    ({ point, explanation }, index) => (
+  const body = aboutBody.map(({ header, body: bodyData }, index) => {
+    const templateBody = bodyData.map(({ point, explanation }, index) => (
       <div
         key={index}
         className='font-satoshi text-[18px] leading-[28px] text-justify'>
-        <span className='text-[#01248c] font-medium'>{point}</span>
+        <span className='text-[#01248c] font-medium capitalize'>{point}</span>
         <span className='text-[rgba(1,36,140,0.5)]'>{explanation}</span>
       </div>
-    )
-  );
+    ));
+    return (
+      // <div key={index} className='flex flex-col gap-[22px]'>
+      <div key={index} className='flex flex-col gap-[22px]'>
+        <div className='font-satoshi text-[#01248c] font-medium leading-[28px] text-[24px] self-stretch uppercase'>
+          {header}
+        </div>
+        <div className='flex flex-col gap-[16px]'>{templateBody}</div>
+      </div>
+
+      // </div>
+    );
+  });
   return (
     <div className='mt-[80px] flex flex-col min-h-screen pt-[42px] pb-[147px] px-[62px] bg-[#fcfcfd] gap-[50px]'>
       <div className='text-[38px] font-satoshi text-[#01248c] font-medium leading-[44.5%] underline underline-offset-[8px]'>
@@ -34,8 +45,8 @@ const AboutPage = () => {
             identities, including gender, location, (dis)ability, wealth,
             education, age, caste/ethnicity, race, and sexuality.
           </div>
-          <div className='flex flex-col gap-[10px] font-satoshi'>
-            <div className='text-[#01248c] text-[24px] font-medium leading-[28px] self-stretch'>
+          <div className='flex flex-col gap-[22px] font-satoshi'>
+            <div className='text-[#01248c] text-[24px] font-medium leading-[28px] self-stretch uppercase'>
               Mission
             </div>
             <div className='self-stretch text-[rgba(1,36,140,0.5)] text-[18px] leading-[28px] text-justify'>
@@ -48,18 +59,20 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
-      <div>
-        <div className='flex flex-col gap-[22px]'>
-          <div className='font-satoshi text-[#01248c] font-medium leading-[28px] text-[24px] self-stretch'>
-            Core Activities
-          </div>
-          <div className='flex flex-col gap-[22px]'>{coreActivities}</div>
+      {/* <div> */}
+      <div className='flex flex-col gap-[48px]'>
+        {/* <div className='font-satoshi text-[#01248c] font-medium leading-[28px] text-[24px] self-stretch'>
+          Core Activities
         </div>
+        <div className='flex flex-col gap-[22px]'>{body}</div> */}
+        {body}
       </div>
-      <div className='text-[#01248c] font-satoshi text-[18px] leading-[28px]'>
-        Join us in our journey as we strive to empower underserved communities,
-        providing them with the essential foundation for a healthier, more
-        sustainable, and equitable future.
+      {/* </div> */}
+      <div className='text-[#01248c] font-satoshi text-[18px] leading-[28px] italic'>
+        At JAM Foundation, we are dedicated to serving humanity, empowering the
+        youth, and providing support to widows. We believe in the potential for
+        positive change, and we invite you to join us on this mission of making
+        the world a better place.
       </div>
     </div>
   );

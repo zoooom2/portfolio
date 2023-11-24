@@ -9,6 +9,158 @@ import {
   mockArticleImage,
 } from '../assets';
 
+export const aboutBody = [
+  {
+    header: 'Vision',
+    body: [
+      {
+        point: '',
+        explanation:
+          'Our vision at JAM Foundation is to Gather the Lost, the Confused, and the Needy, Help them discover their purpose, Talent, and Challenges, and equip them to achieve/solve them. Our vision is to Raise Models with high Morals through Human Capital/Talent Development and create a Network which enhances youth effectiveness in Nations Building.',
+      },
+    ],
+  },
+  {
+    header: 'Core Values',
+    body: [
+      {
+        point: '',
+        explanation:
+          'Our commitment involves making sacrifices to serve those in need, even in challenging circumstances. We maintain zero tolerance for staff selfish interests, prioritizing the needs of the vulnerable above personal agendas. We foster a learning culture, encouraging continuous growth and self-discipline for talent exploration. Nurturing personal excellence is a core value, emphasizing the discovery and development of individual gifts and talents to their full potential. Lastly, we ensure a robust program sustainability plan, dedicated to ensuring our initiatives have a lasting and meaningful impact.',
+      },
+    ],
+  },
+  {
+    header: 'Core Activities',
+    body: [
+      {
+        point: 'Water Supply and Distribution: ',
+        explanation: ` We work tirelessly to ensure that communities have reliable access to clean and safe drinking water. Our initiatives encompass the development of water sources, the establishment of distribution networks, and the implementation of water treatment solutions. Emphasizing climate resilience, we strive to secure a long-term supply of clean water for the communities we serve.
+Sanitation and Hygiene Promotion: We believe in the transformative power of sanitation and hygiene education. Our organization conducts awareness campaigns, provides sanitation facilities, and promotes hygienic practices to reduce the prevalence of waterborne diseases and improve public health`,
+      },
+      {
+        point: 'Water Supply and Distribution: ',
+        explanation: ` We work tirelessly to ensure that communities have reliable access to clean and safe drinking water. Our initiatives encompass the development of water sources, the establishment of distribution networks, and the implementation of water treatment solutions. Emphasizing climate resilience, we strive to secure a long-term supply of clean water for the communities we serve.
+Sanitation and Hygiene Promotion: We believe in the transformative power of sanitation and hygiene education. Our organization conducts awareness campaigns, provides sanitation facilities, and promotes hygienic practices to reduce the prevalence of waterborne diseases and improve public health`,
+      },
+      {
+        point: 'Capacity Building and Training: ',
+        explanation: ` JAM Foundation invests in local capacity by training community members, local technicians, and organizations. Through these efforts, we aim to empower communities to independently manage, maintain, and repair WASH infrastructure, fostering self-sufficiency in the long run.`,
+      },
+      {
+        point: 'Advocacy and Policy Influence: ',
+        explanation: ` Advocating for sound policies and regulations that support WASH access for all is integral to our mission. JAM Foundation actively engages with governmental bodies, non-governmental organizations, and the private sector to drive systemic change in the sector, ensuring inclusivity and sustainability.`,
+      },
+      {
+        point: 'Research and Innovation: ',
+        explanation:
+          ' Committed to staying at the forefront of WASH innovation, our organization conducts research to develop and implement cutting-edge technologies and approaches. We strive to continuously improve WASH services, addressing emerging challenges with creativity and expertise.',
+      },
+    ],
+  },
+  {
+    header: 'Our Approach',
+    body: [
+      {
+        point: '',
+        explanation:
+          'JAM Foundation takes a holistic approach to Women, Children, Youth, and WASH programs. We understand that addressing water, sanitation, and hygiene issues requires a multidimensional strategy. Our approach focuses on:',
+      },
+      {
+        point: 'Water Access: ',
+        explanation:
+          "We work tirelessly to provide safe and reliable sources of clean water, whether it's through well construction, water treatment facilities, or water supply management.",
+      },
+      {
+        point: 'Sanitation: ',
+        explanation:
+          'Proper sanitation is essential to prevent the spread of diseases. We design and implement innovative solutions for sustainable sanitation practices, including the construction of toilets and waste management systems.',
+      },
+      {
+        point: 'Hygeine Promotion: ',
+        explanation:
+          'Education is at the core of our work. We conduct community outreach programs, training, and awareness campaigns to promote better hygiene practices and behavior change, ensuring that our impact is lasting.',
+      },
+      {
+        point: 'Community Engagement: ',
+        explanation:
+          'We collaborate closely with communities, local governments, and partner organizations to create tailored solutions that meet the specific needs of each region and foster long-term sustainability.',
+      },
+    ],
+  },
+  {
+    header: 'why choose JAM foundation',
+    body: [
+      {
+        point: 'Expertise: ',
+        explanation:
+          'With years of experience in the field, our team of experts brings a wealth of knowledge and a deep understanding of WASH issues. We have successfully implemented programs in diverse settings, from rural villages to urban centers.',
+      },
+      {
+        point: 'Sustainability: ',
+        explanation:
+          'We are committed to building sustainable solutions that endure beyond the life of our projects. Our goal is to leave communities with the capacity to maintain and expand on the improvements we help initiate.',
+      },
+      {
+        point: 'Impact: ',
+        explanation: `Our work is not just about numbers; it's about the lives we touch and the communities we transform. We measure our success by the improved health, safety, and well-being of those we serve.
+`,
+      },
+      {
+        point: 'Transparency and Accountability: ',
+        explanation:
+          ' JAM Foundation operates with integrity, ensuring transparency in our operations and accountability to our donors and the communities we work with.',
+      },
+    ],
+  },
+
+  {
+    header: 'Programs',
+    body: [
+      {
+        point: '',
+        explanation:
+          'Our programs are designed to align with our vision, mission, and core values. They include:',
+      },
+      {
+        point: 'Purpose Discovery and Enhancement: ',
+        explanation:
+          'Our organization is committed to making a positive impact in various facets of the community through a range of impactful initiatives. In the realm of health, we actively collaborate with medical service organizations to conduct quarterly healthcare outreach programs, ensuring that essential medical services are accessible to those in need. In the realm of sports, our focus is on nurturing youth development by supplying jerseys and socks, as well as organizing a bi-annual soccer tournament that not only promotes physical well-being but also fosters a sense of community and teamwork. Engaging with schools is another cornerstone of our efforts, where we facilitate activities such as basketball tournaments, debate and spelling bee competitions, and provide valuable career counseling to empower the younger generation. Additionally, our commitment extends to supporting widows through a multifaceted approach, encompassing essential provisions like food and clothing, skill acquisition opportunities, and access to microfinance, thereby contributing to their overall well-being and empowerment. Through these diverse initiatives, we strive to create a positive and lasting impact on the health, sports, educational, and socio-economic dimensions of our community.',
+      },
+      {
+        point: 'YOUTH Skills Acquisition Program: ',
+        explanation:
+          'We offer training in carpentry, information technology, printing, and tiling to empower young individuals.',
+      },
+      {
+        point: 'Program Sustainability Plan: ',
+        explanation:
+          'Our programs are designed to meet the critical needs of youth and widows in our communities while fostering their active participation and benefits. We collaborate with other like-minded organizations to maximize our impact and sustainability.',
+      },
+      {
+        point: 'Developmental Plan: ',
+        explanation:
+          'In line with our vision and mission, we continually review and adapt our programs to address the evolving needs of our operating areas. We are committed to expanding our reach to the entire region and nation, working to break the barriers of mass penury, incompetency, and unconstructive reasoning among our youth population.',
+      },
+    ],
+  },
+  {
+    header: 'Join us in our mission',
+    body: [
+      {
+        point: '',
+        explanation:
+          'We invite you to join us on this journey to make the world a better place. Together, we can create a future where every person has access to clean water, where sanitation is a right, not a privilege, and where hygiene education is a norm, not an exception.',
+      },
+      {
+        point: '',
+        explanation:
+          'Thank you for considering JAM Foundation as your partner in making a difference. We look forward to working together to bring lasting change to communities in need.',
+      },
+    ],
+  },
+];
+
 export const whatWeDoLinks = [
   {
     id: '1',
@@ -128,29 +280,3 @@ export const mockSingleBlogArticle = {
     },
   ],
 };
-
-export const coreActivitiesData = [
-  {
-    point: 'Water Supply and Distribution:',
-    explanation: ` We work tirelessly to ensure that communities have reliable access to clean and safe drinking water. Our initiatives encompass the development of water sources, the establishment of distribution networks, and the implementation of water treatment solutions. Emphasizing climate resilience, we strive to secure a long-term supply of clean water for the communities we serve.
-Sanitation and Hygiene Promotion: We believe in the transformative power of sanitation and hygiene education. Our organization conducts awareness campaigns, provides sanitation facilities, and promotes hygienic practices to reduce the prevalence of waterborne diseases and improve public health`,
-  },
-  {
-    point: 'Water Supply and Distribution:',
-    explanation: ` We work tirelessly to ensure that communities have reliable access to clean and safe drinking water. Our initiatives encompass the development of water sources, the establishment of distribution networks, and the implementation of water treatment solutions. Emphasizing climate resilience, we strive to secure a long-term supply of clean water for the communities we serve.
-Sanitation and Hygiene Promotion: We believe in the transformative power of sanitation and hygiene education. Our organization conducts awareness campaigns, provides sanitation facilities, and promotes hygienic practices to reduce the prevalence of waterborne diseases and improve public health`,
-  },
-  {
-    point: 'Capacity Building and Training:',
-    explanation: ` JAM Foundation invests in local capacity by training community members, local technicians, and organizations. Through these efforts, we aim to empower communities to independently manage, maintain, and repair WASH infrastructure, fostering self-sufficiency in the long run.`,
-  },
-  {
-    point: 'Advocacy and Policy Influence:',
-    explanation: ` Advocating for sound policies and regulations that support WASH access for all is integral to our mission. JAM Foundation actively engages with governmental bodies, non-governmental organizations, and the private sector to drive systemic change in the sector, ensuring inclusivity and sustainability.`,
-  },
-  {
-    point: 'Research and Innovation:',
-    explanation:
-      ' Committed to staying at the forefront of WASH innovation, our organization conducts research to develop and implement cutting-edge technologies and approaches. We strive to continuously improve WASH services, addressing emerging challenges with creativity and expertise.',
-  },
-];
