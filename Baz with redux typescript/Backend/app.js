@@ -32,7 +32,7 @@ app.enable('trust proxy');
 // Implement CORS
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://bazng.vercel.app',
     methods: 'GET,POST,PATCH,DELETE',
     credentials: true,
   })
