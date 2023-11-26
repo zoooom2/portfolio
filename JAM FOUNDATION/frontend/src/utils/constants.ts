@@ -40,11 +40,6 @@ export const aboutBody = [
 Sanitation and Hygiene Promotion: We believe in the transformative power of sanitation and hygiene education. Our organization conducts awareness campaigns, provides sanitation facilities, and promotes hygienic practices to reduce the prevalence of waterborne diseases and improve public health`,
       },
       {
-        point: 'Water Supply and Distribution: ',
-        explanation: ` We work tirelessly to ensure that communities have reliable access to clean and safe drinking water. Our initiatives encompass the development of water sources, the establishment of distribution networks, and the implementation of water treatment solutions. Emphasizing climate resilience, we strive to secure a long-term supply of clean water for the communities we serve.
-Sanitation and Hygiene Promotion: We believe in the transformative power of sanitation and hygiene education. Our organization conducts awareness campaigns, provides sanitation facilities, and promotes hygienic practices to reduce the prevalence of waterborne diseases and improve public health`,
-      },
-      {
         point: 'Capacity Building and Training: ',
         explanation: ` JAM Foundation invests in local capacity by training community members, local technicians, and organizations. Through these efforts, we aim to empower communities to independently manage, maintain, and repair WASH infrastructure, fostering self-sufficiency in the long run.`,
       },

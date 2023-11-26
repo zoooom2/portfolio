@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { JAMLogo, MAILLogo, PhoneLogo } from '../../assets';
-import { FaBars } from 'react-icons/fa6';
+// import { FaBars } from 'react-icons/fa6';
+import Dropdown from './Dropdown';
 
 const Navbar = () => {
   return (
@@ -59,9 +60,10 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className='text-[#01248c] text-[32px] font-extrabold laptop:hidden'>
+      {/* <div className='text-[#01248c] text-[32px] font-extrabold laptop:hidden'>
         <FaBars />
-      </div>
+      </div> */}
+      <Dropdown />
     </div>
   );
 };
