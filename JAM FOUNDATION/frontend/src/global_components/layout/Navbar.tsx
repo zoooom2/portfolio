@@ -6,9 +6,9 @@ const Navbar = () => {
   return (
     <div className='flex px-[16px] tablet:px-[70px] py-[10px] justify-between h-[80px] w-full fixed top-0 items-center z-[99] bg-white'>
       <div className='flex gap-[40px] h-full items-center'>
-        <div className='aspect-[81/58] h-full'>
+        <Link to={'/'} className='aspect-[81/58] h-full'>
           <img src={JAMLogo} alt='' className='h-full' />
-        </div>
+        </Link>
         <ul className='flex gap-[40px] font-inter text-[16px] font-semibold leading-[24px] max-laptop:hidden'>
           <li>
             <Link
@@ -59,7 +59,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className='text-[#01248c] text-[32px] font-extrabold'>
+      <div className='text-[#01248c] text-[32px] font-extrabold laptop:hidden'>
         <FaBars />
       </div>
     </div>

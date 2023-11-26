@@ -4,19 +4,19 @@ import { mockBlogpostsDB } from '../../utils/constants';
 const Blog = () => {
   const blog = mockBlogpostsDB.map((post, index) => (
     <div key={index} className='flex flex-col relative min-w-fit'>
-      <div>
-        <img src={post.image} alt='' />
+      <div className='w-full'>
+        <img src={post.image} alt='' className='w-full' />
       </div>
       <div className='relative h-[204px]'>
-        <div className='flex absolute right-[-5px] h-full bottom-8 w-full'>
+        <div className='flex absolute right-[-10px] h-full bottom-8 w-full'>
           <div className='bg-[#01248c] w-[8px] h-[51px]'></div>
           <div
             className='py-[20px] px-[10px] flex flex-col gap-[10px] items-start justify-between bg-[rgba(0,119,190,0.2)]'
             style={{ backdropFilter: 'blur(10px)' }}>
-            <div className='font-satoshi laptop:text-[20px] text-[16px] font-bold leading-[20.33px] tablet:leading-[21.569px] laptop:leading-[28px] text-[#01248c] self-stretch '>
+            <div className='max-smallMobile:text-[14px] font-satoshi laptop:text-[20px] text-[16px] font-bold leading-[20.33px] tablet:leading-[21.569px] laptop:leading-[28px] text-[#01248c] self-stretch '>
               {post.title}
             </div>
-            <div className='text-[rgba(0,0,0,0.5)] font-satoshi laptop:text-[16px] text-[14px] tablet:leading-[18.487px] laptop:leading-[24px] self-stretch flex'>
+            <div className='text-[rgba(0,0,0,0.5)] font-satoshi laptop:text-[16px] max-smallMobile:text-[10px] text-[14px] tablet:leading-[18.487px] laptop:leading-[24px] self-stretch flex'>
               {post.body}
             </div>
             <div className='flex justify-between items-center w-full'>
@@ -51,7 +51,7 @@ const Blog = () => {
       </div>
     </div>
   ));
-  return <div className='flex gap-[28px] overflow-x-auto p-4'>{blog}</div>;
+  return <>{blog}</>;
 };
 
 export default Blog;

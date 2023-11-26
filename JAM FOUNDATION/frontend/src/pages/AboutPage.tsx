@@ -28,11 +28,11 @@ const AboutPage = () => {
       <div className='text-[38px] font-satoshi text-[#01248c] font-medium leading-[44.5%] underline underline-offset-[8px]'>
         About Us
       </div>
-      <div className='flex gap-[41px]'>
-        <div className='w-3/5'>
+      <div className='flex max-laptop:flex-col gap-[41px]'>
+        <div className='w-3/5 max-laptop:w-full'>
           <img src={AboutUsImg} alt='' className='w-full' />
         </div>
-        <div className='w-2/5 flex flex-col gap-[24px]'>
+        <div className='w-2/5 flex flex-col gap-[24px] max-laptop:w-full'>
           <div className='text-[rgba(1,36,140,0.5)] font-satoshi text-[18px] leading-[28px] text-justify'>
             Welcome to the Jonathan Akwashiki Memorial Foundation (JAM
             Foundation), a dynamic and socially conscious non-profit
