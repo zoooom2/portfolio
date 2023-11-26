@@ -24,7 +24,7 @@ const AboutPage = () => {
     );
   });
   return (
-    <div className='mt-[80px] flex flex-col min-h-screen pt-[42px] pb-[147px] px-[62px] bg-[#fcfcfd] gap-[50px]'>
+    <div className='mt-[80px] flex flex-col min-h-screen pt-[42px] pb-[147px] px-[16px] tablet:px-[62px] bg-[#fcfcfd] gap-[50px]'>
       <div className='text-[38px] font-satoshi text-[#01248c] font-medium leading-[44.5%] underline underline-offset-[8px]'>
         About Us
       </div>
