@@ -38,7 +38,7 @@ const SingleArticlePage = () => {
   );
 
   return (
-    <div className='mt-[80px] py-[42px] px-[63px] bg-[#fcfcfd] flex flex-col gap-[46px]'>
+    <div className='mt-[80px] py-[42px] px-[24px] tablet:px-[63px] bg-[#fcfcfd] flex flex-col gap-[46px]'>
       <div className='font-satoshi text-[#01248c] text-[20px] tablet:text-[30px] laptop:text-[38px] leading-[44.5px]'>
         <span>{title}</span>
         <span className={`${!titleul && 'hidden'}`}>: </span>

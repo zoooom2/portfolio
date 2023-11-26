@@ -78,7 +78,7 @@ const GuidingLight = () => {
           {/* </div> */}
 
           <div className='flex gap-[15px] items-start ml-[63px] w-4/5'>
-            <div className='aspect-[410/458] w-[50%] flex mt-[-15%] z-[1]'>
+            <div className='aspect-[410/458] w-[50%] flex mt-[-15%] z-[1] max-w-[410px]'>
               <img src={TapWater} alt='' />
             </div>
             <div className='p-[24px] flex-col gap-[12px] bg-white rounded-[8px] flex'>
