@@ -11,7 +11,7 @@ const Blog = () => {
         <div className='flex absolute right-[-10px] h-full bottom-8 w-full'>
           <div className='bg-[#01248c] w-[8px] h-[51px]'></div>
           <div
-            className='py-[20px] px-[10px] flex flex-col gap-[10px] items-start justify-between bg-[rgba(0,119,190,0.2)]'
+            className='py-[20px] px-[10px] flex flex-col gap-[10px] items-start justify-between bg-[rgba(0,119,190,0.2)] hover-container'
             style={{
               WebkitBackdropFilter: 'blur(10px)',
               backdropFilter: 'blur(10px)',

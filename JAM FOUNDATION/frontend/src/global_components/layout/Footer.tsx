@@ -14,7 +14,7 @@ import {
 const Footer = () => {
   return (
     <div className='w-full h-[371px] relative overflow-hidden max-laptop:bg-[#01248c]'>
-      <div className='absolute h-full bottom-0 max-laptop:hidden'>
+      <div className='absolute h-full bottom-0 max-laptop:hidden -z-[1]'>
         <img
           src={footerBg}
           alt=''

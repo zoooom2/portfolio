@@ -2,6 +2,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  variants: { textColor: ['group-hover'], extend: {} },
   theme: {
     screens: {
       smallMobile: '300px',
