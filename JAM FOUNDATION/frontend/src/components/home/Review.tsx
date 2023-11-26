@@ -26,7 +26,7 @@ const Review = () => {
   ));
 
   return (
-    <div className='py-[42px]  gap-[38px] laptop:gap-[79px] flex flex-col pb-[109px]'>
+    <div className='py-[42px]  gap-[38px] laptop:gap-[79px] flex flex-col pb-[109px] bg-white'>
       <div className='px-[32px] tablet:px-[63px] underline underline-offset-[12px] font-satoshi text-[24px] tablet:text-[28px] laptop:text-[38px] font-medium laptop:leading-[60px] tablet:leading-[38px] leading-[36.5px] laptop:tracking-[-0.76px] tablet:tracking-[-0.56px] text-[#01248c]'>
         What people say about us
       </div>

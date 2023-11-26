@@ -1,6 +1,6 @@
 const JoinMission = () => {
   return (
-    <div className='pb-[18px] flex justify-center w-full mt-[-120px]'>
+    <div className='pb-[18px] flex justify-center w-full mt-[-120px] bg-white'>
       <div
         className='w-8/12 max-tablet:w-9/12 py-[25px] flex flex-col gap-[34px] justify-start bg-[#F9FAFB] px-[12px] laptop:px-[32px] z-[3]'
         style={{ boxShadow: '0px 6px 6px 0px rgba(0, 0, 0, 0.25)' }}>
