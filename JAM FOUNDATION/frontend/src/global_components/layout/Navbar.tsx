@@ -4,7 +4,7 @@ import { FaBars } from 'react-icons/fa6';
 
 const Navbar = () => {
   return (
-    <div className='flex px-[70px] py-[10px] justify-between h-[80px] w-full fixed top-0 items-center z-[99] bg-white'>
+    <div className='flex px-[16px] tablet:px-[70px] py-[10px] justify-between h-[80px] w-full fixed top-0 items-center z-[99] bg-white'>
       <div className='flex gap-[40px] h-full items-center'>
         <div className='aspect-[81/58] h-full'>
           <img src={JAMLogo} alt='' className='h-full' />
