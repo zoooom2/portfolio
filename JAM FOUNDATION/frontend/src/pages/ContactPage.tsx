@@ -123,7 +123,7 @@ const ContactPage = () => {
               rows={10}
               value={contactData.chat}
               onChange={onChange}
-              className='bg-[#f2f4f7] p-[18px]'
+              className='bg-[#f2f4f7] p-[18px] text-black'
               required
             />
           </div>

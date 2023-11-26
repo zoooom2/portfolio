@@ -28,7 +28,7 @@ const FormInput = (props: FormInputProps) => {
         onBlur={handleFocus}
         onFocus={() => setFocused(true)}
         data-focused={focused.toString()}
-        className='py-[18px] bg-[#f2f4f7] rounded-[8px] w-full text-[10px] px-[16px] tablet:text-[15px]'
+        className='py-[18px] bg-[#f2f4f7] rounded-[8px] w-full text-[10px] px-[16px] tablet:text-[15px] text-black'
         required
       />
     </div>
