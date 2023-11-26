@@ -12,7 +12,10 @@ const Blog = () => {
           <div className='bg-[#01248c] w-[8px] h-[51px]'></div>
           <div
             className='py-[20px] px-[10px] flex flex-col gap-[10px] items-start justify-between bg-[rgba(0,119,190,0.2)]'
-            style={{ backdropFilter: 'blur(10px)' }}>
+            style={{
+              WebkitBackdropFilter: 'blur(10px)',
+              backdropFilter: 'blur(10px)',
+            }}>
             <div className='max-smallMobile:text-[14px] font-satoshi laptop:text-[20px] text-[16px] font-bold leading-[20.33px] tablet:leading-[21.569px] laptop:leading-[28px] text-[#01248c] self-stretch '>
               {post.title}
             </div>
