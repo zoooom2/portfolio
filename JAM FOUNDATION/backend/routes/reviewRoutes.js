@@ -5,7 +5,7 @@ const authController = require('../controllers/authControllers');
 const router = express.Router({ mergeParams: true });
 const {
   getAllReviews,
-  setProductUserIds,
+
   createReview,
   getReview,
   updateReview,
@@ -13,12 +13,11 @@ const {
 } = reviewController;
 const { protect, restrictTo } = authController;
 
+router.route('/').get(getAllReviews);
+
 router.use(protect);
 
-router
-  .route('/')
-  .get(getAllReviews)
-  .post(restrictTo('user'), setProductUserIds, createReview);
+router.post('/').post(createReview);
 
 router
   .route('/:id')

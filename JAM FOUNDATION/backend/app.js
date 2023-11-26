@@ -12,15 +12,12 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const compression = require('compression');
 const cors = require('cors');
-require('./controllers/passport')(passport);
+
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-const productRouter = require('./routes/productRoutes');
+const articleRouter = require('./routes/articleRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
-const orderRouter = require('./routes/orderRoute');
-const authRouter = require('./routes/authRoute');
-const visitorRouter = require('./routes/visitorRoute');
 
 // Start express app
 const app = express();
@@ -32,15 +29,15 @@ app.enable('trust proxy');
 // Implement CORS
 app.use(
   cors({
-    origin: 'https://bazng.vercel.app',
+    origin: 'https://jamfoundation.vercel.app',
     methods: 'GET,POST,PATCH,DELETE',
     credentials: true,
-  })
+  }),
 );
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
+  process.env.DATABASE_PASSWORD,
 );
 app.use(
   session({
@@ -61,7 +58,7 @@ app.use(
       sameSite: 'lax',
       maxAge: 360000,
     },
-  })
+  }),
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -70,7 +67,7 @@ app.options('*', cors());
 
 // Serving static files
 app.use(
-  express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 })
+  express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }),
 );
 
 // Set security HTTP headers
@@ -104,7 +101,7 @@ app.use(xss());
 app.use(
   hpp({
     whitelist: [],
-  })
+  }),
 );
 
 app.use(compression());
@@ -117,12 +114,9 @@ app.use((req, res, next) => {
 });
 
 /// 3) ROUTES
-app.use('/api/v1/products', productRouter);
+app.use('/api/v1/articles', articleRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/order', orderRouter);
-app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/visitor', visitorRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

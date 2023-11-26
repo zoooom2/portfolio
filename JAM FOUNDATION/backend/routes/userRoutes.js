@@ -41,7 +41,7 @@ router.get('/me', getMe, getUser);
 router.patch('/updateMe', uploadPhoto([], 'user'), updateMe);
 router.delete('/deleteMe', deleteMe);
 
-router.use(restrictTo('admin'));
+router.use(restrictTo('master'));
 
 router.route('/').get(getAllUsers).post(createUser);
 

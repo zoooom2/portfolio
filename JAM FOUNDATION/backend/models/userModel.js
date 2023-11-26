@@ -28,17 +28,14 @@ const userSchema = new Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email'],
   },
-  // dateOfBirth: {
-  //   type: Date,
-  //   required: [true, 'Please provide date of birth'],
-  // },
+
   photo: {
     type: String,
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
-    default: 'user',
+    enum: ['master', 'admin'],
+    default: 'admin',
   },
   password: {
     type: String,
@@ -95,7 +92,7 @@ userSchema.pre(/^find/, function (next) {
 
 userSchema.methods.correctPassword = async function (
   candidatePassword,
-  userPassword
+  userPassword,
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
@@ -104,7 +101,7 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(
       this.passwordChangedAt.getTime() / 1000,
-      10
+      10,
     );
 
     return JWTTimestamp < changedTimestamp;
