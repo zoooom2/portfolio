@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { JAMLogo, MAILLogo, PhoneLogo } from '../../assets';
+import { FaBars } from 'react-icons/fa6';
 
 const Navbar = () => {
   return (
@@ -8,7 +9,7 @@ const Navbar = () => {
         <div className='aspect-[81/58] h-full'>
           <img src={JAMLogo} alt='' className='h-full' />
         </div>
-        <ul className='flex gap-[40px] font-inter text-[16px] font-semibold leading-[24px]'>
+        <ul className='flex gap-[40px] font-inter text-[16px] font-semibold leading-[24px] max-laptop:hidden'>
           <li>
             <Link
               to={'/'}
@@ -23,9 +24,16 @@ const Navbar = () => {
               About Us
             </Link>
           </li>
+          <li>
+            <Link
+              to={'/about'}
+              className='text-[#01248c] hover:underline hover:text-[#01248c] hover:underline-offset-[16px]'>
+              Blog
+            </Link>
+          </li>
         </ul>
       </div>
-      <div className='flex items-end gap-[20px]'>
+      <div className='flex items-end gap-[20px] max-laptop:hidden'>
         <div className='flex items-center gap-[10px]'>
           <div className='aspect-square w-[24px]'>
             <img src={PhoneLogo} alt='' className='h-full' />
@@ -50,6 +58,9 @@ const Navbar = () => {
             </a>
           </div>
         </div>
+      </div>
+      <div className='text-[#01248c] text-[32px] font-extrabold'>
+        <FaBars />
       </div>
     </div>
   );

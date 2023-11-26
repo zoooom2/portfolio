@@ -6,6 +6,7 @@ import {
   LatestImg3,
   Sanitation,
   Tap,
+  imageHolder,
   mockArticleImage,
 } from '../assets';
 
@@ -280,3 +281,35 @@ export const mockSingleBlogArticle = {
     },
   ],
 };
+
+export const coreValues = [
+  'Sacrifice to serve Humanity',
+  'Zero Tolerance for staff selfish interest Agendas',
+  'Providing a Learning Culture for Talent Exploration and Self-Discipline',
+  'Personal Excellence to discover personal gifts/Talents and to develop them to their full potentials',
+  'A Robust Program Sustainability Plan',
+];
+
+export const reviewData = [
+  {
+    review:
+      'Lorem ipsum dolor sit amet consectetur. Adipiscing imperdiet nisi utelementum mattis non sed et. Convallis accumsan nibh enim at. Eros pellentesque id rutrum enim. Sed tortor dolor acLorem ipsum dolor sit amet consectetur. Adipiscing imperdiet nisi ut elementum mattis non sed et. Convallis accumsan nibh enim at. Eros pellentesque id rutrum enim. Sed tortor dolor ac.',
+    image: imageHolder,
+    name: 'Dr Naomi .D. Francies',
+    company: 'Treasure orphanage',
+  },
+  {
+    review:
+      'Lorem ipsum dolor sit amet consectetur. Adipiscing imperdiet nisi utelementum mattis non sed et. Convallis accumsan nibh enim at. Eros pellentesque id rutrum enim. Sed tortor dolor acLorem ipsum dolor sit amet consectetur. Adipiscing imperdiet nisi ut elementum mattis non sed et. Convallis accumsan nibh enim at. Eros pellentesque id rutrum enim. Sed tortor dolor ac.',
+    image: imageHolder,
+    name: 'Dr Naomi .D. Francies',
+    company: 'Treasure orphanage',
+  },
+  {
+    review:
+      'Lorem ipsum dolor sit amet consectetur. Adipiscing imperdiet nisi utelementum mattis non sed et. Convallis accumsan nibh enim at. Eros pellentesque id rutrum enim. Sed tortor dolor acLorem ipsum dolor sit amet consectetur. Adipiscing imperdiet nisi ut elementum mattis non sed et. Convallis accumsan nibh enim at. Eros pellentesque id rutrum enim. Sed tortor dolor ac.',
+    image: imageHolder,
+    name: 'Dr Naomi .D. Francies',
+    company: 'Treasure orphanage',
+  },
+];
