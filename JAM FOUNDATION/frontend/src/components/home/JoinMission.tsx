@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const JoinMission = () => {
   return (
     <div className='pb-[18px] flex justify-center w-full mt-[-120px] bg-transparent -z-10'>
@@ -17,9 +19,11 @@ const JoinMission = () => {
             difference. We look forward to working together to bring lasting
             change to communities in need.
           </div>
-          <button className='bg-[rgba(1,36,140,0.20)] rounded-none font-inter text-[14px] font-semibold leading-[20px] text-[#01248c]'>
+          <Link
+            to={'/contact'}
+            className='bg-[rgba(1,36,140,0.20)] rounded-none font-inter text-[14px] font-semibold leading-[20px] text-[#01248c]'>
             Partner with us
-          </button>
+          </Link>
         </div>
       </div>
     </div>

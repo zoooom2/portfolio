@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { QuenchingFullImg, QuenchingImage } from '../../assets';
 
 const Quenching = () => {
@@ -15,9 +16,11 @@ const Quenching = () => {
           water and the enlightenment of people about the importance of good
           sanitation and hygiene
         </div>
-        <button className='rounded-none px-[8px] py-[14px] w-fit font-inter text-[14px] font-semibold leading-[20px] bg-[rgba(1,36,140,0.2)] text-[#01248c]'>
+        <Link
+          to={'/contact'}
+          className='rounded-none px-[8px] py-[14px] w-fit font-inter text-[14px] font-semibold leading-[20px] bg-[rgba(1,36,140,0.2)] text-[#01248c]'>
           Partner with us
-        </button>
+        </Link>
       </div>
       <div className='pt-[62px] max-tablet:hidden'>
         <div className='w-full max-tablet:hidden'>
