@@ -2,12 +2,13 @@ import { CiLogout, CiSearch, CiUser } from 'react-icons/ci';
 import { useAppDispatch } from '../../../App/hooks';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../../userFeature/userSlice';
+import styled from 'styled-components';
 
 const AdminMenuButtons = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return (
-    <div className='gap-4 flex'>
+    <Wrapper className='gap-4 flex'>
       <button>
         <CiSearch />
       </button>
@@ -23,8 +24,15 @@ const AdminMenuButtons = () => {
         }}>
         <CiLogout />
       </button>
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: none;
+  @media (min-width: 992px) {
+    display: flex;
+  }
+`;
 
 export default AdminMenuButtons;

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-
+import { products_url as url } from '../utils/constants';
 import styled from 'styled-components';
 
-import { setClicked } from '../features/userFeature/userSlice';
+import { fetchProfile, setClicked } from '../features/userFeature/userSlice';
 import {
   fetchOrderStats,
   fetchVisitorStats,
@@ -13,7 +13,6 @@ import {
 } from '../features/adminFeature/adminSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 import {
-  AdminNav,
   AdminOrders,
   AdminOverview,
   AdminProduct,
@@ -23,8 +22,14 @@ import {
 import AdminProductForm from '../features/adminFeature/admin/AdminProducts/AdminProductForm';
 import Modal from '../features/adminFeature/admin/Layout/Modal';
 import AdminOrderDetail from '../features/adminFeature/admin/AdminOrders/AdminOrderDetail';
-import { removeProduct } from '../features/productFeature/productSlice';
-import AdminSidebar from '../features/adminFeature/admin/Layout/AdminSidebar';
+import {
+  fetchProducts,
+  removeProduct,
+} from '../features/productFeature/productSlice';
+
+import { Navbar, Sidebar } from '../global_components';
+import AdminMenuButtons from '../features/adminFeature/admin/AdminMenuButtons';
+import { adminLinks } from '../utils/constants';
 
 const AdminPages = ({
   page,
@@ -44,9 +49,12 @@ const AdminPages = ({
   );
   const { clicked } = useAppSelector((state) => state.user);
   const { single_product } = useAppSelector((state) => state.product);
+
   useEffect(() => {
     document.title = 'Admin | Baz Official Store';
     if (clicked) dispatch(setClicked(false));
+
+    dispatch(fetchProducts(url));
     dispatch(fetchOrders());
     dispatch(fetchBestSeller());
     dispatch(fetchOrderStats(period));
@@ -70,11 +78,11 @@ const AdminPages = ({
           ]}
         />
       )}
-      <AdminNav />
-      <div className='h-[100px]'></div>
-      <AdminSidebar />
+      <Navbar buttons={<AdminMenuButtons />} admin={true} />
+      {/* <div className='h-[100px]'></div> */}
+      <Sidebar navLinks={adminLinks} footerButtons={<AdminMenuButtons />} />
       <main className='relative'>
-        <div className='fixed '>
+        <div className='fixed sideMenu'>
           <AdminSideMenu
             page={
               page === 'productDetail'
@@ -87,7 +95,7 @@ const AdminPages = ({
             }
           />
         </div>
-        <div className='invisible '>
+        <div className='invisible sideMenu'>
           <AdminSideMenu
             page={
               page === 'productDetail'
@@ -124,6 +132,11 @@ const Wrapper = styled.section`
     section {
       font-size: 40px;
       // height: fit-content;
+    }
+    .sideMenu {
+      @media (max-width: 992px) {
+        display: none;
+      }
     }
   }
 `;

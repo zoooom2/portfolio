@@ -20,10 +20,14 @@ const AdminOverview = () => {
     return (
       <div className='box' key={i}>
         <div className='top'>
-          <div className='logo'>{x.logo}</div>
+          <div className='logo'>
+            <img src={x.logo} alt='' />
+          </div>
           <div className='detail flex-column'>
-            <div className='detail-name'>{x.topic}</div>
-            <div className='detail-value'>
+            <div className='text-[#2b2b2b] font-baz1 text-[14px]'>
+              {x.topic}
+            </div>
+            <div className='text-black font-baz1 text-[24px] font-medium'>
               {current_key === 'totalRevenue'
                 ? priceFormat(state[current_key])
                 : state[current_key]}

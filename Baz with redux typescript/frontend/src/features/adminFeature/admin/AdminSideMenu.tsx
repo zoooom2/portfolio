@@ -7,7 +7,11 @@ import { adminSidebarLinks } from '../../../utils/constants';
 const AdminSideMenu = ({ page = 'overview' }: { page: AdminPageType }) => {
   const links = adminSidebarLinks.map((link, index) => (
     <li key={index} className={page === link.tag ? 'active' : ''}>
-      <Link to={link.link}>{link.name}</Link>
+      <Link
+        to={link.link}
+        className='font-baz2 text-[28px] leading-[34px] text-[#2a2a2a] font-medium'>
+        {link.name}
+      </Link>
     </li>
   ));
   return (
@@ -30,11 +34,11 @@ const Wrapper = styled.aside`
   .active {
     border: 1px solid #a4a4a4;
   }
-  li > a {
-    font-family: 'Zilla Slab';
-    font-size: 28px;
-    line-height: 34px;
-    color: #2a2a2a;
-  }
+  // li > a {
+  //   font-family: 'Zilla Slab';
+  //   font-size: 28px;
+  //   line-height: 34px;
+  //   color: #2a2a2a;
+  // }
 `;
 export default AdminSideMenu;

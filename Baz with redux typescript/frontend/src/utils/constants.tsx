@@ -1,5 +1,4 @@
-import { MdSell, MdShoppingCart } from 'react-icons/md';
-import { FaUsers, FaMoneyCheckAlt } from 'react-icons/fa';
+import { BuyLogo, ItemSoldLogo, revenueLogo, visitorLogo } from '../assets';
 
 export const links = [
   {
@@ -115,7 +114,7 @@ export const periodOption = [
 ];
 
 export type AdminAnalyticsType = {
-  logo: JSX.Element;
+  logo: string;
   topic: string;
   value: {
     current: 'totalRevenue' | 'totalOrder' | 'visitor' | 'totalSale';
@@ -134,25 +133,25 @@ export type AdminAnalyticsType = {
 
 export const adminAnalytics = [
   {
-    logo: <FaMoneyCheckAlt />,
+    logo: revenueLogo,
     topic: 'Total Revenue',
     value: { current: 'totalRevenue', previous: 'previousTotalRevenue' },
     percentage: 'percentageRevenue',
   },
   {
-    logo: <MdShoppingCart />,
+    logo: BuyLogo,
     topic: 'Total Orders',
     value: { current: 'totalOrder', previous: 'previousTotalOrder' },
     percentage: 'percentageOrder',
   },
   {
-    logo: <FaUsers />,
+    logo: visitorLogo,
     topic: 'Total Visitors',
     value: { current: 'visitor', previous: 'previousVisitor' },
     percentage: 'percentageVisitor',
   },
   {
-    logo: <MdSell />,
+    logo: ItemSoldLogo,
     topic: 'Total Items Sold',
     value: { current: 'totalSale', previous: 'previousTotalSales' },
     percentage: 'percentageSales',
@@ -220,3 +219,6 @@ export const shippingChart = {
   yobe: 4500,
   zamfara: 4500,
 } as Record<string, number>;
+
+export const BAZLogo =
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1700295242/image_2-removebg-preview_s5cssh.png';

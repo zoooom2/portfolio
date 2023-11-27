@@ -2,9 +2,9 @@ import styled from 'styled-components';
 // import logo from '../../assets/image 2.svg';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { links } from '../../utils/constants';
+import { BAZLogo, links } from '../../utils/constants';
 import { openSidebar } from '../../features/productFeature/productSlice';
-import { CartButtons } from '../../features/cartFeature/cart';
+// import { CartButtons } from '../../features/cartFeature/cart';
 import { useAppDispatch, useAppSelector } from '../../App/hooks';
 import { BsSearch } from 'react-icons/bs';
 import {
@@ -13,7 +13,7 @@ import {
 } from '../../features/filterFeature/filterSlice';
 import { ChangeEvent } from 'react';
 
-const Nav = () => {
+const Nav = ({ buttons, admin }: { buttons: JSX.Element; admin: boolean }) => {
   const dispatch = useAppDispatch();
   const { openSearchBar } = useAppSelector((state) => state.filter);
   const navlinks = links.map((link) => {
@@ -33,26 +33,24 @@ const Nav = () => {
   };
   return (
     <NavContainer className='place-center bg-baz-white flex flex-col gap-4 pb-[18px]'>
-      <div className='nav-center'>
+      <div className={admin ? 'admin-nav-center' : 'nav-center'}>
         <div className='nav-header bg-baz-white'>
           <Link to='/'>
-            <img
-              src={
-                'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1700295242/image_2-removebg-preview_s5cssh.png'
-              }
-              alt='logo'
-            />
+            <img src={BAZLogo} alt='logo' />
           </Link>
           <div className='nav-toggle'>
-            <CartButtons />
+            {/* <CartButtons /> */}
+            {/* {buttons} */}
             <FaBars
-              className='text-baz-black'
+              className='text-baz-black '
               onClick={() => dispatch(openSidebar())}
             />
           </div>
         </div>
-        <ul className='nav-links'>{navlinks}</ul>
-        <CartButtons />
+        {!admin && <ul className='nav-links'>{navlinks}</ul>}
+
+        {/* <CartButtons /> */}
+        {buttons}
       </div>
       <div
         className={`search-container w-full border-t border-black ${
@@ -84,7 +82,8 @@ const NavContainer = styled.nav`
   top: 0;
   width: 100%;
   z-index: 100;
-  .nav-center {
+  .nav-center,
+  .admin-nav-center {
     width: 90vw;
     margin: 0 auto;
     max-width: var(--max-width);
@@ -122,6 +121,10 @@ const NavContainer = styled.nav`
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
+    }
+    .admin-nav-center {
+      display: flex;
+      justify-content: space-between;
     }
     .nav-links {
       display: flex;

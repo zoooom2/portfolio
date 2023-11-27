@@ -1,186 +1,126 @@
-import styled from 'styled-components';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { FieldErrors, FieldValues, useForm } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
-import axios from 'axios';
-import logo from '../assets/image 2.svg';
-import GoogleButton from 'react-google-button';
-import { jwtAuth, googleAuth } from '../features/userFeature/userSlice';
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  useEffect,
+  useState,
+} from 'react';
+import FormInput from '../global_components/FormInput';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
-import { useEffect } from 'react';
-axios.defaults.withCredentials = true;
+import { jwtAuth } from '../features/userFeature/userSlice';
+import { BAZLogo } from '../utils/constants';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const LoginPage = () => {
   const { authentication_error } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
   const dispatch = useAppDispatch();
+  const [isFormValid, setIsFormValid] = useState(true);
+  const [showError, setShowError] = useState(false);
 
-  const validationSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email('Invalid email format')
-      .required('Email is required'),
-    password: yup
-      .string()
-      .required('Password is required')
-      .min(8, 'Password should be at least 8 characters long'),
-  });
-  const form = useForm({
-    resolver: yupResolver(validationSchema),
-    mode: 'onTouched',
-  });
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowError(false);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, [showError]);
 
-  const { register, control, setError, handleSubmit, formState, trigger } =
-    form;
-  const {
-    errors,
-    isDirty,
-    isValid,
-    isSubmitting,
-    // isSubmitted,
-    // isSubmitSuccessful,
-  } = formState;
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, validity } = e.target;
 
-  const onSubmit = async (data: FieldValues) => {
-    const response = await dispatch(jwtAuth([data.email, data.password]));
+    if (validity.valid) setIsFormValid(true);
+    setCredentials({ ...credentials, [name]: value });
+  };
 
-    if (!authentication_error) {
-      const redirectTo = searchParams.get('redirectTo');
+  const handleSubmit = async (
+    e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
 
-      if (redirectTo) {
-        navigate(redirectTo);
-      } else if (response.payload.role === 'admin') {
-        navigate('/admin/overview');
-      } else {
-        navigate('/');
+    // Get all form elements
+    const form = e.currentTarget.form;
+    if (!form) {
+      console.error('Form not found');
+      return;
+    }
+
+    const formElements = form.elements;
+
+    // Check validity for each form element
+    for (let i = 0; i < formElements.length; i++) {
+      const element = formElements[i] as HTMLInputElement;
+
+      if (element instanceof HTMLInputElement) {
+        if (!element.validity.valid) {
+          setIsFormValid(false);
+          setShowError(true);
+          console.log('form is not valid');
+          return; // Stop checking if any field is invalid
+        }
       }
-    } else {
-      setError('root', { type: 'manual', message: authentication_error });
-      setTimeout(() => {
-        setError('root', {
-          type: 'manual',
-          message: '',
-        });
-        trigger();
-      }, 5000);
+    }
+
+    // If all fields are valid, navigate to the next stage
+    if (isFormValid) {
+      await dispatch(jwtAuth([credentials.email, credentials.password]));
+
+      if (!authentication_error) {
+        const redirectTo = searchParams.get('redirectTo');
+
+        if (redirectTo) {
+          navigate(redirectTo);
+        } else {
+          navigate('/admin/overview');
+        }
+      }
     }
   };
-  const onError = (errors: FieldErrors) => {
-    console.log('Form Errors', errors);
-  };
-  useEffect(() => {
-    trigger();
-  }, [trigger]);
-
-  useEffect(() => {
-    document.title = 'Login | Baz Official Store';
-  }, []);
 
   return (
-    <Wrapper className='page-100 section section-center'>
-      <div className='form_container'>
-        <div className='right flex-column place-center'>
-          <img src={logo} alt='logo' className='logo' />
-
-          <form onSubmit={handleSubmit(onSubmit, onError)}>
-            {errors.root?.message && (
-              <p className='errormsg'>Something went wrong</p>
-            )}
-            <div className='form-control'>
-              <input
-                type='text'
-                className='input email'
-                placeholder='Email'
-                {...register('email')}
-              />
-            </div>
-            <div className='form-control'>
-              <input
-                type='password'
-                className='input'
-                placeholder='Password'
-                {...register('password')}
-              />
-            </div>
-
-            <button
-              type='submit'
-              className='btn place-center'
-              disabled={!isDirty || !isValid || isSubmitting}>
-              Log In
-            </button>
-            <DevTool control={control} />
-          </form>
-          <p className='text'>or</p>
-          <GoogleButton onClick={() => dispatch(googleAuth())} />
-          <p className='text'>
-            New Here ? <Link to='/signup'>Sign Up</Link>
-          </p>
+    <div className='bg-baz-white flex w-full justify-center px-5  items-center h-screen'>
+      <form
+        className='bg-opacity-60 border border-gray-200 bg-clip-padding h-fit w-full tablet:w-1/2 laptop:w-1/3 flex flex-col gap-[48px] justify-center tablet:p-12  px-4 py-10 bg-baz-white shadow-lg rounded-3xl'
+        style={{ backdropFilter: '20px' }}>
+        <div className='w-full justify-center flex'>
+          <img src={BAZLogo} alt='Logo' />
         </div>
-      </div>
-    </Wrapper>
+        <div className='flex flex-col gap-[24px]'>
+          <div
+            className={`text-[#ed0000] font-baz1 text-[12px] ${
+              !showError && 'hidden'
+            }`}>
+            *Complete filling the information
+          </div>
+          <FormInput
+            type='email'
+            name='email'
+            className=''
+            placeholder='Email'
+            value={credentials.email}
+            onChange={onChange}
+            required
+          />
+          <FormInput
+            type='password'
+            name='password'
+            className=''
+            placeholder='password'
+            value={credentials.password}
+            onChange={onChange}
+            required
+          />
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          className='hover:bg-baz-black hover:text-white py-[20px] border-[1.5px] border-black font-baz1 text-[16px] tracking-wide font-bold capitalize'>
+          submit
+        </button>
+      </form>
+    </div>
   );
 };
-
-const Wrapper = styled.main`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .input {
-    width: 100%;
-    margin-block: 10px;
-  }
-  .email {
-    margin-top: 20px;
-  }
-  .btn {
-    width: 100%;
-    display: flex;
-  }
-
-  p {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #2c444e;
-    font-family: 'Bell-MT';
-  }
-
-  .errormsg {
-    margin-bottom: 5px;
-    color: #cc5151;
-  }
-
-  .text > a {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--clr-primary-7);
-  }
-
-  form {
-    width: 100%;
-  }
-  .form_container {
-    padding: 30px;
-    box-shadow: var(--light-shadow);
-    border-radius: var(--radius);
-    background-color: rgba(255, 255, 255, 0.2);
-    width: 40%;
-    max-width: 500px;
-    display: grid;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    place-items: center;
-    @media (max-width: 900px) {
-      width: 75%;
-    }
-    @media (max-width: 600px) {
-      width: 95%;
-    }
-  }
-`;
 
 export default LoginPage;

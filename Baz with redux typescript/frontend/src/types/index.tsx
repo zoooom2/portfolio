@@ -297,3 +297,5 @@ export type OrderStateType = {
   orders: OrderType[];
   create_order_error: string;
 };
+
+export type sideBarLinks = { id: number; text: string; url: string };

@@ -7,9 +7,11 @@ const AdminProductBody = () => {
   const { products } = useAppSelector((state) => state.product);
   const collection = getUniqueValues(products, 'collectionName');
 
+  console.log(products);
+
   const body = collection.map((collectionName, index) => {
     return (
-      <div key={index} className='px-[48px] '>
+      <div key={index} className='px-[48px]'>
         <div className='flex items-end justify-between  border-b border-solid border-[#9b9b9b] pb-[20px] pt-[33px]'>
           <div className='font-medium text-[28px] leading-[42px] font-baz1 capitalize'>
             {collectionName}

@@ -14,11 +14,11 @@ const AdminNav = () => {
       <Link to='/admin/overview'>
         <img src={logo} alt='logo' className='logo' />
       </Link>
-      <div className='max-xl:hidden'>
+      <div className='max-tablet:hidden'>
         <AdminMenuButtons />
       </div>
 
-      <div className='xl:hidden'>
+      <div className='tablet:hidden'>
         <button
           onClick={() => {
             dispatch(openAdminSidebar());

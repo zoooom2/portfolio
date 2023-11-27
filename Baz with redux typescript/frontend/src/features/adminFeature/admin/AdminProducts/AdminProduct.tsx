@@ -15,7 +15,7 @@ const AdminProduct = () => {
 
   return (
     <>
-      <section className='flex flex-col'>
+      <section className='flex flex-col w-full'>
         <Hero
           title={'Products'}
           description={'View your availabe products and edit them'}

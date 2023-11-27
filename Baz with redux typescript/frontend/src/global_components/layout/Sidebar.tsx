@@ -1,13 +1,21 @@
 // import logo from '../../assets/image 2.svg';
 import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
-import { links } from '../../utils/constants';
+// import { links } from '../../utils/constants';
 import styled from 'styled-components';
 import { closeSidebar } from '../../features/productFeature/productSlice';
 import { useAppDispatch, useAppSelector } from '../../App/hooks';
-import { CartButtons } from '../../features/cartFeature/cart';
+// import { CartButtons } from '../../features/cartFeature/cart';
+import { sideBarLinks } from '../../types';
+import { BAZLogo } from '../../utils/constants';
 
-const Sidebar = () => {
+const Sidebar = ({
+  navLinks,
+  footerButtons,
+}: {
+  navLinks: sideBarLinks[];
+  footerButtons: JSX.Element;
+}) => {
   const dispatch = useAppDispatch();
 
   const { isSidebarOpen } = useAppSelector((state) => state.product);
@@ -28,16 +36,10 @@ const Sidebar = () => {
         </div>
         <div className='flex flex-col items-center gap-[60px] justify-center'>
           <div className='w-[130px] flex justify-center aspect-[130/101]'>
-            <img
-              src={
-                'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1700295242/image_2-removebg-preview_s5cssh.png'
-              }
-              alt='logo'
-              className='w-full'
-            />
+            <img src={BAZLogo} alt='logo' className='w-full' />
           </div>
           <ul className='flex flex-col gap-[32px] font-baz2 text-[20px] font-semibold tracking-[2px] capitalize'>
-            {links.map(({ id, text, url }) => {
+            {navLinks.map(({ id, text, url }) => {
               return (
                 <li key={id}>
                   <Link to={url} onClick={() => dispatch(closeSidebar())}>
@@ -47,8 +49,8 @@ const Sidebar = () => {
               );
             })}
           </ul>
-
-          <CartButtons />
+          {footerButtons}
+          {/* <CartButtons /> */}
         </div>
       </aside>
     </SidebarContainer>

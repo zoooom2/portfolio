@@ -23,7 +23,7 @@ const ErrorPage = lazy(() => import('../pages/ErrorPage'));
 const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
 const PaymentGateway = lazy(() => import('../pages/PaymentGatewayPage'));
 const LoginPage = lazy(() => import('../pages/LoginPage'));
-const Signup = lazy(() => import('../pages/Signup'));
+
 const OrderPage = lazy(() => import('../pages/OrderPage'));
 const ContactPage = lazy(() => import('../pages/ContactPage'));
 const AdminPages = lazy(() => import('../pages/AdminPages'));
@@ -33,12 +33,16 @@ const AdminRoutes = lazy(
 );
 import { useAppDispatch, useAppSelector } from './hooks';
 import { countCartTotal } from '../features/cartFeature/cartSlice';
+import { links } from '../utils/constants';
+import { CartButtons } from '../features/cartFeature/cart';
 
 const App = () => {
   const { isAuthenticated, clicked, user, loading } = useAppSelector(
     (state) => state.user
   );
   const dispatch = useAppDispatch();
+
+  console.log('render');
 
   useEffect(() => {
     dispatch(checkVisitorCount());
@@ -53,9 +57,9 @@ const App = () => {
     <Router>
       {clicked && (
         <>
-          <Navbar />
+          <Navbar buttons={<CartButtons />} admin={false} />
 
-          <Sidebar />
+          <Sidebar navLinks={links} footerButtons={<CartButtons />} />
         </>
       )}
       <Suspense fallback={<Loading />}>
@@ -73,12 +77,9 @@ const App = () => {
 
           <Route
             path='/login'
-            element={isAuthenticated ? <Navigate to='/' /> : <LoginPage />}
-          />
-          <Route
-            path='/signup'
-            // element={isAuthenticated ? <Navigate to='/' /> : <Signup />}
-            element={<Signup />}
+            element={
+              isAuthenticated ? <Navigate to='/admin/' /> : <LoginPage />
+            }
           />
 
           <Route

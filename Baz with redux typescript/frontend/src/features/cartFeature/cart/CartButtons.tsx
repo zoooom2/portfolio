@@ -1,13 +1,8 @@
-import {
-  FiSearch,
-  // FiUserMinus,
-  // FiUserPlus,
-  FiShoppingCart,
-} from 'react-icons/fi';
+import { FiSearch, FiShoppingCart } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { closeSidebar } from '../../productFeature/productSlice';
-// import { logOut } from '../../userFeature/userSlice';
+
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 import { openSearchBar } from '../../filterFeature/filterSlice';
 
@@ -15,12 +10,6 @@ const CartButtons = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { total_items } = useAppSelector((state) => state.cart);
-  // const { isAuthenticated } = useAppSelector((state) => state.user);
-
-  // const logOutUser = async () => {
-  //   dispatch(logOut());
-  //   dispatch(closeSidebar());
-  // };
 
   return (
     <Wrapper className='cart-btn-wrapper'>
@@ -44,21 +33,6 @@ const CartButtons = () => {
           <span className='cart-value text-baz-white'>{total_items}</span>
         </span>
       </Link>
-
-      {/* {isAuthenticated ? (
-        <button type='button' className='auth-btn' onClick={logOutUser}>
-          <FiUserMinus />
-        </button>
-      ) : (
-        <Link to='/login'>
-          <button
-            type='button'
-            className='auth-btn'
-            onClick={() => dispatch(closeSidebar())}>
-            <FiUserPlus />
-          </button>
-        </Link>
-      )} */}
     </Wrapper>
   );
 };
