@@ -5,6 +5,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const { updateStock } = require('./productsController');
 const getUniqueValues = require('../utils/uniqueValues');
+const { sendMail } = require('../utils/email');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const { firstName, lastName, email } = req.body.shippingInfo;
@@ -108,6 +109,13 @@ exports.createOrder = catchAsync(async (req, res, next) => {
   if (!order) {
     next(new AppError('Could not create order. Please try again.', 400));
   }
+
+  sendMail({
+    emailAddress: shippingInfo.email,
+    subject: 'ORDER DETAILS',
+    text: JSON.stringify(order),
+    // html,
+  });
 
   //4) update the stock of each product
   await Promise.all(
