@@ -68,7 +68,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className='p-[64px] min-h-screen mt-[80px] gap-[93px] flex flex-col bg-white'>
+    <div className='tablet:p-[64px] px-[16px]  min-h-screen mt-[80px] gap-[93px] flex flex-col bg-white'>
       <div className='font-satoshi text-[#01248c] text-[38px] font-medium leading-[44.5px] underline underline-offset-[12px]'>
         ContactPage
       </div>

@@ -27,7 +27,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to={'/about'}
+              to={'/articles'}
               className='text-[#01248c] hover:underline hover:text-[#01248c] hover:underline-offset-[16px]'>
               Blog
             </Link>
@@ -60,10 +60,9 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {/* <div className='text-[#01248c] text-[32px] font-extrabold laptop:hidden'>
-        <FaBars />
-      </div> */}
-      <Dropdown />
+      <div className='laptop:hidden'>
+        <Dropdown />
+      </div>
     </div>
   );
 };
