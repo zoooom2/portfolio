@@ -188,6 +188,7 @@ export const shippingChart = {
   'akwa ibom': 4500,
   anambra: 4500,
   bauchi: 4500,
+  bayelsa: 4500,
   benue: 4500,
   borno: 4500,
   'cross river': 4500,
