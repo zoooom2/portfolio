@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import logo from '../assets/image 2.svg';
+import { BAZLogo } from '../utils/constants';
 
 const Loading = () => {
   return (
     <Wrapper className='page-100 section section-center bg-baz-white'>
-      <img src={logo} alt='logo'/>
+      <img src={BAZLogo} alt='logo' />
     </Wrapper>
   );
 };
