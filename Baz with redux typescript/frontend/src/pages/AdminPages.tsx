@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { products_url as url } from '../utils/constants';
 import styled from 'styled-components';
 
-import { fetchProfile, setClicked } from '../features/userFeature/userSlice';
+import { setClicked } from '../features/userFeature/userSlice';
 import {
   fetchOrderStats,
   fetchVisitorStats,
