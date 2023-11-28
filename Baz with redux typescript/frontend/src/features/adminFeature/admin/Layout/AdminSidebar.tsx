@@ -1,4 +1,4 @@
-import logo from '../../../../assets/image 2.svg';
+
 import { Link } from 'react-router-dom';
 import { FaTimes } from 'react-icons/fa';
 
@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useAppDispatch, useAppSelector } from '../../../../App/hooks';
 import { closeAdminSidebar } from '../../adminSlice';
 import AdminMenuButtons from '../AdminMenuButtons';
-import { adminLinks } from '../../../../utils/constants';
+import { BAZLogo, adminLinks } from '../../../../utils/constants';
 
 const AdminSidebar = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ const AdminSidebar = () => {
           showSidebar ? 'sidebar show-sidebar' : 'xl:hidden sidebar'
         }`}>
         <div className='sidebar-header'>
-          <img src={logo} className='logo' alt='logo' />
+          <img src={BAZLogo} className='logo' alt='logo' />
           <button
             type='button'
             className='close-btn'
