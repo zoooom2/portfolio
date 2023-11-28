@@ -7,7 +7,7 @@ import ProductPage from './ProductsPage';
 import SingleProductPage from './SingleProductPage';
 import PaymentGateway from './PaymentGatewayPage';
 import LoginPage from './LoginPage';
-import Signup from './Signup';
+// import Signup from './Signup';
 import OrderPage from './OrderPage';
 import Profile from './UserProfilePage';
 import ContactPage from './ContactPage';
@@ -24,7 +24,7 @@ export {
   CartPage,
   PaymentGateway,
   LoginPage,
-  Signup,
+  // Signup,
   OrderPage,
   Profile,
   ContactPage,
