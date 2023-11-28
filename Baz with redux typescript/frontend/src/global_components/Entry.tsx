@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { useAppDispatch } from '../App/hooks';
-import logo from '../assets/image 2.svg';
+
 import { setClicked } from '../features/userFeature/userSlice';
+import { BAZLogo } from '../utils/constants';
 
 const Entry = () => {
   const dispatch = useAppDispatch();
@@ -9,7 +10,7 @@ const Entry = () => {
     <Wrapper
       className='flex-column place-center'
       onClick={() => dispatch(setClicked(true))}>
-      <img src={logo} alt='' className='logo' />
+      <img src={BAZLogo} alt='' className='logo' />
       <p>click to enter</p>
     </Wrapper>
   );
