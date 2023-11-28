@@ -32,7 +32,11 @@ app.enable('trust proxy');
 // Implement CORS
 app.use(
   cors({
-    origin: 'https://www.bazofficial.com',
+    origin: [
+      'https://www.bazofficial.com',
+      'https://bazofficial.com',
+      'https://localhost:5173',
+    ],
     methods: 'GET,POST,PATCH,DELETE',
     credentials: true,
   })
