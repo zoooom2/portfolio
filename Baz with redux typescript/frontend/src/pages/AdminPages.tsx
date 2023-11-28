@@ -79,7 +79,7 @@ const AdminPages = ({
         />
       )}
       <Navbar buttons={<AdminMenuButtons />} admin={true} />
-      {/* <div className='h-[100px]'></div> */}
+
       <Sidebar navLinks={adminLinks} footerButtons={<AdminMenuButtons />} />
       <main className='relative'>
         <div className='fixed sideMenu'>
