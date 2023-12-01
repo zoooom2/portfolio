@@ -17,7 +17,7 @@ const storage = (location) =>
     params: {
       folder: `${location} images`,
       allowed_formats: ['jpg', 'png'],
-      transformation: [{ width: 500, height: 500, crop: 'limit' }],
+      // transformation: [{ width: 500, height: 500, crop: 'limit' }],
       public_id: (req, file) => file.originalname,
     },
   });
@@ -93,7 +93,7 @@ exports.resizeMultiplePhotos = (length, width, name, location) =>
           .toFile(`../../frontend/public/${location}/${filename}`);
 
         req.body.images.push(filename);
-      })
+      }),
     );
 
     next();
