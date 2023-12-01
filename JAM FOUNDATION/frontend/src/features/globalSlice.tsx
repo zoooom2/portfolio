@@ -25,7 +25,7 @@ export const uploadArticle = createAsyncThunk(
   'global/uploadArticle',
   async ({ body }: { body: FormData }) => {
     const response = await axios.post(
-      `http://localhost:2705/api/v1/articles`,
+      `${import.meta.env.VITE_SERVER_URL}/api/v1/articles`,
       body
     );
     return response.data;
