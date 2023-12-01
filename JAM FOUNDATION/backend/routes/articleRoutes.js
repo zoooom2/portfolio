@@ -19,7 +19,15 @@ router.route('/:id').get(getArticle);
 
 router.use(protect);
 
-router.route('/').post(uploadPhoto([], 'article'), uploadArticle);
+router.route('/').post(
+  uploadPhoto([], 'article'),
+  async (req, res, next) => {
+    req.body.image = req.file.path;
+    next();
+  },
+  uploadArticle,
+);
+
 router.route('/:id').delete(deleteArticle).patch(updateArticle);
 
 module.exports = router;
