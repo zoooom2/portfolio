@@ -141,7 +141,10 @@ const AdminForm = () => {
     }
   };
 
-  const addContent = () => {
+  const addContent = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.preventDefault();
     setArticleData({
       ...articleData,
       content: [...articleData.content, { topic: '', description: '' }],
@@ -243,6 +246,7 @@ const AdminForm = () => {
         id='date'
         className='w-full text-[10px] px-[16px] tablet:text-[15px]'
         value={articleData.dateCreated}
+        placeholder='Pick a date'
         onChange={onChange}
         required
       />
@@ -278,7 +282,12 @@ const AdminForm = () => {
                 required
               />
             </div>
-            <button onClick={() => deleteContent(index)} className='w-fit'>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                deleteContent(index);
+              }}
+              className='w-fit'>
               {<FaTrash />}
             </button>
           </div>
@@ -289,7 +298,7 @@ const AdminForm = () => {
           </div>
           <button
             onClick={addContent}
-            className='text-[#01248C] text-lg bg-white'>
+            className='text-[#01248C] text-lg bg-[#f2f4f7]'>
             {<FaPlus />}
           </button>
         </div>
