@@ -6,6 +6,7 @@ interface FormInputProps {
     | ((event: React.ChangeEvent<HTMLInputElement>) => void)
     | string
     | boolean
+    | number
     | null;
 }
 
@@ -19,7 +20,9 @@ const FormInput = (props: FormInputProps) => {
     <div className='flex flex-col gap-[8px]'>
       <label
         htmlFor={props.id as string}
-        className='font-poppins text-[#01248c] text-[24px] font-medium'>
+        className={`font-poppins ${
+          props.labelColor ? props.labelColor : 'text-[#01248c]'
+        }  laptop:text-[24px] tablet:text-[18px] font-medium text-[14px] capitalize`}>
         {props.id as string}
       </label>
       <input
@@ -28,7 +31,7 @@ const FormInput = (props: FormInputProps) => {
         onBlur={handleFocus}
         onFocus={() => setFocused(true)}
         data-focused={focused.toString()}
-        className='py-[18px] bg-[#f2f4f7] rounded-[8px] w-full text-[10px] px-[16px] tablet:text-[15px] text-black'
+        className='laptop:py-[18px] tablet:py-[14px] py-[10px] max-tablet:w-4/5 bg-[#f2f4f7] rounded-[8px] w-full text-[10px] px-[16px] tablet:text-[15px] text-black'
         required
       />
     </div>

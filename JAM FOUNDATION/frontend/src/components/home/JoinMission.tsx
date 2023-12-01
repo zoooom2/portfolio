@@ -21,7 +21,7 @@ const JoinMission = () => {
           </div>
           <Link
             to={'/contact'}
-            className='bg-[rgba(1,36,140,0.20)] rounded-none font-inter text-[14px] font-semibold leading-[20px] text-[#01248c]'>
+            className='bg-[rgba(1,36,140,0.20)] rounded-none font-inter text-[14px] font-semibold leading-[20px] text-[#01248c] px-[8px] py-[14px]'>
             Partner with us
           </Link>
         </div>

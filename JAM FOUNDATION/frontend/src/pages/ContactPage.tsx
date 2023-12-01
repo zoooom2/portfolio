@@ -68,8 +68,8 @@ const ContactPage = () => {
   };
 
   return (
-    <div className='tablet:p-[64px] px-[16px]  min-h-screen mt-[80px] gap-[93px] flex flex-col bg-white'>
-      <div className='font-satoshi text-[#01248c] text-[38px] font-medium leading-[44.5px] underline underline-offset-[12px]'>
+    <div className='tablet:p-[32px] p-[16px]  min-h-screen mt-[80px] laptop:gap-[93px] tablet:gap-[64px] gap-[32px] flex flex-col bg-white'>
+      <div className='font-satoshi text-[#01248c] laptop:text-[38px] tablet:text-[28px] text-[24px] font-medium leading-[44.5px] underline underline-offset-[12px] '>
         ContactPage
       </div>
       <div className='flex gap-[32px] max-tablet:flex-col'>
@@ -113,7 +113,7 @@ const ContactPage = () => {
           <div className='flex flex-col'>
             <label
               htmlFor='chat'
-              className='font-poppins text-[#01248c] text-[24px] font-medium'>
+              className='tablet:text-[18px] font-poppins text-[#01248c] text-[14px] laptop:text-[24px] font-medium'>
               Lets Talk
             </label>
             <textarea
@@ -123,19 +123,19 @@ const ContactPage = () => {
               rows={10}
               value={contactData.chat}
               onChange={onChange}
-              className='bg-[#f2f4f7] p-[18px] text-black'
+              className='bg-[#f2f4f7] p-[18px] text-black max-tablet:w-4/5'
               required
             />
           </div>
 
           <button
             type='submit'
-            className='py-[8px] px-[14px] w-fit text-[14px] font-inter text-[#01248c] font-extrabold leading-[20px] '
+            className='bg-[rgba(1,36,140,0.20)] py-[8px] px-[14px] w-fit text-[14px] font-inter text-[#01248c] font-semibold tablet:font-bold laptop:font-extrabold leading-[20px] '
             onClick={handleSubmit}>
             submit
           </button>
         </form>
-        <div className='bg-[#01248c] py-[24px] px-[10px] gap-[32px] text-[#fcfcfd] font-satoshi font-medium text-[16px] tablet:text-[20px]  laptop:text-[28px] flex flex-col h-fit leading-[28px]'>
+        <div className='bg-[#01248c] py-[24px] px-[10px] gap-[32px] text-[#fcfcfd] font-satoshi font-medium text-[16px] tablet:text-[20px]  laptop:text-[28px] flex flex-col h-fit leading-[28px] w-fit'>
           <div>0803462901</div>
           <div>Jamfoundation@info.com</div>
           <div>20 Aba Close off Lokoja Street Area 8 Garki Abuja FCT</div>

@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,9 +17,16 @@ import {
   HomePage,
   SingleArticlePage,
 } from '../pages';
+import { useAppDispatch } from './hooks';
+import { fetchArticles } from '../features/globalSlice';
+import LoginPage from '../pages/LoginPage';
+import AdminForm from '../pages/AdminForm';
 
 const App = () => {
-  // const { isAuthenticated } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchArticles());
+  }, [dispatch]);
 
   return (
     <Router>
@@ -37,6 +44,8 @@ const App = () => {
           <Route path='/about' element={<AboutPage />} />
           <Route path='/articles' element={<ArticlePage />} />
           <Route path='/articles/:id' element={<SingleArticlePage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/admin/articles' element={<AdminForm />} />
 
           {/* <Route
             path='/login'

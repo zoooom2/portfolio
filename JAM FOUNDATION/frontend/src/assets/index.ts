@@ -25,6 +25,9 @@ import logoWhite from './jamWhiteLogo.svg';
 import TwitterWhite from './TwitterWhite.svg';
 import InstagramWhite from './InstagramWhite.svg';
 import FacebookWhite from './FacebookWhite.svg';
+import MissionVector from './MissionVector.svg';
+import CoreValues from './Frame 342.svg';
+import Vision from './Vision.svg';
 
 export {
   JAMLogo,
@@ -54,4 +57,7 @@ export {
   TwitterWhite,
   InstagramWhite,
   FacebookWhite,
+  MissionVector,
+  Vision,
+  CoreValues,
 };

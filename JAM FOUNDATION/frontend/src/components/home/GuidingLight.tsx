@@ -1,4 +1,10 @@
-import { BallBoy, TapWater } from '../../assets';
+import {
+  BallBoy,
+  CoreValues,
+  MissionVector,
+  TapWater,
+  Vision,
+} from '../../assets';
 import { coreValues } from '../../utils/constants';
 
 const GuidingLight = () => {
@@ -17,7 +23,9 @@ const GuidingLight = () => {
           <div className='font-satoshi text-white text-[20px] font-medium leading-[20px] tracking-[-0.4px]'>
             {title}
           </div>
-          <div>{icon}</div>
+          <div className='aspect-square w-[33px] rounded-full bg-[#0077be] grid place-items-center p-1'>
+            <img src={icon} alt='' />
+          </div>
         </div>
         <div className='font-satoshi text-white text-[16px] leading-[24px] tracking-[-0.32px]'>
           {description}
@@ -33,11 +41,13 @@ const GuidingLight = () => {
   }: Record<string, string>) => {
     return (
       <div className='flex flex-col py-[24px] p-[24px] rounded-[8px] border-white border h-full bg-white text-[#01248c] gap-[12px]'>
-        <div className='flex justify-between'>
+        <div className='flex justify-between items-center'>
           <div className='font-satoshi text-[30px] font-medium leading-[60px] tracking-[-0.6px] capitalize'>
             {title}
           </div>
-          <div>{icon}</div>
+          <div className='px-[15px] py-[10px] bg-[rgba(1,36,140,0.30)] rounded-[8px] h-full grid place-items-center'>
+            <img src={icon} alt='' />
+          </div>
         </div>
         <div className='text-[#01248c] font-satoshi text-[18px] font-medium leading-[35px] tracking-[-0.36px] text-justify'>
           {description}
@@ -63,11 +73,13 @@ const GuidingLight = () => {
                 title: 'vision',
                 description:
                   'To Raise Models with high Morals through Human Capital, Talent and Community Development thereby creating a Network that enhances youth effectiveness in Nation Building.',
+                icon: Vision,
               })}
               {LargeScreenCard({
                 title: 'Mission',
                 description:
                   'To Gather the Lost, the Confused, and the Needy, Help them discover their purpose, Talent, and Challenges and equip them to achieve/solve it.',
+                icon: MissionVector,
               })}
             </div>
             {/* <div></div> */}
@@ -82,11 +94,13 @@ const GuidingLight = () => {
               <img src={TapWater} alt='' />
             </div>
             <div className='p-[24px] flex-col gap-[12px] bg-white rounded-[8px] flex'>
-              <div className='flex justify-between'>
-                <div className='font-satoshi text-[30px] font-medium leading-[60px] tracking-[-0.6px] capitalize'>
+              <div className='flex justify-between items-center'>
+                <div className='font-satoshi text-[30px] font-medium leading-[60px] tracking-[-0.6px] capitalize text-[#01248c] '>
                   Core Values
                 </div>
-                <div>icon</div>
+                <div className='p-[10px] bg-[rgba(1,36,140,0.30)] rounded-[8px]'>
+                  <img src={CoreValues} alt='' />
+                </div>
               </div>
               <ul className='text-[#01248c] font-satoshi text-[18px] font-medium leading-[35px] tracking-[-0.36px]'>
                 {coreValuesList}
@@ -112,21 +126,23 @@ const GuidingLight = () => {
               title: 'Vision',
               description:
                 'To Raise Models with high Morals through Human Capital,Talent and Community Development thereby creating a Network that enhances youth effectiveness in Nation Building.',
-              icon: 'icon',
+              icon: Vision,
             })}{' '}
             {SmallScreenCard({
               title: 'Mission',
               description:
                 'To Gather the Lost, the Confused, and the Needy, Help them discover their purpose, Talent, and Challenges and equip them to achieve/solve it.',
-              icon: 'icon',
+              icon: MissionVector,
             })}
           </div>
           <div className='flex flex-col gap-[12px] bg-[#022aa1] tablet:bg-[#01248c] z-[2] p-[18px]'>
             <div className='flex justify-between'>
-              <div className='font-satoshi text-white text-[20px] font-medium leading-[20px] tracking-[-0.4px]'>
+              <div className='font-satoshi text-white text-[20px] font-medium leading-[20px] tracking-[-0.4px] '>
                 Core Values
               </div>
-              <div>icon</div>
+              <div className='aspect-square w-[33px] rounded-full bg-[#0077be] grid place-items-center p-1'>
+                <img src={CoreValues} alt='' />
+              </div>
             </div>
             <div className='font-satoshi text-white text-[16px] leading-[24px] tracking-[-0.32px] px-[18px]'>
               <ul className='list-disc'>{coreValuesList}</ul>

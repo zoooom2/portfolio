@@ -2,8 +2,9 @@ import { imageHolder } from '../../assets';
 import { reviewData } from '../../utils/constants';
 
 const Review = () => {
-  const reviews = reviewData.map(({ review, image, name, company }) => (
+  const reviews = reviewData.map(({ review, image, name, company }, index) => (
     <div
+      key={index}
       className='p-[24px] flex flex-col gap-[23px] bg-[#f5f8fd] tablet:min-w-[340px] min-w-full'
       style={{ boxShadow: '4px 4px 0px 0px #01248C' }}>
       <div className='text-[rgba(1,36,140,0.80)] font-satoshi text-[16px] font-medium leading-[34.5px] tracking-[-0.32px]'>
