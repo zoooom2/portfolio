@@ -284,16 +284,19 @@ const AdminForm = () => {
           </div>
         ))}
         <div className='flex gap-[20px]'>
-          <div className='border border-dashed border-[#01248c] p-3'>
+          <div className='border border-dashed border-[#01248c] p-3 text-[#01248c]'>
             Add new content
           </div>
-          <button onClick={addContent} className='text-[#01248C] text-lg'>
+          <button
+            onClick={addContent}
+            className='text-[#01248C] text-lg bg-white'>
             {<FaPlus />}
           </button>
         </div>
       </div>
-
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit} className='text-white bg-[#01248c]'>
+        Submit
+      </button>
     </form>
   );
 };
