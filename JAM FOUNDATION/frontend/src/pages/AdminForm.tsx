@@ -287,7 +287,7 @@ const AdminForm = () => {
                 e.preventDefault();
                 deleteContent(index);
               }}
-              className='w-fit'>
+              className='w-fit text-[#01248C] text-lg bg-[#f2f4f7]'>
               {<FaTrash />}
             </button>
           </div>
