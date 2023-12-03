@@ -28,6 +28,7 @@ import FacebookWhite from './FacebookWhite.svg';
 import MissionVector from './MissionVector.svg';
 import CoreValues from './Frame 342.svg';
 import Vision from './Vision.svg';
+import Edit from './Edit.svg';
 
 export {
   JAMLogo,
@@ -60,4 +61,5 @@ export {
   MissionVector,
   Vision,
   CoreValues,
+  Edit,
 };

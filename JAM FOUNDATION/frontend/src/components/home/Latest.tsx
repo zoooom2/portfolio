@@ -8,7 +8,7 @@ const Latest = () => {
         Latest from JAM foundation
       </div>
       <div className='flex gap-[28px] overflow-x-auto p-4'>
-        <Blog />
+        <Blog admin={false} />
       </div>
 
       <Link

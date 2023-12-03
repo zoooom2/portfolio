@@ -3,6 +3,7 @@ export type ArticleStateType = {
   singleArticle: ArticleType;
   loading: boolean;
   error: string;
+  showModal: boolean;
 };
 
 export interface ContentItem {

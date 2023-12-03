@@ -1,22 +1,60 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CalendarOutline, UserOutline } from '../../assets';
+import { VscEdit } from 'react-icons/vsc';
 // import { mockBlogpostsDB } from '../../utils/constants';
-import { useAppSelector } from '../../App/hooks';
+import { useAppDispatch, useAppSelector } from '../../App/hooks';
+import { FaTrash } from 'react-icons/fa6';
+import Modal from '../../global_components/Modal';
+import { displayModal } from '../../features/globalSlice';
 
-const Blog = () => {
+const Blog = ({ admin }: { admin: boolean }) => {
   const { articles } = useAppSelector((state) => state.global);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleDelete = (id: string) => {
+    console.log('article deleted', id);
+  };
 
   const blog = articles.map(
     ({ image, title, overview = '', dateCreated, author, _id: id }, index) => (
-      <Link
-        to={`/articles/${id}`}
+      <div
+        onClick={() => !admin && navigate(`/articles/${id}`)}
         key={index}
-        className='flex flex-col relative min-w-fit'>
-        <div className='aspect-[401/303] max-w-[441px]'>
+        className={`flex flex-col relative min-w-fit ${
+          !admin && 'cursor-pointer'
+        }`}>
+        {admin && (
+          <Modal
+            body='Are you sure you want to delete this article?'
+            title='Delete Article'
+            actionTitle='delete'
+            action={() => handleDelete(id as string)}
+          />
+        )}
+        <div className='aspect-[401/303] max-w-[441px] relative'>
           <img src={image as string} alt='' className='w-full h-full' />
+          {admin && (
+            <div className='absolute right-0 top-0 flex gap-2 p-2'>
+              <button
+                onClick={() => {
+                  navigate(`/admin/articles/edit/${id}`);
+                }}
+                className='rounded-none aspect-square max-w-[40px] max-h-[40px] text-[#01248c] grid justify-center'>
+                {/* <img src={Edit} alt='' /> */}
+                <VscEdit />
+              </button>
+              <button
+                className='aspect-square max-w-[40px] max-h-[40px] text-[#01248c] rounded-none grid justify-center'
+                onClick={() => dispatch(displayModal(true))}>
+                <FaTrash />
+              </button>
+            </div>
+          )}
         </div>
+
         <div className='relative h-[204px] max-w-[441px]'>
-          <div className='flex absolute right-[-10px] h-full bottom-8 w-full'>
+          <div className='flex absolute right-[-2px] tablet:right-[-5px] laptop:right-[-10px] h-full bottom-8 w-full'>
             <div className='bg-[#01248c] w-[8px] h-[51px]'></div>
             <div
               className='py-[20px] px-[10px] flex flex-col gap-[10px] items-start justify-between bg-[rgba(0,119,190,0.2)] hover-container w-full'
@@ -63,7 +101,7 @@ const Blog = () => {
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     )
   );
   return <>{blog}</>;

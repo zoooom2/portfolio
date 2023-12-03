@@ -12,6 +12,7 @@ import Loading from '../global_components/layout/Loading';
 // import { useAppSelector } from './hooks';
 import {
   AboutPage,
+  AdminArticlesPage,
   ArticlePage,
   ContactPage,
   HomePage,
@@ -45,7 +46,9 @@ const App = () => {
           <Route path='/articles' element={<ArticlePage />} />
           <Route path='/articles/:id' element={<SingleArticlePage />} />
           <Route path='/login' element={<LoginPage />} />
-          <Route path='/admin/articles' element={<AdminForm />} />
+          <Route path='/admin/articles/create' element={<AdminForm />} />
+          <Route path='/admin/articles' element={<AdminArticlesPage />} />
+          <Route path='/admin/articles/edit/:id' element={<AdminForm />} />
 
           {/* <Route
             path='/login'

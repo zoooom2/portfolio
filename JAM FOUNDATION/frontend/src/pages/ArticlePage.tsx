@@ -7,7 +7,7 @@ const ArticlePage = () => {
         Articles
       </div>
       <div className='laptop:px-[32px] grid tablet:grid-cols-2 desktop:grid-cols-3 gap-0 tablet:gap-6 justify-center max-smallMobile:px-5 max-desktop:w-[95%] desktop:w-full'>
-        <Blog />
+        <Blog admin={false} />
       </div>
     </div>
   );

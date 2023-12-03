@@ -8,22 +8,30 @@ import {
 import FormInput from '../global_components/FormInput';
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { ArticleType, ContentItem } from '../types';
-import { uploadArticle } from '../features/globalSlice';
-import { useAppDispatch } from '../App/hooks';
+import {
+  fetchSingleArticle,
+  updateArticle,
+  uploadArticle,
+} from '../features/globalSlice';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
+import { useParams } from 'react-router-dom';
 
 const AdminForm = () => {
+  const { id } = useParams();
+  const { singleArticle } = useAppSelector((state) => state.global);
   const [selectedFile, setSelectedFile] = useState<File>();
-  const [preview, setPreview] = useState<string | undefined>();
+  const [preview, setPreview] = useState<string>();
   const [isFormValid, setIsFormValid] = useState(true);
   const [showError, setShowError] = useState(false);
   const [articleData, setArticleData] = useState<ArticleType>({
-    title: '',
-    titleUl: '',
-    image: '',
-    overview: '',
-    author: '',
-    dateCreated: '',
-    content: [],
+    _id: '',
+    title: id ? singleArticle.title : '',
+    titleUl: singleArticle.titleUl || '',
+    image: singleArticle.image || '',
+    overview: singleArticle.overview || '',
+    author: singleArticle.author || '',
+    dateCreated: singleArticle.dateCreated || '',
+    content: singleArticle.content || [],
   });
 
   const dispatch = useAppDispatch();
@@ -43,6 +51,31 @@ const AdminForm = () => {
     const objectURL = URL.createObjectURL(selectedFile);
     setPreview(objectURL);
   }, [selectedFile]);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchSingleArticle(id));
+    } else {
+      setPreview('');
+      setSelectedFile(undefined);
+      setArticleData({
+        _id: '',
+        title: '',
+        titleUl: '',
+        image: '',
+        overview: '',
+        author: '',
+        dateCreated: '',
+        content: [],
+      });
+    }
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (id) {
+      setArticleData({ ...singleArticle });
+    }
+  }, [id, singleArticle]);
 
   const onChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -130,11 +163,15 @@ const AdminForm = () => {
         }
       }
       try {
-        dispatch(
-          uploadArticle({
-            body: formData,
-          })
-        );
+        if (id) {
+          dispatch(updateArticle({ id, body: formData }));
+        } else {
+          dispatch(
+            uploadArticle({
+              body: formData,
+            })
+          );
+        }
       } catch (error) {
         setShowError(true);
       }
@@ -206,9 +243,17 @@ const AdminForm = () => {
           onChange={onSelectFile}
           required
         />
-        {selectedFile && (
+        {(selectedFile || articleData.image) && (
           <div className='w-[200px]'>
-            <img src={preview} alt='' className='w-full' />
+            <img
+              src={
+                selectedFile
+                  ? (preview as string)
+                  : (articleData.image as string)
+              }
+              alt=''
+              className='w-full'
+            />
           </div>
         )}
       </div>
@@ -304,7 +349,7 @@ const AdminForm = () => {
         </div>
       </div>
       <button onClick={handleSubmit} className='text-white bg-[#01248c]'>
-        Submit
+        {id ? 'Update Article' : 'create Article'}
       </button>
     </form>
   );
