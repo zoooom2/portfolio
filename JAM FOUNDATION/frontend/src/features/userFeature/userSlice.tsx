@@ -5,8 +5,10 @@ import { UserStateType, UserType } from '../../types';
 
 export const fetchProfile = createAsyncThunk('user/fetchProfile', async () => {
   const response = await axios.get(
-    `${import.meta.env.VITE_SERVER_URL}/users/me`
+    `${import.meta.env.VITE_SERVER_URL}/users/me`,
+    { withCredentials: true }
   );
+
   return response.data.data;
 });
 

@@ -43,12 +43,12 @@ const Blog = ({ admin }: { admin: boolean }) => {
                 onClick={() => {
                   navigate(`/admin/articles/edit/${id}`);
                 }}
-                className='rounded-none aspect-square max-w-[40px] max-h-[40px] text-[#01248c] grid justify-center'>
+                className='rounded-none aspect-square max-w-[40px] max-h-[40px] text-[#01248c] grid justify-center bg-white'>
                 {/* <img src={Edit} alt='' /> */}
                 <VscEdit />
               </button>
               <button
-                className='aspect-square max-w-[40px] max-h-[40px] text-[#01248c] rounded-none grid justify-center'
+                className='aspect-square max-w-[40px] max-h-[40px] text-[#01248c] rounded-none grid justify-center bg-white'
                 onClick={() => dispatch(displayModal(true))}>
                 <FaTrash />
               </button>

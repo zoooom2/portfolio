@@ -113,7 +113,7 @@ const LoginPage = () => {
             onChange={onChange}
             required
           />
-          <button className='w-fit' onClick={handleSubmit}>
+          <button className='w-fit bg-white text-black' onClick={handleSubmit}>
             Submit
           </button>
         </form>

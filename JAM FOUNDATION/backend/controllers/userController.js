@@ -22,8 +22,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         'This route is not for password updates. Please use /updateMyPassword.',
-        400
-      )
+        400,
+      ),
     );
   }
 

@@ -1,9 +1,10 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { UserType } from '../../types';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../App/hooks';
+import { useAppDispatch, useAppSelector } from '../../App/hooks';
 import { fetchProfile } from '../userFeature/userSlice';
 import { setAdminMode } from '../globalSlice';
+import Loading from '../../global_components/layout/Loading';
 
 const AdminRoutes = ({
   isAuthenticated,
@@ -13,6 +14,7 @@ const AdminRoutes = ({
 }) => {
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const { loading } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(setAdminMode(true));
@@ -22,11 +24,20 @@ const AdminRoutes = ({
     if (!isAuthenticated) dispatch(fetchProfile());
   }, [dispatch, isAuthenticated]);
 
-  return !isAuthenticated ? (
-    <Navigate to={`/login?redirectTo=${location.pathname}`} />
-  ) : (
-    <Outlet />
-  );
+  if (loading) {
+    console.log('loading');
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  } else {
+    if (!isAuthenticated) {
+      return <Navigate to={`/login?redirectTo=${location.pathname}`} />;
+    } else {
+      return <Outlet />;
+    }
+  }
 };
 
 export default AdminRoutes;
