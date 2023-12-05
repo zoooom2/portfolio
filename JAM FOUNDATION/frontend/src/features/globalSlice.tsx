@@ -6,7 +6,7 @@ export const fetchArticles = createAsyncThunk(
   'global/fetchArticles/',
   async () => {
     const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL_DEV}/articles`
+      `${import.meta.env.VITE_SERVER_URL}/articles`
     );
     return response.data.data;
   }
@@ -16,7 +16,7 @@ export const fetchSingleArticle = createAsyncThunk(
   'global/fetchSingleArticle',
   async (id: string) => {
     const response = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL_DEV}/articles/${id}`
+      `${import.meta.env.VITE_SERVER_URL}/articles/${id}`
     );
     return response.data.data;
   }
@@ -25,7 +25,7 @@ export const uploadArticle = createAsyncThunk(
   'global/uploadArticle',
   async ({ body }: { body: FormData }) => {
     const response = await axios.post(
-      `${import.meta.env.VITE_SERVER_URL}/api/v1/articles`,
+      `${import.meta.env.VITE_SERVER_URL}/articles`,
       body
     );
     return response.data;
@@ -35,10 +35,17 @@ export const updateArticle = createAsyncThunk(
   'global/updateArticle',
   async ({ body, id }: { body: FormData; id: string }) => {
     const response = await axios.patch(
-      `${import.meta.env.VITE_SERVER_URL}/api/v1/articles/${id}`,
+      `${import.meta.env.VITE_SERVER_URL}/articles/${id}`,
       body
     );
     return response.data;
+  }
+);
+export const deleteArticle = createAsyncThunk(
+  'global/deleteArticle',
+  async (id: string) => {
+    await axios.delete(`${import.meta.env.VITE_SERVER_URL}/articles/${id}`);
+    return id;
   }
 );
 
@@ -56,6 +63,7 @@ const initialState = {
   },
   showModal: false,
   loading: false,
+  adminMode: true,
   error: '',
 } as ArticleStateType;
 
@@ -73,6 +81,14 @@ const globalSlice = createSlice({
           ...initialState[action.payload],
         },
       };
+    },
+    removeArticles: (state, action) => {
+      state.articles = state.articles.filter(
+        (article) => article._id !== action.payload
+      );
+    },
+    setAdminMode: (state, action) => {
+      state.adminMode = action.payload;
     },
   },
   extraReducers(builder) {
@@ -98,10 +114,19 @@ const globalSlice = createSlice({
     builder.addCase(
       fetchSingleArticle.fulfilled,
       (state, action: { payload: ArticleType }) => {
+        const originalTimestamp = action.payload.dateCreated;
+        const dateObject = new Date(originalTimestamp);
+
+        const year = dateObject.getFullYear();
+        const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObject.getDate()).padStart(2, '0');
+
+        const formattedDate = `${year}-${month}-${day}`;
         state.loading = false;
         state.singleArticle = {
           ...initialState.singleArticle,
           ...action.payload,
+          dateCreated: formattedDate,
         };
       }
     );
@@ -129,8 +154,21 @@ const globalSlice = createSlice({
       state.error = action.error.message as string;
       state.loading = false;
     });
+    builder.addCase(deleteArticle.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteArticle.fulfilled, (state, action) => {
+      state.loading = false;
+      state.articles = state.articles.filter(
+        (article) => article.id !== action.payload
+      );
+    });
+    builder.addCase(deleteArticle.rejected, (state, action) => {
+      state.error = action.error.message as string;
+      state.loading = false;
+    });
   },
 });
 
-export const { displayModal, purge } = globalSlice.actions;
+export const { displayModal, purge, setAdminMode } = globalSlice.actions;
 export default globalSlice.reducer;

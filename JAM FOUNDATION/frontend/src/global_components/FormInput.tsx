@@ -32,7 +32,7 @@ const FormInput = (props: FormInputProps) => {
         onFocus={() => setFocused(true)}
         data-focused={focused.toString()}
         className='laptop:py-[18px] tablet:py-[14px] py-[10px] max-tablet:w-4/5 bg-[#f2f4f7] rounded-[8px] w-full text-[10px] px-[16px] tablet:text-[15px] text-black'
-        required
+        // required
       />
     </div>
   );

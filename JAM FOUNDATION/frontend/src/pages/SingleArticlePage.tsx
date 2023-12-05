@@ -40,7 +40,7 @@ const SingleArticlePage = () => {
             {title}
           </div>
           <div className='text-[rgba(25,54,132,0.50)] font-poppins text-[14px] tablet:text-[16px] leading-[29.161px]'>
-            {dateCreated}
+            {new Date(Date.parse(dateCreated)).toLocaleDateString('en-GB')}
           </div>
         </div>
         <div className='text-[rgba(0,0,0,0.5)] font-satoshi text-[14px] tablet:text-[16px] laptop:text-[18px] leading-[24px] text-justify'>

@@ -17,17 +17,27 @@ const { protect } = authController;
 router.route('/').get(getAllArticles);
 router.route('/:id').get(getArticle);
 
-router.use(protect);
+// router.use(protect);
 
 router.route('/').post(
   uploadPhoto([], 'article'),
   async (req, res, next) => {
     req.body.image = req.file.path;
-    next();
+    next();   
   },
   uploadArticle,
 );
 
-router.route('/:id').delete(deleteArticle).patch(updateArticle);
+router
+  .route('/:id')
+  .delete(deleteArticle)
+  .patch(
+    uploadPhoto([], 'article'),
+    async (req, res, next) => {
+      if (req.file) req.body.image = req.file.path;
+      next();
+    },
+    updateArticle,
+  );
 
 module.exports = router;

@@ -6,14 +6,22 @@ import {
   useState,
 } from 'react';
 import FormInput from '../global_components/FormInput';
+import { useAppDispatch, useAppSelector } from '../App/hooks';
+import { jwtAuth } from '../features/userFeature/userSlice';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const LoginPage = () => {
+  const [searchParams] = useSearchParams();
   const [isFormValid, setIsFormValid] = useState(true);
   const [showError, setShowError] = useState(false);
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
   });
+  const { authentication_error } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -31,7 +39,7 @@ const LoginPage = () => {
     setCredentials({ ...credentials, [name]: value });
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
@@ -62,7 +70,20 @@ const LoginPage = () => {
     setShowError(true);
 
     // If all fields are valid, navigate to the next stage
-    if (isFormValid) console.log('submitted succesfully');
+    if (isFormValid) {
+      try {
+        await dispatch(jwtAuth([credentials.email, credentials.password]));
+
+        const redirectTo = searchParams.get('redirectTo');
+        if (redirectTo) {
+          navigate(redirectTo);
+        } else {
+          navigate('/admin/articles');
+        }
+      } catch (error) {
+        console.log(authentication_error);
+      }
+    }
   };
 
   return (

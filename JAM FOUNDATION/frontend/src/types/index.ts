@@ -4,6 +4,7 @@ export type ArticleStateType = {
   loading: boolean;
   error: string;
   showModal: boolean;
+  adminMode: boolean;
 };
 
 export interface ContentItem {

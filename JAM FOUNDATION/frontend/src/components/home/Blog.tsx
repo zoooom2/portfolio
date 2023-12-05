@@ -5,15 +5,16 @@ import { VscEdit } from 'react-icons/vsc';
 import { useAppDispatch, useAppSelector } from '../../App/hooks';
 import { FaTrash } from 'react-icons/fa6';
 import Modal from '../../global_components/Modal';
-import { displayModal } from '../../features/globalSlice';
+import { deleteArticle, displayModal } from '../../features/globalSlice';
 
 const Blog = ({ admin }: { admin: boolean }) => {
   const { articles } = useAppSelector((state) => state.global);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleDelete = (id: string) => {
-    console.log('article deleted', id);
+  const handleDelete = async (id: string) => {
+    await dispatch(deleteArticle(id));
+    dispatch(displayModal(false));
   };
 
   const blog = articles.map(
@@ -29,7 +30,9 @@ const Blog = ({ admin }: { admin: boolean }) => {
             body='Are you sure you want to delete this article?'
             title='Delete Article'
             actionTitle='delete'
-            action={() => handleDelete(id as string)}
+            action={() => {
+              handleDelete(id as string);
+            }}
           />
         )}
         <div className='aspect-[401/303] max-w-[441px] relative'>

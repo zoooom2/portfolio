@@ -14,7 +14,8 @@ import {
   uploadArticle,
 } from '../features/globalSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminForm = () => {
   const { id } = useParams();
@@ -35,6 +36,8 @@ const AdminForm = () => {
   });
 
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -72,9 +75,20 @@ const AdminForm = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    if (id) {
-      setArticleData({ ...singleArticle });
-    }
+    // if (id) {
+    //   setArticleData({ ...singleArticle });
+    // }
+    const fetchData = async () => {
+      if (id && singleArticle) {
+        const imageFile = await downloadImage(
+          singleArticle.image as string,
+          id
+        );
+        setSelectedFile(imageFile);
+        setArticleData({ ...singleArticle });
+      }
+    };
+    fetchData();
   }, [id, singleArticle]);
 
   const onChange = (
@@ -103,7 +117,6 @@ const AdminForm = () => {
       setArticleData({ ...articleData, [name]: value });
     }
   };
-
   const handleSubmit = async (
     e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>
   ) => {
@@ -130,11 +143,13 @@ const AdminForm = () => {
           setIsFormValid(false);
           setShowError(true);
           console.log('form is not valid');
-          return; // Stop checking if any field is invalid
+
+          return;
+          // Stop checking if any field is invalid
         }
       }
     }
-
+    // return;
     setShowError(true);
 
     // If all fields are valid, navigate to the next stage
@@ -151,7 +166,11 @@ const AdminForm = () => {
         if (item !== 'content' && item !== 'image') {
           formData.append(item, formatBackendData[item] as string);
         } else if (item === 'image') {
-          formData.append(item, selectedFile as File);
+          if (selectedFile && selectedFile) {
+            formData.append(item, selectedFile as File);
+          } else {
+            formData.append(item, formatBackendData[item]);
+          }
         } else if (item === 'content') {
           const contentArray = formatBackendData[item] as ContentItem[];
           for (let i = 0; i < contentArray.length; i++) {
@@ -172,10 +191,19 @@ const AdminForm = () => {
             })
           );
         }
+        navigate('/admin/articles');
       } catch (error) {
         setShowError(true);
       }
     }
+  };
+
+  const downloadImage = async (url: string, name: string) => {
+    const response = await axios.get(url, { responseType: 'blob' });
+    const file = new File([response.data], name, {
+      type: response.headers['content-type'],
+    });
+    return file;
   };
 
   const addContent = (
@@ -201,6 +229,7 @@ const AdminForm = () => {
       return;
     }
     setSelectedFile(e.target.files[0]);
+    setArticleData({ ...articleData, image: '' });
   };
 
   return (
@@ -239,9 +268,8 @@ const AdminForm = () => {
           id='image'
           accept='image/*'
           className='w-full text-[10px] px-[16px] tablet:text-[15px]'
-          // value={selectedFile}
           onChange={onSelectFile}
-          required
+          // required
         />
         {(selectedFile || articleData.image) && (
           <div className='w-[200px]'>
@@ -272,6 +300,7 @@ const AdminForm = () => {
           onChange={onChange}
           value={articleData.overview}
           className='laptop:py-[18px] tablet:py-[14px] py-[10px] max-tablet:w-4/5 bg-[#f2f4f7] rounded-[8px] w-full text-[10px] px-[16px] tablet:text-[15px] text-black'
+          required
         />
       </div>
       <FormInput
