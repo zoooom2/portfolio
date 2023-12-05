@@ -24,7 +24,6 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
 
   return (
     <Wrapper className='size flex-column'>
-      {/* <AmountButtons increase={increase} decrease={decrease} amount={amount} /> */}
       <div className='flex flex-col gap-[16px] w-full'>
         <button
           className='size-guide'

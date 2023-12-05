@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { setClicked } from '../features/userFeature/userSlice';
+
 import {
   countCartTotal,
   updateCartTotal,
@@ -17,7 +17,7 @@ const CartPage = () => {
   const [_localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
 
   useEffect(() => {
-    dispatch(setClicked(true));
+    
     document.title = 'Cart | Baz Official Store';
   }, []);
 

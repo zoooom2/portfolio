@@ -66,10 +66,6 @@ const Wrapper = styled.table`
   th {
     text-align: left;
   }
-
-  // thead {
-  //   border: 1px solid red;
-  // }
 `;
 
 export default BestSellerTable;

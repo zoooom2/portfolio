@@ -22,8 +22,6 @@ const AdminSideMenu = ({ page = 'overview' }: { page: AdminPageType }) => {
 };
 
 const Wrapper = styled.aside`
-  // height: calc(100vh - 7em);
-  // border-right: 1px solid #b6b6b6;
   ul {
     padding: 2em;
     gap: 1em;
@@ -34,11 +32,5 @@ const Wrapper = styled.aside`
   .active {
     border: 1px solid #a4a4a4;
   }
-  // li > a {
-  //   font-family: 'Zilla Slab';
-  //   font-size: 28px;
-  //   line-height: 34px;
-  //   color: #2a2a2a;
-  // }
 `;
 export default AdminSideMenu;

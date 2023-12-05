@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import { GrStripe } from 'react-icons/gr';
+
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -22,17 +22,7 @@ const PaymentGateway = () => {
     <Wrapper className='page-100 section section-center'>
       <div className='gateway-container'>
         <h5>Select Payment Option</h5>
-        {/* <Select options={options} className="option" /> */}
-        {/* <button
-          className='paypalBtn btn'
-          onClick={() => dispatch(handlePaypal())}>
-          <img src='/paypal-3.svg' alt='Paypal' />
-        </button>
-        <button
-          className='stripeBtn btn'
-          onClick={() => dispatch(handleStripe())}>
-          <GrStripe /> Stripe
-        </button> */}
+
         <button
           className='paystackBtn btn'
           onClick={

@@ -1,15 +1,10 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { setClicked } from '../features/userFeature/userSlice';
-import { useAppDispatch } from '../App/hooks';
 
 const ErrorPage = () => {
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     document.title = 'Error | Baz Official Store';
-    dispatch(setClicked(true));
   }, []);
 
   return (

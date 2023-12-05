@@ -1,13 +1,9 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { setClicked } from '../features/userFeature/userSlice';
-import { useDispatch } from 'react-redux';
-const ThesisPage = () => {
-  const dispatch = useDispatch();
 
+const ThesisPage = () => {
   useEffect(() => {
     document.title = 'Thesis | Baz Official Store';
-    dispatch(setClicked(true));
   }, []);
 
   return (

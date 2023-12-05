@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { getUniqueValues } from '../utils/helpers';
-import { setClicked } from '../features/userFeature/userSlice';
+
 import {
   filterProduct,
   loadProducts,
@@ -12,7 +12,7 @@ import {
 import { fetchProducts } from '../features/productFeature/productSlice';
 import { products_url as url } from '../utils/constants';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
-// import { Filters, Sort } from '../features/filterFeature/filter';
+
 import ProductList from '../features/productFeature/product/ProductList';
 
 const ProductsPage = () => {
@@ -24,7 +24,7 @@ const ProductsPage = () => {
   useEffect(() => {
     document.title = 'Shop | Baz Official Store';
     dispatch(fetchProducts(url));
-    dispatch(setClicked(true));
+
     dispatch(fetchProducts(url));
   }, []);
 

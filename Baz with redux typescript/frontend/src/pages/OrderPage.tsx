@@ -11,7 +11,7 @@ import { createOrder } from '../features/orderFeature/orderSlice';
 
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 import useLocalStorage from '../utils/customHooks/localStorage';
-import { setClicked } from '../features/userFeature/userSlice';
+
 import { OrderGreenSVG } from '../assets';
 
 const OrderPage = () => {
@@ -47,7 +47,6 @@ const OrderPage = () => {
   }, [body.shippingInfo]);
 
   useEffect(() => {
-    dispatch(setClicked(true));
     document.title = 'Order | Baz Official Store';
     dispatch(countCartTotal());
     dispatch(updateCartTotal());

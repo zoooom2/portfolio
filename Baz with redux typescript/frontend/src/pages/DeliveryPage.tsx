@@ -1,14 +1,8 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from '../App/hooks';
-import { setClicked } from '../features/userFeature/userSlice';
 
 const DeliveryPage = () => {
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     document.title = 'Delivery | Baz Official Store';
-
-    dispatch(setClicked(true));
   }, []);
   return (
     <div>

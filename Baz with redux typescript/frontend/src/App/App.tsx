@@ -35,14 +35,13 @@ import { useAppDispatch, useAppSelector } from './hooks';
 import { countCartTotal } from '../features/cartFeature/cartSlice';
 import { links } from '../utils/constants';
 import { CartButtons } from '../features/cartFeature/cart';
+import UserRoutes from '../features/userFeature/user/UserRoutes';
 
 const App = () => {
   const { isAuthenticated, clicked, user, loading } = useAppSelector(
     (state) => state.user
   );
   const dispatch = useAppDispatch();
-
-  console.log('render');
 
   useEffect(() => {
     dispatch(checkVisitorCount());
@@ -64,23 +63,25 @@ const App = () => {
       )}
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/contact' element={<ContactPage />} />
-          <Route path='/thesis' element={<ThesisPage />} />
-          <Route path='/cart' element={<CartPage />} />
-          <Route path='/shop' element={<ProductPage />} />
-          <Route path='/shop/:id' element={<SingleProductPage />} />
-          <Route path='/checkout/:params' element={<CheckoutPage />} />
-          <Route path='/pay' element={<PaymentGateway />} />
-          <Route path='/order' element={<OrderPage />} />
-          <Route path='/delivery' element={<DeliveryPage />} />
+          <Route element={<UserRoutes />}>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/contact' element={<ContactPage />} />
+            <Route path='/thesis' element={<ThesisPage />} />
+            <Route path='/cart' element={<CartPage />} />
+            <Route path='/shop' element={<ProductPage />} />
+            <Route path='/shop/:id' element={<SingleProductPage />} />
+            <Route path='/checkout/:params' element={<CheckoutPage />} />
+            <Route path='/pay' element={<PaymentGateway />} />
+            <Route path='/order' element={<OrderPage />} />
+            <Route path='/delivery' element={<DeliveryPage />} />
 
-          <Route
-            path='/login'
-            element={
-              isAuthenticated ? <Navigate to='/admin/' /> : <LoginPage />
-            }
-          />
+            <Route
+              path='/login'
+              element={
+                isAuthenticated ? <Navigate to='/admin/' /> : <LoginPage />
+              }
+            />
+          </Route>
 
           <Route
             element={

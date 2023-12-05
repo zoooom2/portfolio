@@ -2,7 +2,6 @@ import { FiSearch, FiShoppingCart } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { closeSidebar } from '../../productFeature/productSlice';
-
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 import { openSearchBar } from '../../filterFeature/filterSlice';
 

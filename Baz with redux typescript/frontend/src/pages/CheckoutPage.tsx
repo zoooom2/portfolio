@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { setClicked } from '../features/userFeature/userSlice';
 
 import {
   countCartTotal,
@@ -30,7 +29,6 @@ const CheckoutPage = () => {
   // const
 
   useEffect(() => {
-    dispatch(setClicked(true));
     document.title = 'Checkout | Baz Official Store';
   }, []);
 

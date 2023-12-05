@@ -13,7 +13,6 @@ export const createOrder = createAsyncThunk(
         withCredentials: true,
       }
     );
-    console.log(response.data);
     return response.data;
   }
 );

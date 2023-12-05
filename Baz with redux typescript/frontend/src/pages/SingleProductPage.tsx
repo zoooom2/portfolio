@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import { priceFormat, single_product_url as url } from '../utils/constants';
 import styled from 'styled-components';
-import { setClicked } from '../features/userFeature/userSlice';
+
 import { fetchSingleProduct } from '../features/productFeature/productSlice';
 import {
   countCartTotal,
@@ -32,7 +32,6 @@ const SingleProductPage = () => {
   const { cart, subtotal } = useAppSelector((state) => state.cart);
   const { productName, price, description, images, stock } = product;
   useEffect(() => {
-    dispatch(setClicked(true));
     document.title = `Shop | Baz Official Store`;
   }, []);
 
