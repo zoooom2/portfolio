@@ -11,14 +11,13 @@ import {
   BillingInfo,
   CheckoutStage,
   Payment,
-  // Shipping,
 } from '../features/cartFeature/checkout';
 import useLocalStorage from '../utils/customHooks/localStorage';
-// import { CartSummary } from '../features/cartFeature/cart';
 
 const CheckoutPage = () => {
   const { params } = useParams();
   const [stage, setStage] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_localStorageShipping, setLocalStorageShipping] = useLocalStorage(
     'shipping',
     []
@@ -51,13 +50,9 @@ const CheckoutPage = () => {
         <div className='details'>
           <CheckoutStage position={stage} />
           {params === 'information' && <BillingInfo setStage={setStage} />}
-          {/* {params === 'shipping' && (
-            <Shipping setStage={setStage} shippingInfo={localShipping} />
-          )} */}
           {params === 'payment' && (
             <Payment setStage={setStage} shippingInfo={shippingInfo} />
           )}
-          {/* <CartSummary /> */}
         </div>
       </Wrapper>
     </main>

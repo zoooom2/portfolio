@@ -21,7 +21,7 @@ const SingleProductPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   const [_localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
   const navigate = useNavigate();
   const {
