@@ -35,7 +35,7 @@ app.use(
     origin: [
       'https://www.bazofficial.com',
       'https://bazofficial.com',
-      'https://localhost:5173',
+      'http://localhost:5173',
     ],
     methods: 'GET,POST,PATCH,DELETE',
     credentials: true,
@@ -70,7 +70,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.options('*', cors());
-// app.options('/api/v1/tours/:id', cors());
 
 // Serving static files
 app.use(

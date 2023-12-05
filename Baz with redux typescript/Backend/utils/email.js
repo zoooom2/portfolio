@@ -25,7 +25,7 @@ exports.sendMail = async ({ emailAddress, subject, text, html }) => {
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         refreshToken: process.env.GOOGLEMAIL_REFRESH_TOKEN,
-        accessToken: accessToken,
+        accessToken,
       },
     });
 
