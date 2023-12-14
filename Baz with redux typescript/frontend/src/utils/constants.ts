@@ -1,4 +1,25 @@
 import { BuyLogo, ItemSoldLogo, revenueLogo, visitorLogo } from '../assets';
+import { SingleProductType } from '../types';
+
+export const initialSingleProduct = {
+  _id: '',
+  productName: '',
+  description: '',
+  featured: false,
+  price: 0,
+  priceID: '',
+  taxPrice: 0,
+  sizes: [],
+  discount: 0,
+  category: 'all',
+  collectionName: 'all',
+  quantitySold: 0,
+  reviews: [],
+  images: [],
+  numberOfReviews: 0,
+  stock: 0,
+  ratingsAverage: 0,
+} as SingleProductType;
 
 export const links = [
   {
@@ -177,9 +198,9 @@ export const featuredSlide2 = [
   'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1695742704/img_g3j9p9.jpg',
 ];
 
-export const products_url = 'https://baz-api.onrender.com/api/v1/products';
-export const single_product_url = `https://baz-api.onrender.com/api/v1/products/`;
-export const auth_url = 'https://baz-api.onrender.com/api/v1/auth/google';
+export const products_url = `${import.meta.env.VITE_BAZ_SERVER_URL}/products/`;
+
+export const auth_url = `${import.meta.env.VITE_BAZ_SERVER_URL}/auth/google`;
 
 export const shippingChart = {
   abia: 4500,

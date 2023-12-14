@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { priceFormat, single_product_url as url } from '../utils/constants';
+import { priceFormat, products_url as url } from '../utils/constants';
 import styled from 'styled-components';
 
 import { fetchSingleProduct } from '../features/productFeature/productSlice';

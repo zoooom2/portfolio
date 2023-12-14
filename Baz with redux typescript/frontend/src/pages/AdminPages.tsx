@@ -6,7 +6,6 @@ import { setClicked } from '../features/userFeature/userSlice';
 import {
   fetchOrderStats,
   fetchVisitorStats,
-  fetchOrders,
   fetchBestSeller,
   closeAdminModal,
   deleteProduct,
@@ -55,7 +54,6 @@ const AdminPages = ({
     if (clicked) dispatch(setClicked(false));
 
     dispatch(fetchProducts(url));
-    dispatch(fetchOrders());
     dispatch(fetchBestSeller());
     dispatch(fetchOrderStats(period));
     dispatch(fetchVisitorStats(period));
@@ -82,7 +80,7 @@ const AdminPages = ({
 
       <Sidebar navLinks={adminLinks} footerButtons={<AdminMenuButtons />} />
       <main className='relative'>
-        <div className='fixed sideMenu'>
+        <div className='fixed sideMenu pt-[120px]'>
           <AdminSideMenu
             page={
               page === 'productDetail'
@@ -95,29 +93,17 @@ const AdminPages = ({
             }
           />
         </div>
-        <div className='invisible sideMenu'>
-          <AdminSideMenu
-            page={
-              page === 'productDetail'
-                ? 'product'
-                : page === 'productCreate'
-                ? 'product'
-                : page === 'orderDetail'
-                ? 'order'
-                : page
-            }
-          />
+        <div className='laptop:pl-[220px] mainContent w-full pt-[120px] px-2'>
+          {page === 'overview' && <AdminOverview />}
+          {page === 'product' && <AdminProduct />}
+          {page === 'productDetail' && (
+            <AdminProductForm type={'detail'} product={single_product} />
+          )}
+          {page === 'productCreate' && <AdminProductForm type={'create'} />}
+          {page === 'order' && <AdminOrders />}
+          {page === 'orderDetail' && <AdminOrderDetail />}
+          {page === 'users' && <AdminUser />}
         </div>
-
-        {page === 'overview' && <AdminOverview />}
-        {page === 'product' && <AdminProduct />}
-        {page === 'productDetail' && (
-          <AdminProductForm type={'detail'} product={single_product} />
-        )}
-        {page === 'productCreate' && <AdminProductForm type={'create'} />}
-        {page === 'order' && <AdminOrders />}
-        {page === 'orderDetail' && <AdminOrderDetail />}
-        {page === 'users' && <AdminUser />}
       </main>
     </Wrapper>
   );
@@ -125,6 +111,9 @@ const AdminPages = ({
 
 const Wrapper = styled.section`
   overflow-y: none;
+  nav {
+    position: fixed;
+  }
   main {
     display: flex;
     // grid-template-columns: auto 1fr;
@@ -134,8 +123,13 @@ const Wrapper = styled.section`
       // height: fit-content;
     }
     .sideMenu {
-      @media (max-width: 992px) {
+      @media (max-width: 1024px) {
         display: none;
+      }
+    }
+    .mainContent {
+      @media (max-width: 992px) {
+        margin-left: 0px;
       }
     }
   }

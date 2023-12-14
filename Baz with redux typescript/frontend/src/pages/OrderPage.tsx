@@ -1,57 +1,39 @@
-import axios, { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  clearCart,
-  clearShipping,
   countCartTotal,
   updateCartTotal,
 } from '../features/cartFeature/cartSlice';
-import { createOrder } from '../features/orderFeature/orderSlice';
-
+import { createOrder } from '../features/cartFeature/cartSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
-import useLocalStorage from '../utils/customHooks/localStorage';
-
 import { OrderGreenSVG } from '../assets';
 
 const OrderPage = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_localStorageShipping, setLocalStorageShipping] = useLocalStorage(
-    'shipping',
-    []
-  );
-
   const body = useAppSelector((state) => state.cart);
 
   const query = new URLSearchParams(useLocation().search);
   const reference = query.get('reference');
   const dispatch = useAppDispatch();
 
-  const placeOrder = async () => {
-    try {
-      if (body.cart && body.shippingInfo && reference) {
-        await dispatch(createOrder({ body, reference }));
-        dispatch(clearCart());
-        dispatch(clearShipping());
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        const axiosError = err as AxiosError;
-        console.log(axiosError.response?.data);
-      }
-    }
-  };
-
-  useEffect(() => {
-    setLocalStorageShipping(body.shippingInfo);
-  }, [body.shippingInfo]);
-
   useEffect(() => {
     document.title = 'Order | Baz Official Store';
+    if (body.cart && body.shippingInfo && reference) {
+      dispatch(
+        createOrder({
+          body: {
+            ...body,
+            total_amount: body.subtotal + body.shippingInfo.shippingFee,
+          },
+          reference,
+        })
+      );
+    }
+  }, [reference]);
+
+  useEffect(() => {
     dispatch(countCartTotal());
     dispatch(updateCartTotal());
-    placeOrder();
-  }, []);
+  }, [body.cart]);
 
   return (
     <div className='flex flex-col'>

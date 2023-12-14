@@ -8,7 +8,7 @@ const AdminMenuButtons = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return (
-    <Wrapper className='gap-4 flex'>
+    <Wrapper className='gap-4 flex text-[30px]'>
       <button>
         <CiSearch />
       </button>

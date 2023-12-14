@@ -1,5 +1,5 @@
 import AdminHero from './AdminHero';
-import AdminNav from './AdminNav';
+
 import AdminOrders from './AdminOrders/AdminOrders';
 import AdminOverview from './AdminOverview';
 import AdminProduct from './AdminProducts/AdminProduct';
@@ -11,7 +11,6 @@ import AdminRecentOrderTable from './RecentOrderTable';
 
 export {
   AdminHero,
-  AdminNav,
   AdminOrders,
   AdminOverview,
   AdminProduct,

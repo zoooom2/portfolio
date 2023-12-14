@@ -4,7 +4,6 @@ import cartReducer from '../features/cartFeature/cartSlice';
 import filterReducer from '../features/filterFeature/filterSlice';
 import productReducer from '../features/productFeature/productSlice';
 import userReducer from '../features/userFeature/userSlice';
-import orderReducer from '../features/orderFeature/orderSlice';
 
 const store = configureStore({
   reducer: {
@@ -13,7 +12,6 @@ const store = configureStore({
     filter: filterReducer,
     product: productReducer,
     user: userReducer,
-    order: orderReducer,
   },
 });
 

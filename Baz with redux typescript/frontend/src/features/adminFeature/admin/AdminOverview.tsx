@@ -18,30 +18,34 @@ const AdminOverview = () => {
     const percentage_key = x.percentage;
 
     return (
-      <div className='box' key={i}>
-        <div className='top'>
-          <div className='logo'>
-            <img src={x.logo} alt='' />
-          </div>
-          <div className='detail flex-column'>
-            <div className='text-[#2b2b2b] font-baz1 text-[14px]'>
-              {x.topic}
+      <div
+        className='aspect-[300/180] min-w-[300px] border border-[#a5a5a5] grid py-[32px] tablet:py-[41.5px] px-[21px]'
+        key={i}>
+        <div className='grid tablet:gap-[20.5px]'>
+          <div className='flex gap-[18px]'>
+            <div className='grid place-items-center border rounded-[50%] aspect-square w-[59px] border-[#7d7d7d]'>
+              <img src={x.logo} alt='' />
             </div>
-            <div className='text-black font-baz1 text-[24px] font-medium'>
+            <div className='flex flex-col gap-[4px]'>
+              <div className='text-[#2b2b2b] font-baz1 text-[14px]'>
+                {x.topic}
+              </div>
+              <div className='text-black font-baz1 text-[16px] tablet:text-[24px] font-medium'>
+                {current_key === 'totalRevenue'
+                  ? priceFormat(state[current_key])
+                  : state[current_key]}
+              </div>
+            </div>
+          </div>
+          <div className='bottom'>
+            <span>
+              <span> {state[percentage_key]}%</span> {state.period} change (
               {current_key === 'totalRevenue'
-                ? priceFormat(state[current_key])
-                : state[current_key]}
-            </div>
+                ? priceFormat(state[x.value.previous])
+                : state[x.value.previous]}
+              )
+            </span>
           </div>
-        </div>
-        <div className='bottom'>
-          <span>
-            <span> {state[percentage_key]}%</span> {state.period} change (
-            {current_key === 'totalRevenue'
-              ? priceFormat(state[x.value.previous])
-              : state[x.value.previous]}
-            )
-          </span>
         </div>
       </div>
     );
@@ -54,15 +58,19 @@ const AdminOverview = () => {
         description={'Stay up to date with your store current status'}
         timeBased={true}
       />
-      <div className='hero_body flex-col flex max-md:p-0'>
-        <div className='analysis'>{analytics}</div>
-        <div className='order-sales w-full flex max-lg:flex-col'>
-          <div className='p-5  max-lg:w-[65%] max-md:w-[75%] max-sm:w-[95%] w-[45%] flex flex-col border border-black gap-9'>
-            <div className='table-title'>Recent Orders</div>
+      <div className='py-5 gap-5 flex-col flex  '>
+        <div className='flex overflow-x-auto gap-[16px] py-4'>{analytics}</div>
+        <div className='grid gap-y-6 laptop:grid-cols-2 gap-x-3'>
+          <div className='p-5 flex flex-col border border-black gap-9'>
+            <div className='font-baz1 font-medium text-[22px]  tablet:text-[28px] leading-[42px]'>
+              Recent Orders
+            </div>
             <RecentOrderTable contentArray={state.recentOrders} />
           </div>
-          <div className='lowerbox bestSellerBox max-lg:w-[65%] max-md:w-[75%] max-sm:w-[95%] w-[45%] flex flex-col gap-9'>
-            <div className='table-title justify-self-start'>Best Sellers</div>
+          <div className='lowerbox bestSellerBox  gap-9'>
+            <div className='font-baz1 font-medium text-[22px]  tablet:text-[28px] leading-[42px] justify-self-start'>
+              Best Sellers
+            </div>
             <BestSellerTable contentArray={state.bestSeller} />
           </div>
         </div>
@@ -102,12 +110,12 @@ const Wrapper = styled.section`
   select {
     border: none;
     font-family: 'Poppins';
-    font-size: 20px;
     line-height: 30px;
     text-transform: capitalize;
     cursor: pointer;
     appearance: none;
     padding-left: 0.5em;
+    background: transparent;
     &:focus {
       border: none;
       outline: none;
@@ -117,26 +125,14 @@ const Wrapper = styled.section`
       cursor: pointer;
     }
   }
-  .hero_body {
-    padding-left: 0.5em;
-    padding-block: 0.5em;
-    gap: 1em;
-    overflow-y: scroll;
-  }
+
   .analysis {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5em;
     justify-content: flex-start;
   }
-  .box {
-    border: 1px solid #2b2b2b;
-    padding: 0.5em;
-    width: 280px;
-    height: 180px;
-    display: grid;
-    align-content: center;
-  }
+
   .top {
     display: flex;
     gap: 0.5em;
@@ -175,37 +171,11 @@ const Wrapper = styled.section`
     line-height: 42px;
   }
 
-  th {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #2a2a2a;
-  }
-  td {
-    font-family: 'Poppins';
-    font-size: 16px;
-    line-height: 27px;
-    // text-align: center;
-  }
-  .order-sales {
-    display: flex;
-    gap: 0.5em;
-    width: 100%;
-    // flex-wrap: wrap;
-  }
   .seller-table {
     border-collapse: separate;
     border-spacing: 1em 20px;
   }
-  .table-title {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 28px;
-    line-height: 42px;
-  }
+
   .lowerbox {
     border: 1px solid black;
     padding: 0.5em;

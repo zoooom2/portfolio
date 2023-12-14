@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import { useAppSelector } from '../App/hooks';
 
-interface FormInputProps {
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+type FormTextAreaProps = {
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   [key: string]:
-    | ((event: React.ChangeEvent<HTMLInputElement>) => void)
+    | ((event: React.ChangeEvent<HTMLTextAreaElement>) => void)
     | string
-    | boolean
-    | null
-    | number;
-}
+    | boolean;
+};
 
-const FormInput = (props: FormInputProps) => {
+const FormTextArea = (props: FormTextAreaProps) => {
   const [focused, setFocused] = useState(false);
   const { formFieldMode } = useAppSelector((state) => state.admin);
   const { onChange, ...inputProps } = props;
@@ -21,17 +19,20 @@ const FormInput = (props: FormInputProps) => {
   return (
     <div className='flex flex-col gap-[8px]'>
       <label
-        htmlFor={props.id as string}
-        className={`font-baz1 text-baz-black laptop:text-[20px] tablet:text-[18px] font-medium text-[14px] capitalize`}>
-        {props.id as string}
+        htmlFor={props.name as string}
+        className='font-baz1 text-baz-black laptop:text-[20px] tablet:text-[18px] font-medium text-[14px] capitalize  '>
+        {props.label as string}
       </label>
-      <input
+      <textarea
         {...inputProps}
+        id={props.name as string}
+        cols={30}
+        rows={10}
         onChange={onChange}
+        className='laptop:py-[18px] tablet:py-[14px] py-[10px] bg-transparent border-[1.5px] tracking-wider border-[#a2a2a2] placeholder:text-[#2a2a2a] rounded-none w-full text-[10px] px-[16px] tablet:text-[15px] text-black'
         onBlur={handleFocus}
         onFocus={() => setFocused(true)}
         data-focused={focused.toString()}
-        required
         readOnly={
           props.mode === 'detail'
             ? formFieldMode === 'fixed'
@@ -44,4 +45,4 @@ const FormInput = (props: FormInputProps) => {
   );
 };
 
-export default FormInput;
+export default FormTextArea;

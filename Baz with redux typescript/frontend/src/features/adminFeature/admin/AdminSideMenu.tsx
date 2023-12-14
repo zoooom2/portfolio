@@ -15,7 +15,7 @@ const AdminSideMenu = ({ page = 'overview' }: { page: AdminPageType }) => {
     </li>
   ));
   return (
-    <Wrapper className='h-[calc(100vh-6.5em)] border-r border-[#666060] max-xl:hidden'>
+    <Wrapper className='h-[calc(100vh-6.5em)] border-r border-[#666060] max-xl:hidden w-[212px] bg-baz-white'>
       <ul className='flex-column'>{links}</ul>
     </Wrapper>
   );

@@ -1,27 +1,32 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { UserType } from '../../../types';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../../App/hooks';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 import { fetchProfile } from '../../userFeature/userSlice';
+import { Loading } from '../../../global_components';
+import { setAdminRoute } from '../adminSlice';
 
-const AdminRoutes = ({
-  isAuthenticated,
-}: {
-  isAuthenticated: boolean;
-  user: UserType;
-}) => {
+const AdminRoutes = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const { loading } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     if (!isAuthenticated) dispatch(fetchProfile());
   }, [dispatch, isAuthenticated]);
 
-  return !isAuthenticated ? (
-    <Navigate to={`/login?redirectTo=${location.pathname}`} />
-  ) : (
-    <Outlet />
-  );
+  useEffect(() => {
+    dispatch(setAdminRoute(true));
+  });
+
+  if (loading) {
+    return <Loading />;
+  } else {
+    return !isAuthenticated ? (
+      <Navigate to={`/login?redirectTo=${location.pathname}`} />
+    ) : (
+      <Outlet />
+    );
+  }
 };
 
 export default AdminRoutes;

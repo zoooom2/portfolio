@@ -40,6 +40,9 @@ export type userActionType = {
 
 // Commerce Types
 export type ShippingInfoTypes = {
+  firstName: string;
+  lastName: string;
+  email: string;
   address: string;
   city: string;
   phoneNumber: string;
@@ -47,6 +50,8 @@ export type ShippingInfoTypes = {
   country: string;
   shippingFee: number;
   shippingMethod: string;
+  countryCode: string;
+  state: string;
 };
 
 export type OrderItemType = {
@@ -59,7 +64,7 @@ export type OrderItemType = {
 };
 
 export type PaymentInfoType = {
-  reference: string;
+  reference: string | JSX.Element;
   gateway: string;
   channel?: string;
   status?: string;
@@ -68,7 +73,7 @@ export type PaymentInfoType = {
 export type OrderType = {
   _id: string;
   shippingInfo: ShippingInfoTypes;
-  user: UserType;
+  // user: UserType;
   orderItems: OrderItemType[];
   paymentInfo: PaymentInfoType;
   createdAt: string;
@@ -77,7 +82,7 @@ export type OrderType = {
   deliveredAt: string;
   total_amount: number;
   subtotal: number;
-  orderStatus: 'processing' | 'shipped' | 'completed' | 'failed';
+  orderStatus: 'pending' | 'completed';
   total_items: number;
 };
 
@@ -87,19 +92,10 @@ export interface ChildrenProps {
 
 //product types
 
-export type CategoryType =
-  | 'bags'
-  | 'bracelets'
-  | 'waistbeads'
-  | 'necklaces'
-  | 'anklet'
-  | 'earrings'
-  | 'all'
-  | 'body jewelry'
-  | 'custom';
+export type CategoryType = string;
 
 export type SingleProductType = {
-  _id: string;
+  _id?: string;
   productName: string;
   description: string;
   featured: boolean;
@@ -181,6 +177,7 @@ export type CartStateType = {
   loading: boolean;
   handle_paystack_error: string;
   total_amount: number;
+  create_order_error: string;
   shippingInfo: {
     firstName: string;
     lastName: string;
@@ -221,6 +218,7 @@ export type countryTypes = {
 export type AdminState = {
   loading: boolean;
   openModal: boolean;
+  adminRoute: boolean;
   modalTitle: string;
   modalRef: string;
   showSidebar: boolean;
@@ -243,9 +241,15 @@ export type AdminState = {
   percentageOrder: number;
   percentageVisitor: number;
   percentageSales: number;
+  singleOrder: OrderType;
   orders: OrderType[];
   recentOrders: OrderType[];
   bestSeller: SingleProductType[];
+  formTempProduct: SingleProductType;
+  formErrorMessage: boolean;
+  isFormValid: boolean;
+  formFieldMode: 'fixed' | 'update';
+  formImages: string[];
 };
 export type stats = {
   time: string;
@@ -288,8 +292,8 @@ export type AdminPageType = 'overview' | 'product' | 'order' | 'users';
 //   collectionName: string;
 // }
 
-export type orderTableDataProps = (Omit<OrderType, '_id'> & {
-  _id: JSX.Element;
+export type orderTableDataProps = (Omit<OrderType, '_id' | 'total_amount'> & {
+  total_amount: string;
 })[];
 
 export type OrderStateType = {

@@ -6,7 +6,8 @@ import { FieldValues } from 'react-hook-form';
 
 export const fetchProfile = createAsyncThunk('user/fetchProfile', async () => {
   const response = await axios.get(
-    'https://baz-api.onrender.com/api/v1/users/me'
+    `${import.meta.env.VITE_BAZ_SERVER_URL}/users/me`,
+    { withCredentials: true }
   );
   return response.data.data;
 });
@@ -15,7 +16,7 @@ export const fetchUserOrder = createAsyncThunk(
   'user/fetchUserOrder',
   async () => {
     const response = await axios.get(
-      'https://baz-api.onrender.com/api/v1/order/myorders'
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/myorders`
     );
     return response.data.data;
   }
@@ -27,7 +28,7 @@ export const checkVisitorCount = createAsyncThunk(
     if (!Cookies.get('visited')) {
       Cookies.set('visited', 'true', { expires: 1 });
       const response = await axios.patch(
-        'https://baz-api.onrender.com/api/v1/visitor'
+        `${import.meta.env.VITE_BAZ_SERVER_URL}/visitor`
       );
       return response.data.doc.count;
     }
@@ -36,7 +37,7 @@ export const checkVisitorCount = createAsyncThunk(
 
 export const logOut = createAsyncThunk('user/logOut', async () => {
   const response = await axios.get(
-    'https://baz-api.onrender.com/api/v1/users/logout'
+    `${import.meta.env.VITE_BAZ_SERVER_URL}/users/logout`
   );
   return response.data.status;
 });
@@ -45,7 +46,7 @@ export const jwtAuth = createAsyncThunk(
   'user/jwtAuth',
   async ([email, password]: string[]) => {
     const response = await axios.post(
-      'https://baz-api.onrender.com/api/v1/users/login',
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/users/login`,
       {
         email,
         password,
@@ -62,7 +63,7 @@ export const signup = createAsyncThunk(
   'user/signup',
   async (data: FieldValues) => {
     const response = await axios.post(
-      'https://baz-api.onrender.com/api/v1/users/signup',
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/users/signup`,
       data
     );
     return response.data.data.user;
@@ -70,8 +71,8 @@ export const signup = createAsyncThunk(
 );
 
 const initialState = {
-  loading: true,
-  isAuthenticated: false,
+  loading: false,
+  isAuthenticated: true,
   authentication_error: '',
   remove_auth_error: '',
   clicked: false,
@@ -80,6 +81,7 @@ const initialState = {
   orders: [],
   fetch_order_error: '',
   visitor_count_error: '',
+
   user: {
     id: '',
     firstname: '',
@@ -97,7 +99,7 @@ const initialState = {
 
 const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: { ...initialState },
   reducers: {
     authenticateUser: (state, action: { type: string; payload: UserType }) => {
       state = {

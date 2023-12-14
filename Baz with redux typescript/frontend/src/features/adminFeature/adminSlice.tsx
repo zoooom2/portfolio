@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { AdminState, OrderType } from '../../types';
+import { initialSingleProduct } from '../../utils/constants';
 
 export const fetchOrderStats = createAsyncThunk(
   'admin/fetchOrderStats',
   async (period: string) => {
     const response = await axios.get(
-      `https://baz-api.onrender.com/api/v1/order/pctchange?time=${period}`
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/pctchange?time=${period}`
     );
 
     return response.data.stats;
@@ -16,22 +17,36 @@ export const fetchVisitorStats = createAsyncThunk(
   'admin/fetchVisitorStats',
   async (period: string) => {
     const response = await axios.get(
-      `https://baz-api.onrender.com/api/v1/visitor/pctchange?time=${period}`
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/visitor/pctchange?time=${period}`
     );
     return response.data.stats;
   }
 );
 
 export const fetchOrders = createAsyncThunk('admin/fetchOrders', async () => {
-  const response = await axios.get('https://baz-api.onrender.com/api/v1/order');
+  const response = await axios.get(
+    `${import.meta.env.VITE_BAZ_SERVER_URL}/order`
+  );
   return response.data.data;
 });
+
+export const fetchSingleOrder = createAsyncThunk(
+  'admin/fetchSingleOrder',
+  async (id: string) => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/${id}`
+    );
+    return response.data.data;
+  }
+);
 
 export const fetchBestSeller = createAsyncThunk(
   'admin/fetchBestSeller',
   async () => {
     const response = await axios.get(
-      'https://baz-api.onrender.com/api/v1/products?sort=quantitySold&limit=3'
+      `${
+        import.meta.env.VITE_BAZ_SERVER_URL
+      }/products?sort=quantitySold&limit=3`
     );
     return response.data.data;
   }
@@ -40,7 +55,7 @@ export const fetchBestSeller = createAsyncThunk(
 export const createProduct = createAsyncThunk(
   'admin/createProduct',
   async (data: FormData) => {
-    await axios.post('https://baz-api.onrender.com/api/v1/products', data, {
+    await axios.post(`${import.meta.env.VITE_BAZ_SERVER_URL}/products`, data, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   }
@@ -49,20 +64,40 @@ export const createProduct = createAsyncThunk(
 export const updateProduct = createAsyncThunk(
   'admin/updateProduct',
   async ({ id, data }: { id: string; data: FormData }) => {
-    await axios.patch(
-      `https://baz-api.onrender.com/api/v1/products/${id}`,
+    const response = await axios.put(
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/products/${id}`,
       data,
       {
         headers: { 'Content-Type': 'multipart/form-data' },
       }
     );
+    return response.data;
   }
 );
 
 export const deleteProduct = createAsyncThunk(
   'admin/deleteProduct',
   async (id: string) => {
-    await axios.delete(`https://baz-api.onrender.com/api/v1/products/${id}`);
+    await axios.delete(`${import.meta.env.VITE_BAZ_SERVER_URL}/products/${id}`);
+  }
+);
+
+export const updateOrderStatus = createAsyncThunk(
+  'admin/updateOrderStatus',
+  async ({
+    id,
+    orderStatus,
+  }: {
+    id: string;
+    orderStatus: 'pending' | 'completed';
+  }) => {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/${id}`,
+      {
+        orderStatus,
+      }
+    );
+    return response.data.data;
   }
 );
 
@@ -70,6 +105,7 @@ const initialState = {
   loading: true,
   openModal: false,
   showSidebar: false,
+  adminRoute: false,
   modalTitle: '',
   modalRef: '',
   showDelBtn: false,
@@ -92,8 +128,44 @@ const initialState = {
   percentageVisitor: 0,
   percentageSales: 0,
   orders: [],
+  singleOrder: {
+    _id: '',
+    shippingInfo: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      address: '',
+      city: '',
+      phoneNumber: '',
+      postCode: '',
+      country: '',
+      shippingFee: 0,
+      shippingMethod: '',
+      countryCode: '',
+      state: '',
+    },
+    orderItems: [],
+    paymentInfo: { reference: '', gateway: '', channel: '', status: '' },
+    createdAt: '',
+    paidAt: '',
+    taxPrice: 0,
+    deliveredAt: 'string',
+    total_amount: 0,
+    subtotal: 0,
+    orderStatus: 'pending',
+    total_items: 0,
+  },
   recentOrders: [],
   bestSeller: [],
+  formTempProduct: {
+    ...initialSingleProduct,
+    collectionName: '',
+    category: '',
+  },
+  formErrorMessage: false,
+  isFormValid: true,
+  formFieldMode: 'fixed',
+  formImages: [],
 } as AdminState;
 
 const adminSlice = createSlice({
@@ -102,6 +174,9 @@ const adminSlice = createSlice({
   reducers: {
     changeTimeRange: (state, action: { type: string; payload: string }) => {
       state.period = action.payload;
+    },
+    setAdminRoute: (state, action) => {
+      state.adminRoute = action.payload;
     },
     openAdminModal: (
       state,
@@ -124,6 +199,31 @@ const adminSlice = createSlice({
     },
     closeAdminSidebar: (state) => {
       state.showSidebar = false;
+    },
+    resetFormProduct: (state) => {
+      state.formTempProduct = { ...initialState.formTempProduct };
+    },
+    loadFormProduct: (state, action) => {
+      state.formTempProduct = action.payload;
+    },
+    updateFormProduct: (state, action) => {
+      const { detail, info } = action.payload;
+      state.formTempProduct = { ...state.formTempProduct, [detail]: info };
+    },
+    setShowErrorMessage: (state, action: { payload: boolean }) => {
+      state.formErrorMessage = action.payload;
+    },
+    setFormValidity: (state, action: { payload: boolean }) => {
+      state.isFormValid = action.payload;
+    },
+    setFieldMode: (state, action: { payload: 'fixed' | 'update' }) => {
+      state.formFieldMode = action.payload;
+    },
+    setFormImages: (state, action) => {
+      state.formImages = [...action.payload];
+    },
+    clearFormImages: (state) => {
+      state.formImages = [];
     },
   },
   extraReducers: (builder) => {
@@ -198,6 +298,21 @@ const adminSlice = createSlice({
         state.recentOrders = [];
         state.orders = [];
       });
+    builder
+      .addCase(fetchSingleOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchSingleOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.fetch_recent_order_error = '';
+        state.singleOrder = action.payload;
+      })
+      .addCase(fetchSingleOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.fetch_recent_order_error = action.error.message as string;
+        state.recentOrders = [];
+        state.singleOrder = initialState.singleOrder;
+      });
 
     builder
       .addCase(deleteProduct.pending, (state) => {
@@ -235,6 +350,19 @@ const adminSlice = createSlice({
         state.loading = false;
         state.product_error = action.error.message as string;
       });
+    builder
+      .addCase(updateOrderStatus.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateOrderStatus.fulfilled, (state) => {
+        state.loading = false;
+        state.singleOrder = { ...state.singleOrder, orderStatus: 'completed' };
+
+        // state.orders = state.orders.map((order) =>)
+      })
+      .addCase(updateOrderStatus.rejected, (state) => {
+        state.loading = true;
+      });
   },
 });
 
@@ -245,5 +373,14 @@ export const {
   toggleDelBtn,
   openAdminSidebar,
   closeAdminSidebar,
+  resetFormProduct,
+  updateFormProduct,
+  loadFormProduct,
+  setShowErrorMessage,
+  setFieldMode,
+  setFormImages,
+  setFormValidity,
+  clearFormImages,
+  setAdminRoute,
 } = adminSlice.actions;
 export default adminSlice.reducer;

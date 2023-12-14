@@ -14,8 +14,12 @@ const BestSellerTable = ({
         <td className='productItem'>
           <img src={content.images[0]} alt='product' className='product-img' />
           <div className='product-details flex-column'>
-            <div className='productName'>{content.productName}</div>
-            <div className='price'>{priceFormat(content.price)}</div>
+            <div className='font-baz1 text-[14px] tablet:text-[18px] leading-[27px]'>
+              {content.productName}
+            </div>
+            <div className='font-baz1 tablet:text-[14px] text-[10px] leading-[21px] text-[#9c9c9c] text-left'>
+              {priceFormat(content.price)}
+            </div>
           </div>
         </td>
         <td>{content.quantitySold}</td>
@@ -27,7 +31,7 @@ const BestSellerTable = ({
     <Wrapper>
       <thead className=''>
         <tr className=''>
-          <th>Item</th>
+          <th className=''>Item</th>
           <th>Piece(s)</th>
           <th>Total</th>
         </tr>
@@ -38,6 +42,7 @@ const BestSellerTable = ({
 };
 
 const Wrapper = styled.table`
+  width: 100%;
   border-collapse: separate;
   border-spacing: 20px;
   .productItem {
@@ -64,8 +69,27 @@ const Wrapper = styled.table`
     text-align: left;
   }
   th {
-    text-align: left;
+      font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #2a2a2a;
+    text-align: center;
+    @media (max-width: 640px) {
+      font-size: 14px;
+    }
+    
   }
+   td {
+     font-family: 'Poppins';
+    font-size: 16px;
+    line-height: 27px;
+    text-align:center;
+    @media (max-width: 640px) {
+      text-align:center;
+      font-size: 12px;
+    }
 `;
 
 export default BestSellerTable;

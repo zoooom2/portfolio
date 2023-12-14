@@ -31,23 +31,24 @@ const Hero = ({
       key={index}
       onClick={x.action}
       {...(buttonType && { type: 'button' })}
-      className={`max-lg:p-3 max-lg:text-sm flex items-center font-baz1 text-xl gap-5 px-6 py-4 ${
+      className={`flex items-center font-baz1 text-[10px] font-medium gap-2 px-[12px] py-4 tablet:text-[20px] tablet:py-[16px] tablet:px-[20px] ${
         index === 0
           ? 'bg-black text-white hover:bg-white hover:border border-black hover:text-black'
           : 'bg-white text-black border border-black hover:bg-black hover:border-none hover:text-white'
       }`}>
-      {x.icon({})} {x.name}
+      <div>{x.icon({})}</div>
+      <div className=' '>{x.name}</div>
     </button>
   ));
 
   return (
-    <div className='max-md:flex-col max-md:items-start max-md:gap-4 flex justify-between items-center px-10 py-5 w-full border-b  border-solid border-[#b6b6b6]'>
-      <div>
-        <div className='font-baz1 font-medium min-[900px]:text-adminHero text-2xl '>
-          <span className='capitalize'>{`${title} `}</span>
-          <span className='text-gray-400'>{subtitle && `/ ${subtitle}`}</span>
+    <div className='max-tablet:flex-col max-tablet:items-start max-tablet:gap-4 flex justify-between items-center px-5 tablet:px-10 py-5 w-full border-b  border-solid border-[#b6b6b6]'>
+      <div className='flex flex-col'>
+        <div className='font-baz1 text-[18px] tablet:text-[32px] font-medium min-[900px]:text-adminHero'>
+          <span className='capitalize text-black'>{`${title} `}</span>
+          <span className='text-[#666]'>{subtitle && `/ ${subtitle}`}</span>
         </div>
-        <div className='font-baz1 font-normal text-xs text-[#2a2a2a]'>
+        <div className='font-baz1 font-normal text-[10px] tablet:text-[12px] text-[#2a2a2a]'>
           {description}
         </div>
       </div>
@@ -55,7 +56,7 @@ const Hero = ({
         {timeBased ? (
           <div className='flex items-center h-12 gap-1 focus:border focus:border-solid focus:border-black'>
             <select
-              className='border-none font-baz1 text-adminSelect capitalize cursor-pointer appearance-none pl-2 focus:border-none focus:outline-none'
+              className='border-none font-baz1 text-[14px] tablet:text-[20px] tablet:leading-[30px] capitalize cursor-pointer appearance-none pl-2 focus:border-none focus:outline-none'
               name='period'
               id='period'
               value={period}

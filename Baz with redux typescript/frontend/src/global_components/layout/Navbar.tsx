@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-// import logo from '../../assets/image 2.svg';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { BAZLogo, links } from '../../utils/constants';
 import { openSidebar } from '../../features/productFeature/productSlice';
-// import { CartButtons } from '../../features/cartFeature/cart';
 import { useAppDispatch, useAppSelector } from '../../App/hooks';
 import { BsSearch } from 'react-icons/bs';
 import {
@@ -15,7 +13,9 @@ import { ChangeEvent } from 'react';
 
 const Nav = ({ buttons, admin }: { buttons: JSX.Element; admin: boolean }) => {
   const dispatch = useAppDispatch();
+
   const { openSearchBar } = useAppSelector((state) => state.filter);
+  const { adminRoute } = useAppSelector((state) => state.admin);
   const navlinks = links.map((link) => {
     return (
       <li key={link.id}>
@@ -35,12 +35,10 @@ const Nav = ({ buttons, admin }: { buttons: JSX.Element; admin: boolean }) => {
     <NavContainer className='place-center bg-baz-white flex flex-col gap-4 pb-[18px]'>
       <div className={admin ? 'admin-nav-center' : 'nav-center'}>
         <div className='nav-header bg-baz-white'>
-          <Link to='/'>
+          <Link to={adminRoute ? '/admin' : '/'}>
             <img src={BAZLogo} alt='logo' />
           </Link>
           <div className='nav-toggle'>
-            {/* <CartButtons /> */}
-            {/* {buttons} */}
             <FaBars
               className='text-baz-black '
               onClick={() => dispatch(openSidebar())}
@@ -49,7 +47,6 @@ const Nav = ({ buttons, admin }: { buttons: JSX.Element; admin: boolean }) => {
         </div>
         {!admin && <ul className='nav-links'>{navlinks}</ul>}
 
-        {/* <CartButtons /> */}
         {buttons}
       </div>
       <div
@@ -78,6 +75,7 @@ const NavContainer = styled.nav`
   // display: flex;
   padding-top: 2em;
   // padding-bottom: 0.5em;
+  background: #f9f8f8;
   position: sticky;
   top: 0;
   width: 100%;

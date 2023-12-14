@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ProductStateType, SingleProductType } from '../../types';
+import { initialSingleProduct } from '../../utils/constants';
 
 export const fetchProducts = createAsyncThunk(
   'product/fetchProducts',
@@ -16,6 +17,7 @@ export const fetchSingleProduct = createAsyncThunk(
     return response.data.data;
   }
 );
+
 const productSlice = createSlice({
   name: 'product',
   initialState: {
@@ -27,25 +29,7 @@ const productSlice = createSlice({
     single_product_loading: false,
     single_product_error: '',
     showModal: false,
-    single_product: {
-      _id: '',
-      productName: '',
-      description: '',
-      featured: false,
-      price: 0,
-      priceID: '',
-      taxPrice: 0,
-      sizes: [],
-      discount: 0,
-      category: 'all',
-      collectionName: 'all',
-      quantitySold: 0,
-      reviews: [],
-      images: [],
-      numberOfReviews: 0,
-      stock: 0,
-      ratingsAverage: 0,
-    },
+    single_product: initialSingleProduct,
   } as ProductStateType,
   reducers: {
     openSidebar: (state) => {

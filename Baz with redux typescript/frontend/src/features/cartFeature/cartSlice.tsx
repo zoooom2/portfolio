@@ -16,7 +16,7 @@ export const handlePayStack = createAsyncThunk(
     'shippingInfo' | 'cart' | 'total_amount' | 'total_items' | 'subtotal'
   >) => {
     const response = await axios.post(
-      'https://baz-api.onrender.com/api/v1/order/paystack/checkout-session',
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/paystack/checkout-session`,
       {
         shippingInfo: { ...shippingInfo },
         orderItems: cart,
@@ -30,6 +30,23 @@ export const handlePayStack = createAsyncThunk(
     );
 
     return response.data.data;
+  }
+);
+
+export const createOrder = createAsyncThunk(
+  'order/create',
+  async ({ body, reference }: { body: CartStateType; reference: string }) => {
+    const url = `${
+      import.meta.env.VITE_BAZ_SERVER_URL
+    }/order/paystack/createOrder`;
+    const response = await axios.post(
+      url,
+      { ...body, reference },
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data;
   }
 );
 
@@ -57,6 +74,7 @@ const cartSlice = createSlice({
     total_items: 0,
     subtotal: 0,
     total_amount: 0,
+    create_order_error: '',
     shippingInfo: JSON.parse(
       localStorage.getItem('shipping') || shippingInfoJSON
     ),
@@ -140,6 +158,7 @@ const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.cart = [];
+      localStorage.removeItem('cart');
     },
     countCartTotal: (state) => {
       const { total_items, subtotal } = state.cart.reduce(
@@ -167,6 +186,7 @@ const cartSlice = createSlice({
       state.shippingInfo = { ...state.shippingInfo, ...action.payload };
     },
     clearShipping: (state) => {
+      localStorage.removeItem('shippingInfo');
       state.shippingInfo = {
         firstName: '',
         lastName: '',
@@ -204,6 +224,22 @@ const cartSlice = createSlice({
       state.loading = false;
       state.handle_paystack_error = action.error.message as string;
     });
+    builder
+      .addCase(createOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createOrder.fulfilled, (state) => {
+        state.loading = false;
+        state.create_order_error = '';
+        state.cart = [];
+        state.shippingInfo = JSON.parse(shippingInfoJSON);
+        localStorage.removeItem('cart');
+        localStorage.removeItem('shipping');
+      })
+      .addCase(createOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.create_order_error = action.error.message as string;
+      });
   },
 });
 

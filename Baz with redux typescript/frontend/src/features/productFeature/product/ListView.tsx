@@ -15,7 +15,7 @@ const ListView = ({ products }: { products: SingleProductType[] }) => {
             className='border-b border-black flex flex-col h-[50vh] px-[24px] py-2'>
             <figure className='place-items-center h-3/4 flex justify-center'>
               <img
-                src={images[0]}
+                src={images[0] as string}
                 alt={name}
                 className='aspect-[230/317] h-full object-contain'
               />

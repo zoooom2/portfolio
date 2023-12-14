@@ -30,30 +30,30 @@ const AdminProductCollectionBody = ({
       <Link
         to={showDelBtn ? '#' : `/admin/product/detail/${product._id}`}
         key={product._id}
-        className='border border-solid border-[#b6b6b6] px-[15px] w-[280px] h-[300px] relative'>
-        <div className='h-[230px] flex justify-center items-center p-3'>
+        className='tablet:border tablet:border-[#b6b6b6] px-[15px] tablet:aspect-[306/328] tablet:w-[280px] tablet:h-[300px] items-center gap-[15px] w-full relative flex tablet:flex-col'>
+        <div className='tablet:h-[230px] flex justify-center items-center tablet:p-3 aspect-[51/48] max-tablet:w-[60px]'>
           <img
             src={product.images[0]}
             alt='productImage'
             className='object-contain w-full h-full'
           />
         </div>
-        <div className='flex justify-between items-start'>
+        <div className='flex justify-between items-start max-tablet:border-b border-[#b6b6b6] w-full max-tablet:py-[24px]'>
           <div className='flex flex-col'>
-            <div className='text-black font-baz1 text-[18px] capitalize'>
+            <div className='text-black font-baz1 text-[14px] tablet:text-[18px] capitalize'>
               {product.productName}
             </div>
             <div className='text-[#2A2A2A] text-[14px] font-baz1'>sizes</div>
           </div>
-          <div className='text-[#2A2A2A] text-[18px] font-baz1'>
+          <div className='text-[#2A2A2A] text-[14px] tablet:text-[18px] font-baz1'>
             {priceFormat(product.price)}
           </div>
         </div>
         {showDelBtn && (
           <button
-            className='absolute right-3 top-3 text-black rounded-lg border border-black p-1'
-            onClick={() => handleDeleteProduct(product._id)}>
-            <AiOutlineClose size={18} />
+            className='absolute right-3 max-tablet:bottom-3  tablet:top-3 text-black rounded-lg border border-black p-1 text-[14px] tablet:text-[18px]'
+            onClick={() => handleDeleteProduct(product._id as string)}>
+            <AiOutlineClose />
           </button>
         )}
       </Link>

@@ -38,7 +38,7 @@ import { CartButtons } from '../features/cartFeature/cart';
 import UserRoutes from '../features/userFeature/user/UserRoutes';
 
 const App = () => {
-  const { isAuthenticated, clicked, user, loading } = useAppSelector(
+  const { isAuthenticated, clicked, loading } = useAppSelector(
     (state) => state.user
   );
   const dispatch = useAppDispatch();
@@ -83,10 +83,7 @@ const App = () => {
             />
           </Route>
 
-          <Route
-            element={
-              <AdminRoutes isAuthenticated={isAuthenticated} user={user} />
-            }>
+          <Route element={<AdminRoutes isAuthenticated={isAuthenticated} />}>
             <Route path='/admin' element={<Navigate to='/admin/overview' />} />
             <Route path='/admin'>
               <Route
