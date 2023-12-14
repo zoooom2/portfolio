@@ -3,7 +3,7 @@ import { useTable, Column } from 'react-table';
 interface TableProps {
   columns: Column[];
   data: any[];
-  handleClick?: (row) => void;
+  handleClick?: (row: any) => void;
 }
 
 const Table = ({ columns, data, handleClick }: TableProps) => {
