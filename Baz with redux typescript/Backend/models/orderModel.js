@@ -120,12 +120,12 @@ const orderSchema = new Schema({
   subtotal: {
     type: Number,
     required: true,
-    default: 0.0,
+    // default: 0.0,
   },
   total_amount: {
     type: Number,
     required: true,
-    default: 0.0,
+    // default: 0.0,
   },
   orderStatus: {
     type: String,

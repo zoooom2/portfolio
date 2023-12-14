@@ -81,17 +81,13 @@ exports.createOrder = catchAsync(async (req, res, next) => {
   });
 
   //3) create the order
-  const {
-    shippingInfo,
-    total_amount: totalAmount,
-    subtotal,
-    total_items: totalItems,
-  } = req.body;
+
+  const { shippingInfo, subtotal, total_items: totalItems } = req.body;
 
   const order = await Order.create({
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
     shippingInfo,
-    total_amount: totalAmount,
+    total_amount: req.body.subtotal + req.body.shippingInfo.shippingFee,
     subtotal,
     total_items: totalItems,
     orderItems: newOrderItems,
@@ -114,7 +110,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     emailAddress: shippingInfo.email,
     subject: 'ORDER DETAILS',
     text: JSON.stringify(order),
-    // html,
+    html: <div></div>,
   });
 
   //4) update the stock of each product

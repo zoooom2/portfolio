@@ -37,9 +37,25 @@ router.use(restrictTo('admin'));
 router
   .route('/')
   .post(
-    multipleSinglePhotos([{ name: 'coverImages', maxCount: 4 }], 'product'),
+    multipleSinglePhotos([{ name: 'images', maxCount: 4 }], 'product'),
     uploadProduct
   );
-router.route('/:id').delete(deleteProduct).patch(updateProduct);
+router
+  .route('/:id')
+  .delete(deleteProduct)
+  .put(
+    multipleSinglePhotos([{ name: 'images', maxCount: 4 }], 'product'),
+    async (req, res, next) => {
+      if (req.files) {
+        const fileImages = req.files.map((image) => image.path);
+        if (!Array.isArray(req.body.images)) {
+          req.body.images = [req.body.images];
+        }
+        req.body.images = [...req.body.images, ...fileImages];
+      }
+      next();
+    },
+    updateProduct
+  );
 
 module.exports = router;

@@ -31,7 +31,7 @@ exports.createOrder = catchAsync(async (req, res) => {
       };
     })
   );
-  amount = itemTotal + req.body.shippingPrice;
+  amount = itemTotal + req.body.shippingInfo.shippingFee;
 
   const request = new paypal.orders.OrdersCreateRequest();
   request.requestBody({
@@ -43,7 +43,10 @@ exports.createOrder = catchAsync(async (req, res) => {
           value: amount,
           // this is where to add handling fee, total disocunt, etc
           breakdown: {
-            shipping: { currency_code: 'USD', value: req.body.shippingPrice },
+            shipping: {
+              currency_code: 'USD',
+              value: req.body.shippingInfo.shippingFee,
+            },
             item_total: { currency_code: 'USD', value: itemTotal },
           },
         },
@@ -56,7 +59,9 @@ exports.createOrder = catchAsync(async (req, res) => {
             admin_area_2: req.body.shippingInfo.city,
             postal_code: req.body.shippingInfo.postalCode,
           },
-          name: { full_name: req.body.shippingInfo.name },
+          name: {
+            full_name: `${req.body.shippingInfo.firstName} ${req.body.shippingInfo.lastName}`,
+          },
           type: req.body.shippingInfo.type,
           payee: {
             email_address: 'www.bazng@gmail.com',

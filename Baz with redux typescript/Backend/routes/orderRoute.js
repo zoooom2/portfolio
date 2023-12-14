@@ -13,6 +13,7 @@ const {
   getAllOrders,
   getOrder,
   deleteOrder,
+  updateOrder,
   getMyOrders,
   orderPerTime,
   percentageChangeOrder,
@@ -43,5 +44,5 @@ router.route('/').get(getAllOrders);
 router.get('/totalOrder', orderPerTime);
 
 router.get('/pctChange', percentageChangeOrder);
-router.route('/:id').get(getOrder).delete(deleteOrder);
+router.route('/:id').get(getOrder).delete(deleteOrder).patch(updateOrder);
 module.exports = router;

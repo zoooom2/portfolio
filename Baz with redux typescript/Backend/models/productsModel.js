@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { ObjectId, model, Schema } = mongoose;
+const { model, Schema } = mongoose;
 
 const productSchema = new Schema({
   productName: { type: String, required: true },
@@ -15,9 +15,9 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
-  reviews: [ObjectId],
+
   images: [{ type: String, required: true }],
-  numberofReviews: { type: Number, required: true, default: 0 },
+
   ratingsAverage: {
     type: Number,
     default: 5,

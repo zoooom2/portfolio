@@ -34,10 +34,10 @@ router.post('/forgotPassword', forgotPassword);
 router.patch('/resetPassword/:token', resetPassword);
 
 // Protect all routes after this middleware
-router.use(protect);
 
-router.patch('/updateMyPassword', updatePassword);
+router.use(protect);
 router.get('/me', getMe, getUser);
+router.patch('/updateMyPassword', updatePassword);
 router.patch('/updateMe', uploadPhoto([], 'user'), updateMe);
 router.delete('/deleteMe', deleteMe);
 
