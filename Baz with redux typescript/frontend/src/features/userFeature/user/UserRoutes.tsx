@@ -1,13 +1,14 @@
 import { Outlet } from 'react-router-dom';
 import { setClicked } from '../userSlice';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../../App/hooks';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 import { setAdminRoute } from '../../adminFeature/adminSlice';
 
 const UserRoutes = () => {
   const dispatch = useAppDispatch();
+  const { clicked } = useAppSelector((state) => state.user);
   useEffect(() => {
-    dispatch(setClicked(true));
+    if (clicked) dispatch(setClicked(true));
     dispatch(setAdminRoute(false));
   }, []);
 
