@@ -65,7 +65,16 @@ const AdminOverview = () => {
             <div className='font-baz1 font-medium text-[22px]  tablet:text-[28px] leading-[42px]'>
               Recent Orders
             </div>
-            <RecentOrderTable contentArray={state.recentOrders} />
+            <RecentOrderTable
+              contentArray={[...state.orders]
+                .sort((a, b) => {
+                  return (
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime()
+                  );
+                })
+                .slice(0, 4)}
+            />
           </div>
           <div className='lowerbox bestSellerBox  gap-9'>
             <div className='font-baz1 font-medium text-[22px]  tablet:text-[28px] leading-[42px] justify-self-start'>

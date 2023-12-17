@@ -11,13 +11,15 @@ const Hero = ({
   description,
   timeBased,
   button,
+  customPeriod,
   periodChangeFn,
   buttonType,
 }: HeroProps) => {
   const { period } = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
   const changePeriod = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
+    const value = e.target.value as 'daily' | 'weekly' | 'monthly' | 'yearly';
+
     dispatch(changeTimeRange(value));
   }, []);
 
@@ -60,7 +62,7 @@ const Hero = ({
               className='border-none font-baz1 text-[14px] tablet:text-[20px] tablet:leading-[30px] capitalize cursor-pointer appearance-none pl-2 focus:border-none focus:outline-none'
               name='period'
               id='period'
-              value={period}
+              value={customPeriod ? customPeriod : period}
               onChange={periodChangeFn ? periodChangeFn : changePeriod}>
               {options}
             </select>

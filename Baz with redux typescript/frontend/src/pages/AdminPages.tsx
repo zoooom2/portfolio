@@ -9,6 +9,7 @@ import {
   getTopProducts,
   closeAdminModal,
   deleteProduct,
+  fetchOrders,
 } from '../features/adminFeature/adminSlice';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 import {
@@ -48,6 +49,7 @@ const AdminPages = ({
   );
   const { clicked } = useAppSelector((state) => state.user);
   const { single_product } = useAppSelector((state) => state.product);
+  const { singleOrder } = useAppSelector((state) => state.admin);
 
   useEffect(() => {
     document.title = 'Admin | Baz Official Store';
@@ -57,6 +59,12 @@ const AdminPages = ({
     dispatch(fetchOrderStats(period));
     dispatch(fetchVisitorStats(period));
   }, [period]);
+
+  useEffect(() => {
+    dispatch(fetchOrders());
+  }, [singleOrder.orderStatus]);
+
+  useEffect(() => {}, []);
 
   return (
     <Wrapper className='relative'>

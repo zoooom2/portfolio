@@ -105,7 +105,9 @@ export const getTopProducts = createAsyncThunk(
   'admin/getTopProducts',
   async (period: 'daily' | 'weekly' | 'monthly' | 'yearly') => {
     const response = await axios.get(
-      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/bestSellers/${period}`
+      `${
+        import.meta.env.VITE_BAZ_SERVER_URL
+      }/order/bestSellers?period=${period}`
     );
     return response.data.data;
   }
@@ -118,6 +120,7 @@ export const getAggregateOrder = createAsyncThunk(
         import.meta.env.VITE_BAZ_SERVER_URL
       }/order/aggregateOrder?period=${period}`
     );
+
     return response.data.data;
   }
 );
@@ -194,7 +197,13 @@ const adminSlice = createSlice({
   name: 'admin',
   initialState,
   reducers: {
-    changeTimeRange: (state, action: { type: string; payload: string }) => {
+    changeTimeRange: (
+      state,
+      action: {
+        type: string;
+        payload: 'daily' | 'weekly' | 'monthly' | 'yearly';
+      }
+    ) => {
       state.period = action.payload;
     },
     setAdminRoute: (state, action) => {
@@ -391,7 +400,7 @@ const adminSlice = createSlice({
       })
       .addCase(getAggregateOrder.fulfilled, (state, action) => {
         state.loading = false;
-        // state.aggre
+        state.aggregateOrder = action.payload;
       });
   },
 });

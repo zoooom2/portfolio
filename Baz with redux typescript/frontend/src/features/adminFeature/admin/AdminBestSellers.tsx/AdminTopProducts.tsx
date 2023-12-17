@@ -9,12 +9,14 @@ const AdminTopProducts = () => {
     'daily' | 'weekly' | 'monthly' | 'yearly'
   >('monthly');
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(getAggregateOrder(period));
   }, [period]);
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as 'daily' | 'weekly' | 'monthly' | 'yearly';
+    console.log(value);
     setPeriod(value);
   };
 
@@ -24,6 +26,7 @@ const AdminTopProducts = () => {
         title='Items Sold'
         description='View your items sold and the cummulative amount'
         periodChangeFn={handleChange}
+        customPeriod={period}
         timeBased
       />
       <AdminTopProductBody />

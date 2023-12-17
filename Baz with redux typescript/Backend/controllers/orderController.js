@@ -16,7 +16,7 @@ exports.percentageChangeOrder = factory.percentageChangeModel(Order, [
 const pickTime = (period) => {
   let dateFilter = {};
 
-  if (period === 'today') {
+  if (period === 'daily') {
     dateFilter = {
       createdAt: {
         $gte: new Date(new Date().setHours(0, 0, 0)),

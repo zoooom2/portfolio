@@ -294,6 +294,7 @@ export type HeroProps = {
   description: string;
   timeBased?: boolean;
   buttonType?: boolean;
+  customPeriod?: 'daily' | 'weekly' | 'monthly' | 'yearly';
   periodChangeFn?: (e: ChangeEvent<HTMLSelectElement>) => void;
   button?: {
     icon: IconType;

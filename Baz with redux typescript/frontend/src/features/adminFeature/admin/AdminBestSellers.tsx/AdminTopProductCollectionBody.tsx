@@ -6,8 +6,6 @@ const AdminTopProductCollectionBody = ({
 }: {
   products: AdminState['aggregateOrder'][number]['products'];
 }) => {
-  console.log(products);
-
   const collectionBody = products.map((product, index) => {
     return (
       <div
