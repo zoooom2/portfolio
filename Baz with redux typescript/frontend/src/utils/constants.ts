@@ -62,8 +62,8 @@ export const adminLinks = [
   },
   {
     id: 4,
-    text: 'User',
-    url: '/admin/users',
+    text: 'Best Seller',
+    url: '/admin/topProducts',
   },
 ];
 
