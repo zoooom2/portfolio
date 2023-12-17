@@ -110,7 +110,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     emailAddress: shippingInfo.email,
     subject: 'ORDER DETAILS',
     text: JSON.stringify(order),
-    html: <div></div>,
+    html: `<div></div>`,
   });
 
   //4) update the stock of each product

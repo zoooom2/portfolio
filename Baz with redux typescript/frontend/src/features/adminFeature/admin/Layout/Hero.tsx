@@ -11,6 +11,7 @@ const Hero = ({
   description,
   timeBased,
   button,
+  periodChangeFn,
   buttonType,
 }: HeroProps) => {
   const { period } = useAppSelector((state) => state.admin);
@@ -60,7 +61,7 @@ const Hero = ({
               name='period'
               id='period'
               value={period}
-              onChange={changePeriod}>
+              onChange={periodChangeFn ? periodChangeFn : changePeriod}>
               {options}
             </select>
             <label className='flex text-2xl items-center' htmlFor='period'>

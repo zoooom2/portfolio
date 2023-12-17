@@ -121,9 +121,9 @@ export const adminSidebarLinks = [
     link: '/admin/order/',
   },
   {
-    name: 'User',
-    tag: 'users',
-    link: '/admin/users/',
+    name: 'Best Seller',
+    tag: 'bestSeller',
+    link: '/admin/topProducts/',
   },
 ];
 

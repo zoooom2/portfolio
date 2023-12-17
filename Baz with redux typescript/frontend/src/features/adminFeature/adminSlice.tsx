@@ -40,17 +40,17 @@ export const fetchSingleOrder = createAsyncThunk(
   }
 );
 
-export const fetchBestSeller = createAsyncThunk(
-  'admin/fetchBestSeller',
-  async () => {
-    const response = await axios.get(
-      `${
-        import.meta.env.VITE_BAZ_SERVER_URL
-      }/products?sort=quantitySold&limit=3`
-    );
-    return response.data.data;
-  }
-);
+// export const fetchBestSeller = createAsyncThunk(
+//   'admin/fetchBestSeller',
+//   async () => {
+//     const response = await axios.get(
+//       `${
+//         import.meta.env.VITE_BAZ_SERVER_URL
+//       }/products?sort=quantitySold&limit=3`
+//     );
+//     return response.data.data;
+//   }
+// );
 
 export const createProduct = createAsyncThunk(
   'admin/createProduct',
@@ -96,6 +96,27 @@ export const updateOrderStatus = createAsyncThunk(
       {
         orderStatus,
       }
+    );
+    return response.data.data;
+  }
+);
+
+export const getTopProducts = createAsyncThunk(
+  'admin/getTopProducts',
+  async (period: 'daily' | 'weekly' | 'monthly' | 'yearly') => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/bestSellers/${period}`
+    );
+    return response.data.data;
+  }
+);
+export const getAggregateOrder = createAsyncThunk(
+  'admin/aggregateOrder',
+  async (period: 'daily' | 'weekly' | 'monthly' | 'yearly') => {
+    const response = await axios.get(
+      `${
+        import.meta.env.VITE_BAZ_SERVER_URL
+      }/order/aggregateOrder?period=${period}`
     );
     return response.data.data;
   }
@@ -156,6 +177,7 @@ const initialState = {
     total_items: 0,
   },
   recentOrders: [],
+  aggregateOrder: [],
   bestSeller: [],
   formTempProduct: {
     ...initialSingleProduct,
@@ -264,15 +286,15 @@ const adminSlice = createSlice({
         state.fetch_visitor_stat_error = action.error.message as string;
       });
     builder
-      .addCase(fetchBestSeller.pending, (state) => {
+      .addCase(getTopProducts.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchBestSeller.fulfilled, (state, action) => {
+      .addCase(getTopProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.fetch_best_seller_error = '';
         state.bestSeller = action.payload;
       })
-      .addCase(fetchBestSeller.rejected, (state, action) => {
+      .addCase(getTopProducts.rejected, (state, action) => {
         state.loading = false;
         state.fetch_best_seller_error = action.error.message as string;
         state.bestSeller = [];
@@ -362,6 +384,14 @@ const adminSlice = createSlice({
       })
       .addCase(updateOrderStatus.rejected, (state) => {
         state.loading = true;
+      });
+    builder
+      .addCase(getAggregateOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAggregateOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.aggre
       });
   },
 });

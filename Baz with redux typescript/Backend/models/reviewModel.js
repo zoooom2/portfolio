@@ -1,4 +1,5 @@
 // review / rating / createdAt / ref to tour / ref to user
+
 const mongoose = require('mongoose');
 const Product = require('./productsModel');
 

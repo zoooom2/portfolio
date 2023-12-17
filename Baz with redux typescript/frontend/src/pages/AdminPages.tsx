@@ -6,7 +6,7 @@ import { setClicked } from '../features/userFeature/userSlice';
 import {
   fetchOrderStats,
   fetchVisitorStats,
-  fetchBestSeller,
+  getTopProducts,
   closeAdminModal,
   deleteProduct,
 } from '../features/adminFeature/adminSlice';
@@ -16,7 +16,6 @@ import {
   AdminOverview,
   AdminProduct,
   AdminSideMenu,
-  AdminUser,
 } from '../features/adminFeature/admin';
 import AdminProductForm from '../features/adminFeature/admin/AdminProducts/AdminProductForm';
 import Modal from '../features/adminFeature/admin/Layout/Modal';
@@ -29,6 +28,7 @@ import {
 import { Navbar, Sidebar } from '../global_components';
 import AdminMenuButtons from '../features/adminFeature/admin/AdminMenuButtons';
 import { adminLinks } from '../utils/constants';
+import AdminTopProducts from '../features/adminFeature/admin/AdminBestSellers.tsx/AdminTopProducts';
 
 const AdminPages = ({
   page,
@@ -37,7 +37,7 @@ const AdminPages = ({
     | 'overview'
     | 'product'
     | 'order'
-    | 'users'
+    | 'bestSeller'
     | 'productDetail'
     | 'productCreate'
     | 'orderDetail';
@@ -52,9 +52,8 @@ const AdminPages = ({
   useEffect(() => {
     document.title = 'Admin | Baz Official Store';
     if (clicked) dispatch(setClicked(false));
-
     dispatch(fetchProducts(url));
-    dispatch(fetchBestSeller());
+    dispatch(getTopProducts(period));
     dispatch(fetchOrderStats(period));
     dispatch(fetchVisitorStats(period));
   }, [period]);
@@ -102,7 +101,7 @@ const AdminPages = ({
           {page === 'productCreate' && <AdminProductForm type={'create'} />}
           {page === 'order' && <AdminOrders />}
           {page === 'orderDetail' && <AdminOrderDetail />}
-          {page === 'users' && <AdminUser />}
+          {page === 'bestSeller' && <AdminTopProducts />}
         </div>
       </main>
     </Wrapper>

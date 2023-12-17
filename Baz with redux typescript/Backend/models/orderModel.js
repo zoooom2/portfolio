@@ -146,13 +146,13 @@ const orderSchema = new Schema({
 //   next();
 // });
 
-// orderSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: 'user',
-//     select: 'firstname lastname username name email',
-//   });
-//   next();
-// });
+orderSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'orderItems.productID',
+    select: 'collectionName',
+  });
+  next();
+});
 
 const Order = model('Order', orderSchema);
 

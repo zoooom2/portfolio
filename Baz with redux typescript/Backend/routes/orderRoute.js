@@ -16,6 +16,7 @@ const {
   updateOrder,
   getMyOrders,
   orderPerTime,
+
   percentageChangeOrder,
 } = OrderController;
 
@@ -42,6 +43,8 @@ router.use(restrictTo('admin'));
 router.route('/paystack/:id').patch(paystackCheckout.updatePayStackOrder);
 router.route('/').get(getAllOrders);
 router.get('/totalOrder', orderPerTime);
+router.get('/aggregateOrder', OrderController.aggregateOrders);
+router.get('/bestSellers', OrderController.bestSellers);
 
 router.get('/pctChange', percentageChangeOrder);
 router.route('/:id').get(getOrder).delete(deleteOrder).patch(updateOrder);

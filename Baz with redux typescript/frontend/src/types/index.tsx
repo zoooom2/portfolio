@@ -1,7 +1,7 @@
 //Axios Request Types
 // export type AxiosResponseType = Awaited<ReturnType<typeof axios.get>>['data'];
 
-import { SyntheticEvent } from 'react';
+import { ChangeEvent, SyntheticEvent } from 'react';
 import { IconType } from 'react-icons';
 
 //User Types
@@ -215,6 +215,16 @@ export type countryTypes = {
   countryCode: string;
 };
 
+export type BestSellerType = {
+  _id: string;
+  sizes: { size: string; quantity: number }[];
+  totalQuantitySold: number;
+  productName: string;
+  collectionName: string;
+  productImage: string[];
+  price: number;
+}[];
+
 export type AdminState = {
   loading: boolean;
   openModal: boolean;
@@ -228,7 +238,7 @@ export type AdminState = {
   fetch_recent_order_error: string;
   fetch_best_seller_error: string;
   product_error: string;
-  period: string;
+  period: 'daily' | 'weekly' | 'monthly' | 'yearly';
   totalRevenue: number;
   previousTotalRevenue: number;
   totalOrder: number;
@@ -244,7 +254,17 @@ export type AdminState = {
   singleOrder: OrderType;
   orders: OrderType[];
   recentOrders: OrderType[];
-  bestSeller: SingleProductType[];
+  bestSeller: BestSellerType;
+  aggregateOrder: {
+    _id: string;
+    totalItemsSold: number;
+    products: {
+      productName: string;
+      sizes: { size: string; quantity: number }[];
+      images: string[];
+      price: number;
+    }[];
+  }[];
   formTempProduct: SingleProductType;
   formErrorMessage: boolean;
   isFormValid: boolean;
@@ -274,6 +294,7 @@ export type HeroProps = {
   description: string;
   timeBased?: boolean;
   buttonType?: boolean;
+  periodChangeFn?: (e: ChangeEvent<HTMLSelectElement>) => void;
   button?: {
     icon: IconType;
     name: string;
@@ -281,7 +302,7 @@ export type HeroProps = {
   }[];
 };
 
-export type AdminPageType = 'overview' | 'product' | 'order' | 'users';
+export type AdminPageType = 'overview' | 'product' | 'order' | 'bestSeller';
 // export interface FormData {
 //   productName: string;
 //   price: number;

@@ -1,18 +1,22 @@
 import styled from 'styled-components';
-import { SingleProductType } from '../../../types';
+import { BestSellerType } from '../../../types';
 import { priceFormat } from '../../../utils/constants';
 
 const BestSellerTable = ({
   contentArray = [],
 }: {
-  contentArray: SingleProductType[];
+  contentArray: BestSellerType;
 }) => {
   const tableContent = contentArray.map((content, index) => {
-    const total = content.quantitySold * content.price;
+    const total = content.totalQuantitySold * content.price;
     return (
       <tr key={index} className=''>
         <td className='productItem'>
-          <img src={content.images[0]} alt='product' className='product-img' />
+          <img
+            src={content.productImage[0]}
+            alt='product'
+            className='product-img'
+          />
           <div className='product-details flex-column'>
             <div className='font-baz1 text-[14px] tablet:text-[18px] leading-[27px]'>
               {content.productName}
@@ -22,7 +26,7 @@ const BestSellerTable = ({
             </div>
           </div>
         </td>
-        <td>{content.quantitySold}</td>
+        <td>{content.totalQuantitySold}</td>
         <td>{priceFormat(total)}</td>
       </tr>
     );

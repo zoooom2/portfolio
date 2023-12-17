@@ -115,8 +115,8 @@ const App = () => {
                 />
               </Route>
               <Route
-                path='/admin/users'
-                element={<AdminPages page='users' />}
+                path='/admin/topProducts'
+                element={<AdminPages page='bestSeller' />}
               />
             </Route>
           </Route>
