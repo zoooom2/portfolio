@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { AdminState, OrderType } from '../../types';
+import { AdminState } from '../../types';
 import { initialSingleProduct } from '../../utils/constants';
 
 export const fetchOrderStats = createAsyncThunk(
@@ -39,18 +39,6 @@ export const fetchSingleOrder = createAsyncThunk(
     return response.data.data;
   }
 );
-
-// export const fetchBestSeller = createAsyncThunk(
-//   'admin/fetchBestSeller',
-//   async () => {
-//     const response = await axios.get(
-//       `${
-//         import.meta.env.VITE_BAZ_SERVER_URL
-//       }/products?sort=quantitySold&limit=3`
-//     );
-//     return response.data.data;
-//   }
-// );
 
 export const createProduct = createAsyncThunk(
   'admin/createProduct',
@@ -179,7 +167,7 @@ const initialState = {
     orderStatus: 'pending',
     total_items: 0,
   },
-  recentOrders: [],
+
   aggregateOrder: [],
   bestSeller: [],
   formTempProduct: {
@@ -316,17 +304,11 @@ const adminSlice = createSlice({
         state.loading = false;
         state.fetch_recent_order_error = '';
         state.orders = action.payload;
-        state.recentOrders = action.payload
-          .sort(
-            (a: OrderType, b: OrderType) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          )
-          .slice(0, 5);
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.loading = false;
         state.fetch_recent_order_error = action.error.message as string;
-        state.recentOrders = [];
+
         state.orders = [];
       });
     builder
@@ -341,7 +323,6 @@ const adminSlice = createSlice({
       .addCase(fetchSingleOrder.rejected, (state, action) => {
         state.loading = false;
         state.fetch_recent_order_error = action.error.message as string;
-        state.recentOrders = [];
         state.singleOrder = initialState.singleOrder;
       });
 

@@ -253,7 +253,6 @@ export type AdminState = {
   percentageSales: number;
   singleOrder: OrderType;
   orders: OrderType[];
-  recentOrders: OrderType[];
   bestSeller: BestSellerType;
   aggregateOrder: {
     _id: string;
