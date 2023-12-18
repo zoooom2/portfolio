@@ -72,7 +72,7 @@ export const signup = createAsyncThunk(
 
 const initialState = {
   loading: false,
-  isAuthenticated: true,
+  isAuthenticated: false,
   authentication_error: '',
   remove_auth_error: '',
   clicked: false,

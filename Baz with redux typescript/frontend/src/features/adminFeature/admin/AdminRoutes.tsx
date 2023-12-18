@@ -18,15 +18,11 @@ const AdminRoutes = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
     dispatch(setAdminRoute(true));
   });
 
-  if (loading) {
-    return <Loading />;
-  } else {
-    return !isAuthenticated ? (
-      <Navigate to={`/login?redirectTo=${location.pathname}`} />
-    ) : (
-      <Outlet />
-    );
-  }
+  return isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to={`/login?redirectTo=${location.pathname}`} />
+  );
 };
 
 export default AdminRoutes;
