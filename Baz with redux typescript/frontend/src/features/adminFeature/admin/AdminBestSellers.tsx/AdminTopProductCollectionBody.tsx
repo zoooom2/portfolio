@@ -1,5 +1,5 @@
 import { AdminState } from '../../../../types';
-import { priceFormat } from '../../../../utils/constants';
+import { priceFormat, sizeAbbr } from '../../../../utils/constants';
 
 const AdminTopProductCollectionBody = ({
   products,
@@ -23,7 +23,17 @@ const AdminTopProductCollectionBody = ({
             <div className='text-black font-baz1 text-[14px] tablet:text-[18px] capitalize'>
               {product.productName}
             </div>
-            <div className='text-[#2A2A2A] text-[14px] font-baz1'>sizes</div>
+            <div className='text-[#2A2A2A] text-[14px] font-baz1 flex gap-2 '>
+              {/* <div></div> */}
+              {product.sizes.map(({ size, quantity }, index) => {
+                return (
+                  <div key={index} className='flex'>
+                    <span>{quantity}</span>
+                    <span> {sizeAbbr[size]}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <div className='text-[#2A2A2A] text-[14px] tablet:text-[18px] font-baz1'>
             {priceFormat(product.price)}

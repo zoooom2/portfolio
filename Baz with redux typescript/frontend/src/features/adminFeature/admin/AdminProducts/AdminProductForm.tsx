@@ -252,8 +252,8 @@ const AdminProductForm = ({
     { value: 'small', option: 'S' },
     { value: 'medium', option: 'M' },
     { value: 'large', option: 'L' },
-    { value: 'extraLarge', option: 'XL' },
-    { value: 'extraextraLarge', option: 'XXL' },
+    { value: 'x-large', option: 'XL' },
+    { value: '2x-large', option: 'XXL' },
   ];
 
   const deleteImage = (position: number) => {

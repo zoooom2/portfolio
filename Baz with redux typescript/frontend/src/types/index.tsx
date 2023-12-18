@@ -3,6 +3,7 @@
 
 import { ChangeEvent, SyntheticEvent } from 'react';
 import { IconType } from 'react-icons';
+import { sizeAbbr } from '../utils/constants';
 
 //User Types
 export type UserType = {
@@ -111,7 +112,7 @@ export type SingleProductType = {
   quantitySold: number;
   stock: number;
   ratingsAverage: number;
-  sizes: { size: string; quantity: number }[];
+  sizes: { size: keyof typeof sizeAbbr; quantity: number }[];
 };
 export type ProductStateType = {
   isSidebarOpen: boolean;
@@ -259,7 +260,7 @@ export type AdminState = {
     totalItemsSold: number;
     products: {
       productName: string;
-      sizes: { size: string; quantity: number }[];
+      sizes: { size: keyof typeof sizeAbbr; quantity: number }[];
       images: string[];
       price: number;
     }[];

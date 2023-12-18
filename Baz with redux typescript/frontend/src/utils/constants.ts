@@ -244,3 +244,11 @@ export const shippingChart = {
 
 export const BAZLogo =
   'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1700295242/image_2-removebg-preview_s5cssh.png';
+
+export const sizeAbbr = {
+  small: 'S',
+  medium: 'M',
+  large: 'L',
+  'x-large': 'XL',
+  '2x-large': 'XXL',
+};
