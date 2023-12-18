@@ -30,7 +30,7 @@ const AdminProductCollectionBody = ({
       <Link
         to={showDelBtn ? '#' : `/admin/product/detail/${product._id}`}
         key={product._id}
-        className='tablet:border tablet:border-[#b6b6b6] px-[15px] tablet:aspect-[306/328] tablet:w-[280px] tablet:h-[300px] items-center gap-[15px] w-full relative flex tablet:flex-col tablet:py-[10px]'>
+        className='tablet:border tablet:border-[#b6b6b6] px-[15px] tablet:aspect-[306/328] tablet:w-[280px] tablet:h-[300px] items-center max-tablet:gap-[15px]  w-full relative flex tablet:flex-col tablet:py-[10px]'>
         <div className='tablet:h-[230px] flex justify-center items-center tablet:p-3 aspect-[51/48] max-tablet:w-[60px]'>
           <img
             src={product.images[0]}
@@ -43,7 +43,7 @@ const AdminProductCollectionBody = ({
             <div className='text-black font-baz1 text-[14px] tablet:text-[18px] capitalize'>
               {product.productName}
             </div>
-            <div className='text-[#2A2A2A] text-[14px] font-baz1 flex gap-2'>
+            <div className='text-[#2A2A2A] text-[14px] font-baz1 flex gap-x-2'>
               {product.sizes.map(({ size, quantity }, index) => {
                 return (
                   <div key={index} className='flex'>
