@@ -23,6 +23,18 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
     setSize(value);
   };
 
+  const options = product.sizes.map(
+    ({ size, quantity }, index) =>
+      quantity && (
+        <option
+          className='text-[10px] font-baz1 tablet:text-[15px] capitalize'
+          key={index}
+          value={size}>
+          {size}
+        </option>
+      )
+  );
+
   return (
     <Wrapper className='size flex-column'>
       <div className='flex flex-col gap-[16px] w-full'>
@@ -41,31 +53,7 @@ const AddToCart = ({ product }: { product: SingleProductType }) => {
           <option value='none' disabled>
             Select a Size
           </option>
-          <option
-            value='small'
-            className='text-[10px] font-baz1 tablet:text-[15px]'>
-            Small
-          </option>
-          <option
-            value='medium'
-            className='text-[10px] font-baz1 tablet:text-[15px]'>
-            Medium
-          </option>
-          <option
-            value='large'
-            className='text-[10px] font-baz1 tablet:text-[15px]'>
-            Large
-          </option>
-          <option
-            value='x-large'
-            className='text-[10px] font-baz1 tablet:text-[15px]'>
-            X-Large
-          </option>
-          <option
-            value='2x-large'
-            className='text-[10px] font-baz1 tablet:text-[15px]'>
-            2x-large
-          </option>
+          {options}
         </select>
       </div>
 

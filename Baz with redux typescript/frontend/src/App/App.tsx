@@ -9,7 +9,7 @@ import {
   checkVisitorCount,
   stopLoading,
 } from '../features/userFeature/userSlice';
-import { Navbar, Sidebar, Loading } from '../global_components';
+import { Loading } from '../global_components';
 import {
   HomePage,
   SingleProductPage,
@@ -33,14 +33,11 @@ const AdminRoutes = lazy(
 );
 import { useAppDispatch, useAppSelector } from './hooks';
 import { countCartTotal } from '../features/cartFeature/cartSlice';
-import { links } from '../utils/constants';
-import { CartButtons } from '../features/cartFeature/cart';
+
 import UserRoutes from '../features/userFeature/user/UserRoutes';
 
 const App = () => {
-  const { isAuthenticated, clicked, loading } = useAppSelector(
-    (state) => state.user
-  );
+  const { isAuthenticated, loading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -54,13 +51,6 @@ const App = () => {
   }
   return (
     <Router>
-      {clicked && (
-        <>
-          <Navbar buttons={<CartButtons />} admin={false} />
-
-          <Sidebar navLinks={links} footerButtons={<CartButtons />} />
-        </>
-      )}
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route element={<UserRoutes />}>
@@ -123,7 +113,6 @@ const App = () => {
           <Route path='*' element={<ErrorPage />} />
         </Routes>
       </Suspense>
-      {/* <Footer /> */}
     </Router>
   );
 };

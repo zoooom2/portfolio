@@ -8,7 +8,7 @@ const Entry = () => {
   const dispatch = useAppDispatch();
   return (
     <Wrapper
-      className='flex-column place-center'
+      className='flex-column place-center absolute z-[10000] bg-baz-white top-0 left-0'
       onClick={() => dispatch(setClicked(true))}>
       <img src={BAZLogo} alt='' className='logo' />
       <p>click to enter</p>

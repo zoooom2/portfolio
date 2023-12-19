@@ -119,12 +119,13 @@ const cartSlice = createSlice({
           size,
           image: product.images[0],
           price: product.price,
-          max: product.stock,
+          max: product.sizes.find((s) => s.size === size)?.quantity as number,
           productID: id,
         };
         state.cart.push(newItem);
         // state.cart = [...state.cart, newItem];
       }
+
       toast.success('Added to cart successfully');
     },
     removeItem: (state, action) => {
