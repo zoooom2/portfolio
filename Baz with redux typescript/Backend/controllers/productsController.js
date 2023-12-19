@@ -8,11 +8,14 @@ exports.updateStock = (id, orderItem) =>
   catchAsync(async () => {
     const product = await Product.findById(id);
     orderItem.sizes.forEach((orderSize) => {
-      const size = product.sizes.find(
+      const index = product.sizes.findIndex(
         (productSize) => productSize.size === orderSize.size
       );
-      size.quantity -= orderSize.quantity;
-      product.sizes = [...product.sizes, { ...size }];
+      // size.quantity -= orderSize.quantity;
+      product.sizes[index] = {
+        size: orderSize,
+        quantity: product.sizes[index].quantity - orderSize.quantity,
+      };
     });
     product.save();
   });

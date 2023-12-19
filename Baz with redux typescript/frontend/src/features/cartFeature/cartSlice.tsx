@@ -123,6 +123,7 @@ const cartSlice = createSlice({
           max: product.sizes.find((s) => s.size === size)?.quantity as number,
           productID: id,
         };
+        console.log(newItem);
         state.cart.push(newItem);
         // state.cart = [...state.cart, newItem];
       }
