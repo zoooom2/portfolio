@@ -23,12 +23,12 @@ const ProductImages = ({ images = [] }: { images: string[] }) => {
       )}
       className=''>
       {images.map((image, index) => (
-        <div key={index} className='h-full'>
+        <div key={index} className='h-full grid items-center'>
           <img
             key={index}
             src={image}
             alt=''
-            className='h-full object-contain'
+            className='min-w-fit object-contain'
           />
         </div>
       ))}

@@ -24,12 +24,13 @@ const HomePage = () => {
         </Link>
       </Wrapper>
     );
+  } else {
+    return (
+      <>
+        <Entry />
+      </>
+    );
   }
-  return (
-    <>
-      <Entry />
-    </>
-  );
 };
 
 const Wrapper = styled.main`

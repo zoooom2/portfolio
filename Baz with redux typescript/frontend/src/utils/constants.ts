@@ -99,7 +99,8 @@ export const selectStyle = {
   color: 'black',
   border: '1.5px solid #a6a6a6',
   borderRadius: 'none',
-  padding: '0.5em',
+  minHeight: '100%',
+  paddingInline: '0.5em',
   backgroundColor: 'transparent',
   // textTransform: 'capitalize',
 };

@@ -20,11 +20,13 @@ const FormInput = (props: FormInputProps) => {
   };
   return (
     <div className='flex flex-col gap-[8px]'>
-      <label
-        htmlFor={props.id as string}
-        className={`font-baz1 text-baz-black laptop:text-[20px] tablet:text-[18px] font-medium text-[14px] capitalize`}>
-        {props.id as string}
-      </label>
+      {props.id && (
+        <label
+          htmlFor={props.id as string}
+          className={`font-baz1 text-baz-black laptop:text-[20px] tablet:text-[18px] font-medium text-[14px] capitalize`}>
+          {props.id as string}
+        </label>
+      )}
       <input
         {...inputProps}
         onChange={onChange}
