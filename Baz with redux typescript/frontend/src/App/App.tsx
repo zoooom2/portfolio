@@ -21,7 +21,7 @@ const ThesisPage = lazy(() => import('../pages/ThesisPage'));
 const CartPage = lazy(() => import('../pages/CartPage'));
 const ErrorPage = lazy(() => import('../pages/ErrorPage'));
 const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
-const PaymentGateway = lazy(() => import('../pages/PaymentGatewayPage'));
+
 const LoginPage = lazy(() => import('../pages/LoginPage'));
 
 const OrderPage = lazy(() => import('../pages/OrderPage'));
@@ -61,7 +61,6 @@ const App = () => {
             <Route path='/shop' element={<ProductPage />} />
             <Route path='/shop/:id' element={<SingleProductPage />} />
             <Route path='/checkout/:params' element={<CheckoutPage />} />
-            <Route path='/pay' element={<PaymentGateway />} />
             <Route path='/order' element={<OrderPage />} />
             <Route path='/delivery' element={<DeliveryPage />} />
 

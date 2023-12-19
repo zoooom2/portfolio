@@ -25,11 +25,7 @@ const HomePage = () => {
       </Wrapper>
     );
   } else {
-    return (
-      <>
-        <Entry />
-      </>
-    );
+    return <Entry />;
   }
 };
 

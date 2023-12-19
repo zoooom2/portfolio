@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useAppDispatch } from '../App/hooks';
-
 import { setClicked } from '../features/userFeature/userSlice';
 import { BAZLogo } from '../utils/constants';
 
@@ -8,31 +7,21 @@ const Entry = () => {
   const dispatch = useAppDispatch();
   return (
     <Wrapper
-      className='flex-column place-center absolute z-[10000] bg-baz-white top-0 left-0'
+      className='flex-column place-center absolute z-[10000] bg-baz-white top-0 left-0 h-screen w-screen cursor-pointer'
       onClick={() => dispatch(setClicked(true))}>
-      <img src={BAZLogo} alt='' className='logo' />
-      <p>click to enter</p>
+      <img src={BAZLogo} alt='' className='w-3/5 ' />
+      <p className='font-baz2 font-medium text-[16px] leading-[19px] tracking-[0.255em]'>
+        click to enter
+      </p>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
-  cursor: pointer;
   img {
-    width: 60%;
     @media (min-width: 768px) {
       width: 400px;
     }
-  }
-  p {
-    font-family: 'Zilla Slab';
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
-    letter-spacing: 0.255em;
-    margin-top: 2em;
   }
 `;
 
