@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import FormInput from '../../../global_components/FormInput';
 import { updateCartTotal, updateShipping } from '../cartSlice';
 import { CartSummary } from '../cart';
+import FormTextArea from '../../../global_components/FormTextArea';
 
 const BillingInfo = ({
   setStage,
@@ -70,7 +71,7 @@ const BillingInfo = ({
     }
   };
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, validity } = e.target;
 
     if (validity.valid) setIsFormValid(true);
@@ -94,9 +95,12 @@ const BillingInfo = ({
 
     // Check validity for each form element
     for (let i = 0; i < formElements.length; i++) {
-      const element = formElements[i] as HTMLInputElement;
+      const element = formElements[i] as HTMLInputElement | HTMLTextAreaElement;
 
-      if (element instanceof HTMLInputElement) {
+      if (
+        element instanceof HTMLInputElement ||
+        element instanceof HTMLTextAreaElement
+      ) {
         if (!element.validity.valid) {
           setIsFormValid(false);
           setShowError(true);
@@ -224,13 +228,13 @@ const BillingInfo = ({
           Additional Information (Optional)
         </h3>
 
-        <textarea
-          name='additional-info'
-          id='a-info'
+        <FormTextArea
+          name='additionalInfo'
+          id='aInfo'
           placeholder='Add additional note to your order'
-          cols={30}
-          rows={5}
-          className='w-full border border-[#a6a6a6] px-[16px] py-[11px] font-baz1 text-[10px] text-black tablet:text-[15px] bg-transparent'></textarea>
+          onChange={onChange}
+          value={shippingInfo.additionalInfo || ''}
+        />
       </div>
       <button
         onClick={handleSubmit}

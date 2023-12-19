@@ -18,11 +18,13 @@ const FormTextArea = (props: FormTextAreaProps) => {
   };
   return (
     <div className='flex flex-col gap-[8px]'>
-      <label
-        htmlFor={props.name as string}
-        className='font-baz1 text-baz-black laptop:text-[20px] tablet:text-[18px] font-medium text-[14px] capitalize  '>
-        {props.label as string}
-      </label>
+      {props.label && (
+        <label
+          htmlFor={props.name as string}
+          className='font-baz1 text-baz-black laptop:text-[20px] tablet:text-[18px] font-medium text-[14px] capitalize  '>
+          {props.label as string}
+        </label>
+      )}
       <textarea
         {...inputProps}
         id={props.name as string}

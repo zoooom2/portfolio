@@ -192,6 +192,7 @@ export type CartStateType = {
     email: string;
     shippingMethod: string;
     shippingFee: number;
+    additionalInfo: string;
   };
 };
 

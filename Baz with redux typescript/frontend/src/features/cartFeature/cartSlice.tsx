@@ -63,6 +63,7 @@ const shippingInfoJSON = JSON.stringify({
   email: '',
   shippingMethod: '',
   shippingFee: 0,
+  additionalInfo: '',
 });
 
 const cartSlice = createSlice({
@@ -201,6 +202,7 @@ const cartSlice = createSlice({
         email: '',
         shippingMethod: '',
         shippingFee: 0,
+        additionalInfo: '',
       };
     },
     updateCartTotal: (state) => {
