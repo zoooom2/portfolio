@@ -31,7 +31,7 @@ const productSchema = new Schema({
     ],
     required: true,
   },
-  quantitySold: { type: Number, required: true, default: 0 },
+
   collectionName: { type: String, required: true },
   releaseDate: { type: Date, required: true, default: Date.now },
   active: {

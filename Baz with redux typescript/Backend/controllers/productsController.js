@@ -12,6 +12,7 @@ exports.updateStock = (id, orderItem) =>
         (productSize) => productSize.size === orderSize.size
       );
       size.quantity -= orderSize.quantity;
+      product.sizes = [...product.sizes, { ...size }];
     });
     product.save();
   });
