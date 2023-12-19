@@ -87,6 +87,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
   const order = await Order.create({
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
     shippingInfo,
+    additionalInfo: shippingInfo.additionalInfo,
     total_amount: req.body.subtotal + req.body.shippingInfo.shippingFee,
     subtotal,
     total_items: totalItems,
@@ -99,7 +100,6 @@ exports.createOrder = catchAsync(async (req, res, next) => {
       status: verification.data.status,
       gateway: 'PAYSTACK',
     },
-    // user: req.user.id,
   });
 
   if (!order) {
@@ -124,19 +124,6 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     order,
   });
 });
-
-// exports.updatePayStackOrderStatus = (reference, status, id) =>
-//   catchAsync(async (req, res) => {
-//     const order = await Order.findByIdAndUpdate(
-//       id,
-//       { orderStatus: status },
-//       {
-//         new: true,
-//         runValidators: true,
-//       }
-//     );
-//     res.status(200).json({ status: 'success', order });
-//   });
 
 exports.updatePayStackOrder = catchAsync(async (req, res, next) => {
   const order = await Order.findById(req.params.id);

@@ -50,11 +50,7 @@ const orderSchema = new Schema({
       // required: true,
     },
   },
-  // user: {
-  //   type: Schema.ObjectId,
-  //   ref: 'User',
-  //   required: [true, 'Order must belong to a User!'],
-  // },
+  additionalInfo: { type: String },
   orderItems: [
     {
       productName: {
