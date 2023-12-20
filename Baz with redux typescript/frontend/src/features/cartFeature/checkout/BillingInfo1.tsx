@@ -160,14 +160,16 @@ const BillingInfo = ({
           />
 
           <FormInput
-            type='number'
+            type='text'
             onChange={onChange}
             name='phoneNumber'
             placeholder='Phone Number'
             value={shippingInfo.phoneNumber}
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
-            // pattern='^(\+\d{1,2}\s?)?(\()?((\+234)|(0))[789][01]\d{8}(\))?[\s.\-]?\d{3}[\s.\-]?\d{4}$'
-            // required
+            pattern={
+              '((^+)(234){1}[0–9]{10})|((^234)[0–9]{10})|((^0)(7|8|9){1}(0|1){1}[0–9]{8})'
+            }
+            required
           />
         </div>
       </div>

@@ -4,22 +4,6 @@ const Product = require('../models/productsModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
-exports.updateStock = (id, orderItem) =>
-  catchAsync(async () => {
-    const product = await Product.findById(id);
-    orderItem.sizes.forEach((orderSize) => {
-      const index = product.sizes.findIndex(
-        (productSize) => productSize.size === orderSize.size
-      );
-      // size.quantity -= orderSize.quantity;
-      product.sizes[index] = {
-        size: orderSize,
-        quantity: product.sizes[index].quantity - orderSize.quantity,
-      };
-    });
-    product.save();
-  });
-
 exports.uploadProduct = catchAsync(async (req, res) => {
   req.body.images = req.files.map((image) => image.path);
   const stripeProduct = await stripe.products.create({

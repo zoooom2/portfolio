@@ -27,10 +27,18 @@ const CartItem = ({
   };
 
   const increase = () => {
-    dispatch(setAmount({ id: productID, value: amount + 1, size }));
+    dispatch(
+      setAmount({
+        id: productID,
+        value: amount + 1 > max ? max : amount + 1,
+        size,
+      })
+    );
   };
   const decrease = () => {
-    dispatch(setAmount({ id: productID, value: amount - 1, size }));
+    dispatch(
+      setAmount({ id: productID, value: amount - 1 < 1 ? 1 : amount - 1, size })
+    );
   };
 
   return (
@@ -70,12 +78,13 @@ const CartItem = ({
                 id='quantity'
                 // placeholder={0}
                 min={0}
-                value={amount === 0 ? '' : amount}
+                max={max}
+                value={amount}
                 className='w-[40px] h-[24px]'
                 onChange={handleChange}
               />
               <button
-                className='w-[24px] h-[24px] bg-baz-black text-baz-white flex items-center justify-center'
+                className='w-[24px] h-[24px] bg-baz-black text-baz-white grid place-items-center'
                 onClick={increase}>
                 +
               </button>

@@ -8,6 +8,7 @@ interface FormInputProps {
     | string
     | boolean
     | null
+    | RegExp
     | number;
 }
 

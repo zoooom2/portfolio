@@ -1,9 +1,10 @@
 const paystack = require('paystack-api')(process.env.PAYSTACK_SECRET_KEY);
 const crypto = require('crypto');
 const Order = require('../models/orderModel');
+const Product = require('../models/productsModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-const { updateStock } = require('./productsController');
+
 const getUniqueValues = require('../utils/uniqueValues');
 const { sendMail } = require('../utils/email');
 
@@ -16,7 +17,10 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const session = await paystack.transaction.initialize({
     name,
     email,
-    callback_url: `${process.env.CLIENT_URL}/order`,
+    callback_url:
+      process.env.NODE_ENV === 'production'
+        ? `${process.env.CLIENT_URL}/order`
+        : `${process.env.LOCAL_CLIENT_URL}/order`,
     amount: helper.addFeesTo(req.body.total_amount * 100),
   });
   res.status(200).json({ data: session.data.authorization_url });
@@ -27,7 +31,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 
 //   if (verification.data.status !== 'success') {
 //     next(new AppError('payment transaction verification failed', 401));
-//   }
+//   } m
 //   return verification;
 // };
 
@@ -106,17 +110,26 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     next(new AppError('Could not create order. Please try again.', 400));
   }
 
-  sendMail({
-    emailAddress: shippingInfo.email,
-    subject: 'ORDER DETAILS',
-    text: JSON.stringify(order),
-    html: `<div></div>`,
-  });
+  // sendMail({
+  //   emailAddress: shippingInfo.email,
+  //   subject: 'ORDER DETAILS',
+  //   text: JSON.stringify(order),
+  //   html: `<div></div>`,
+  // });
 
   //4) update the stock of each product
-  await Promise.all(
-    orderItems.map(async (item) => await updateStock(item.product, item))
-  );
+
+  orderItems.forEach(async (item) => {
+    const product = await Product.findById(item.productID);
+    const index = product.sizes.findIndex(
+      (productSize) => productSize.size === item.size
+    );
+    product.sizes[index] = {
+      size: item.size,
+      quantity: product.sizes[index].quantity - item.amount,
+    };
+    product.save();
+  });
 
   // 5) Create session as response
   res.status(200).json({
