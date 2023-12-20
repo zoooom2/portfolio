@@ -7,7 +7,8 @@ export const fetchOrderStats = createAsyncThunk(
   'admin/fetchOrderStats',
   async (period: string) => {
     const response = await axios.get(
-      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/pctchange?time=${period}`
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/pctchange?time=${period}`,
+      { withCredentials: true }
     );
 
     return response.data.stats;
@@ -17,7 +18,8 @@ export const fetchVisitorStats = createAsyncThunk(
   'admin/fetchVisitorStats',
   async (period: string) => {
     const response = await axios.get(
-      `${import.meta.env.VITE_BAZ_SERVER_URL}/visitor/pctchange?time=${period}`
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/visitor/pctchange?time=${period}`,
+      { withCredentials: true }
     );
     return response.data.stats;
   }
@@ -25,7 +27,8 @@ export const fetchVisitorStats = createAsyncThunk(
 
 export const fetchOrders = createAsyncThunk('admin/fetchOrders', async () => {
   const response = await axios.get(
-    `${import.meta.env.VITE_BAZ_SERVER_URL}/order`
+    `${import.meta.env.VITE_BAZ_SERVER_URL}/order`,
+    { withCredentials: true }
   );
   return response.data.data;
 });
@@ -34,7 +37,8 @@ export const fetchSingleOrder = createAsyncThunk(
   'admin/fetchSingleOrder',
   async (id: string) => {
     const response = await axios.get(
-      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/${id}`
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/${id}`,
+      { withCredentials: true }
     );
     return response.data.data;
   }
@@ -45,6 +49,7 @@ export const createProduct = createAsyncThunk(
   async (data: FormData) => {
     await axios.post(`${import.meta.env.VITE_BAZ_SERVER_URL}/products`, data, {
       headers: { 'Content-Type': 'multipart/form-data' },
+      withCredentials: true,
     });
   }
 );
@@ -57,6 +62,7 @@ export const updateProduct = createAsyncThunk(
       data,
       {
         headers: { 'Content-Type': 'multipart/form-data' },
+        withCredentials: true,
       }
     );
     return response.data;
@@ -66,7 +72,10 @@ export const updateProduct = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
   'admin/deleteProduct',
   async (id: string) => {
-    await axios.delete(`${import.meta.env.VITE_BAZ_SERVER_URL}/products/${id}`);
+    await axios.delete(
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/products/${id}`,
+      { withCredentials: true }
+    );
   }
 );
 
@@ -83,7 +92,8 @@ export const updateOrderStatus = createAsyncThunk(
       `${import.meta.env.VITE_BAZ_SERVER_URL}/order/${id}`,
       {
         orderStatus,
-      }
+      },
+      { withCredentials: true }
     );
     return response.data.data;
   }
@@ -95,7 +105,8 @@ export const getTopProducts = createAsyncThunk(
     const response = await axios.get(
       `${
         import.meta.env.VITE_BAZ_SERVER_URL
-      }/order/bestSellers?period=${period}`
+      }/order/bestSellers?period=${period}`,
+      { withCredentials: true }
     );
     return response.data.data;
   }
@@ -106,7 +117,8 @@ export const getAggregateOrder = createAsyncThunk(
     const response = await axios.get(
       `${
         import.meta.env.VITE_BAZ_SERVER_URL
-      }/order/aggregateOrder?period=${period}`
+      }/order/aggregateOrder?period=${period}`,
+      { withCredentials: true }
     );
 
     return response.data.data;

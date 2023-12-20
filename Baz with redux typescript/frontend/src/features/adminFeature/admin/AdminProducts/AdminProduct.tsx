@@ -1,13 +1,21 @@
 import { useAppDispatch, useAppSelector } from '../../../../App/hooks';
 import Hero from '../Layout/Hero';
+import { products_url as url } from '../../../../utils/constants';
 import { AiOutlineClose, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { toggleDelBtn } from '../../adminSlice';
 import AdminProductBody from './AdminProductBody';
+import { useEffect } from 'react';
+import { fetchProducts } from '../../../productFeature/productSlice';
 const AdminProduct = () => {
   const dispatch = useAppDispatch();
+  const { single_product } = useAppSelector((state) => state.product);
   const { showDelBtn } = useAppSelector((state) => state.admin);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchProducts(url));
+  }, [single_product]);
 
   const handleAddNewProduct = () => {
     navigate('/admin/product/create');

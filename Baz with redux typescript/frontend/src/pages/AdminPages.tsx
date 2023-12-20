@@ -1,8 +1,5 @@
 import { useEffect } from 'react';
-import { products_url as url } from '../utils/constants';
 import styled from 'styled-components';
-
-import { setClicked } from '../features/userFeature/userSlice';
 import {
   fetchOrderStats,
   fetchVisitorStats,
@@ -21,10 +18,7 @@ import {
 import AdminProductForm from '../features/adminFeature/admin/AdminProducts/AdminProductForm';
 import Modal from '../features/adminFeature/admin/Layout/Modal';
 import AdminOrderDetail from '../features/adminFeature/admin/AdminOrders/AdminOrderDetail';
-import {
-  fetchProducts,
-  removeProduct,
-} from '../features/productFeature/productSlice';
+import { removeProduct } from '../features/productFeature/productSlice';
 
 import { Navbar, Sidebar } from '../global_components';
 import AdminMenuButtons from '../features/adminFeature/admin/AdminMenuButtons';
@@ -47,14 +41,11 @@ const AdminPages = ({
   const { period, openModal, modalRef, modalTitle } = useAppSelector(
     (state) => state.admin
   );
-  const { clicked } = useAppSelector((state) => state.user);
   const { single_product } = useAppSelector((state) => state.product);
   const { singleOrder } = useAppSelector((state) => state.admin);
 
   useEffect(() => {
     document.title = 'Admin | Baz Official Store';
-    if (clicked) dispatch(setClicked(false));
-    dispatch(fetchProducts(url));
     dispatch(getTopProducts(period));
     dispatch(fetchOrderStats(period));
     dispatch(fetchVisitorStats(period));

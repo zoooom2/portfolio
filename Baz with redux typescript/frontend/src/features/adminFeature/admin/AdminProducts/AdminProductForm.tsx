@@ -385,7 +385,7 @@ const AdminProductForm = ({
                       <img
                         src={image as string}
                         alt=''
-                        className='w-full h-full'
+                        className='w-full h-full object-contain'
                       />
                       <button
                         className=' text-black'
