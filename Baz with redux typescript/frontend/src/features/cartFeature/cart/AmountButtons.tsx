@@ -28,7 +28,6 @@ const AmountButtons = ({ increase, decrease, amount }: AmountButtonType) => {
 };
 
 const Wrapper = styled.div`
-  // width: 140px;
   justify-content: flex-start;
   align-items: center;
   h2 {

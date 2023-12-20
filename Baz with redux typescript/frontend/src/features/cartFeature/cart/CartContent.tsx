@@ -37,7 +37,6 @@ const Wrapper = styled.main`
   }
   .column-cart {
     padding: 2em;
-    // display: flex;
   }
 `;
 export default CartContent;

@@ -104,11 +104,6 @@ const CartItem = ({
 const Wrapper = styled.section`
   display: flex;
   justify-content: center;
-  // gap: 2em;
-
-  // .productImage {
-  //   width: 50%;
-  // }
   input {
     margin-block: 0;
   }
@@ -124,28 +119,7 @@ const Wrapper = styled.section`
     line-height: 25px;
     letter-spacing: 0.1em;
   }
-  // .name {
-  //   font-family: 'Bell-MT';
-  //   font-size: 20px;
-  //   line-height: 45px;
-  //   text-transform: capitalize;
-  // }
 
-  // .price {
-  //   font-family: 'Poppins';
-  //   font-weight: 600;
-  //   font-size: 24px;
-  //   line-height: 36px;
-  //   /* identical to box height */
-  //   color: #000000;
-  // }
-  // label {
-  //   font-family: 'Bell MT';
-  // font-size: 15px;
-  // line-height: 17px;
-  // /* identical to box height */
-  // color: #000000;
-  // }
   .quantityForm-remove {
     align-items: flex-start;
     padding: 0px;
