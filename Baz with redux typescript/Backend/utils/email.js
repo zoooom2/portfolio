@@ -15,6 +15,13 @@ oAuth2Client.setCredentials({
 
 exports.sendMail = async ({ emailAddress, subject, text, html }) => {
   try {
+    if (oAuth2Client.isTokenExpiring()) {
+      // Refresh the access token
+      const { token } = await oAuth2Client.getAccessToken();
+      oAuth2Client.setCredentials(token);
+    }
+
+    // Get the latest access token
     const accessToken = await oAuth2Client.getAccessToken();
 
     const transport = nodemailer.createTransport({
