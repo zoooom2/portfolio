@@ -22,6 +22,7 @@ const CartItem = ({
     if (e.target instanceof HTMLInputElement) {
       let value = +e.target.value;
       value = value > max ? max : value;
+
       dispatch(setAmount({ id: productID, value, size }));
     }
   };
@@ -77,7 +78,7 @@ const CartItem = ({
                 name='quantity'
                 id='quantity'
                 // placeholder={0}
-                min={0}
+                // min={1}
                 max={max}
                 value={amount}
                 className='w-[40px] h-[24px]'

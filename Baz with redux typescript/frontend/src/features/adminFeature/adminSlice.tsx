@@ -130,6 +130,7 @@ const initialState = {
   openModal: false,
   showSidebar: false,
   adminRoute: false,
+  sideMenuValue: 'overview',
   modalTitle: '',
   modalRef: '',
   showDelBtn: false,
@@ -224,6 +225,9 @@ const adminSlice = createSlice({
     },
     toggleDelBtn: (state) => {
       state.showDelBtn = !state.showDelBtn;
+    },
+    changeSideMenuValue: (state, action) => {
+      state.sideMenuValue = action.payload;
     },
     openAdminSidebar: (state) => {
       state.showSidebar = true;
@@ -403,6 +407,7 @@ export const {
   openAdminModal,
   closeAdminModal,
   toggleDelBtn,
+  changeSideMenuValue,
   openAdminSidebar,
   closeAdminSidebar,
   resetFormProduct,

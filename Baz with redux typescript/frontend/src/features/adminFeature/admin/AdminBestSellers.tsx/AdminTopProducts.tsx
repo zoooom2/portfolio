@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { getAggregateOrder } from '../../adminSlice';
+import { changeSideMenuValue, getAggregateOrder } from '../../adminSlice';
 import { useAppDispatch } from '../../../../App/hooks';
 import Hero from '../Layout/Hero';
 import AdminTopProductBody from './AdminTopProductBody';
@@ -9,6 +9,10 @@ const AdminTopProducts = () => {
     'daily' | 'weekly' | 'monthly' | 'yearly'
   >('monthly');
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(changeSideMenuValue('bestSeller'));
+  }, []);
 
   useEffect(() => {
     dispatch(getAggregateOrder(period));

@@ -7,6 +7,7 @@ const catchAsync = require('../utils/catchAsync');
 
 const getUniqueValues = require('../utils/uniqueValues');
 const { sendMail } = require('../utils/email');
+const { emailOrderTemplate } = require('../utils/templates');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const { firstName, lastName, email } = req.body.shippingInfo;
@@ -110,12 +111,43 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     next(new AppError('Could not create order. Please try again.', 400));
   }
 
-  // sendMail({
-  //   emailAddress: shippingInfo.email,
-  //   subject: 'ORDER DETAILS',
-  //   text: JSON.stringify(order),
-  //   html: `<div></div>`,
-  // });
+  let content = '';
+
+  orderItems.forEach((item) => {
+    content += `<tr><td>${item.productName}</td><td>${'quantity'}</td></tr>`;
+  });
+
+  const replacements = {
+    '%FIRSTNAME%': shippingInfo.firstName,
+    '%LASTNAME%': shippingInfo.lastName,
+    '%REFERENCE%': verification.data.reference.toUpperCase(),
+    '%DATE%': new Date(verification.data.created_at).toLocaleString('en-GB'),
+    '%ORDERS%': content,
+    '%PHONE%': shippingInfo.phoneNumber,
+    '%EMAIL%': shippingInfo.email,
+    '%ADDRESS%': shippingInfo.address,
+    '%CITY%': shippingInfo.city,
+    '%STATE%': shippingInfo.state,
+    '%SUBTOTAL%': order.subtotal,
+    '%SHIPPING_FEE%': order.shippingInfo.shippingFee,
+    '%TOTAL%': order.total_amount,
+    '%ADDITIONAL_INFO%': order.additionalInfo,
+  };
+  let updatedTemplate = emailOrderTemplate;
+
+  Object.keys(replacements).forEach((key) => {
+    updatedTemplate = updatedTemplate.replace(
+      new RegExp(key, 'g'),
+      replacements[key]
+    );
+  });
+
+  sendMail({
+    emailAddress: shippingInfo.email,
+    subject: 'ORDER DETAILS',
+    text: JSON.stringify(order),
+    html: updatedTemplate,
+  });
 
   //4) update the stock of each product
 

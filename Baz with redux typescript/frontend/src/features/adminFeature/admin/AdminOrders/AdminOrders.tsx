@@ -5,16 +5,17 @@ import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { orderTableDataProps } from '../../../../types';
 import { priceFormat } from '../../../../utils/constants';
-import { fetchOrders } from '../../adminSlice';
+import { changeSideMenuValue } from '../../adminSlice';
 
 const AdminOrders = () => {
-  const { orders, singleOrder } = useAppSelector((state) => state.admin);
+  const { orders } = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchOrders());
-  }, [singleOrder.orderStatus]);
+    dispatch(changeSideMenuValue('order'));
+  }, []);
 
   const tableData = orders.map((order) => {
     return {

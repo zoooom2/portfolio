@@ -7,6 +7,7 @@ import { fetchSingleProduct } from '../../../productFeature/productSlice';
 import Hero from '../Layout/Hero';
 import { SingleProductType } from '../../../../types';
 import {
+  changeSideMenuValue,
   clearFormImages,
   createProduct,
   loadFormProduct,
@@ -41,6 +42,10 @@ const AdminProductForm = ({
   } = useAppSelector((state) => state.admin);
 
   const { single_product } = useAppSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(changeSideMenuValue('product'));
+  }, []);
 
   useEffect(() => {
     if (id) {

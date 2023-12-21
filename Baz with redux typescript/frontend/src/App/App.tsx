@@ -16,28 +16,31 @@ import {
   ProductPage,
   DeliveryPage,
 } from '../pages';
-
 const ThesisPage = lazy(() => import('../pages/ThesisPage'));
 const CartPage = lazy(() => import('../pages/CartPage'));
 const ErrorPage = lazy(() => import('../pages/ErrorPage'));
 const CheckoutPage = lazy(() => import('../pages/CheckoutPage'));
-
 const LoginPage = lazy(() => import('../pages/LoginPage'));
-
 const OrderPage = lazy(() => import('../pages/OrderPage'));
 const ContactPage = lazy(() => import('../pages/ContactPage'));
-const AdminPages = lazy(() => import('../pages/AdminPages'));
-
 const AdminRoutes = lazy(
   () => import('../features/adminFeature/admin/AdminRoutes')
 );
 import { useAppDispatch, useAppSelector } from './hooks';
 import { countCartTotal } from '../features/cartFeature/cartSlice';
-
 import UserRoutes from '../features/userFeature/user/UserRoutes';
+import {
+  AdminOrders,
+  AdminOverview,
+  AdminProduct,
+} from '../features/adminFeature/admin';
+import AdminProductForm from '../features/adminFeature/admin/AdminProducts/AdminProductForm';
+import AdminOrderDetail from '../features/adminFeature/admin/AdminOrders/AdminOrderDetail';
+import AdminTopProducts from '../features/adminFeature/admin/AdminBestSellers.tsx/AdminTopProducts';
 
 const App = () => {
   const { isAuthenticated, loading } = useAppSelector((state) => state.user);
+  const { single_product } = useAppSelector((state) => state.product);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -74,41 +77,30 @@ const App = () => {
 
           <Route element={<AdminRoutes isAuthenticated={isAuthenticated} />}>
             <Route path='/admin' element={<Navigate to='/admin/overview' />} />
-            <Route path='/admin'>
-              <Route
-                path='/admin/overview'
-                element={<AdminPages page={'overview'} />}
-              />
-              <Route path='/admin/product'>
-                <Route
-                  path='/admin/product/'
-                  element={<AdminPages page={'product'} />}
-                />
-                <Route
-                  path='/admin/product/detail/:id'
-                  element={<AdminPages page={'productDetail'} />}
-                />
-                <Route
-                  path='/admin/product/create'
-                  element={<AdminPages page={'productCreate'} />}
-                />
-              </Route>
-              <Route path='/admin/order'>
-                <Route
-                  path='/admin/order/'
-                  element={<AdminPages page='order' />}
-                />
-                <Route
-                  path='/admin/order/detail/:id'
-                  element={<AdminPages page={'orderDetail'} />}
-                />
-              </Route>
-              <Route
-                path='/admin/topProducts'
-                element={<AdminPages page='bestSeller' />}
-              />
-            </Route>
+
+            <Route path='/admin/overview' element={<AdminOverview />} />
+
+            <Route path='/admin/product' element={<AdminProduct />} />
+            <Route
+              path='/admin/product/detail/:id'
+              element={
+                <AdminProductForm type='detail' product={single_product} />
+              }
+            />
+            <Route
+              path='/admin/product/create'
+              element={<AdminProductForm type='create' />}
+            />
+
+            <Route path='/admin/order/' element={<AdminOrders />} />
+            <Route
+              path='/admin/order/detail/:id'
+              element={<AdminOrderDetail />}
+            />
+
+            <Route path='/admin/topProducts' element={<AdminTopProducts />} />
           </Route>
+
           <Route path='*' element={<ErrorPage />} />
         </Routes>
       </Suspense>

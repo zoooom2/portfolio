@@ -4,7 +4,11 @@ import Hero from '../Layout/Hero';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { priceFormat } from '../../../../utils/constants';
-import { fetchSingleOrder, updateOrderStatus } from '../../adminSlice';
+import {
+  changeSideMenuValue,
+  fetchSingleOrder,
+  updateOrderStatus,
+} from '../../adminSlice';
 import { useEffect } from 'react';
 
 const AdminOrderDetail = () => {
@@ -16,16 +20,20 @@ const AdminOrderDetail = () => {
     if (id) dispatch(fetchSingleOrder(id));
   }, [dispatch, id]);
 
+  useEffect(() => {
+    dispatch(changeSideMenuValue('order'));
+  }, []);
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (id) dispatch(updateOrderStatus({ id, orderStatus: 'completed' }));
   };
 
-  const orderBody = singleOrder?.orderItems.map((product) => {
+  const orderBody = singleOrder?.orderItems.map((product, index) => {
     return (
       <Link
         to={`/admin/product/detail/${product.productID}`}
-        key={product.productID}
+        key={index}
         className='tablet:border tablet:border-[#b6b6b6] px-[15px] tablet:aspect-[306/328] tablet:w-[280px] tablet:h-[300px] items-center gap-[15px] w-full relative flex tablet:flex-col'>
         <div className='tablet:h-[230px] flex justify-center items-center tablet:p-3 aspect-[51/48] max-tablet:w-[60px]'>
           <img

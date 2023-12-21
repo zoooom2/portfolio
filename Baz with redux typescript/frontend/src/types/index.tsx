@@ -232,6 +232,7 @@ export type AdminState = {
   openModal: boolean;
   adminRoute: boolean;
   modalTitle: string;
+  sideMenuValue: 'overview' | 'product' | 'order' | 'bestSeller';
   modalRef: string;
   showSidebar: boolean;
   showDelBtn: boolean;

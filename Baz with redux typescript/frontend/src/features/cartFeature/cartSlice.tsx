@@ -94,8 +94,6 @@ const cartSlice = createSlice({
       }
     ) => {
       const { id, amount, product, size } = action.payload;
-      // console.log(action.payload);
-
       const tempItem = state.cart.find(
         (i) => i.productID === id && i.size === size
       );
@@ -123,15 +121,13 @@ const cartSlice = createSlice({
           max: product.sizes.find((s) => s.size === size)?.quantity as number,
           productID: id,
         };
-        console.log(newItem);
+
         state.cart.push(newItem);
-        // state.cart = [...state.cart, newItem];
       }
 
       toast.success('Added to cart successfully');
     },
     removeItem: (state, action) => {
-      // console.log(action.payload);
       const temp = state.cart.filter(
         (item) =>
           item.productID + item.size !==

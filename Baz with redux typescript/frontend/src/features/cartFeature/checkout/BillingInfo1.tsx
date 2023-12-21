@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { State } from 'country-state-city';
 import {
   ChangeEvent,
@@ -160,15 +161,13 @@ const BillingInfo = ({
           />
 
           <FormInput
-            type='text'
+            type='tel'
             onChange={onChange}
             name='phoneNumber'
             placeholder='Phone Number'
             value={shippingInfo.phoneNumber}
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
-            pattern={
-              '((^+)(234){1}[0–9]{10})|((^234)[0–9]{10})|((^0)(7|8|9){1}(0|1){1}[0–9]{8})'
-            }
+            // pattern={/(234)[0-9]{9}/}
             required
           />
         </div>

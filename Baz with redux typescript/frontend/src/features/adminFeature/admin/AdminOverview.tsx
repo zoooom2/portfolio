@@ -6,12 +6,31 @@ import {
 } from '../../../utils/constants';
 import RecentOrderTable from './RecentOrderTable';
 import BestSellerTable from './BestSellerTable';
-import { useAppSelector } from '../../../App/hooks';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 import Hero from './Layout/Hero';
+import {
+  changeSideMenuValue,
+  fetchOrderStats,
+  fetchVisitorStats,
+  getTopProducts,
+} from '../adminSlice';
+import { useEffect } from 'react';
 
 const AdminOverview = () => {
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
   const state = useAppSelector((state) => state.admin);
+
+  useEffect(() => {
+    document.title = 'Admin | Baz Official Store';
+    dispatch(getTopProducts(state.period));
+    dispatch(fetchOrderStats(state.period));
+    dispatch(fetchVisitorStats(state.period));
+  }, [state.period]);
+
+  useEffect(() => {
+    dispatch(changeSideMenuValue('overview'));
+  }, []);
 
   const analytics = adminAnalytics.map((x: AdminAnalyticsType, i) => {
     const current_key = x.value.current;
