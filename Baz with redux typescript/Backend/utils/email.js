@@ -25,7 +25,10 @@ exports.sendMail = async ({ emailAddress, subject, text, html }) => {
     const accessToken = await oAuth2Client.getAccessToken();
 
     const transport = nodemailer.createTransport({
-      service: 'gmail',
+      // service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
       auth: {
         type: 'OAuth2',
         user: process.env.AUTHORIZED_MAIL,
@@ -34,6 +37,7 @@ exports.sendMail = async ({ emailAddress, subject, text, html }) => {
         refreshToken: process.env.GOOGLEMAIL_REFRESH_TOKEN,
         accessToken,
       },
+      expires: 1484314697598,
     });
 
     const mailOptions = {
