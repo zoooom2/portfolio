@@ -60,7 +60,7 @@ export type OrderItemType = {
   amount: number;
   price: number;
   image: string;
-  size: string;
+  sizes: { size: string; quantity: string; _id: string }[];
   productID: string;
 };
 
