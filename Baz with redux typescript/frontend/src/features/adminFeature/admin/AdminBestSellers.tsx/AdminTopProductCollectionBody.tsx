@@ -33,7 +33,7 @@ const AdminTopProductCollectionBody = ({
                 return (
                   <div key={index} className='flex'>
                     <span>{quantity}</span>
-                    <span> {sizeAbbr[size]}</span>
+                    <span> {sizeAbbr[size as keyof typeof sizeAbbr]}</span>
                   </div>
                 );
               })}

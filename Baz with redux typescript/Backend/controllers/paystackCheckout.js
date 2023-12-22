@@ -164,6 +164,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     product.sizes[index] = {
       size: item.size,
       quantity: product.sizes[index].quantity - item.amount,
+      custom: product.sizes[index].custom,
     };
     product.save();
   });

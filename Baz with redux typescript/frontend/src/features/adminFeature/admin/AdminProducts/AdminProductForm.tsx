@@ -65,11 +65,14 @@ const AdminProductForm = ({
 
   const addSize = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
     e.preventDefault();
-    if (type === 'detail' && formFieldMode === 'update')
+    if ((type === 'detail' && formFieldMode === 'update') || type === 'create')
       dispatch(
         updateFormProduct({
           detail: 'sizes',
-          info: [...formTempProduct.sizes, { size: '', quantity: '' }],
+          info: [
+            ...formTempProduct.sizes,
+            { size: '', quantity: '', custom: false },
+          ],
         })
       );
   };
@@ -99,14 +102,18 @@ const AdminProductForm = ({
       | ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value, validity, dataset } = e.target;
+    let isChecked: boolean;
+    if ('checked' in e.target) {
+      isChecked = (e.target as HTMLInputElement).checked;
+    }
 
     const { index }: { index: string } = dataset as { index: string };
 
     if (validity.valid) dispatch(setFormValidity(true));
-    if (name === 'size' || name === 'quantity') {
+    if (name === 'size' || name === 'quantity' || name === 'custom') {
       const updatedSizes = formTempProduct.sizes.map((data, position) => {
         if (+index === position) {
-          return { ...data, [name]: value };
+          return { ...data, [name]: name === 'custom' ? isChecked : value };
         } else {
           return { ...data };
         }
@@ -162,14 +169,13 @@ const AdminProductForm = ({
         ) {
           dispatch(setFormValidity(false));
           dispatch(setShowErrorMessage(true));
-
           console.log('form is not valid');
 
           return;
         }
       }
     }
-    // return;
+
     dispatch(setShowErrorMessage(true));
 
     const getExtension = (contentType: string) => {
@@ -208,9 +214,10 @@ const AdminProductForm = ({
         } else if (item === 'sizes') {
           const sizeArray = formTempProduct[item];
           for (let i = 0; i < sizeArray.length; i++) {
-            const { size, quantity } = sizeArray[i];
+            const { size, quantity, custom } = sizeArray[i];
             formData.append(`sizes[${i}][size]`, size);
             formData.append(`sizes[${i}][quantity]`, String(quantity));
+            formData.append(`sizes[${i}][custom]`, String(custom));
           }
         }
       }
@@ -218,7 +225,6 @@ const AdminProductForm = ({
       try {
         if (id) {
           dispatch(updateProduct({ id, data: formData }));
-          // console.log(formData.get('description'));
         } else {
           dispatch(createProduct(formData));
         }
@@ -247,11 +253,8 @@ const AdminProductForm = ({
     const selectedFilesUrl = [...selectedFiles].map((file: File) =>
       URL.createObjectURL(file)
     );
-    // console.log(selectedFilesUrl);
     dispatch(setFormImages([...formImages, ...selectedFilesUrl]));
   };
-
-  // console.log(formImages);
 
   const options = [
     { value: 'small', option: 'S' },
@@ -363,7 +366,6 @@ const AdminProductForm = ({
               value={formTempProduct.description}
               mode={type}
               required={true}
-              // className='w-full text-[10px] px-[16px] tablet:text-[15px]'
             />
 
             <div className='flex flex-col gap-[10px]'>
@@ -378,7 +380,6 @@ const AdminProductForm = ({
                 onChange={onSelectFile}
                 max={4}
                 mode={type}
-                // required
               />
 
               {formImages && (
@@ -411,32 +412,45 @@ const AdminProductForm = ({
               Product Variables
             </div>
             {formTempProduct.sizes.map((temp, index) => (
-              <div key={index} className='grid grid-cols-2 tablet:w-1/2 gap-4'>
-                <div className='flex flex-col gap-[8px]'>
-                  <label
-                    htmlFor='size'
-                    className='font-baz1 text-baz-black laptop:text-[20px] tablet:text-[18px] font-medium text-[14px] capitalize'>
-                    Size
-                  </label>
-                  <select
-                    name='size'
-                    id='size'
-                    data-index={index}
-                    onChange={onChange}
-                    // mode={type}
-                    value={temp.size}
-                    required
-                    className='w-full text-[10px] px-[16px] tablet:text-[15px] h-full border-[#a2a2a2] border-[1.5px] bg-transparent'>
-                    <option value={''} disabled>
-                      --select a value
-                    </option>
-                    {options.map(({ option, value }, index) => (
-                      <option key={index} value={value}>
-                        {option}
+              <div key={index} className='grid grid-cols-2 tablet:w-2/3 gap-4'>
+                {!temp.custom ? (
+                  <div className='flex flex-col gap-[8px]'>
+                    <label
+                      htmlFor='size'
+                      className='font-baz1 text-baz-black laptop:text-[20px] tablet:text-[18px] font-medium text-[14px] capitalize'>
+                      Size
+                    </label>
+                    <select
+                      name='size'
+                      id='size'
+                      data-index={index}
+                      onChange={onChange}
+                      value={temp.size}
+                      required
+                      className='w-full text-[10px] px-[16px] tablet:text-[15px] h-full border-[#a2a2a2] border-[1.5px] bg-transparent'>
+                      <option value={''} disabled>
+                        --Select a value
                       </option>
-                    ))}
-                  </select>
-                </div>
+                      {options.map(({ option, value }, index) => (
+                        <option key={index} value={value}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <FormInput
+                    type='text'
+                    onChange={onChange}
+                    id='Custom'
+                    value={temp.size}
+                    name={'size'}
+                    required={true}
+                    className='w-full text-[10px] px-[16px] tablet:text-[15px]'
+                    data-index={index}
+                    placeholder='Enter Custom Size'
+                  />
+                )}
 
                 <FormInput
                   type='number'
@@ -451,14 +465,32 @@ const AdminProductForm = ({
                   value={temp.quantity}
                   required={true}
                 />
-                <button
-                  className=''
-                  onClick={(e) => {
-                    e.preventDefault();
-                    deleteSize(index);
-                  }}>
-                  <FaTrash />
-                </button>
+                <div className='flex gap-4 flex-col'>
+                  {
+                    <div className='flex items-center '>
+                      <label htmlFor='customCheckbox'>
+                        click for custom sizing:
+                      </label>
+                      <input
+                        type='checkbox'
+                        name='custom'
+                        id='customCheckbox'
+                        data-index={index}
+                        className='w-5'
+                        checked={temp.custom}
+                        onChange={onChange}
+                      />
+                    </div>
+                  }
+                  <button
+                    className=''
+                    onClick={(e) => {
+                      e.preventDefault();
+                      deleteSize(index);
+                    }}>
+                    <FaTrash />
+                  </button>
+                </div>
               </div>
             ))}
             <div className='flex gap-[20px]'>

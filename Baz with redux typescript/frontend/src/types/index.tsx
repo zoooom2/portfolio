@@ -3,7 +3,7 @@
 
 import { ChangeEvent, SyntheticEvent } from 'react';
 import { IconType } from 'react-icons';
-import { sizeAbbr } from '../utils/constants';
+// import { sizeAbbr } from '../utils/constants';
 
 //User Types
 export type UserType = {
@@ -112,7 +112,12 @@ export type SingleProductType = {
   quantitySold: number;
   stock: number;
   ratingsAverage: number;
-  sizes: { size: keyof typeof sizeAbbr; quantity: number }[];
+  sizes: {
+    // size: keyof typeof sizeAbbr;
+    size: string;
+    quantity: number;
+    custom?: boolean;
+  }[];
 };
 export type ProductStateType = {
   isSidebarOpen: boolean;
@@ -262,12 +267,18 @@ export type AdminState = {
     totalItemsSold: number;
     products: {
       productName: string;
-      sizes: { size: keyof typeof sizeAbbr; quantity: number }[];
+      sizes: {
+        // size: keyof typeof sizeAbbr;
+        size: string;
+        quantity: number;
+      }[];
       images: string[];
       price: number;
     }[];
   }[];
-  formTempProduct: SingleProductType;
+  formTempProduct: Omit<SingleProductType, 'sizes'> & {
+    sizes: { size: string; quantity: number; custom: boolean }[];
+  };
   formErrorMessage: boolean;
   isFormValid: boolean;
   formFieldMode: 'fixed' | 'update';
