@@ -59,6 +59,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     const baseObject = {
       productName: '',
       price: 0,
+      totalQuantity: 0,
       image: '',
       sizes: [],
       productID: id,
@@ -81,7 +82,9 @@ exports.createOrder = catchAsync(async (req, res, next) => {
         });
         count += 1;
       }
+      baseObject.totalQuantity += item.amount;
     });
+
     return baseObject;
   });
 
@@ -113,8 +116,10 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 
   let content = '';
 
-  orderItems.forEach((item) => {
-    content += `<tr><td>${item.productName}</td><td>${'quantity'}</td></tr>`;
+  newOrderItems.forEach((item) => {
+    content += `<tr><td>${item.productName}</td><td>${
+      item.totalQuantity
+    }</td><td>${item.totalQuantity * item.price}</td></tr>`;
   });
 
   const replacements = {
