@@ -13,6 +13,7 @@ import {
   Payment,
 } from '../features/cartFeature/checkout';
 import useLocalStorage from '../utils/customHooks/localStorage';
+import { Link } from 'react-router-dom';
 
 const CheckoutPage = () => {
   const { params } = useParams();
@@ -45,7 +46,9 @@ const CheckoutPage = () => {
       <Wrapper className='flex-column place-center'>
         <div className='flex flex-col items-center py-[45px] justify-center border-b w-full border-black'>
           <h3 className='pageName'>Checkout</h3>
-          <button className='backToCart-btn'>Back to Cart</button>
+          <Link to={'/cart'} className='backToCart-btn'>
+            Back to Cart
+          </Link>
         </div>
         <div className='details'>
           <CheckoutStage position={stage} />
