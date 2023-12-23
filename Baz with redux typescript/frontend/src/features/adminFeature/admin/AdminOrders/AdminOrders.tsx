@@ -10,7 +10,6 @@ import { changeSideMenuValue } from '../../adminSlice';
 const AdminOrders = () => {
   const { orders } = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
 
   useEffect(() => {

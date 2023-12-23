@@ -51,43 +51,35 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 
   const uniqueID = getUniqueValues(orderItems, 'productID');
 
-  let newOrderItems = [];
-
   // pick the unique id, check each of the order items for any with the same unique ID, if it is the first copy all of its content into an object else just size and quantity into the sizes array
+  const newOrderItems = uniqueID.map((id) => {
+    const itemsWithSameID = orderItems.filter((item) => item.productID === id);
 
-  newOrderItems = uniqueID.map((id) => {
-    const baseObject = {
-      productName: '',
-      price: 0,
-      totalQuantity: 0,
-      image: '',
-      sizes: [],
-      productID: id,
-    };
-    orderItems.forEach((item) => {
-      let count = 0;
-      if (item.productID === id && count === 0) {
-        baseObject.productName = item.productName;
-        baseObject.price = item.price;
-        baseObject.image = item.image;
-        baseObject.sizes.push({
+    const baseObject = itemsWithSameID.reduce(
+      (acc, item) => {
+        acc.productID = id;
+        acc.productName = item.productName;
+        acc.price = item.price;
+        acc.image = item.image;
+        acc.sizes.push({
           size: item.size,
           quantity: item.amount,
         });
-        count += 1;
-      } else {
-        baseObject.sizes.push({
-          size: item.size,
-          quantity: item.amount,
-        });
-        count += 1;
+        acc.totalQuantity += item.amount;
+        return acc;
+      },
+      {
+        productName: '',
+        price: 0,
+        totalQuantity: 0,
+        image: '',
+        sizes: [],
+        productID: '',
       }
-      baseObject.totalQuantity += item.amount;
-    });
+    );
 
     return baseObject;
   });
-
   //3) create the order
 
   const { shippingInfo, subtotal, total_items: totalItems } = req.body;
@@ -96,7 +88,7 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
     shippingInfo,
     additionalInfo: shippingInfo.additionalInfo,
-    total_amount: req.body.subtotal + req.body.shippingInfo.shippingFee,
+    total_amount: subtotal + shippingInfo.shippingFee,
     subtotal,
     total_items: totalItems,
     orderItems: newOrderItems,
@@ -133,10 +125,10 @@ exports.createOrder = catchAsync(async (req, res, next) => {
     '%ADDRESS%': shippingInfo.address,
     '%CITY%': shippingInfo.city,
     '%STATE%': shippingInfo.state,
-    '%SUBTOTAL%': order.subtotal,
-    '%SHIPPING_FEE%': order.shippingInfo.shippingFee,
-    '%TOTAL%': order.total_amount,
-    '%ADDITIONAL_INFO%': order.additionalInfo,
+    '%SUBTOTAL%': subtotal,
+    '%SHIPPING_FEE%': shippingInfo.shippingFee,
+    '%TOTAL%': subtotal + shippingInfo.shippingFee,
+    '%ADDITIONAL_INFO%': shippingInfo.additionalInfo,
   };
   let updatedTemplate = emailOrderTemplate;
 
