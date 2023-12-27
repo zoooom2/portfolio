@@ -17,7 +17,7 @@ const storage = (location) =>
     params: {
       folder: `${location} images`,
       allowed_formats: ['jpg', 'png'],
-      transformation: [{ width: 500, height: 500, crop: 'limit' }],
+      transformation: [{ width: 2500, height: 2500, crop: 'limit' }],
       public_id: (req, file) => file.originalname,
     },
   });
