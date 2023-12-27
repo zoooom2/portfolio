@@ -48,10 +48,14 @@ router
     async (req, res, next) => {
       if (req.files) {
         const fileImages = req.files.map((image) => image.path);
-        if (!Array.isArray(req.body.images)) {
-          req.body.images = [req.body.images];
+        if (req.body.images) {
+          if (!Array.isArray(req.body.images)) {
+            req.body.images = [req.body.images];
+          }
+          req.body.images = [...req.body.images, ...fileImages];
+        } else {
+          req.body.images = [...fileImages];
         }
-        req.body.images = [...req.body.images, ...fileImages];
       }
       next();
     },
