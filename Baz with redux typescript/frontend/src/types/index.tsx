@@ -110,7 +110,6 @@ export type SingleProductType = {
   images: string[];
   numberOfReviews: number;
   quantitySold: number;
-  stock: number;
   ratingsAverage: number;
   sizes: {
     // size: keyof typeof sizeAbbr;
@@ -118,6 +117,7 @@ export type SingleProductType = {
     quantity: number;
     custom?: boolean;
   }[];
+  totalQuantity: number;
 };
 export type ProductStateType = {
   isSidebarOpen: boolean;

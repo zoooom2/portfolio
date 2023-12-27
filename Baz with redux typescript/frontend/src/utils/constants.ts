@@ -17,8 +17,8 @@ export const initialSingleProduct = {
   reviews: [],
   images: [],
   numberOfReviews: 0,
-  stock: 0,
   ratingsAverage: 0,
+  totalQuantity: 0,
 } as SingleProductType;
 
 export const links = [

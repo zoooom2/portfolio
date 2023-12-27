@@ -30,7 +30,7 @@ const SingleProductPage = () => {
     single_product: product,
   } = useAppSelector((state) => state.product);
   const { cart, subtotal } = useAppSelector((state) => state.cart);
-  const { productName, price, description, images, stock } = product;
+  const { productName, price, description, images, totalQuantity } = product;
   useEffect(() => {
     document.title = `Shop | Baz Official Store`;
   }, []);
@@ -81,7 +81,7 @@ const SingleProductPage = () => {
             </p>
           </div>
 
-          {stock > 0 ? (
+          {totalQuantity > 0 ? (
             <AddToCart product={product} />
           ) : (
             <button className='sold-out-btn' disabled>

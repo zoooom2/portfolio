@@ -7,7 +7,7 @@ const Product = ({
   _id: id,
   productName: name,
   price,
-  stock,
+  totalQuantity,
 }: SingleProductType) => {
   return (
     <Link
@@ -28,10 +28,11 @@ const Product = ({
         </h5>
 
         <p
-          className={`${
-            stock > 0 ? '' : 'line-through'
-          }text-black font-normal leading-normal text-[20.926px] font-baz1`}>
-          {`${priceFormat(price)} ${stock > 0 ? '' : ' Sold-Out'}`}
+          className={`text-black font-normal leading-normal text-[20.926px] font-baz1 flex gap-1`}>
+          <div className={`${totalQuantity > 0 ? '' : 'line-through'}`}>
+            {priceFormat(price)}
+          </div>
+          <div>{totalQuantity > 0 ? '' : ' Sold-Out'}</div>
         </p>
       </footer>
     </Link>
