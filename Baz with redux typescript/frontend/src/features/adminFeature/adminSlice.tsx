@@ -138,6 +138,7 @@ const initialState = {
   fetch_visitor_stat_error: '',
   fetch_recent_order_error: '',
   fetch_best_seller_error: '',
+  aggregateOrder_error: '',
   product_error: '',
   period: 'monthly',
   totalRevenue: 0,
@@ -301,6 +302,7 @@ const adminSlice = createSlice({
     builder
       .addCase(getTopProducts.pending, (state) => {
         state.loading = true;
+        state.bestSeller = [];
       })
       .addCase(getTopProducts.fulfilled, (state, action) => {
         state.loading = false;
@@ -315,6 +317,7 @@ const adminSlice = createSlice({
     builder
       .addCase(fetchOrders.pending, (state) => {
         state.loading = true;
+        state.orders = [];
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.loading = false;
@@ -330,6 +333,7 @@ const adminSlice = createSlice({
     builder
       .addCase(fetchSingleOrder.pending, (state) => {
         state.loading = true;
+        state.singleOrder = { ...initialState.singleOrder };
       })
       .addCase(fetchSingleOrder.fulfilled, (state, action) => {
         state.loading = false;
@@ -385,8 +389,6 @@ const adminSlice = createSlice({
       .addCase(updateOrderStatus.fulfilled, (state) => {
         state.loading = false;
         state.singleOrder = { ...state.singleOrder, orderStatus: 'completed' };
-
-        // state.orders = state.orders.map((order) =>)
       })
       .addCase(updateOrderStatus.rejected, (state) => {
         state.loading = true;
@@ -398,6 +400,10 @@ const adminSlice = createSlice({
       .addCase(getAggregateOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.aggregateOrder = action.payload;
+      })
+      .addCase(getAggregateOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.aggregateOrder_error = action.error.message as string;
       });
   },
 });

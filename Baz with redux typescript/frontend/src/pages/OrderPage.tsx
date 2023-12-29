@@ -81,7 +81,7 @@ const OrderPage = () => {
               <br />
             </span>{' '}
             TAKE OVER THE WORLD,
-            <br /> FIRST THING YOU HAVE TO BUY IS BAZ.
+            <br /> FIRST THING YOU HAVE TO DO IS BUY BAZ.
           </div>
         </div>
       </div>

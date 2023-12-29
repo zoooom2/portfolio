@@ -1,4 +1,5 @@
 const multer = require('multer');
+const crypto = require('crypto');
 const sharp = require('sharp');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -18,7 +19,10 @@ const storage = (location) =>
       folder: `${location} images`,
       allowed_formats: ['jpg', 'png'],
       transformation: [{ width: 2500, height: 2500, crop: 'limit' }],
-      public_id: (req, file) => file.originalname,
+      public_id: (req, file) =>
+        `baz_${Date.now()}-${crypto.randomBytes(8).toString('hex')}-${
+          file.originalname
+        }`,
     },
   });
 

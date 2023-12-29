@@ -16,12 +16,12 @@ exports.emailOrderTemplate = `
   <div style="font-family: Verdana;">
     <h1 style="background: black; color: white; padding: 2em; font-size: 24px;">Congratulations, your order has been confirmed</h1>
     <div>
-      <h3>
+      <h5>
         Hi %FIRSTNAME%
         <br /> We have received your order
-      </h3>
+      </h5>
       <div>
-        <h2>Order %REFERENCE% ( %DATE% )</h2>
+        <h5>Order %REFERENCE% ( %DATE% )</h5>
         <div>
           <table>
             <tr>
@@ -46,7 +46,7 @@ exports.emailOrderTemplate = `
         </div>
       </div>
       <div>
-        <h2>Shipping Information</h2>
+        <h5>Shipping Information</h2>
         <div>
           <div>Name: %FIRSTNAME% %LASTNAME%</div>
           <div>Phone Number: %PHONE%</div>
@@ -57,10 +57,10 @@ exports.emailOrderTemplate = `
         </div>
       </div>
       <div>
-        <h2>Additional Information</h2>
+        <h5>Additional Information</h5>
         <div style="border: 1px solid black;">%ADDITIONAL_INFO%</div>
       </div>
-      <h2>Good luck on taking over the world</h2>
+      <h5>Good luck on taking over the world</h5>
     </div>
   </div>
 </body>

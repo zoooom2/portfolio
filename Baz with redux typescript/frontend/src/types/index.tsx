@@ -245,6 +245,7 @@ export type AdminState = {
   fetch_visitor_stat_error: string;
   fetch_recent_order_error: string;
   fetch_best_seller_error: string;
+  aggregateOrder_error: string;
   product_error: string;
   period: 'daily' | 'weekly' | 'monthly' | 'yearly';
   totalRevenue: number;
