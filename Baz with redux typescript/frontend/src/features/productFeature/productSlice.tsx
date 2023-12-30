@@ -71,7 +71,7 @@ const productSlice = createSlice({
       state.products_error = action.error.message as string;
     });
     builder.addCase(fetchSingleProduct.pending, (state) => {
-      state.single_product_loading = false;
+      state.single_product_loading = true;
       state.single_product = { ...initialSingleProduct };
     });
     builder.addCase(

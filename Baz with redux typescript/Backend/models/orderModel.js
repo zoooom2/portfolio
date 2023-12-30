@@ -145,7 +145,7 @@ const orderSchema = new Schema({
 orderSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'orderItems.productID',
-    select: 'collectionName',
+    select: 'collectionName sizes',
   });
   next();
 });

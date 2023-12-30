@@ -27,13 +27,13 @@ const Product = ({
           {name}
         </h5>
 
-        <p
+        <div
           className={`text-black font-normal leading-normal text-[20.926px] font-baz1 flex gap-1`}>
           <div className={`${totalQuantity > 0 ? '' : 'line-through'}`}>
             {priceFormat(price)}
           </div>
           <div>{totalQuantity > 0 ? '' : ' Sold-Out'}</div>
-        </p>
+        </div>
       </footer>
     </Link>
   );

@@ -8,7 +8,6 @@ import SingleProductPage from './SingleProductPage';
 import LoginPage from './LoginPage';
 import OrderPage from './OrderPage';
 import ContactPage from './ContactPage';
-import AdminPages from './AdminPages';
 import DeliveryPage from './DeliveryPage';
 
 export {
@@ -22,6 +21,5 @@ export {
   LoginPage,
   OrderPage,
   ContactPage,
-  AdminPages,
   DeliveryPage,
 };

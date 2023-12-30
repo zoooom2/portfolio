@@ -14,12 +14,15 @@ import { products_url as url } from '../utils/constants';
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 
 import ProductList from '../features/productFeature/product/ProductList';
+import { Loading } from '../global_components';
 
 const ProductsPage = () => {
   const dispatch = useAppDispatch();
   const { all_products, filtered_product, filtered_collection, sort, filters } =
     useAppSelector((state) => state.filter);
-  const { products } = useAppSelector((state) => state.product);
+  const { products, products_loading } = useAppSelector(
+    (state) => state.product
+  );
 
   useEffect(() => {
     document.title = 'Shop | Baz Official Store';
@@ -42,71 +45,75 @@ const ProductsPage = () => {
   const categories = getUniqueValues(filtered_collection, 'category');
   const collections = getUniqueValues(all_products, 'collectionName');
 
-  return (
-    <main>
-      <Wrapper className='page flex-column'>
-        <div className='flex justify-center py-[45px] border-b border-black'>
-          <select
-            name='collection'
-            className='font-baz2 text-[20px] font-semibold tracking-[2px] bg-baz-white outline-none w-fit'
-            onChange={(e) => {
-              dispatch(
-                updateFilters({ name: 'collection', value: e.target.value })
-              );
-              dispatch(updateFilters({ name: 'category', value: 'all' }));
-              const filtered = all_products.filter((p) =>
-                e.target.value === 'all'
-                  ? all_products
-                  : p.collectionName === e.target.value
-              );
-              dispatch(updateCollectionProduct(filtered));
-            }}>
-            <option value={'all'} className='text-center'>
-              All
-            </option>
-            {collections.map((collection, index) => (
-              <option value={collection} key={index} className='text-center'>
-                {collection}
+  if (products_loading) {
+    return <Loading />;
+  } else {
+    return (
+      <main>
+        <Wrapper className='page flex-column'>
+          <div className='flex justify-center py-[45px] border-b border-black'>
+            <select
+              name='collection'
+              className='font-baz2 text-[20px] font-semibold tracking-[2px] bg-baz-white outline-none w-fit'
+              onChange={(e) => {
+                dispatch(
+                  updateFilters({ name: 'collection', value: e.target.value })
+                );
+                dispatch(updateFilters({ name: 'category', value: 'all' }));
+                const filtered = all_products.filter((p) =>
+                  e.target.value === 'all'
+                    ? all_products
+                    : p.collectionName === e.target.value
+                );
+                dispatch(updateCollectionProduct(filtered));
+              }}>
+              <option value={'all'} className='text-center'>
+                All
               </option>
-            ))}
-          </select>
-        </div>
-        <div className='pageHero'>
-          <div className='font-baz3 text-[14px] font-normal tracking-[1.4px]'>
-            {filtered_product.length} Results
+              {collections.map((collection, index) => (
+                <option value={collection} key={index} className='text-center'>
+                  {collection}
+                </option>
+              ))}
+            </select>
           </div>
-          <select
-            className='pageName bg-baz-white text-baz-black text-[14px] tracking-[1.4px] font-baz3 cursor-pointer'
-            value={category}
-            onChange={(e) =>
-              dispatch(
-                updateFilters({ name: 'category', value: e.target.value })
-              )
-            }
-            name='category'>
-            <option className='capitalize flex justify-around' value={'all'}>
-              Shop All
-            </option>
-            {categories.map((category, index) => (
-              <option value={category} key={index}>
-                {category}
+          <div className='pageHero'>
+            <div className='font-baz3 text-[14px] font-normal tracking-[1.4px]'>
+              {filtered_product.length} Results
+            </div>
+            <select
+              className='pageName bg-baz-white text-baz-black text-[14px] tracking-[1.4px] font-baz3 cursor-pointer'
+              value={category}
+              onChange={(e) =>
+                dispatch(
+                  updateFilters({ name: 'category', value: e.target.value })
+                )
+              }
+              name='category'>
+              <option className='capitalize flex justify-around' value={'all'}>
+                Shop All
               </option>
-            ))}
-          </select>
-        </div>
-        {/* <div className='sort-filter max-tablet:hidden'>
+              {categories.map((category, index) => (
+                <option value={category} key={index}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* <div className='sort-filter max-tablet:hidden'>
           <Sort />
           <div className={`filter ${openFilter && 'open'}`}>
             <Filters />
           </div>
         </div> */}
 
-        <div className='product-list'>
-          <ProductList />
-        </div>
-      </Wrapper>
-    </main>
-  );
+          <div className='product-list'>
+            <ProductList />
+          </div>
+        </Wrapper>
+      </main>
+    );
+  }
 };
 
 const Wrapper = styled.div`
