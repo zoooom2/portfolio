@@ -241,9 +241,11 @@ export type AdminState = {
   modalRef: string;
   showSidebar: boolean;
   showDelBtn: boolean;
+  submit_product_error: string;
+  fetch_order_error: string;
   fetch_order_stat_error: string;
   fetch_visitor_stat_error: string;
-  fetch_recent_order_error: string;
+  fetch_single_order_error: string;
   fetch_best_seller_error: string;
   aggregateOrder_error: string;
   product_error: string;

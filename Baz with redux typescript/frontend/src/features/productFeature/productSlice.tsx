@@ -53,6 +53,7 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
       state.products_loading = true;
+      state.products_error = '';
     });
     builder.addCase(
       fetchProducts.fulfilled,
@@ -73,6 +74,7 @@ const productSlice = createSlice({
     builder.addCase(fetchSingleProduct.pending, (state) => {
       state.single_product_loading = true;
       state.single_product = { ...initialSingleProduct };
+      state.single_product_error = '';
     });
     builder.addCase(
       fetchSingleProduct.fulfilled,

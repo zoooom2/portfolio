@@ -10,9 +10,12 @@ import { useAppDispatch, useAppSelector } from '../App/hooks';
 import { jwtAuth } from '../features/userFeature/userSlice';
 import { BAZLogo } from '../utils/constants';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { SpinnerCircular } from 'spinners-react';
 
 const LoginPage = () => {
-  const { authentication_error } = useAppSelector((state) => state.user);
+  const { authentication_error, loading } = useAppSelector(
+    (state) => state.user
+  );
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -93,6 +96,12 @@ const LoginPage = () => {
             }`}>
             *Complete filling the information
           </div>
+          <div
+            className={`text-[#ed0000] font-baz1 text-[12px] ${
+              !authentication_error && 'hidden'
+            }`}>
+            *Invalid Credentials
+          </div>
           <FormInput
             type='email'
             name='email'
@@ -116,7 +125,11 @@ const LoginPage = () => {
         <button
           onClick={handleSubmit}
           className='hover:bg-baz-black hover:text-white py-[20px] border-[1.5px] border-black font-baz1 text-[16px] tracking-wide font-bold capitalize'>
-          submit
+          {loading ? (
+            <SpinnerCircular secondaryColor={'#000'} color='white' size={35} />
+          ) : (
+            'Submit'
+          )}
         </button>
       </form>
     </div>

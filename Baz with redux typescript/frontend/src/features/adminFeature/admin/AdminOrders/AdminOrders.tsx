@@ -6,9 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { orderTableDataProps } from '../../../../types';
 import { priceFormat } from '../../../../utils/constants';
 import { changeSideMenuValue } from '../../adminSlice';
+import { Error, Loading } from '../../../../global_components';
 
 const AdminOrders = () => {
-  const { orders } = useAppSelector((state) => state.admin);
+  const { orders, loading, fetch_order_error } = useAppSelector(
+    (state) => state.admin
+  );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -61,6 +64,14 @@ const AdminOrders = () => {
     ],
     []
   );
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (fetch_order_error) {
+    return <Error />;
+  }
 
   return (
     <div className='w-full'>

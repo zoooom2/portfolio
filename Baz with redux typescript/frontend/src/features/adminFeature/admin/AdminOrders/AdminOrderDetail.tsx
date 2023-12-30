@@ -10,10 +10,13 @@ import {
   updateOrderStatus,
 } from '../../adminSlice';
 import { useEffect } from 'react';
+import { Error, Loading } from '../../../../global_components';
 
 const AdminOrderDetail = () => {
   const { id } = useParams();
-  const { singleOrder } = useAppSelector((state) => state.admin);
+  const { singleOrder, loading, fetch_single_order_error } = useAppSelector(
+    (state) => state.admin
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -67,6 +70,13 @@ const AdminOrderDetail = () => {
       </Link>
     );
   });
+
+  if (loading) {
+    return <Loading />;
+  }
+  if (fetch_single_order_error) {
+    return <Error />;
+  }
 
   return (
     <section className='flex flex-col pb-14 w-full bg-baz-white'>

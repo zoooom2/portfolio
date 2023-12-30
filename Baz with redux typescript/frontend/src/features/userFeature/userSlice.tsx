@@ -201,7 +201,7 @@ const userSlice = createSlice({
       state.remove_auth_error = action.error.message as string;
     });
     builder.addCase(jwtAuth.pending, (state) => {
-      state.loading = false;
+      state.loading = true;
       state.authentication_error = '';
     });
     builder.addCase(

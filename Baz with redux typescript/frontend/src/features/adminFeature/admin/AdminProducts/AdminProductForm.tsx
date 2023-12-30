@@ -39,6 +39,7 @@ const AdminProductForm = ({
     formFieldMode,
     formImages,
     isFormValid,
+    submit_product_error,
   } = useAppSelector((state) => state.admin);
 
   const { single_product } = useAppSelector((state) => state.product);
@@ -224,13 +225,15 @@ const AdminProductForm = ({
 
       try {
         if (id) {
-          dispatch(updateProduct({ id, data: formData }));
+          await dispatch(updateProduct({ id, data: formData }));
         } else {
-          dispatch(createProduct(formData));
+          await dispatch(createProduct(formData));
         }
-        dispatch(clearFormImages());
-        dispatch(setFieldMode('fixed'));
-        navigate('/admin/product');
+        if (!submit_product_error) {
+          dispatch(clearFormImages());
+          dispatch(setFieldMode('fixed'));
+          navigate('/admin/product');
+        }
       } catch (error) {
         dispatch(setShowErrorMessage(true));
       }

@@ -134,10 +134,12 @@ const initialState = {
   modalTitle: '',
   modalRef: '',
   showDelBtn: false,
+  fetch_order_error: '',
   fetch_order_stat_error: '',
   fetch_visitor_stat_error: '',
-  fetch_recent_order_error: '',
+  fetch_single_order_error: '',
   fetch_best_seller_error: '',
+  submit_product_error: '',
   aggregateOrder_error: '',
   product_error: '',
   period: 'monthly',
@@ -302,6 +304,7 @@ const adminSlice = createSlice({
     builder
       .addCase(getTopProducts.pending, (state) => {
         state.loading = true;
+        state.fetch_best_seller_error = '';
         state.bestSeller = [];
       })
       .addCase(getTopProducts.fulfilled, (state, action) => {
@@ -317,38 +320,40 @@ const adminSlice = createSlice({
     builder
       .addCase(fetchOrders.pending, (state) => {
         state.loading = true;
+        state.fetch_order_error = '';
         state.orders = [];
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.loading = false;
-        state.fetch_recent_order_error = '';
+        state.fetch_order_error = '';
         state.orders = action.payload;
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.loading = false;
-        state.fetch_recent_order_error = action.error.message as string;
-
+        state.fetch_order_error = action.error.message as string;
         state.orders = [];
       });
     builder
       .addCase(fetchSingleOrder.pending, (state) => {
         state.loading = true;
+        state.fetch_single_order_error = '';
         state.singleOrder = { ...initialState.singleOrder };
       })
       .addCase(fetchSingleOrder.fulfilled, (state, action) => {
         state.loading = false;
-        state.fetch_recent_order_error = '';
+        state.fetch_single_order_error = '';
         state.singleOrder = action.payload;
       })
       .addCase(fetchSingleOrder.rejected, (state, action) => {
         state.loading = false;
-        state.fetch_recent_order_error = action.error.message as string;
+        state.fetch_single_order_error = action.error.message as string;
         state.singleOrder = initialState.singleOrder;
       });
 
     builder
       .addCase(deleteProduct.pending, (state) => {
         state.loading = true;
+        state.product_error = '';
       })
       .addCase(deleteProduct.fulfilled, (state) => {
         state.loading = false;
@@ -363,24 +368,28 @@ const adminSlice = createSlice({
     builder
       .addCase(createProduct.pending, (state) => {
         state.loading = true;
+        state.submit_product_error = '';
       })
       .addCase(createProduct.fulfilled, (state) => {
         state.loading = false;
+        state.submit_product_error = '';
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
-        state.product_error = action.error.message as string;
+        state.submit_product_error = action.error.message as string;
       });
     builder
       .addCase(updateProduct.pending, (state) => {
         state.loading = true;
+        state.submit_product_error = '';
       })
       .addCase(updateProduct.fulfilled, (state) => {
         state.loading = false;
+        state.submit_product_error = '';
       })
       .addCase(updateProduct.rejected, (state, action) => {
         state.loading = false;
-        state.product_error = action.error.message as string;
+        state.submit_product_error = action.error.message as string;
       });
     builder
       .addCase(updateOrderStatus.pending, (state) => {
@@ -396,9 +405,11 @@ const adminSlice = createSlice({
     builder
       .addCase(getAggregateOrder.pending, (state) => {
         state.loading = true;
+        state.aggregateOrder_error = '';
       })
       .addCase(getAggregateOrder.fulfilled, (state, action) => {
         state.loading = false;
+        state.aggregateOrder_error = '';
         state.aggregateOrder = action.payload;
       })
       .addCase(getAggregateOrder.rejected, (state, action) => {
