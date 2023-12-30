@@ -10,11 +10,12 @@ import {
   updateOrderStatus,
 } from '../../adminSlice';
 import { useEffect } from 'react';
-import { Error, Loading } from '../../../../global_components';
+import { Error } from '../../../../global_components';
+import { SpinnerCircular } from 'spinners-react';
 
 const AdminOrderDetail = () => {
   const { id } = useParams();
-  const { singleOrder, loading, fetch_single_order_error } = useAppSelector(
+  const { singleOrder, fetch_single_order_error, loading } = useAppSelector(
     (state) => state.admin
   );
   const dispatch = useAppDispatch();
@@ -72,8 +73,13 @@ const AdminOrderDetail = () => {
   });
 
   if (loading) {
-    return <Loading />;
+    return (
+      <div className='w-full flex items-center justify-center h-[80vh]'>
+        <SpinnerCircular secondaryColor={'#000'} color='white' size={200} />
+      </div>
+    );
   }
+
   if (fetch_single_order_error) {
     return <Error />;
   }

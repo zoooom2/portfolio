@@ -6,10 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { orderTableDataProps } from '../../../../types';
 import { priceFormat } from '../../../../utils/constants';
 import { changeSideMenuValue } from '../../adminSlice';
-import { Error, Loading } from '../../../../global_components';
+import { Error } from '../../../../global_components';
+import { SpinnerCircular } from 'spinners-react';
 
 const AdminOrders = () => {
-  const { orders, loading, fetch_order_error } = useAppSelector(
+  const { orders, fetch_order_error, loading } = useAppSelector(
     (state) => state.admin
   );
   const dispatch = useAppDispatch();
@@ -66,7 +67,11 @@ const AdminOrders = () => {
   );
 
   if (loading) {
-    return <Loading />;
+    return (
+      <div className='w-full flex items-center justify-center h-[80vh]'>
+        <SpinnerCircular secondaryColor={'#000'} color='white' size={200} />
+      </div>
+    );
   }
 
   if (fetch_order_error) {

@@ -40,6 +40,7 @@ const AdminProductForm = ({
     formImages,
     isFormValid,
     submit_product_error,
+    loading,
   } = useAppSelector((state) => state.admin);
 
   const { single_product } = useAppSelector((state) => state.product);
@@ -281,6 +282,7 @@ const AdminProductForm = ({
           title={'Product'}
           subtitle={'Product Details'}
           description={'Create new product'}
+          disableBtn={loading}
           button={[
             {
               icon: AiOutlinePlus,

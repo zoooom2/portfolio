@@ -10,7 +10,7 @@ import {
   setAdminRoute,
 } from '../adminSlice';
 import { removeProduct } from '../../productFeature/productSlice';
-import { Navbar, Sidebar } from '../../../global_components';
+import { Loading, Navbar, Sidebar } from '../../../global_components';
 import AdminMenuButtons from './AdminMenuButtons';
 import { adminLinks } from '../../../utils/constants';
 import AdminSideMenu from './AdminSideMenu';
@@ -20,8 +20,14 @@ import Modal from './Layout/Modal';
 const AdminRoutes = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const { openModal, modalRef, modalTitle, singleOrder, sideMenuValue } =
-    useAppSelector((state) => state.admin);
+  const {
+    openModal,
+    modalRef,
+    modalTitle,
+    singleOrder,
+    sideMenuValue,
+    loading,
+  } = useAppSelector((state) => state.admin);
 
   useEffect(() => {
     if (!isAuthenticated) dispatch(fetchProfile());
@@ -64,6 +70,8 @@ const AdminRoutes = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
         </div>
       </main>
     </Wrapper>
+  ) : loading ? (
+    <Loading />
   ) : (
     <Navigate to={`/login?redirectTo=${location.pathname}`} />
   );

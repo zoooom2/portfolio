@@ -14,6 +14,7 @@ const Hero = ({
   customPeriod,
   periodChangeFn,
   buttonType,
+  disableBtn,
 }: HeroProps) => {
   const { period } = useAppSelector((state) => state.admin);
   const dispatch = useAppDispatch();
@@ -38,7 +39,8 @@ const Hero = ({
         index === 0
           ? 'bg-black text-white hover:bg-white hover:border border-black hover:text-black'
           : 'bg-white text-black border border-black hover:bg-black hover:border-none hover:text-white'
-      }`}>
+      } ${disableBtn ? 'cursor-not-allowed' : ''}`}
+      disabled={disableBtn}>
       <div>{x.icon({})}</div>
       <div className=' '>{x.name}</div>
     </button>

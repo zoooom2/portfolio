@@ -310,6 +310,7 @@ export type HeroProps = {
   description: string;
   timeBased?: boolean;
   buttonType?: boolean;
+  disableBtn?: boolean;
   customPeriod?: 'daily' | 'weekly' | 'monthly' | 'yearly';
   periodChangeFn?: (e: ChangeEvent<HTMLSelectElement>) => void;
   button?: {

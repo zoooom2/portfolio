@@ -3,7 +3,8 @@ import { changeSideMenuValue, getAggregateOrder } from '../../adminSlice';
 import { useAppDispatch, useAppSelector } from '../../../../App/hooks';
 import Hero from '../Layout/Hero';
 import AdminTopProductBody from './AdminTopProductBody';
-import { Error, Loading } from '../../../../global_components';
+import { Error } from '../../../../global_components';
+import { SpinnerCircular } from 'spinners-react';
 
 const AdminTopProducts = () => {
   const [period, setPeriod] = useState<
@@ -28,7 +29,11 @@ const AdminTopProducts = () => {
   };
 
   if (loading) {
-    return <Loading />;
+    return (
+      <div className='w-full flex items-center justify-center h-[80vh]'>
+        <SpinnerCircular secondaryColor={'#000'} color='white' size={200} />
+      </div>
+    );
   }
 
   if (aggregateOrder_error) {

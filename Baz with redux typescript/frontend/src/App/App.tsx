@@ -70,12 +70,16 @@ const App = () => {
           <Route
             path='/login'
             element={
-              isAuthenticated ? <Navigate to='/admin/' /> : <LoginPage />
+              isAuthenticated ? (
+                <Navigate to='/admin/overview' />
+              ) : (
+                <LoginPage />
+              )
             }
           />
 
           <Route element={<AdminRoutes isAuthenticated={isAuthenticated} />}>
-            <Route path='/admin' element={<Navigate to='/admin/overview' />} />
+            <Route path='/admin/' element={<Navigate to='/admin/overview' />} />
 
             <Route path='/admin/overview' element={<AdminOverview />} />
 

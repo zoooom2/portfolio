@@ -7,9 +7,13 @@ import { changeSideMenuValue, toggleDelBtn } from '../../adminSlice';
 import AdminProductBody from './AdminProductBody';
 import { useEffect } from 'react';
 import { fetchProducts } from '../../../productFeature/productSlice';
+import { SpinnerCircular } from 'spinners-react';
+import { Error } from '../../../../global_components';
 const AdminProduct = () => {
   const dispatch = useAppDispatch();
-  const { single_product } = useAppSelector((state) => state.product);
+  const { single_product, products_loading, products_error } = useAppSelector(
+    (state) => state.product
+  );
   const { showDelBtn } = useAppSelector((state) => state.admin);
   const navigate = useNavigate();
 
@@ -24,6 +28,18 @@ const AdminProduct = () => {
   const handleAddNewProduct = () => {
     navigate('/admin/product/create');
   };
+
+  if (products_loading) {
+    return (
+      <div className='w-full flex items-center justify-center h-[80vh]'>
+        <SpinnerCircular secondaryColor={'#000'} color='white' size={200} />
+      </div>
+    );
+  }
+
+  if (products_error) {
+    return <Error />;
+  }
 
   return (
     <section className='flex flex-col w-full'>
