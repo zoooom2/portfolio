@@ -35,12 +35,10 @@ const Nav = ({ buttons, admin }: { buttons: JSX.Element; admin: boolean }) => {
     <NavContainer className='place-center bg-baz-white flex flex-col gap-4 pb-[18px]'>
       <div className={admin ? 'admin-nav-center' : 'nav-center'}>
         <div className='flex items-center justify-between'>
-          <Link to={adminRoute ? '/admin' : '/'} className='h-[80px]'>
-            <img
-              src={BAZLogo}
-              alt='logo'
-              className='object-contain w-full h-full'
-            />
+          <Link
+            to={adminRoute ? '/admin' : '/'}
+            className='h-[80px] border-rose-500 border'>
+            <img src={BAZLogo} alt='logo' className='object-contain h-full' />
           </Link>
           <div className='nav-toggle'>
             <FaBars
