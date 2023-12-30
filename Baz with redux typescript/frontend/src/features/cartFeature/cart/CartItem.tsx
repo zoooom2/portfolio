@@ -20,8 +20,8 @@ const CartItem = ({
     e: KeyboardEvent<HTMLInputElement> | ChangeEvent<HTMLInputElement>
   ) => {
     if (e.target instanceof HTMLInputElement) {
-      let value = +e.target.value;
-      value = value > max ? max : value;
+      let value: number | string = +e.target.value;
+      value = value > max ? max : value < 1 ? '' : Number(value);
 
       dispatch(setAmount({ id: productID, value, size }));
     }
