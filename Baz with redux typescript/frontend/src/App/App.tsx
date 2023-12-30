@@ -66,14 +66,13 @@ const App = () => {
             <Route path='/checkout/:params' element={<CheckoutPage />} />
             <Route path='/order' element={<OrderPage />} />
             <Route path='/delivery' element={<DeliveryPage />} />
-
-            <Route
-              path='/login'
-              element={
-                isAuthenticated ? <Navigate to='/admin/' /> : <LoginPage />
-              }
-            />
           </Route>
+          <Route
+            path='/login'
+            element={
+              isAuthenticated ? <Navigate to='/admin/' /> : <LoginPage />
+            }
+          />
 
           <Route element={<AdminRoutes isAuthenticated={isAuthenticated} />}>
             <Route path='/admin' element={<Navigate to='/admin/overview' />} />

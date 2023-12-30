@@ -7,9 +7,11 @@ const Entry = () => {
   const dispatch = useAppDispatch();
   return (
     <Wrapper
-      className='flex-column place-center absolute z-[10000] bg-baz-white top-0 left-0 h-screen w-screen cursor-pointer'
+      className='flex-column gap-[32px] place-center absolute z-[10000] bg-baz-white top-0 left-0 h-screen w-screen cursor-pointer'
       onClick={() => dispatch(setClicked(true))}>
-      <img src={BAZLogo} alt='' className='w-3/5 ' />
+      <div className='flex justify-center laptop:w-1/2'>
+        <img src={BAZLogo} alt='' className='w-3/5 ' />
+      </div>
       <p className='font-baz2 font-medium text-[16px] leading-[19px] tracking-[0.255em]'>
         click to enter
       </p>
@@ -18,11 +20,11 @@ const Entry = () => {
 };
 
 const Wrapper = styled.div`
-  img {
-    @media (min-width: 768px) {
-      width: 400px;
-    }
-  }
+  // img {
+  //   @media (min-width: 768px) {
+  //     width: 400px;
+  //   }
+  // }
 `;
 
 export default Entry;

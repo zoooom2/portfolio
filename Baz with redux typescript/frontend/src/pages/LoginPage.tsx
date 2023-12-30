@@ -83,8 +83,8 @@ const LoginPage = () => {
       <form
         className='bg-opacity-60 border border-gray-200 bg-clip-padding h-fit w-full tablet:w-1/2 laptop:w-1/3 flex flex-col gap-[48px] justify-center tablet:p-12  px-4 py-10 bg-baz-white shadow-lg rounded-3xl'
         style={{ backdropFilter: '20px' }}>
-        <div className='w-full justify-center flex'>
-          <img src={BAZLogo} alt='Logo' />
+        <div className='w-full justify-center flex h-[100px]'>
+          <img src={BAZLogo} alt='Logo' className='object-contain' />
         </div>
         <div className='flex flex-col gap-[24px]'>
           <div

@@ -244,7 +244,7 @@ export const shippingChart = {
 } as Record<string, number>;
 
 export const BAZLogo =
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1700295242/image_2-removebg-preview_s5cssh.png';
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_2500/v1703932967/paywb2uewgpy0kylpskq.png';
 
 export const sizeAbbr = {
   small: 'S',
