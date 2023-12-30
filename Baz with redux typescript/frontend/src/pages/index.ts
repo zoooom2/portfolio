@@ -9,6 +9,8 @@ import LoginPage from './LoginPage';
 import OrderPage from './OrderPage';
 import ContactPage from './ContactPage';
 import DeliveryPage from './DeliveryPage';
+import TermsAndCondition from './TermsAndCondition';
+import Privacy from './Privacy';
 
 export {
   ThesisPage,
@@ -22,4 +24,6 @@ export {
   OrderPage,
   ContactPage,
   DeliveryPage,
+  TermsAndCondition,
+  Privacy,
 };

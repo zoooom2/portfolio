@@ -15,6 +15,8 @@ import {
   SingleProductPage,
   ProductPage,
   DeliveryPage,
+  Privacy,
+  TermsAndCondition,
 } from '../pages';
 const ThesisPage = lazy(() => import('../pages/ThesisPage'));
 const CartPage = lazy(() => import('../pages/CartPage'));
@@ -66,6 +68,8 @@ const App = () => {
             <Route path='/checkout/:params' element={<CheckoutPage />} />
             <Route path='/order' element={<OrderPage />} />
             <Route path='/delivery' element={<DeliveryPage />} />
+            <Route path='/terms-of-use' element={<TermsAndCondition />} />
+            <Route path='/privacy' element={<Privacy />} />
           </Route>
           <Route
             path='/login'
