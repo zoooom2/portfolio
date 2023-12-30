@@ -34,7 +34,7 @@ const Nav = ({ buttons, admin }: { buttons: JSX.Element; admin: boolean }) => {
   return (
     <NavContainer className='place-center bg-baz-white flex flex-col gap-4 pb-[18px]'>
       <div className={admin ? 'admin-nav-center' : 'nav-center'}>
-        <div className='nav-header bg-baz-white'>
+        <div className='flex items-center justify-between'>
           <Link to={adminRoute ? '/admin' : '/'} className='h-[80px]'>
             <img
               src={BAZLogo}
@@ -90,16 +90,7 @@ const NavContainer = styled.nav`
     margin: 0 auto;
     max-width: var(--max-width);
   }
-  .nav-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    // img {
-    //   width: 90px;
-    //   height: 70px;
-    //   margin-left: -15px;
-    // }
-  }
+
   .nav-toggle {
     background: transparent;
     border: transparent;
@@ -131,7 +122,7 @@ const NavContainer = styled.nav`
     .nav-links {
       display: flex;
       align-items: flex-start;
-      gap: 32px;
+      gap: 48px;
       justify-content: center;
       li {
         margin: 0 0.5rem;
