@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <!-- Homepage -->
+   <url>
+      <loc>https://www.bazofficial.com/</loc>
+      <changefreq>daily</changefreq>
+      <priority>1.0</priority>
+   </url>
+
+   <!-- Product Pages -->
+   <url>
+      <loc>https://www.bazofficial.com/shop</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+   
+
+   <!-- Category Pages -->
+   <url>
+      <loc>https://www.bazofficial.com/categories/men</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
+   <url>
+      <loc>https://www.bazofficial.com/categories/women</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.7</priority>
+   </url>
+
+   <!-- About Us Page -->
+   <url>
+      <loc>https://www.bazofficial.com/about-us</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.5</priority>
+   </url>
+
+   <!-- Contact Page -->
+   <url>
+      <loc>https://www.bazofficial.com/contact</loc>
+      <changefreq>monthly</changefreq>
+      <priority>0.5</priority>
+   </url>
+</urlset>

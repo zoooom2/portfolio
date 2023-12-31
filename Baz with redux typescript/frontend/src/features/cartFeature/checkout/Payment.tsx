@@ -115,7 +115,6 @@ const Wrapper = styled.main`
     font-family: 'Poppins';
     font-size: 15px;
     line-height: 32px;
-    /* identical to box height */
     text-transform: uppercase;
     color: #5c5c5c;
   }

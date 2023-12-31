@@ -1,12 +1,14 @@
-import { useEffect } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import { getUniqueValues } from '../utils/helpers';
+import { useSearchParams } from 'react-router-dom';
 
 import {
   filterProduct,
   loadProducts,
   sortProduct,
-  updateCollectionProduct,
+  updateCollection,
+  // updateCollectionProduct,
   updateFilters,
 } from '../features/filterFeature/filterSlice';
 import { fetchProducts } from '../features/productFeature/productSlice';
@@ -17,6 +19,7 @@ import ProductList from '../features/productFeature/product/ProductList';
 import { Loading } from '../global_components';
 
 const ProductsPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const { all_products, filtered_product, filtered_collection, sort, filters } =
     useAppSelector((state) => state.filter);
@@ -27,7 +30,6 @@ const ProductsPage = () => {
   useEffect(() => {
     document.title = 'Shop | Baz Official Store';
     dispatch(fetchProducts(url));
-
     dispatch(fetchProducts(url));
   }, []);
 
@@ -40,7 +42,40 @@ const ProductsPage = () => {
     dispatch(loadProducts(products));
   }, [products]);
 
-  const { category } = filters;
+  useEffect(() => {
+    const category = searchParams.get('category');
+    const collection = searchParams.get('collection');
+    if (collection) {
+      dispatch(updateCollection(collection.toLowerCase()));
+    }
+    if (category) {
+      dispatch(
+        updateFilters({ name: 'category', value: category.toLowerCase() })
+      );
+    }
+  }, [dispatch, searchParams]);
+
+  const handleCollectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(updateCollection(e.target.value));
+    if (e.target.value === 'all') {
+      searchParams.delete('collection');
+    } else {
+      searchParams.set('collection', e.target.value);
+    }
+    setSearchParams(searchParams);
+  };
+
+  const handleCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(updateFilters({ name: 'category', value: e.target.value }));
+    if (e.target.value === 'all') {
+      searchParams.delete('category');
+    } else {
+      searchParams.set('category', e.target.value);
+    }
+    setSearchParams(searchParams);
+  };
+
+  const { category, collection } = filters;
 
   const categories = getUniqueValues(filtered_collection, 'category');
   const collections = getUniqueValues(all_products, 'collectionName');
@@ -55,23 +90,16 @@ const ProductsPage = () => {
             <select
               name='collection'
               className='font-baz2 text-[20px] font-semibold tracking-[2px] bg-baz-white outline-none w-fit'
-              onChange={(e) => {
-                dispatch(
-                  updateFilters({ name: 'collection', value: e.target.value })
-                );
-                dispatch(updateFilters({ name: 'category', value: 'all' }));
-                const filtered = all_products.filter((p) =>
-                  e.target.value === 'all'
-                    ? all_products
-                    : p.collectionName === e.target.value
-                );
-                dispatch(updateCollectionProduct(filtered));
-              }}>
+              value={collection}
+              onChange={handleCollectionChange}>
               <option value={'all'} className='text-center'>
                 All
               </option>
               {collections.map((collection, index) => (
-                <option value={collection} key={index} className='text-center'>
+                <option
+                  value={collection.toLowerCase()}
+                  key={index}
+                  className='text-center'>
                   {collection}
                 </option>
               ))}
@@ -84,17 +112,13 @@ const ProductsPage = () => {
             <select
               className='pageName bg-baz-white text-baz-black text-[14px] tracking-[1.4px] font-baz3 cursor-pointer'
               value={category}
-              onChange={(e) =>
-                dispatch(
-                  updateFilters({ name: 'category', value: e.target.value })
-                )
-              }
+              onChange={handleCategoryChange}
               name='category'>
               <option className='capitalize flex justify-around' value={'all'}>
                 Shop All
               </option>
               {categories.map((category, index) => (
-                <option value={category} key={index}>
+                <option value={category.toLowerCase()} key={index}>
                   {category}
                 </option>
               ))}

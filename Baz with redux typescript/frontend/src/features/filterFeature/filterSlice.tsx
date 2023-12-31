@@ -86,14 +86,19 @@ const filterSlice = createSlice({
         );
       }
       if (category !== 'all') {
-        temp = temp.filter((product) => product.category === category);
+        temp = temp.filter(
+          (product) => product.category.toLowerCase() === category.toLowerCase()
+        );
       }
       // if (color !== 'all') {
       //   temp = temp.filter((product) => product.color.find((c) => c === color));
       // }
       temp = temp.filter((product) => product.price <= price);
       if (collection !== 'all') {
-        temp = temp.filter((product) => product.collectionName === collection);
+        temp = temp.filter(
+          (product) =>
+            product.collectionName.toLowerCase() === collection.toLowerCase()
+        );
       }
       state.filtered_product = temp;
     },
@@ -107,8 +112,20 @@ const filterSlice = createSlice({
       } = action.payload;
       state.filters = { ...state.filters, [name]: value };
     },
-    updateCollectionProduct: (state, action) => {
-      state.filtered_collection = [...action.payload];
+    updateCollection: (state, action) => {
+      state.filters = {
+        ...state.filters,
+        collection: action.payload,
+        category: 'all',
+      };
+
+      const filtered = state.all_products.filter((p) =>
+        action.payload === 'all'
+          ? state.all_products
+          : p.collectionName.toLowerCase() === action.payload.toLowerCase()
+      );
+
+      state.filtered_collection = [...filtered];
     },
 
     toggleFilter: (state) => {
@@ -144,7 +161,7 @@ export const {
   updateFilters,
   toggleFilter,
   clearFilters,
-  updateCollectionProduct,
+  updateCollection,
   openSearchBar,
   closeSearchBar,
 } = filterSlice.actions;

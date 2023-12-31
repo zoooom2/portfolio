@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { State } from 'country-state-city';
 import {
   ChangeEvent,
