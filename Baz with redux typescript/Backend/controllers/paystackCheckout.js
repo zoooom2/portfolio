@@ -224,6 +224,8 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
     .update(JSON.stringify(req.body))
     .digest('hex');
 
+  console.log(req.body);
+
   if (hash !== req.headers['x-paystack-signature']) {
     next(new AppError(400, 'invalid signature'));
   }
