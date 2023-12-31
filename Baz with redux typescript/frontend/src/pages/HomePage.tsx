@@ -12,10 +12,10 @@ const HomePage = () => {
     return (
       <Wrapper className='border border-baz-black'>
         <div className='tablet:w-1/2 h-full border-r border-baz-black w-full'>
-          <ImageSlider slides={featuredSlide1} timer={3001} />
+          <ImageSlider slides={featuredSlide1} timer={1500} />
         </div>
         <div className='tablet:w-1/2 max-tablet:hidden'>
-          <ImageSlider slides={featuredSlide2} timer={5001} />
+          <ImageSlider slides={featuredSlide2} timer={1000} />
         </div>
         <Link
           to='/shop'
