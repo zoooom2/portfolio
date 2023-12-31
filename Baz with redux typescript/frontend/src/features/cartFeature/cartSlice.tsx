@@ -146,7 +146,7 @@ const cartSlice = createSlice({
       const { total_items, subtotal } = state.cart.reduce(
         (total, cartItem) => {
           const { amount, price } = cartItem;
-          total.total_items += amount;
+          total.total_items += Number(amount);
           total.subtotal += price * amount;
           return total;
         },
