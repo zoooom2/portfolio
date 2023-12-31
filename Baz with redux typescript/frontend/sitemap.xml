@@ -13,24 +13,28 @@
       <loc>https://www.bazofficial.com/shop</loc>
       <changefreq>weekly</changefreq>
       <priority>0.8</priority>
+   </url> 
+   <url>
+      <loc>https://www.bazofficial.com/shop?collection=essentials</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
    </url>
-   
 
    <!-- Category Pages -->
    <url>
-      <loc>https://www.bazofficial.com/categories/men</loc>
+      <loc>https://www.bazofficial.com/shop?category=shirts</loc>
       <changefreq>weekly</changefreq>
       <priority>0.7</priority>
    </url>
    <url>
-      <loc>https://www.bazofficial.com/categories/women</loc>
+      <loc>https://www.bazofficial.com/shop?category=pants</loc>
       <changefreq>weekly</changefreq>
       <priority>0.7</priority>
    </url>
 
    <!-- About Us Page -->
    <url>
-      <loc>https://www.bazofficial.com/about-us</loc>
+      <loc>https://www.bazofficial.com/thesis</loc>
       <changefreq>monthly</changefreq>
       <priority>0.5</priority>
    </url>
