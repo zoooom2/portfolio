@@ -172,13 +172,11 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
       },
     });
 
-    console.log(order);
-
     if (!order) {
       next(new AppError('Could not create order. Please try again.', 400));
     }
     const updatedTemplate = composeOrderDetails({ data, newOrderItems });
-    console.log(updatedTemplate);
+
     sendMail({
       emailAddress: shippingInfo.email,
       subject: 'ORDER DETAILS',
@@ -186,7 +184,8 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
       html: updatedTemplate,
     });
     updateStock(orderItems);
-    res.redirect('http://bazofficial.com/order?type=success');
+    console.log('here');
+    res.redirect('https://bazofficial.com/order?type=success');
   } else {
     res.status(200).json({ data });
   }
