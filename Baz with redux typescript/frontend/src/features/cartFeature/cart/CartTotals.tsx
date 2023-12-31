@@ -5,7 +5,7 @@ import { useAppSelector } from '../../../App/hooks';
 import Conditions from '../checkout/Conditions';
 
 const CartTotals = () => {
-  const { subtotal, total_items, cart } = useAppSelector((state) => state.cart);
+  const { subtotal, cart } = useAppSelector((state) => state.cart);
 
   const cartCheck = cart.some((c) => !c.amount);
 
