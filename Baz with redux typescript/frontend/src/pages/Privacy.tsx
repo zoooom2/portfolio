@@ -1,6 +1,6 @@
 const Privacy = () => {
   return (
-    <div className='font-baz1 p-[64px] flex flex-col gap-[20px] text-[14px]'>
+    <div className='font-baz1 p-[16px] text-justify tablet:p-[64px] flex flex-col gap-[20px] text-[14px]'>
       <h2 className='text-center text-[25px]'>Privacy</h2>
       <h3 className='text-[21px]'>Introduction</h3>
       <p>
