@@ -124,8 +124,9 @@ const filterSlice = createSlice({
           ? state.all_products
           : p.collectionName.toLowerCase() === action.payload.toLowerCase()
       );
-
-      state.filtered_collection = [...filtered];
+      filtered
+        ? (state.filtered_collection = [...filtered])
+        : (state.filtered_collection = state.all_products);
     },
 
     toggleFilter: (state) => {
