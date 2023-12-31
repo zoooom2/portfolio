@@ -36,10 +36,11 @@ const Payment = ({
   const handlePayment = useCallback(
     (e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>) => {
       e.preventDefault();
+
       dispatch(
         handlePayStack({
           shippingInfo,
-          cart,
+          cart: cart.filter((c) => c.amount > 0),
           total_amount,
           total_items,
           subtotal,

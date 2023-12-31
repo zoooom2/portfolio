@@ -1,30 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-
-import {
-  countCartTotal,
-  updateCartTotal,
-} from '../features/cartFeature/cartSlice';
-import useLocalStorage from '../utils/customHooks/localStorage';
-import { useAppDispatch, useAppSelector } from '../App/hooks';
+import { useAppSelector } from '../App/hooks';
 import { CartContent } from '../features/cartFeature/cart';
 
 const CartPage = () => {
-  const dispatch = useAppDispatch();
-  const { cart, subtotal } = useAppSelector((state) => state.cart);
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const [_localStorageCart, setLocalStorageCart] = useLocalStorage('cart', []);
+  const { cart } = useAppSelector((state) => state.cart);
 
   useEffect(() => {
     document.title = 'Cart | Baz Official Store';
   }, []);
-
-  useEffect(() => {
-    dispatch(updateCartTotal());
-    dispatch(countCartTotal());
-    setLocalStorageCart(cart);
-  }, [cart, subtotal]);
 
   if (cart.length < 1) {
     return (

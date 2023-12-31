@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 import { priceFormat } from '../../../utils/constants';
-import { removeItem, setAmount } from '../../cartFeature/cartSlice';
+import {
+  countCartTotal,
+  removeItem,
+  setAmount,
+  updateCartTotal,
+} from '../../cartFeature/cartSlice';
 import { CartItemType } from '../../../types';
-import { ChangeEvent, KeyboardEvent } from 'react';
-import { useAppDispatch } from '../../../App/hooks';
+import { ChangeEvent, KeyboardEvent, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 
 const CartItem = ({
   productID,
@@ -15,6 +20,13 @@ const CartItem = ({
   max,
 }: CartItemType) => {
   const dispatch = useAppDispatch();
+  const { subtotal, cart } = useAppSelector((state) => state.cart);
+
+  useEffect(() => {
+    dispatch(updateCartTotal());
+    dispatch(countCartTotal());
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart, subtotal]);
 
   const handleChange = (
     e: KeyboardEvent<HTMLInputElement> | ChangeEvent<HTMLInputElement>

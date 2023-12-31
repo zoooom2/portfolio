@@ -184,18 +184,18 @@ export const priceFormat = (price: number) =>
   `₦${new Intl.NumberFormat('currency').format(price)}`;
 
 export const featuredSlide1 = [
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1704028255/BAZ/qndw87gggu57u5ixi2vr.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1704028249/BAZ/iyuqka7ylridrb5p2ztj.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1704028248/BAZ/hnueavbi3nmlkqutaxxe.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1704028241/BAZ/rewfxidldlsaoyafop2n.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1704028238/BAZ/jk6dtbzwljes5mzrq4hi.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500/v1704028255/BAZ/qndw87gggu57u5ixi2vr.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500/v1704028249/BAZ/iyuqka7ylridrb5p2ztj.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500/v1704028248/BAZ/hnueavbi3nmlkqutaxxe.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500/v1704028241/BAZ/rewfxidldlsaoyafop2n.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500/v1704028238/BAZ/jk6dtbzwljes5mzrq4hi.jpg',
 ];
 export const featuredSlide2 = [
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1704028237/BAZ/ii3wbwyflmxkznzfqoit.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1704028234/BAZ/zmfsbhvbsumhdr0pzmpd.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1704028249/BAZ/iyuqka7ylridrb5p2ztj.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1704028248/BAZ/hnueavbi3nmlkqutaxxe.jpg',
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1704028241/BAZ/rewfxidldlsaoyafop2n.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500/v1704028237/BAZ/ii3wbwyflmxkznzfqoit.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500/v1704028234/BAZ/zmfsbhvbsumhdr0pzmpd.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500/v1704028249/BAZ/iyuqka7ylridrb5p2ztj.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500/v1704028248/BAZ/hnueavbi3nmlkqutaxxe.jpg',
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500/v1704028241/BAZ/rewfxidldlsaoyafop2n.jpg',
 ];
 
 export const products_url = `${import.meta.env.VITE_BAZ_SERVER_URL}/products/`;

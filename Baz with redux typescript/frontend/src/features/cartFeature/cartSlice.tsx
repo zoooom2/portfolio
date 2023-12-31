@@ -84,11 +84,11 @@ const cartSlice = createSlice({
       if (tempItem) {
         const tempCart = state.cart.map((cartItem) => {
           if (cartItem.productID === id && cartItem.size === size) {
-            let newAmount = cartItem.amount + amount;
+            let newAmount = cartItem.amount + Number(amount);
             if (newAmount > cartItem.max) {
               newAmount = cartItem.max;
             }
-            return { ...cartItem, amount: newAmount };
+            return { ...cartItem, amount: Number(newAmount) };
           } else {
             return cartItem;
           }
@@ -97,7 +97,7 @@ const cartSlice = createSlice({
       } else {
         const newItem = {
           productName: product.productName,
-          amount,
+          amount: Number(amount),
           size,
           image: product.images[0],
           price: product.price,

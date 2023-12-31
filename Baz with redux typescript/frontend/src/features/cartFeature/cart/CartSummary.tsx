@@ -10,21 +10,24 @@ const CartSummary = () => {
   );
   const [show, setShow] = useState(false);
 
-  const content = cart.map((cartItem, key) => (
-    <li key={key} className='grid grid-cols-2'>
-      <div className='name-size-quantity'>
-        <div className='font-baz2 text-[14px] tracking-[1.4px] tablet:text-[21px] tablet:tracking-[2.1px]'>
-          {cartItem.productName}
-        </div>
-        <div className='font-baz2 text-[14px] tablet:text-[21px] tracking-[1.4px] tablet:tracking-[2.1px]'>
-          {cartItem.size}-[{cartItem.amount}]
-        </div>
-      </div>
-      <div className='font-baz1 text-[16px] tablet:text-[24px] text-right'>
-        {priceFormat(cartItem.price)}
-      </div>
-    </li>
-  ));
+  const content = cart.map(
+    (cartItem, key) =>
+      cartItem.amount && (
+        <li key={key} className='grid grid-cols-2'>
+          <div className='name-size-quantity'>
+            <div className='font-baz2 text-[14px] tracking-[1.4px] tablet:text-[21px] tablet:tracking-[2.1px]'>
+              {cartItem.productName}
+            </div>
+            <div className='font-baz2 text-[14px] tablet:text-[21px] tracking-[1.4px] tablet:tracking-[2.1px]'>
+              {cartItem.size}-[{cartItem.amount}]
+            </div>
+          </div>
+          <div className='font-baz1 text-[16px] tablet:text-[24px] text-right self-start'>
+            {priceFormat(cartItem.price)}
+          </div>
+        </li>
+      )
+  );
   return (
     <Wrapper className='w-full tablet:py-[75px] py-[45px] border-t border-black border-dashed'>
       <div className='grid grid-cols-2'>

@@ -24,7 +24,7 @@ const arrangeCart = (orderItems) => {
           size: item.size,
           quantity: item.amount,
         });
-        acc.totalQuantity += item.amount;
+        acc.totalQuantity += Number(item.amount);
         return acc;
       },
       {
@@ -47,9 +47,9 @@ const composeOrderDetails = ({ data, newOrderItems }) => {
   let content = '';
 
   newOrderItems.forEach((item) => {
-    content += `<tr><td>${item.productName}</td><td>${
+    content += `<tr><td>${item.productName}</td><td>${Number(
       item.totalQuantity
-    }</td><td>${item.totalQuantity * item.price}</td></tr>`;
+    )}</td><td>${item.totalQuantity * item.price}</td></tr>`;
   });
 
   const replacements = {
@@ -65,7 +65,7 @@ const composeOrderDetails = ({ data, newOrderItems }) => {
     '%STATE%': data.metadata.shippingInfo.state,
     '%SUBTOTAL%': data.metadata.subtotal,
     '%SHIPPING_FEE%': data.metadata.shippingInfo.shippingFee,
-    '%TOTAL%': data.metadata.subtotal + data.metadata.shippingInfo.shippingFee,
+    '%TOTAL%': data.metadata.total_amount,
     '%ADDITIONAL_INFO%': data.metadata.shippingInfo.additionalInfo,
   };
   let updatedTemplate = emailOrderTemplate;

@@ -12,21 +12,15 @@ import {
   CheckoutStage,
   Payment,
 } from '../features/cartFeature/checkout';
-import useLocalStorage from '../utils/customHooks/localStorage';
+
 import { Link } from 'react-router-dom';
 
 const CheckoutPage = () => {
   const { params } = useParams();
   const [stage, setStage] = useState(1);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_localStorageShipping, setLocalStorageShipping] = useLocalStorage(
-    'shipping',
-    []
-  );
 
   const dispatch = useAppDispatch();
   const { shippingInfo } = useAppSelector((state) => state.cart);
-  // const
 
   useEffect(() => {
     document.title = 'Checkout | Baz Official Store';
@@ -38,7 +32,7 @@ const CheckoutPage = () => {
   }, []);
 
   useEffect(() => {
-    setLocalStorageShipping(shippingInfo);
+    localStorage.setItem('shippingInfo', JSON.stringify(shippingInfo));
   }, [shippingInfo]);
 
   return (
@@ -91,9 +85,7 @@ const Wrapper = styled.div`
     display: grid;
     place-items: center;
 
-    // padding-inline: 1em;
     @media (min-width: 480px) {
-      // width: 95%;
     }
     @media (min-width: 768px) {
       width: 70%;
