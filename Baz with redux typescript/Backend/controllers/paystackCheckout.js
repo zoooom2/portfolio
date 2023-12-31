@@ -23,7 +23,9 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         ? `${process.env.CLIENT_URL}/order`
         : `${process.env.LOCAL_CLIENT_URL}/order`,
     amount: helper.addFeesTo(req.body.total_amount * 100),
+    metadata: { ...req.body },
   });
+
   res.status(200).json({ data: session.data.authorization_url });
 });
 
