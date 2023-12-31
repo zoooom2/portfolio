@@ -156,7 +156,6 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
     const newOrderItems = arrangeCart(orderItems);
 
     const order = await Order.create({
-      // eslint-disable-next-line node/no-unsupported-features/es-syntax
       shippingInfo,
       additionalInfo: shippingInfo.additionalInfo,
       total_amount: subtotal + shippingInfo.shippingFee,
