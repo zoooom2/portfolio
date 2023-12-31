@@ -16,7 +16,7 @@ export const handlePayStack = createAsyncThunk(
     'shippingInfo' | 'cart' | 'total_amount' | 'total_items' | 'subtotal'
   >) => {
     const response = await axios.post(
-      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/paystack/checkout-session`,
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/paystack/webhook`,
       {
         shippingInfo: { ...shippingInfo },
         orderItems: cart,
