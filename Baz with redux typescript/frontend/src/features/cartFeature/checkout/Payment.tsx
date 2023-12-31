@@ -86,6 +86,7 @@ const Payment = ({
       {/* <div className='dashed'></div> */}
       <CartSummary />
       <button
+        disabled={!total_amount}
         className='w-full laptop:w-3/5 self-center zilla-700 flex justify-center items-center border border-black py-[20px] hover:text-baz-white hover:bg-baz-black tablet:text-[24px] text-[16px]'
         onClick={handlePayment}>
         {loading ? (
