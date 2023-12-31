@@ -106,6 +106,10 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     phone: phoneNumber,
     email,
     amount: helper.addFeesTo(req.body.total_amount * 100),
+    callback_url:
+      process.env.NODE_ENV === 'development'
+        ? `${process.env.LOCAL_CLIENT_URL}/order`
+        : `${process.env.CLIENT_URL}/order`,
     metadata: { ...req.body },
   });
 
@@ -184,9 +188,6 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
       html: updatedTemplate,
     });
     updateStock(orderItems);
-    console.log('here');
-    res.redirect('https://bazofficial.com/order?type=success');
-  } else {
-    res.status(200).json({ data });
+    res.status(200);
   }
 });
