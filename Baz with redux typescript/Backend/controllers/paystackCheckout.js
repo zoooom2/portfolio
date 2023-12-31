@@ -44,13 +44,16 @@ const arrangeCart = (orderItems) => {
 };
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
-  const { firstName, lastName, email } = req.body.shippingInfo;
+  const { firstName, lastName, email, phoneNumber } = req.body.shippingInfo;
   const helper = new paystack.FeeHelper();
-  const name = `${firstName} ${lastName}`;
+  // const name = `${firstName} ${lastName}`;
+  console.log(req.body);
 
   //1) Initialize the transaction
   const session = await paystack.transaction.initialize({
-    name,
+    first_name: firstName,
+    last_name: lastName,
+    phone: phoneNumber,
     email,
     callback_url:
       process.env.NODE_ENV === 'production'
@@ -233,7 +236,7 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
 
   if (event === 'success') {
     // const newOrderItems = arrangeCart();
-    console.log(data);
+    console.log(data.cart);
   }
 
   res.status(200).json({ data });
