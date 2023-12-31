@@ -9,6 +9,40 @@ const getUniqueValues = require('../utils/uniqueValues');
 const { sendMail } = require('../utils/email');
 const { emailOrderTemplate } = require('../utils/templates');
 
+const arrangeCart = (orderItems) => {
+  const uniqueID = getUniqueValues(orderItems, 'productID');
+  const newOrderItems = uniqueID.map((id) => {
+    const itemsWithSameID = orderItems.filter((item) => item.productID === id);
+
+    const baseObject = itemsWithSameID.reduce(
+      (acc, item) => {
+        acc.productID = id;
+        acc.productName = item.productName;
+        acc.price = item.price;
+        acc.image = item.image;
+        acc.sizes.push({
+          size: item.size,
+          quantity: item.amount,
+        });
+        acc.totalQuantity += item.amount;
+        return acc;
+      },
+      {
+        productName: '',
+        price: 0,
+        totalQuantity: 0,
+        image: '',
+        sizes: [],
+        productID: '',
+      }
+    );
+
+    return baseObject;
+  });
+
+  return newOrderItems;
+};
+
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const { firstName, lastName, email } = req.body.shippingInfo;
   const helper = new paystack.FeeHelper();
@@ -28,15 +62,6 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 
   res.status(200).json({ data: session.data.authorization_url });
 });
-
-// const verifyPaystackTransaction = (reference) => async (req, res, next) => {
-//   const verification = await paystack.transaction.verify({ reference });
-
-//   if (verification.data.status !== 'success') {
-//     next(new AppError('payment transaction verification failed', 401));
-//   } m
-//   return verification;
-// };
 
 exports.createOrder = catchAsync(async (req, res, next) => {
   //2) Verify the transaction
@@ -193,22 +218,20 @@ exports.updatePayStackOrder = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: 'success', order });
 });
 
-exports.payStackWebHook = catchAsync(async (req, res) => {
+exports.payStackWebHook = catchAsync(async (req, res, next) => {
   const hash = crypto
     .createHmac('sha512', process.env.PAYSTACK_SECRET_KEY)
     .update(JSON.stringify(req.body))
     .digest('hex');
-  if (hash === req.headers['x-paystack-signature']) {
-    // Retrieve the request's body
-    const event = req.body;
-    console.log(event);
+
+  if (hash !== req.headers['x-paystack-signature']) {
+    next(new AppError(400, 'invalid signature'));
+  }
+  const { event, data } = req.body;
+
+  if (event === 'success') {
+    // const newOrderItems = arrangeCart();
   }
 
-  res.status(200).json({});
+  res.status(200).json({ data });
 });
-
-// exports.filterUpdateOrder = catchAsync(async (req, res, next) => {
-//   const { orderStatus, deliveredAt } = req.body;
-//   req.body = { orderStatus, deliveredAt };
-//   next();
-// });
