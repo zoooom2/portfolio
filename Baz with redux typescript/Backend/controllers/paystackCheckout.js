@@ -43,11 +43,61 @@ const arrangeCart = (orderItems) => {
   return newOrderItems;
 };
 
+const composeOrderDetails = ({ data, newOrderItems }) => {
+  let content = '';
+
+  newOrderItems.forEach((item) => {
+    content += `<tr><td>${item.productName}</td><td>${
+      item.totalQuantity
+    }</td><td>${item.totalQuantity * item.price}</td></tr>`;
+  });
+
+  const replacements = {
+    '%FIRSTNAME%': data.metadata.shippingInfo.firstName,
+    '%LASTNAME%': data.metadata.shippingInfo.lastName,
+    '%REFERENCE%': data.reference.toUpperCase(),
+    '%DATE%': new Date(data.created_at).toLocaleString('en-GB'),
+    '%ORDERS%': content,
+    '%PHONE%': data.metadata.shippingInfo.phoneNumber,
+    '%EMAIL%': data.metadata.shippingInfo.email,
+    '%ADDRESS%': data.metadata.shippingInfo.address,
+    '%CITY%': data.metadata.shippingInfo.city,
+    '%STATE%': data.metadata.shippingInfo.state,
+    '%SUBTOTAL%': data.metadata.subtotal,
+    '%SHIPPING_FEE%': data.metadata.shippingInfo.shippingFee,
+    '%TOTAL%': data.metadata.subtotal + data.metadata.shippingInfo.shippingFee,
+    '%ADDITIONAL_INFO%': data.metadata.shippingInfo.additionalInfo,
+  };
+  let updatedTemplate = emailOrderTemplate;
+
+  Object.keys(replacements).forEach((key) => {
+    updatedTemplate = updatedTemplate.replace(
+      new RegExp(key, 'g'),
+      replacements[key]
+    );
+  });
+
+  return updatedTemplate;
+};
+
+const updateStock = (orderItems) => {
+  orderItems.forEach(async (item) => {
+    const product = await Product.findById(item.productID);
+    const index = product.sizes.findIndex(
+      (productSize) => productSize.size === item.size
+    );
+    product.sizes[index] = {
+      size: item.size,
+      quantity: product.sizes[index].quantity - item.amount,
+      custom: product.sizes[index].custom,
+    };
+    product.save();
+  });
+};
+
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const { firstName, lastName, email, phoneNumber } = req.body.shippingInfo;
   const helper = new paystack.FeeHelper();
-  // const name = `${firstName} ${lastName}`;
-  console.log(req.body);
 
   //1) Initialize the transaction
   const session = await paystack.transaction.initialize({
@@ -64,138 +114,6 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 
   res.status(200).json({ data: session.data.authorization_url });
-});
-
-exports.createOrder = catchAsync(async (req, res, next) => {
-  //2) Verify the transaction
-  // const verification = await verifyPaystackTransaction(req.body.reference);
-  const verification = await paystack.transaction.verify({
-    reference: req.body.reference,
-  });
-
-  if (verification.data.status !== 'success') {
-    next(new AppError('payment transaction verification failed', 401));
-  }
-
-  const orderItems = req.body.cart;
-
-  const uniqueID = getUniqueValues(orderItems, 'productID');
-
-  // pick the unique id, check each of the order items for any with the same unique ID, if it is the first copy all of its content into an object else just size and quantity into the sizes array
-  const newOrderItems = uniqueID.map((id) => {
-    const itemsWithSameID = orderItems.filter((item) => item.productID === id);
-
-    const baseObject = itemsWithSameID.reduce(
-      (acc, item) => {
-        acc.productID = id;
-        acc.productName = item.productName;
-        acc.price = item.price;
-        acc.image = item.image;
-        acc.sizes.push({
-          size: item.size,
-          quantity: item.amount,
-        });
-        acc.totalQuantity += item.amount;
-        return acc;
-      },
-      {
-        productName: '',
-        price: 0,
-        totalQuantity: 0,
-        image: '',
-        sizes: [],
-        productID: '',
-      }
-    );
-
-    return baseObject;
-  });
-  //3) create the order
-
-  const { shippingInfo, subtotal, total_items: totalItems } = req.body;
-
-  const order = await Order.create({
-    // eslint-disable-next-line node/no-unsupported-features/es-syntax
-    shippingInfo,
-    additionalInfo: shippingInfo.additionalInfo,
-    total_amount: subtotal + shippingInfo.shippingFee,
-    subtotal,
-    total_items: totalItems,
-    orderItems: newOrderItems,
-    paidAt: verification.data.paid_at,
-    createdAt: verification.data.created_at,
-    paymentInfo: {
-      reference: verification.data.reference,
-      channel: verification.data.channel,
-      status: verification.data.status,
-      gateway: 'PAYSTACK',
-    },
-  });
-
-  if (!order) {
-    next(new AppError('Could not create order. Please try again.', 400));
-  }
-
-  let content = '';
-
-  newOrderItems.forEach((item) => {
-    content += `<tr><td>${item.productName}</td><td>${
-      item.totalQuantity
-    }</td><td>${item.totalQuantity * item.price}</td></tr>`;
-  });
-
-  const replacements = {
-    '%FIRSTNAME%': shippingInfo.firstName,
-    '%LASTNAME%': shippingInfo.lastName,
-    '%REFERENCE%': verification.data.reference.toUpperCase(),
-    '%DATE%': new Date(verification.data.created_at).toLocaleString('en-GB'),
-    '%ORDERS%': content,
-    '%PHONE%': shippingInfo.phoneNumber,
-    '%EMAIL%': shippingInfo.email,
-    '%ADDRESS%': shippingInfo.address,
-    '%CITY%': shippingInfo.city,
-    '%STATE%': shippingInfo.state,
-    '%SUBTOTAL%': subtotal,
-    '%SHIPPING_FEE%': shippingInfo.shippingFee,
-    '%TOTAL%': subtotal + shippingInfo.shippingFee,
-    '%ADDITIONAL_INFO%': shippingInfo.additionalInfo,
-  };
-  let updatedTemplate = emailOrderTemplate;
-
-  Object.keys(replacements).forEach((key) => {
-    updatedTemplate = updatedTemplate.replace(
-      new RegExp(key, 'g'),
-      replacements[key]
-    );
-  });
-
-  sendMail({
-    emailAddress: shippingInfo.email,
-    subject: 'ORDER DETAILS',
-    text: JSON.stringify(order),
-    html: updatedTemplate,
-  });
-
-  //4) update the stock of each product
-
-  orderItems.forEach(async (item) => {
-    const product = await Product.findById(item.productID);
-    const index = product.sizes.findIndex(
-      (productSize) => productSize.size === item.size
-    );
-    product.sizes[index] = {
-      size: item.size,
-      quantity: product.sizes[index].quantity - item.amount,
-      custom: product.sizes[index].custom,
-    };
-    product.save();
-  });
-
-  // 5) Create session as response
-  res.status(200).json({
-    status: 'success',
-    order,
-  });
 });
 
 exports.updatePayStackOrder = catchAsync(async (req, res, next) => {
@@ -231,10 +149,46 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
     next(new AppError(400, 'invalid signature'));
   }
   const { event, data } = req.body;
+  const {
+    orderItems,
+    shippingInfo,
+    subtotal,
+    total_items: totalItems,
+  } = data.metadata;
 
   if (event === 'charge.success') {
-    const newOrderItems = arrangeCart(data.metadata.orderItems);
-    console.log(newOrderItems);
+    const newOrderItems = arrangeCart(orderItems);
+
+    const order = await Order.create({
+      // eslint-disable-next-line node/no-unsupported-features/es-syntax
+      shippingInfo,
+      additionalInfo: shippingInfo.additionalInfo,
+      total_amount: subtotal + shippingInfo.shippingFee,
+      subtotal,
+      total_items: totalItems,
+      orderItems: newOrderItems,
+      paidAt: data.paid_at,
+      createdAt: data.created_at,
+      paymentInfo: {
+        reference: data.reference,
+        channel: data.channel,
+        status: data.status,
+        gateway: 'PAYSTACK',
+      },
+    });
+
+    if (!order) {
+      next(new AppError('Could not create order. Please try again.', 400));
+    }
+    const updatedTemplate = composeOrderDetails({ data, newOrderItems });
+    sendMail({
+      emailAddress: shippingInfo.email,
+      subject: 'ORDER DETAILS',
+      text: JSON.stringify(order),
+      html: updatedTemplate,
+    });
+    updateStock(orderItems);
+    res.redirect('http://bazofficial.com/order?type=success');
   }
 
   res.status(200).json({ data });

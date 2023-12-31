@@ -28,7 +28,6 @@ router.get('/myOrders', getMyOrders);
 //paystack user actions
 router.post('/paystack/checkout-session', paystackCheckout.getCheckoutSession);
 router.post('/paystack/webhook', paystackCheckout.payStackWebHook);
-router.post('/paystack/createOrder', paystackCheckout.createOrder);
 
 //paypal user actions
 router.route('/paypal').post(paypalCheckout.createOrder);
