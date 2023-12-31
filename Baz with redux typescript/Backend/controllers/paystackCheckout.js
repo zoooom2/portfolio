@@ -231,6 +231,7 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
 
   if (event === 'success') {
     // const newOrderItems = arrangeCart();
+    console.log(data);
   }
 
   res.status(200).json({ data });
