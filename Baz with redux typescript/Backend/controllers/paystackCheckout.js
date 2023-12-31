@@ -227,16 +227,14 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
     .update(JSON.stringify(req.body))
     .digest('hex');
 
-  console.log(req.body);
-
   if (hash !== req.headers['x-paystack-signature']) {
     next(new AppError(400, 'invalid signature'));
   }
   const { event, data } = req.body;
 
-  if (event === 'success') {
-    // const newOrderItems = arrangeCart();
-    console.log(data.cart);
+  if (event === 'charge.success') {
+    const newOrderItems = arrangeCart(data.metadata.orderItems);
+    console.log(newOrderItems);
   }
 
   res.status(200).json({ data });
