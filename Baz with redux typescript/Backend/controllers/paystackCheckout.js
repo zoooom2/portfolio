@@ -198,8 +198,8 @@ exports.payStackWebHook = catchAsync(async (req, res) => {
     .digest('hex');
   if (hash === req.headers['x-paystack-signature']) {
     // Retrieve the request's body
-    // const event = req.body;
-    // console.log(event);
+    const event = req.body;
+    console.log(event);
   }
 
   res.status(200).json({});

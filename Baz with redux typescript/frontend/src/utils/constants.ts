@@ -112,14 +112,14 @@ export const adminSidebarLinks = [
     link: '/admin/overview/',
   },
   {
-    name: 'Product',
-    tag: 'product',
-    link: '/admin/product/',
-  },
-  {
     name: 'Orders',
     tag: 'order',
     link: '/admin/order/',
+  },
+  {
+    name: 'Product',
+    tag: 'product',
+    link: '/admin/product/',
   },
   {
     name: 'Best Seller',
@@ -228,7 +228,7 @@ export const shippingChart = {
   kebbi: 4500,
   kogi: 4500,
   kwara: 1000,
-  lagos: 2500,
+  lagos: 3500,
   nassarawa: 4500,
   niger: 4500,
   ogun: 2500,

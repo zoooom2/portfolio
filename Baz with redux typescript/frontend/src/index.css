@@ -270,3 +270,6 @@ input::placeholder {
   display: flex;
   justify-content: center;
 }
+.slider-control-bottomcenter > ul {
+  gap: 15px;
+}

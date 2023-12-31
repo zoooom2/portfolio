@@ -395,9 +395,12 @@ const adminSlice = createSlice({
       .addCase(updateOrderStatus.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateOrderStatus.fulfilled, (state) => {
+      .addCase(updateOrderStatus.fulfilled, (state, action) => {
         state.loading = false;
-        state.singleOrder = { ...state.singleOrder, orderStatus: 'completed' };
+        state.singleOrder = {
+          ...state.singleOrder,
+          orderStatus: action.payload.orderStatus,
+        };
       })
       .addCase(updateOrderStatus.rejected, (state) => {
         state.loading = true;

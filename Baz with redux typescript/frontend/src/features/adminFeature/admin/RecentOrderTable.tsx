@@ -3,6 +3,7 @@ import { OrderType } from '../../../types';
 import { priceFormat } from '../../../utils/constants';
 import Table from '../../../global_components/Table';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 type AdminRecentOrderTableProps = {
   contentArray: OrderType[];
@@ -11,9 +12,12 @@ type AdminRecentOrderTableProps = {
 const AdminRecentOrderTable = ({
   contentArray = [],
 }: AdminRecentOrderTableProps) => {
+  const navigate = useNavigate();
+
   const columns = useMemo(
     () => [
-      { Header: 'reference', accessor: 'paymentInfo.reference' },
+      // { Header: 'reference', accessor: 'paymentInfo.reference' },
+      { Header: 'Name', accessor: 'shippingInfo.firstName' },
       { Header: 'Piece(s)', accessor: 'total_items' },
       {
         Header: 'Price',
@@ -32,7 +36,13 @@ const AdminRecentOrderTable = ({
 
   return (
     <Wrapper>
-      <Table columns={columns} data={contentArray} />
+      <Table
+        columns={columns}
+        data={contentArray}
+        handleClick={(e) => {
+          navigate(`/admin/order/detail/${e.original._id}`);
+        }}
+      />
     </Wrapper>
   );
 };

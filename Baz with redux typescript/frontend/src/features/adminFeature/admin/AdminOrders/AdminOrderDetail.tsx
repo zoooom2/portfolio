@@ -30,7 +30,15 @@ const AdminOrderDetail = () => {
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    if (id) dispatch(updateOrderStatus({ id, orderStatus: 'completed' }));
+
+    if (id)
+      dispatch(
+        updateOrderStatus({
+          id,
+          orderStatus:
+            singleOrder.orderStatus === 'completed' ? 'pending' : 'completed',
+        })
+      );
   };
 
   const orderBody = singleOrder?.orderItems.map((product, index) => {
@@ -107,7 +115,9 @@ const AdminOrderDetail = () => {
             <button
               className='py-[20px] h-fit font-baz2 text-[16px] font-bold bg-baz-black text-white tablet:px-[44px] laptop:px-[88px] btn'
               onClick={handleClick}>
-              Click to complete order
+              {singleOrder.orderStatus === 'pending'
+                ? 'Click to complete order'
+                : 'Click to reverse status'}
             </button>
           </div>
         </div>
