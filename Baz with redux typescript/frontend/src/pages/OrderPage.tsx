@@ -1,34 +1,24 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+
 import {
+  clearCart,
+  clearShipping,
   countCartTotal,
   updateCartTotal,
 } from '../features/cartFeature/cartSlice';
-import { createOrder } from '../features/cartFeature/cartSlice';
+
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 import { OrderGreenSVG } from '../assets';
 
 const OrderPage = () => {
   const body = useAppSelector((state) => state.cart);
-
-  const query = new URLSearchParams(useLocation().search);
-  const reference = query.get('reference');
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     document.title = 'Order | Baz Official Store';
-    if (body.cart && body.shippingInfo && reference) {
-      dispatch(
-        createOrder({
-          body: {
-            ...body,
-            total_amount: body.subtotal + body.shippingInfo.shippingFee,
-          },
-          reference,
-        })
-      );
-    }
-  }, [reference]);
+    dispatch(clearCart());
+    dispatch(clearShipping());
+  }, []);
 
   useEffect(() => {
     dispatch(countCartTotal());

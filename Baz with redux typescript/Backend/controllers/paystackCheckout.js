@@ -105,10 +105,6 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     last_name: lastName,
     phone: phoneNumber,
     email,
-    callback_url:
-      process.env.NODE_ENV === 'production'
-        ? `${process.env.CLIENT_URL}/order`
-        : `${process.env.LOCAL_CLIENT_URL}/order`,
     amount: helper.addFeesTo(req.body.total_amount * 100),
     metadata: { ...req.body },
   });

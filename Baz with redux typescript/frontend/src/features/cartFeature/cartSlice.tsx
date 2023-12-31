@@ -33,23 +33,6 @@ export const handlePayStack = createAsyncThunk(
   }
 );
 
-export const createOrder = createAsyncThunk(
-  'order/create',
-  async ({ body, reference }: { body: CartStateType; reference: string }) => {
-    const url = `${
-      import.meta.env.VITE_BAZ_SERVER_URL
-    }/order/paystack/createOrder`;
-    const response = await axios.post(
-      url,
-      { ...body, reference },
-      {
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  }
-);
-
 const shippingInfoJSON = JSON.stringify({
   firstName: '',
   lastName: '',
@@ -172,7 +155,7 @@ const cartSlice = createSlice({
           subtotal: 0,
         }
       );
-      // return { ...state, total_items, subtotal };
+
       state.total_items = total_items;
       state.subtotal = subtotal;
       state.loading = false;
@@ -224,22 +207,6 @@ const cartSlice = createSlice({
       state.loading = false;
       state.handle_paystack_error = action.error.message as string;
     });
-    builder
-      .addCase(createOrder.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(createOrder.fulfilled, (state) => {
-        state.loading = false;
-        state.create_order_error = '';
-        state.cart = [];
-        state.shippingInfo = JSON.parse(shippingInfoJSON);
-        localStorage.removeItem('cart');
-        localStorage.removeItem('shipping');
-      })
-      .addCase(createOrder.rejected, (state, action) => {
-        state.loading = false;
-        state.create_order_error = action.error.message as string;
-      });
   },
 });
 
