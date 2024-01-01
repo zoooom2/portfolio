@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/url-gen": "^1.14.0",
     "@hookform/devtools": "^4.3.1",
     "@hookform/resolvers": "^3.3.1",
     "@reduxjs/toolkit": "^1.9.6",
@@ -19,6 +20,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.28",
     "axios": "^1.5.1",
+    "cloudinary-build-url": "^0.2.4",
     "country-state-city": "^3.2.1",
     "dotenv": "^16.3.1",
     "js-cookie": "^3.0.5",

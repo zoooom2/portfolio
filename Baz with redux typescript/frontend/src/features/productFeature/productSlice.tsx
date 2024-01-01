@@ -62,13 +62,14 @@ const productSlice = createSlice({
     builder.addCase(
       fetchProducts.fulfilled,
       (state, action: { type: string; payload: SingleProductType[] }) => {
-        const featured_products = action.payload.filter(
-          (product) => product.featured === true
-        );
+        // const featured_products = action.payload.filter(
+        //   (product) => product.featured === true
+        // );
+
         state.products_loading = false;
         state.products = action.payload;
         state.products_error = '';
-        state.featured_products = featured_products;
+        // state.featured_products = featured_products;
       }
     );
     builder.addCase(fetchProducts.rejected, (state, action) => {
