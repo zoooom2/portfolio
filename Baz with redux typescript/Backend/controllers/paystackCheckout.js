@@ -162,7 +162,7 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
     const order = await Order.create({
       shippingInfo,
       additionalInfo: shippingInfo.additionalInfo,
-      total_amount: subtotal + shippingInfo.shippingFee,
+      total_amount: Number(subtotal) + Number(shippingInfo.shippingFee),
       subtotal,
       total_items: totalItems,
       orderItems: newOrderItems,
