@@ -258,4 +258,4 @@ export const sizeAbbr = {
 };
 
 export const BAZLoading =
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/f_webp/BAZ/aulpntlh5winjyfxxo4v.jpg';
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/f_webp,w_1000/BAZ/aulpntlh5winjyfxxo4v.jpg';
