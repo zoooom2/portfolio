@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { priceFormat, products_url as url } from '../utils/constants';
+import { priceFormat } from '../utils/constants';
 import styled from 'styled-components';
 
 import { fetchSingleProduct } from '../features/productFeature/productSlice';
@@ -36,7 +36,7 @@ const SingleProductPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchSingleProduct(`${url}${id}`));
+    dispatch(fetchSingleProduct(id as string));
   }, [id]);
 
   useEffect(() => {

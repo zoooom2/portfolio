@@ -1,19 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ProductStateType, SingleProductType } from '../../types';
-import { initialSingleProduct } from '../../utils/constants';
+import {
+  initialSingleProduct,
+  products_url,
+  single_product_url,
+} from '../../utils/constants';
 
 export const fetchProducts = createAsyncThunk(
   'product/fetchProducts',
-  async (url: string) => {
-    const response = await axios.get(url);
+  async () => {
+    const response = await axios.get(products_url);
     return response.data.data;
   }
 );
 export const fetchSingleProduct = createAsyncThunk(
   'product/fetchSingleProduct',
-  async (url: string) => {
-    const response = await axios.get(url);
+  async (id: string) => {
+    const response = await axios.get(`${single_product_url}/${id}`);
     return response.data.data;
   }
 );

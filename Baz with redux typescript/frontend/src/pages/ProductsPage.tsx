@@ -12,7 +12,7 @@ import {
   updateFilters,
 } from '../features/filterFeature/filterSlice';
 import { fetchProducts } from '../features/productFeature/productSlice';
-import { products_url as url } from '../utils/constants';
+
 import { useAppDispatch, useAppSelector } from '../App/hooks';
 
 import ProductList from '../features/productFeature/product/ProductList';
@@ -29,8 +29,8 @@ const ProductsPage = () => {
 
   useEffect(() => {
     document.title = 'Shop | Baz Official Store';
-    dispatch(fetchProducts(url));
-    dispatch(fetchProducts(url));
+    dispatch(fetchProducts());
+    dispatch(fetchProducts());
   }, []);
 
   useEffect(() => {

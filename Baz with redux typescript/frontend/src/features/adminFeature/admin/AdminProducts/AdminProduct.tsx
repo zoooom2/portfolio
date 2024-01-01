@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../../../App/hooks';
 import Hero from '../Layout/Hero';
-import { products_url as url } from '../../../../utils/constants';
+
 import { AiOutlineClose, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { changeSideMenuValue, toggleDelBtn } from '../../adminSlice';
@@ -18,7 +18,7 @@ const AdminProduct = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchProducts(url));
+    dispatch(fetchProducts());
   }, [single_product]);
 
   useEffect(() => {

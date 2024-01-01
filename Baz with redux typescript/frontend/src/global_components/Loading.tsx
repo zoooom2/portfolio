@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { BAZLogo } from '../utils/constants';
+import { BAZLoading } from '../utils/constants';
 
 const Loading = () => {
   return (
     <Wrapper className='page-100 section section-center bg-baz-white'>
-      <img src={BAZLogo} alt='logo' />
+      <img src={BAZLoading} alt='logo' />
     </Wrapper>
   );
 };

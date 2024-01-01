@@ -1,7 +1,6 @@
 import { ChangeEvent, MouseEvent, SyntheticEvent, useEffect } from 'react';
 import { AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
-import { products_url as url } from '../../../../utils/constants';
 import { useAppDispatch, useAppSelector } from '../../../../App/hooks';
 import { fetchSingleProduct } from '../../../productFeature/productSlice';
 import Hero from '../Layout/Hero';
@@ -51,7 +50,7 @@ const AdminProductForm = ({
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchSingleProduct(`${url}${id}`));
+      dispatch(fetchSingleProduct(id));
     } else {
       dispatch(resetFormProduct());
       dispatch(clearFormImages());
