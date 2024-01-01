@@ -17,7 +17,7 @@ const storage = (location) =>
     cloudinary: cloudinary,
     params: {
       folder: `${location} images`,
-      allowed_formats: ['jpg', 'png'],
+      allowed_formats: ['avif', 'webp'],
       transformation: [{ width: 2500, height: 2500, crop: 'limit' }],
       public_id: (req, file) =>
         `baz_${Date.now()}-${crypto.randomBytes(8).toString('hex')}-${
@@ -104,3 +104,18 @@ exports.resizeMultiplePhotos = (length, width, name, location) =>
 
     next();
   });
+
+exports.processMultipleImages = async (req, res, next) => {
+  if (req.files) {
+    const fileImages = req.files.map((image) => image.path);
+    if (req.body.images) {
+      if (!Array.isArray(req.body.images)) {
+        req.body.images = [req.body.images];
+      }
+      req.body.images = [...req.body.images, ...fileImages];
+    } else {
+      req.body.images = [...fileImages];
+    }
+  }
+  next();
+};

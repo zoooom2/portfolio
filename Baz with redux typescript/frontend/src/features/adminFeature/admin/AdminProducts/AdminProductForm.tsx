@@ -379,7 +379,7 @@ const AdminProductForm = ({
                 type='file'
                 name='image'
                 id='image'
-                accept='image/*'
+                accept='.avif, .webp'
                 className='w-full text-[10px] px-[16px] tablet:text-[15px] min-h-[2em]'
                 multiple
                 onChange={onSelectFile}

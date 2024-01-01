@@ -7,8 +7,8 @@ const {
   getAllReviews,
 } = require('../controllers/reviewController');
 const {
-  // resizeMultiplePhotos,
   multipleSinglePhotos,
+  processMultipleImages,
 } = require('../controllers/imageHandler');
 
 const router = express.Router();
@@ -45,20 +45,7 @@ router
   .delete(deleteProduct)
   .put(
     multipleSinglePhotos([{ name: 'images', maxCount: 4 }], 'product'),
-    async (req, res, next) => {
-      if (req.files) {
-        const fileImages = req.files.map((image) => image.path);
-        if (req.body.images) {
-          if (!Array.isArray(req.body.images)) {
-            req.body.images = [req.body.images];
-          }
-          req.body.images = [...req.body.images, ...fileImages];
-        } else {
-          req.body.images = [...fileImages];
-        }
-      }
-      next();
-    },
+    processMultipleImages,
     updateProduct
   );
 

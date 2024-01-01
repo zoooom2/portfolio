@@ -198,7 +198,9 @@ export const featuredSlide2 = [
   'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_1500,f_auto/v1704028241/BAZ/rewfxidldlsaoyafop2n.jpg',
 ];
 
-export const products_url = `${import.meta.env.VITE_BAZ_SERVER_URL}/products/`;
+export const products_url = `${
+  import.meta.env.VITE_BAZ_SERVER_URL
+}/products?sort=releaseDate`;
 
 export const auth_url = `${import.meta.env.VITE_BAZ_SERVER_URL}/auth/google`;
 
