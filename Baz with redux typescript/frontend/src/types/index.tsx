@@ -61,7 +61,12 @@ export type OrderItemType = {
   price: number;
   image: string;
   sizes: { size: string; quantity: string; _id: string }[];
-  productID: string;
+  productID: {
+    id: string;
+    collectionName: string;
+    sizes: { size: string; quantity: string; _id: string }[];
+    totalQuantity: number;
+  };
 };
 
 export type PaymentInfoType = {

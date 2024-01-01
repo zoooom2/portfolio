@@ -44,7 +44,7 @@ const AdminOrderDetail = () => {
   const orderBody = singleOrder?.orderItems.map((product, index) => {
     return (
       <Link
-        to={`/admin/product/detail/${product.productID}`}
+        to={`/admin/product/detail/${product.productID.id}`}
         key={index}
         className='tablet:border tablet:border-[#b6b6b6] px-[15px] tablet:aspect-[306/328] tablet:w-[280px] tablet:h-[300px] items-center gap-[15px] w-full relative flex tablet:flex-col'>
         <div className='tablet:h-[230px] flex justify-center items-center tablet:p-3 aspect-[51/48] max-tablet:w-[60px]'>

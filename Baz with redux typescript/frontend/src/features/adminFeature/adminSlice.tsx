@@ -7,7 +7,7 @@ export const fetchOrderStats = createAsyncThunk(
   'admin/fetchOrderStats',
   async (period: string) => {
     const response = await axios.get(
-      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/pctchange?time=${period}`,
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/pctchange?period=${period}`,
       { withCredentials: true }
     );
 
@@ -18,7 +18,7 @@ export const fetchVisitorStats = createAsyncThunk(
   'admin/fetchVisitorStats',
   async (period: string) => {
     const response = await axios.get(
-      `${import.meta.env.VITE_BAZ_SERVER_URL}/visitor/pctchange?time=${period}`,
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/visitor/pctchange?period=${period}`,
       { withCredentials: true }
     );
     return response.data.stats;
