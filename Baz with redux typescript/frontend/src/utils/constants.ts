@@ -200,7 +200,7 @@ export const featuredSlide2 = [
 
 export const products_url = `${
   import.meta.env.VITE_BAZ_SERVER_URL
-}/products?sort=releaseDate`;
+}/products?sort=productName`;
 
 export const auth_url = `${import.meta.env.VITE_BAZ_SERVER_URL}/auth/google`;
 
