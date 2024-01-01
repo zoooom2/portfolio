@@ -110,7 +110,7 @@ const aggregator = async (Model, start, stop, period, time, newField) => {
         },
         $or: [
           { orderStatus: { $exists: false } },
-          { orderStatus: { $in: ['completed', 'processing'] } },
+          { orderStatus: { $in: ['completed', 'pending'] } },
         ],
       },
     },
