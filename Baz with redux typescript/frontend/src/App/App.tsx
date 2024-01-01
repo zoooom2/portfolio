@@ -99,7 +99,7 @@ const App = () => {
               element={<AdminProductForm type='create' />}
             />
 
-            <Route path='/admin/order/' element={<AdminOrders />} />
+            <Route path='/admin/order' element={<AdminOrders />} />
             <Route
               path='/admin/order/detail/:id'
               element={<AdminOrderDetail />}

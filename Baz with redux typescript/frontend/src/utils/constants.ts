@@ -198,9 +198,7 @@ export const featuredSlide2 = [
   'https://res.cloudinary.com/dlk2a6ppp/image/upload/w_auto,f_webp/v1704028241/BAZ/rewfxidldlsaoyafop2n.jpg',
 ];
 
-export const products_url = `${
-  import.meta.env.VITE_BAZ_SERVER_URL
-}/products?sort=productName`;
+export const products_url = `${import.meta.env.VITE_BAZ_SERVER_URL}/products`;
 
 export const single_product_url = `${
   import.meta.env.VITE_BAZ_SERVER_URL
@@ -260,4 +258,4 @@ export const sizeAbbr = {
 };
 
 export const BAZLoading =
-  'https://res.cloudinary.com/dlk2a6ppp/image/upload/q_auto:best/f_webp/BAZ/aulpntlh5winjyfxxo4v.jpg';
+  'https://res.cloudinary.com/dlk2a6ppp/image/upload/f_webp/BAZ/aulpntlh5winjyfxxo4v.jpg';

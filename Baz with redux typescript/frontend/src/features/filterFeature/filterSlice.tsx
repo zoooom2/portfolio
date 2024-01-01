@@ -13,7 +13,7 @@ const filterSlice = createSlice({
     filtered_collection: [],
     all_products: [],
     grid_view: false,
-    sort: 'price-lowest',
+    sort: 'name-a',
     openFilter: false,
     openSearchBar: false,
     filters: {
