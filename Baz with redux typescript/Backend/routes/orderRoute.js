@@ -16,7 +16,6 @@ const {
   updateOrder,
   getMyOrders,
   orderPerTime,
-
   percentageChangeOrder,
 } = OrderController;
 

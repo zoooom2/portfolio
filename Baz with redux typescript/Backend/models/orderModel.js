@@ -17,7 +17,6 @@ const orderSchema = new Schema({
         message: (props) => `${props.value} is not a valid phone number!`,
       },
     },
-    test: { type: String, required: [true, 'chill out its testing'] },
     address: {
       type: String,
       required: [true, 'shipping address is required'],
