@@ -156,7 +156,7 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
     total_items: totalItems,
   } = data.metadata;
 
-  if (event === 'charge.success' && data.domain === 'live') {
+  if (event === 'charge.success') {
     const newOrderItems = arrangeCart(orderItems);
 
     const order = await Order.create({
