@@ -189,5 +189,7 @@ exports.payStackWebHook = catchAsync(async (req, res, next) => {
     });
     updateStock(orderItems);
     res.status(200);
+  } else {
+    res.status(500);
   }
 });
