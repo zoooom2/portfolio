@@ -12,11 +12,12 @@ const orderSchema = new Schema({
       // required: true,
       validate: {
         validator: function (v) {
-          return /\d{3}\d{3}\d{4}/.test(v);
+          return /^(?:\+234\d{10}|0\d{10})$/.test(v.replace(/\s/g, ''));
         },
         message: (props) => `${props.value} is not a valid phone number!`,
       },
     },
+    test: { type: String, required: [true, 'chill out its testing'] },
     address: {
       type: String,
       required: [true, 'shipping address is required'],

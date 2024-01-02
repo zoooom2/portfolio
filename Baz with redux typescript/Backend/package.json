@@ -9,7 +9,7 @@
     "start:prod": "SET NODE_ENV=production&node server.js",
     "debug": "ndb server.js",
     "build": "npm i",
-    "pm2-start":"pm2-runtime start pm2.config.js"
+    "pm2-start": "pm2-runtime start pm2.config.js"
   },
   "author": "Adeyinka Roqeeb",
   "license": "ISC",

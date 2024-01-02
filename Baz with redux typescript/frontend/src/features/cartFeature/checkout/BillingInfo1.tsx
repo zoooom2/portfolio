@@ -164,9 +164,9 @@ const BillingInfo = ({
             onChange={onChange}
             name='phoneNumber'
             placeholder='Phone Number'
-            value={shippingInfo.phoneNumber}
+            value={shippingInfo.phoneNumber.replace(/\s/g, '')}
             className='w-full text-[10px] font-baz1 px-[16px] tablet:text-[15px]'
-            // pattern={/(234)[0-9]{9}/}
+            pattern='^(?:\+234\d{10}|0\d{10})$'
             required
           />
         </div>
