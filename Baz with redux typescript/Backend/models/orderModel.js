@@ -9,7 +9,7 @@ const orderSchema = new Schema({
     email: { type: String, required: [true, 'email is required'] },
     phoneNumber: {
       type: String,
-      // required: true,
+      required: true,
       validate: {
         validator: function (v) {
           return /^(?:\+234\d{10}|0\d{10})$/.test(v.replace(/\s/g, ''));
