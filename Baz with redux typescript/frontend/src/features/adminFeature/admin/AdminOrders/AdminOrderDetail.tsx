@@ -137,6 +137,9 @@ const AdminOrderDetail = () => {
           <div>{singleOrder?.shippingInfo.phoneNumber}</div>
           <div>{singleOrder?.shippingInfo.email}</div>
           <div>{`${singleOrder?.shippingInfo.address}, ${singleOrder?.shippingInfo.city}, ${singleOrder?.shippingInfo.state}`}</div>
+          {singleOrder.additionalInfo && (
+            <div>Additional Info : {singleOrder.additionalInfo}</div>
+          )}
         </div>
         <div className='flex flex-col'>
           <div className='border-b border-[#b6b6b6] flex justify-between items-center pb-2'>

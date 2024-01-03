@@ -172,6 +172,7 @@ const initialState = {
       countryCode: '',
       state: '',
     },
+    additionalInfo: '',
     orderItems: [],
     paymentInfo: { reference: '', gateway: '', channel: '', status: '' },
     createdAt: '',

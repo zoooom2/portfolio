@@ -81,6 +81,7 @@ export type OrderType = {
   shippingInfo: ShippingInfoTypes;
   // user: UserType;
   orderItems: OrderItemType[];
+  additionalInfo: string;
   paymentInfo: PaymentInfoType;
   createdAt: string;
   paidAt?: string;
