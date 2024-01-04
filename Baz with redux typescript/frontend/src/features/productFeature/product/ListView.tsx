@@ -7,7 +7,13 @@ const ListView = ({ products }: { products: SingleProductType[] }) => {
   return (
     <Wrapper className='flex flex-col tablet:hidden'>
       {products.map((product) => {
-        const { _id: id, images, productName: name, price } = product;
+        const {
+          _id: id,
+          images,
+          productName: name,
+          price,
+          totalQuantity,
+        } = product;
         return (
           <Link
             to={`/shop/${id}`}
@@ -24,7 +30,13 @@ const ListView = ({ products }: { products: SingleProductType[] }) => {
               <h4 className='text-baz-black font-baz2 text-[16px] font-semibold tracking-[1.6px]'>
                 {name}
               </h4>
-              <h5 className='font-baz1 text-[16px]'>{priceFormat(price)}</h5>
+              <div
+                className={`text-black font-normal leading-normal text-[20.926px] font-baz1 flex gap-1`}>
+                <div className={`${totalQuantity > 0 ? '' : 'line-through'}`}>
+                  {priceFormat(price)}
+                </div>
+                <div>{totalQuantity > 0 ? '' : ' Sold-Out'}</div>
+              </div>
             </div>
           </Link>
         );

@@ -16,9 +16,7 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-
     images: [{ type: String, required: true }],
-
     ratingsAverage: {
       type: Number,
       default: 5,
