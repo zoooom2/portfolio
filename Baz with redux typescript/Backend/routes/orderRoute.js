@@ -39,6 +39,7 @@ router.route('/stripe-checkout').post(getCheckoutSession);
 router.use(protect);
 router.use(restrictTo('admin'));
 
+router.route('/paystack/verify/:reference').get(paystackCheckout.verifyOrder);
 router.route('/paystack/:id').patch(paystackCheckout.updatePayStackOrder);
 router.route('/').get(getAllOrders);
 router.get('/totalOrder', orderPerTime);

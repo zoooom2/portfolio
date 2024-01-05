@@ -116,6 +116,66 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   res.status(200).json({ data: session.data.authorization_url });
 });
 
+exports.verifyOrder = catchAsync(async (req, res, next) => {
+  const verified = await paystack.transaction.verify({
+    reference: req.params.reference,
+  });
+
+  const {
+    data: {
+      paid_at: paidAt,
+      created_at: createdAt,
+      reference,
+      channel,
+      status,
+      domain,
+      metadata: { orderItems, shippingInfo, subtotal, total_items: totalItems },
+    },
+  } = verified;
+
+  console.log(verified.data.metadata);
+
+  if (status !== 'success')
+    next(new AppError('invalid payment reference', 401));
+  if (domain === 'live') {
+    const newOrderItems = arrangeCart(orderItems);
+
+    const order = await Order.create({
+      shippingInfo,
+      additionalInfo: shippingInfo.additionalInfo,
+      total_amount: Number(subtotal) + Number(shippingInfo.shippingFee),
+      subtotal,
+      total_items: totalItems,
+      orderItems: newOrderItems,
+      paidAt,
+      createdAt,
+      paymentInfo: {
+        reference: reference,
+        channel: channel,
+        status: status,
+        gateway: 'PAYSTACK',
+      },
+    });
+
+    if (!order) {
+      next(new AppError('Could not create order. Please try again.', 400));
+    }
+    const updatedTemplate = composeOrderDetails({
+      data: verified.data,
+      newOrderItems,
+    });
+
+    sendMail({
+      emailAddress: shippingInfo.email,
+      subject: 'ORDER DETAILS',
+      text: JSON.stringify(order),
+      html: updatedTemplate,
+    });
+    updateStock(orderItems);
+    res.status(200);
+  }
+});
+
 exports.updatePayStackOrder = catchAsync(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
   const { status } = req.query;
