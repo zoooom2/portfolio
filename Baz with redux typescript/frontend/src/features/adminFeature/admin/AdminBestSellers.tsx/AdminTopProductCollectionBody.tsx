@@ -23,11 +23,11 @@ const AdminTopProductCollectionBody = ({
           />
         </div>
         <div className='flex justify-between items-start max-tablet:border-b border-[#b6b6b6] w-full max-tablet:py-[24px]'>
-          <div className='flex flex-col'>
-            <div className='text-black font-baz1 text-[14px] tablet:text-[18px] capitalize'>
+          <div className='flex flex-col w-7/12'>
+            <div className='text-black font-baz1 text-[14px] tablet:text-[18px] capitalize truncate hover:whitespace-normal'>
               {product.productName}
             </div>
-            <div className='text-[#2A2A2A] text-[14px] font-baz1 flex gap-2 '>
+            <div className='text-[#2A2A2A] text-[14px] font-baz1 flex gap-2'>
               {/* <div></div> */}
               {product.sizes.map(({ size, quantity }, index) => {
                 return (
