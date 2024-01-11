@@ -232,7 +232,7 @@ export const shippingChart = {
   kogi: 4500,
   kwara: 1000,
   lagos: 3500,
-  nassarawa: 4500,
+  nasarawa: 4500,
   niger: 4500,
   ogun: 2500,
   ondo: 2500,
