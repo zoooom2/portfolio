@@ -129,7 +129,13 @@ exports.verifyOrder = catchAsync(async (req, res, next) => {
       channel,
       status,
       domain,
-      metadata: { orderItems, shippingInfo, subtotal, total_items: totalItems },
+      metadata: {
+        orderItems,
+        shippingInfo,
+        subtotal,
+        total_amount: totalAmount,
+        total_items: totalItems,
+      },
     },
   } = verified;
 
@@ -143,7 +149,7 @@ exports.verifyOrder = catchAsync(async (req, res, next) => {
     const order = await Order.create({
       shippingInfo,
       additionalInfo: shippingInfo.additionalInfo,
-      total_amount: Number(subtotal) + Number(shippingInfo.shippingFee),
+      total_amount: totalAmount,
       subtotal,
       total_items: totalItems,
       orderItems: newOrderItems,
