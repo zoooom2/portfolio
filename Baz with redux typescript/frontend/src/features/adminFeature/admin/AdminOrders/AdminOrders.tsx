@@ -37,6 +37,7 @@ const AdminOrders = () => {
   const columns = useMemo(
     () => [
       { Header: 'Email', accessor: 'shippingInfo.email' },
+      { Header: 'Name', accessor: 'shippingInfo.firstName' },
       // { Header: 'Reference', accessor: 'paymentInfo.reference' }, //some orders have just name instead
       { Header: 'Date', accessor: 'createdAt' },
       {

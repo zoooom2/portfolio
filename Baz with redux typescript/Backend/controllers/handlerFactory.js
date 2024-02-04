@@ -122,12 +122,6 @@ const aggregator = async (Model, start, stop, period, time, newField) => {
       },
     },
     {
-      $unwind: {
-        path: '$orderItems',
-        preserveNullAndEmptyArrays: true,
-      },
-    },
-    {
       $group: groupFields,
     },
   ]);
