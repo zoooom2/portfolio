@@ -122,23 +122,6 @@ const Wrapper = styled.main`
     width: 100%;
     justify-content: space-between;
   }
-  // .product-name {
-  //   font-family: 'Poppins';
-  //   font-size: 16px;
-  //   /* identical to box height */
-  //   letter-spacing: 2.4px;
-  //   font-weight: 600;
-  // }
-  // .product-price {
-  //   font-family: 'Poppins';
-  //   font-size: 16px;
-  // }
-  // .desc {
-  //   font-family: 'Poppins';
-  //   font-size: 15px;
-  //   line-height: 25px;
-  //   letter-spacing: 0.02em;
-  // }
   .size {
     display: flex;
     flex-direction: column;

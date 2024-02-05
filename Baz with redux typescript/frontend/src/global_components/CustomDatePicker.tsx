@@ -17,7 +17,6 @@ const CustomDatePicker = () => {
   };
 
   useEffect(() => {
-    console.log(selectedRange[0]);
     const start = new Date(
       selectedRange[0].startDate.toISOString()
     ).toLocaleDateString('en-GB', {
