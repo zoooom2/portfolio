@@ -273,3 +273,6 @@ input::placeholder {
 .slider-control-bottomcenter > ul {
   gap: 15px;
 }
+.rdrDefinedRangesWrapper {
+  display: none;
+}

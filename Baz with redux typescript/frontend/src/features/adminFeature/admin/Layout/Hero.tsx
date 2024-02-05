@@ -1,9 +1,10 @@
 import { ChangeEvent, useCallback } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import { FaCalendarAlt } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from '../../../../App/hooks';
 import { HeroProps } from '../../../../types';
 import { periodOption } from '../../../../utils/constants';
-import { changeTimeRange } from '../../adminSlice';
+import { changeTimeRange, openCustomCalendar } from '../../adminSlice';
 
 const Hero = ({
   title,
@@ -16,10 +17,17 @@ const Hero = ({
   buttonType,
   disableBtn,
 }: HeroProps) => {
-  const { period } = useAppSelector((state) => state.admin);
+  const { period, customPeriod: customDate } = useAppSelector(
+    (state) => state.admin
+  );
   const dispatch = useAppDispatch();
   const changePeriod = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value as 'daily' | 'weekly' | 'monthly' | 'yearly';
+    const value = e.target.value as
+      | 'daily'
+      | 'weekly'
+      | 'monthly'
+      | 'yearly'
+      | 'custom';
 
     dispatch(changeTimeRange(value));
   }, []);
@@ -59,18 +67,29 @@ const Hero = ({
       </div>
       <div className='flex gap-7'>
         {timeBased ? (
-          <div className='flex items-center h-12 gap-1 focus:border focus:border-solid focus:border-black'>
-            <select
-              className='border-none font-baz1 text-[14px] tablet:text-[20px] tablet:leading-[30px] capitalize cursor-pointer appearance-none pl-2 focus:border-none focus:outline-none'
-              name='period'
-              id='period'
-              value={customPeriod ? customPeriod : period}
-              onChange={periodChangeFn ? periodChangeFn : changePeriod}>
-              {options}
-            </select>
-            <label className='flex text-2xl items-center' htmlFor='period'>
-              <MdKeyboardArrowDown />
-            </label>
+          <div className='flex items-center gap-2'>
+            <div className='flex items-center h-12 gap-1 focus:border focus:border-solid focus:border-black'>
+              <select
+                className='border-none font-baz1 text-[14px] tablet:text-[20px] tablet:leading-[30px] capitalize cursor-pointer appearance-none pl-2 focus:border-none focus:outline-none'
+                name='period'
+                id='period'
+                value={customPeriod ? customPeriod : period}
+                onChange={periodChangeFn ? periodChangeFn : changePeriod}>
+                {options}
+              </select>
+              <label className='flex text-2xl items-center' htmlFor='period'>
+                <MdKeyboardArrowDown />
+              </label>
+            </div>
+            {customDate && (
+              <button
+                className='text-[14px] tablet:text-[20px] tablet:leading-[30px]'
+                onClick={() => {
+                  dispatch(openCustomCalendar());
+                }}>
+                <FaCalendarAlt />
+              </button>
+            )}
           </div>
         ) : (
           buttons

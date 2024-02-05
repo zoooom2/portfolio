@@ -129,6 +129,7 @@ export const adminSidebarLinks = [
 ];
 
 export const periodOption = [
+  { name: 'custom', value: 'custom' },
   { name: 'today', value: 'daily' },
   { name: 'This week', value: 'weekly' },
   { name: 'This month', value: 'monthly' },

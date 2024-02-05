@@ -10,11 +10,16 @@ import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 import Hero from './Layout/Hero';
 import {
   changeSideMenuValue,
+  closeCustomCalendar,
+  disableCustomPeriod,
+  enableCustomPeriod,
   fetchOrderStats,
   fetchVisitorStats,
   getTopProducts,
 } from '../adminSlice';
 import { useEffect } from 'react';
+import Modal from '../../../global_components/Modal';
+import CustomDatePicker from '../../../global_components/CustomDatePicker';
 
 const AdminOverview = () => {
   const dispatch = useAppDispatch();
@@ -23,10 +28,34 @@ const AdminOverview = () => {
 
   useEffect(() => {
     document.title = 'Admin | Baz Official Store';
-    dispatch(getTopProducts(state.period));
-    dispatch(fetchOrderStats(state.period));
-    dispatch(fetchVisitorStats(state.period));
+    if (state.period !== 'custom') {
+      dispatch(disableCustomPeriod());
+      dispatch(getTopProducts({ period: state.period }));
+      dispatch(fetchOrderStats({ period: state.period }));
+      dispatch(fetchVisitorStats(state.period));
+    } else {
+      dispatch(enableCustomPeriod());
+    }
   }, [state.period]);
+
+  useEffect(() => {
+    if (!state.showCustomCalendar) {
+      dispatch(
+        fetchOrderStats({
+          period: state.period,
+          start: state.customDateStart,
+          end: state.customDateEnd,
+        })
+      );
+      dispatch(
+        getTopProducts({
+          period: state.period,
+          start: state.customDateStart,
+          end: state.customDateEnd,
+        })
+      );
+    }
+  }, [state.showCustomCalendar]);
 
   useEffect(() => {
     dispatch(changeSideMenuValue('overview'));
@@ -77,6 +106,14 @@ const AdminOverview = () => {
         description={'Stay up to date with your store current status'}
         timeBased={true}
       />
+      {state.showCustomCalendar && (
+        <Modal
+          content={<CustomDatePicker />}
+          closeModal={() => {
+            dispatch(closeCustomCalendar());
+          }}
+        />
+      )}
       <div className='py-5 gap-5 flex-col flex  '>
         <div className='flex overflow-x-auto gap-[16px] py-4'>{analytics}</div>
         <div className='grid gap-y-6 laptop:grid-cols-2 gap-x-3'>

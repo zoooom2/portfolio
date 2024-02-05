@@ -1,15 +1,23 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { changeSideMenuValue, getAggregateOrder } from '../../adminSlice';
+import { ChangeEvent, useEffect } from 'react';
+import {
+  changeSideMenuValue,
+  changeTimeRange,
+  closeCustomCalendar,
+  disableCustomPeriod,
+  enableCustomPeriod,
+  getAggregateOrder,
+} from '../../adminSlice';
 import { useAppDispatch, useAppSelector } from '../../../../App/hooks';
 import Hero from '../Layout/Hero';
 import AdminTopProductBody from './AdminTopProductBody';
 import { Error } from '../../../../global_components';
 import { SpinnerCircular } from 'spinners-react';
+import CustomDatePicker from '../../../../global_components/CustomDatePicker';
+import Modal from '../../../../global_components/Modal';
 
 const AdminTopProducts = () => {
-  const [period, setPeriod] = useState<
-    'daily' | 'weekly' | 'monthly' | 'yearly'
-  >('monthly');
+  const { period, showCustomCalendar, customDateEnd, customDateStart } =
+    useAppSelector((state) => state.admin);
   const { loading, aggregateOrder_error } = useAppSelector(
     (state) => state.admin
   );
@@ -20,12 +28,34 @@ const AdminTopProducts = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getAggregateOrder(period));
+    if (period !== 'custom') {
+      dispatch(getAggregateOrder({ period }));
+      dispatch(disableCustomPeriod());
+    } else {
+      dispatch(enableCustomPeriod());
+    }
   }, [period]);
 
+  useEffect(() => {
+    if (!showCustomCalendar) {
+      dispatch(
+        getAggregateOrder({
+          period: period,
+          start: customDateStart,
+          end: customDateEnd,
+        })
+      );
+    }
+  }, [showCustomCalendar]);
+
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value as 'daily' | 'weekly' | 'monthly' | 'yearly';
-    setPeriod(value);
+    const value = e.target.value as
+      | 'daily'
+      | 'weekly'
+      | 'monthly'
+      | 'yearly'
+      | 'custom';
+    dispatch(changeTimeRange(value));
   };
 
   if (loading) {
@@ -49,6 +79,14 @@ const AdminTopProducts = () => {
         customPeriod={period}
         timeBased
       />
+      {showCustomCalendar && (
+        <Modal
+          content={<CustomDatePicker />}
+          closeModal={() => {
+            dispatch(closeCustomCalendar());
+          }}
+        />
+      )}
       <AdminTopProductBody />
     </div>
   );

@@ -255,7 +255,11 @@ export type AdminState = {
   fetch_best_seller_error: string;
   aggregateOrder_error: string;
   product_error: string;
-  period: 'daily' | 'weekly' | 'monthly' | 'yearly';
+  showCustomCalendar: boolean;
+  customDateStart: string;
+  customDateEnd: string;
+  customPeriod: boolean;
+  period: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom';
   totalRevenue: number;
   previousTotalRevenue: number;
   totalOrder: number;
@@ -317,7 +321,7 @@ export type HeroProps = {
   timeBased?: boolean;
   buttonType?: boolean;
   disableBtn?: boolean;
-  customPeriod?: 'daily' | 'weekly' | 'monthly' | 'yearly';
+  customPeriod?: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom';
   periodChangeFn?: (e: ChangeEvent<HTMLSelectElement>) => void;
   button?: {
     icon: IconType;

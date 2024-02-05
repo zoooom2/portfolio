@@ -163,20 +163,40 @@ exports.getTotalModelPerTime = (Model, newField) =>
 exports.percentageChangeModel = (Model, newField) =>
   catchAsync(async (req, res) => {
     const { time } = req.query;
+    let { customTimeStart, customTimeEnd } = req.query;
+
+    let currentTimeStart;
+    let currentTimeEnd;
+    let previousTimeStart;
+    let previousTimeEnd;
+    let totalDays;
+
     const timeRange = {
+      custom: 'custom',
       daily: 'day',
       weekly: 'week',
       monthly: 'month',
       yearly: 'year',
     };
-    const currentTimeStart = moment().startOf(timeRange[time] || 'day');
-    const currentTimeEnd = moment().endOf(timeRange[time] || 'day');
-    const previousTimeStart = moment()
-      .startOf(timeRange[time] || 'day')
-      .subtract(1, timeRange[time] || 'day');
-    const previousTimeEnd = moment()
-      .endOf(timeRange[time] || 'day')
-      .subtract(1, timeRange[time] || 'day');
+
+    if (time !== 'custom') {
+      currentTimeStart = moment().startOf(timeRange[time] || 'day');
+      currentTimeEnd = moment().endOf(timeRange[time] || 'day');
+      previousTimeStart = moment()
+        .startOf(timeRange[time] || 'day')
+        .subtract(1, timeRange[time] || 'day');
+      previousTimeEnd = moment()
+        .endOf(timeRange[time] || 'day')
+        .subtract(1, timeRange[time] || 'day');
+    } else {
+      customTimeStart = moment(customTimeStart, 'DD/MM/YYYY');
+      customTimeEnd = moment(customTimeEnd, 'DD/MM/YYYY');
+      currentTimeStart = customTimeStart;
+      currentTimeEnd = customTimeEnd;
+      totalDays = currentTimeEnd.diff(currentTimeStart, 'days', true);
+      previousTimeStart = customTimeStart.clone().subtract(totalDays, 'days');
+      previousTimeEnd = customTimeStart.clone();
+    }
 
     const currentTime = await aggregator(
       Model,

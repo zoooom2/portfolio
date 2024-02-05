@@ -1,3 +1,4 @@
+const moment = require('moment');
 const Order = require('../models/orderModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
@@ -13,7 +14,7 @@ exports.percentageChangeOrder = factory.percentageChangeModel(Order, [
   { field: 'Total Orders', acc: 1 },
 ]);
 
-const pickTime = (period) => {
+const pickTime = (period, start, end) => {
   let dateFilter = {};
 
   if (period === 'daily') {
@@ -66,6 +67,15 @@ const pickTime = (period) => {
         $lt: endOfYear,
       },
     };
+  } else if (period === 'custom') {
+    const startTime = start;
+    const endTime = end;
+    dateFilter = {
+      createdAt: {
+        $gte: moment(startTime, 'DD/MM/YYYY').toDate(),
+        $lte: moment(endTime, 'DD/MM/YYYY').toDate(),
+      },
+    };
   }
   return dateFilter;
 };
@@ -73,7 +83,11 @@ const pickTime = (period) => {
 exports.aggregateOrders = catchAsync(async (req, res) => {
   const data = await Order.aggregate([
     {
-      $match: pickTime(req.query.period),
+      $match: pickTime(
+        req.query.period,
+        req.query.customTimeStart,
+        req.query.customTimeEnd
+      ),
     },
     {
       $unwind: '$orderItems',
@@ -139,7 +153,11 @@ exports.aggregateOrders = catchAsync(async (req, res) => {
 exports.bestSellers = catchAsync(async (req, res) => {
   const data = await Order.aggregate([
     {
-      $match: pickTime(req.query.period),
+      $match: pickTime(
+        req.query.period,
+        req.query.customTimeStart,
+        req.query.customTimeEnd
+      ),
     },
     {
       $unwind: '$orderItems',

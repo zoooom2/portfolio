@@ -5,9 +5,23 @@ import { initialSingleProduct } from '../../utils/constants';
 
 export const fetchOrderStats = createAsyncThunk(
   'admin/fetchOrderStats',
-  async (period: string) => {
+  async ({
+    period,
+    start,
+    end,
+  }: {
+    period: string;
+    start?: string;
+    end?: string;
+  }) => {
     const response = await axios.get(
-      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/pctchange?time=${period}`,
+      `${import.meta.env.VITE_BAZ_SERVER_URL}/order/pctchange?time=${period}${
+        start && end
+          ? `&customTimeStart=${encodeURIComponent(
+              start
+            )}&customTimeEnd=${encodeURIComponent(end)}`
+          : ''
+      }`,
       { withCredentials: true }
     );
 
@@ -101,11 +115,25 @@ export const updateOrderStatus = createAsyncThunk(
 
 export const getTopProducts = createAsyncThunk(
   'admin/getTopProducts',
-  async (period: 'daily' | 'weekly' | 'monthly' | 'yearly') => {
+  async ({
+    period,
+    start,
+    end,
+  }: {
+    period: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom';
+    start?: string;
+    end?: string;
+  }) => {
     const response = await axios.get(
       `${
         import.meta.env.VITE_BAZ_SERVER_URL
-      }/order/bestSellers?period=${period}`,
+      }/order/bestSellers?period=${period}${
+        start && end
+          ? `&customTimeStart=${encodeURIComponent(
+              start
+            )}&customTimeEnd=${encodeURIComponent(end)}`
+          : ''
+      }`,
       { withCredentials: true }
     );
     return response.data.data;
@@ -113,11 +141,25 @@ export const getTopProducts = createAsyncThunk(
 );
 export const getAggregateOrder = createAsyncThunk(
   'admin/aggregateOrder',
-  async (period: 'daily' | 'weekly' | 'monthly' | 'yearly') => {
+  async ({
+    period,
+    start,
+    end,
+  }: {
+    period: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom';
+    start?: string;
+    end?: string;
+  }) => {
     const response = await axios.get(
       `${
         import.meta.env.VITE_BAZ_SERVER_URL
-      }/order/aggregateOrder?period=${period}`,
+      }/order/aggregateOrder?period=${period}${
+        start && end
+          ? `&customTimeStart=${encodeURIComponent(
+              start
+            )}&customTimeEnd=${encodeURIComponent(end)}`
+          : ''
+      }`,
       { withCredentials: true }
     );
 
@@ -142,7 +184,11 @@ const initialState = {
   submit_product_error: '',
   aggregateOrder_error: '',
   product_error: '',
+  customPeriod: false,
+  showCustomCalendar: false,
   period: 'monthly',
+  customDateStart: '',
+  customDateEnd: '',
   totalRevenue: 0,
   previousTotalRevenue: 0,
   totalOrder: 0,
@@ -206,10 +252,27 @@ const adminSlice = createSlice({
       state,
       action: {
         type: string;
-        payload: 'daily' | 'weekly' | 'monthly' | 'yearly';
+        payload: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom';
       }
     ) => {
       state.period = action.payload;
+    },
+    setCustomDate: (state, action) => {
+      state.customDateStart = action.payload.start;
+      state.customDateEnd = action.payload.end;
+    },
+
+    enableCustomPeriod: (state) => {
+      state.customPeriod = true;
+    },
+    disableCustomPeriod: (state) => {
+      state.customPeriod = false;
+    },
+    openCustomCalendar: (state) => {
+      state.showCustomCalendar = true;
+    },
+    closeCustomCalendar: (state) => {
+      state.showCustomCalendar = false;
     },
     setAdminRoute: (state, action) => {
       state.adminRoute = action.payload;
@@ -425,6 +488,11 @@ const adminSlice = createSlice({
 
 export const {
   changeTimeRange,
+  enableCustomPeriod,
+  disableCustomPeriod,
+  setCustomDate,
+  openCustomCalendar,
+  closeCustomCalendar,
   openAdminModal,
   closeAdminModal,
   toggleDelBtn,
