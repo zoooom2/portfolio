@@ -12,7 +12,7 @@ const DeliveryPage = () => {
       <div className='grid grid-cols-2 divide-x divide-black border-b border-black justify-center '>
         <div className='py-[45px] w-full font-baz1 text-[10px] tablet:text-[16px] leading-[200.5%] tracking-[1px] tablet:tracking-[1.6px] flex flex-col items-center'>
           <div className='font-semibold '>Interstate delivery</div>
-          <div>3-7 Business days</div>
+          <div>3-10 Business days</div>
         </div>
         <div className='py-[45px] w-full font-baz1 text-[10px] tablet:text-[16px] leading-[200.5%] tracking-[1px] tablet:tracking-[1.6px] flex flex-col items-center'>
           <div className='font-semibold'>International delivery</div>
