@@ -17,7 +17,7 @@ const BestSellerTable = ({
             alt='product'
             className='product-img'
           />
-          <div className='product-details text-left flex-column'>
+          <div className='product-details flex-column'>
             <div className='font-baz1 text-[14px] tablet:text-[18px] leading-[27px]'>
               {content.productName}
             </div>
