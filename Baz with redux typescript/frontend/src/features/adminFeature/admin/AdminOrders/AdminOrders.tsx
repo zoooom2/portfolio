@@ -1,3 +1,4 @@
+import { BiFilterAlt } from 'react-icons/bi';
 import Hero from '../Layout/Hero';
 import { useAppDispatch, useAppSelector } from '../../../../App/hooks';
 import Table from '../../../../global_components/Table';
@@ -8,6 +9,8 @@ import { priceFormat } from '../../../../utils/constants';
 import { changeSideMenuValue } from '../../adminSlice';
 import { Error } from '../../../../global_components';
 import { SpinnerCircular } from 'spinners-react';
+import Modal from '../../../../global_components/Modal';
+import FilterModal from './FilterModal';
 
 const AdminOrders = () => {
   const { orders, fetch_order_error, loading } = useAppSelector(
@@ -85,9 +88,18 @@ const AdminOrders = () => {
         title={'Orders'}
         description={"Stay up to date with your store's current status"}
       />
+      <Modal
+        content={<FilterModal />}
+        closeModal={() => {
+          console.log('close modal');
+        }}
+      />
       <div className='flex flex-col gap-8 pt-[41px] px-[16px] tablet:p-12'>
-        <div className='font-baz1 font-medium text-[22px] tablet:text-[28px]'>
-          Order List ({orders.length})
+        <div className='font-baz1 font-medium text-[22px] tablet:text-[28px] flex justify-between items-center'>
+          <div>Order List ({orders.length})</div>
+          <div>
+            <BiFilterAlt />
+          </div>
         </div>
         <div className='w-full overflow-auto'>
           <Table
