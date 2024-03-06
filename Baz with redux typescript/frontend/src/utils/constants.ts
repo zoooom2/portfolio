@@ -209,7 +209,7 @@ export const auth_url = `${import.meta.env.VITE_BAZ_SERVER_URL}/auth/google`;
 
 export const shippingChart = {
   abia: 6000,
-  'abuja federal capital territory': 5500,
+  'abuja federal capital territory': 5000,
   adamawa: 6000,
   'akwa ibom': 6000,
   anambra: 6000,
