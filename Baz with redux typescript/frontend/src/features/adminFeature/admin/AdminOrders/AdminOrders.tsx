@@ -10,7 +10,7 @@ import { changeSideMenuValue } from '../../adminSlice';
 import { Error } from '../../../../global_components';
 import { SpinnerCircular } from 'spinners-react';
 import Modal from '../../../../global_components/Modal';
-// import FilterModal from './FilterModal';
+// import FilterModal from './FilterModal'
 
 const AdminOrders = () => {
 	const { orders, fetch_order_error, loading } = useAppSelector(
