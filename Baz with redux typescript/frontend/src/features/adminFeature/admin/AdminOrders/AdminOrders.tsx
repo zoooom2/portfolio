@@ -9,7 +9,7 @@ import { priceFormat } from '../../../../utils/constants';
 import { changeSideMenuValue } from '../../adminSlice';
 import { Error } from '../../../../global_components';
 import { SpinnerCircular } from 'spinners-react';
-import Modal from '../../../../global_components/Modal';
+// import Modal from '../../../../global_components/Modal';
 // import FilterModal from './FilterModal'
 
 const AdminOrders = () => {
