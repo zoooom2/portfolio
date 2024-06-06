@@ -29,7 +29,7 @@ app.enable('trust proxy');
 // Implement CORS
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://jamfoundation.vercel.app',  'https://jamfoundation.org.ng'],
+    origin: ['http://localhost:5173', 'https://jamfoundation.vercel.app',  'https://www.jamfoundation.org.ng'],
     methods: 'GET,POST,PATCH,DELETE',
     credentials: true,
   }),
