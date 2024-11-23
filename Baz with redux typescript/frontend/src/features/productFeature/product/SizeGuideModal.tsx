@@ -17,7 +17,7 @@ export default function Modal() {
                 <div className='relative flex-auto'>
                   <img
                     src={
-                      'https://res.cloudinary.com/dlk2a6ppp/image/upload/v1700295260/Size_Guide_v6e4ci.jpg'
+                      'https://res.cloudinary.com/dlk2a6ppp/image/upload/f_webp/v1700295260/Size_Guide_v6e4ci.jpg'
                     }
                     alt='SizeGuide'
                     className='object-contain h-[500px]'

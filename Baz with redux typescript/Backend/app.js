@@ -35,6 +35,8 @@ app.use(
     origin: [
       'https://www.bazofficial.com',
       'https://bazofficial.com',
+       'https://bazofficial.xyz',
+      'https://www.bazofficial.xyz',
       'http://localhost:5173',
     ],
     methods: 'GET,POST,PATCH,DELETE,PUT',
