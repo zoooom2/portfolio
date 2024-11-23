@@ -15,8 +15,9 @@ const UserRoutes = () => {
 		if (clicked) dispatch(setClicked(true));
 		dispatch(setAdminRoute(false));
 	}, []);
+
 	useEffect(() => {
-		fetchProfile();
+		dispatch(fetchProfile());
 	}, []);
 
 	return loading ? (
