@@ -3,14 +3,14 @@ import { fetchProfile, setClicked } from '../userSlice';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 import { setAdminRoute } from '../../adminFeature/adminSlice';
-import { Navbar, Sidebar } from '../../../global_components';
+import { Loading, Navbar, Sidebar } from '../../../global_components';
 import { CartButtons } from '../../cartFeature/cart';
 import { links } from '../../../utils/constants';
 
 const UserRoutes = () => {
 	const dispatch = useAppDispatch();
 	const { clicked } = useAppSelector((state) => state.user);
-	const { isAuthenticated } = useAppSelector((state) => state.user);
+	const { isAuthenticated, loading } = useAppSelector((state) => state.user);
 	useEffect(() => {
 		if (clicked) dispatch(setClicked(true));
 		dispatch(setAdminRoute(false));
@@ -19,7 +19,9 @@ const UserRoutes = () => {
 		fetchProfile();
 	}, []);
 
-	return isAuthenticated ? (
+	return loading ? (
+		<Loading />
+	) : isAuthenticated ? (
 		<>
 			<Navbar
 				buttons={<CartButtons />}
