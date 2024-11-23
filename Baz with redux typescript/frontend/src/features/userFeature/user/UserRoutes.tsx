@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { setClicked } from '../userSlice';
+import { fetchProfile, setClicked } from '../userSlice';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../App/hooks';
 import { setAdminRoute } from '../../adminFeature/adminSlice';
@@ -14,6 +14,9 @@ const UserRoutes = () => {
 	useEffect(() => {
 		if (clicked) dispatch(setClicked(true));
 		dispatch(setAdminRoute(false));
+	}, []);
+	useEffect(() => {
+		fetchProfile();
 	}, []);
 
 	return isAuthenticated ? (
