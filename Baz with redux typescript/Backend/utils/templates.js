@@ -46,6 +46,11 @@ exports.emailOrderTemplate = `
         </div>
       </div>
       <div>
+        <h5>Delivery Date</h5>
+        <div>Expect your order in 2-5 working days</div>
+      </div>
+      <div>
+      <div>
         <h5>Shipping Information</h2>
         <div>
           <div>Name: %FIRSTNAME% %LASTNAME%</div>
