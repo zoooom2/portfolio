@@ -17,8 +17,7 @@ const storage = (location) =>
     cloudinary: cloudinary,
     params: {
       folder: `${location} images`,
-      allowed_formats: ['avif', 'webp','png'],
-      transformation: [{ width: 2500, height: 2500, crop: 'limit' }],
+      allowed_formats: ['avif', 'webp'],
       public_id: (req, file) =>
         `baz_${Date.now()}-${crypto.randomBytes(8).toString('hex')}-${
           file.originalname
