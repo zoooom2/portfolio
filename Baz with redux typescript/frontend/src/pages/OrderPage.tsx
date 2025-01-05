@@ -59,7 +59,7 @@ const OrderPage = () => {
 								<div className='font-semibold capitalize text-center'>
 									estimated delivery
 								</div>
-								<div className=''>4-7 working days</div>
+								<div className=''>7-10 working days</div>
 							</div>
 							<div className='flex flex-col font-baz2 tracking-[1.2px] tablet:tracking-[1.6px] text-[12px] tablet:text-[16px] items-center text-center'>
 								check your mail to view order details
