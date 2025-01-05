@@ -47,7 +47,7 @@ exports.emailOrderTemplate = `
       </div>
       <div>
         <h5>Delivery Date</h5>
-        <div>Expect your order in 4-7 working days</div>
+        <div>Expect your order in 7-10 working days</div>
       </div>
       <div>
       <div>
